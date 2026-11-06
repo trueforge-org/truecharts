@@ -5,6 +5,7 @@ title: autoPermissions
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/persistence/autoPermissions#full-examples) section for complete examples.
 
 :::
 
@@ -120,3 +121,19 @@ Group ID to change the group of the volume to.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  config:
+    autoPermissions:
+      enabled: true
+      chown: true
+      chmod: '775'
+      recursive: true
+      user: 568
+      group: 568
+```

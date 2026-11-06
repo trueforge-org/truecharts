@@ -5,6 +5,7 @@ title: metrics
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/hpa/metrics#full-examples) section for complete examples.
 
 :::
 
@@ -447,3 +448,72 @@ See [external](/truecharts-common/hpa/metrics/external) for all keys of this obj
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+hpa:
+  main:
+    metrics:
+      - type: Resource
+        resource:
+          name: cpu
+          target:
+            type: Utilization
+            averageUtilization: 50
+```
+
+```yaml
+hpa:
+  main:
+    metrics:
+      - type: Resource
+        resource:
+          name: memory
+          target:
+            type: AverageValue
+            averageValue: 500Mi
+      - type: ContainerResource
+        containerResource:
+          name: cpu
+          container: main
+          target:
+            type: Utilization
+            averageUtilization: 70
+```
+
+```yaml
+hpa:
+  main:
+    metrics:
+      - type: Pods
+        pods:
+          metric:
+            name: http_requests_per_second
+          target:
+            type: AverageValue
+            averageValue: 100
+      - type: Object
+        object:
+          metric:
+            name: requests_per_second
+          describedObject:
+            apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            name: main
+          target:
+            type: Value
+            value: 2k
+      - type: External
+        external:
+          metric:
+            name: queue_messages_ready
+            selector:
+              matchLabels:
+                queue: worker_tasks
+          target:
+            type: AverageValue
+            averageValue: 30
+```

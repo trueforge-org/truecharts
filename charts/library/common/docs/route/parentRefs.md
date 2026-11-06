@@ -2,6 +2,12 @@
 title: parentRefs
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/route/parentRefs#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.route.$name.parentRefs`
@@ -133,3 +139,31 @@ Attach to the listeners of the gateway on this port.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+route:
+  dns:
+    parentRefs:
+      - targetSelector: main
+        sectionName: dns
+```
+
+```yaml
+route:
+  grpc:
+    parentRefs:
+      - targetSelector: main
+        sectionName: https
+```
+
+```yaml
+route:
+  mqtt:
+    parentRefs:
+      - targetSelector: main
+        sectionName: mqtt
+```

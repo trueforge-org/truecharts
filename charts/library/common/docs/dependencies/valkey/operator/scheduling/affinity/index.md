@@ -2,6 +2,12 @@
 title: affinity
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/scheduling/affinity#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.scheduling.affinity`
@@ -447,3 +453,28 @@ See [podAffinity](/truecharts-common/dependencies/valkey/operator/scheduling/aff
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      scheduling:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - {}
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                preference: {}
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - topologyKey: example
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 1
+                podAffinityTerm: {}
+```

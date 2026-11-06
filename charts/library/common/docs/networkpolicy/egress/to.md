@@ -2,6 +2,12 @@
 title: to
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/egress/to#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.egress[].to`
@@ -303,3 +309,37 @@ CIDR ranges excluded from the block.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+networkpolicy:
+  allow-database:
+    egress:
+      - to:
+          - podSelector:
+              matchLabels:
+                role: database
+```
+
+```yaml
+networkpolicy:
+  api-policy:
+    egress:
+      - to:
+          - namespaceSelector:
+              matchLabels:
+                name: kube-system
+```
+
+```yaml
+networkpolicy:
+  api-policy:
+    egress:
+      - to:
+          - podSelector:
+              matchLabels:
+                role: database
+```

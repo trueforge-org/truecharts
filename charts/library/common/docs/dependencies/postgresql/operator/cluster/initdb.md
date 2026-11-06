@@ -2,6 +2,12 @@
 title: initdb
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/cluster/initdb#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.cluster.initdb`
@@ -134,3 +140,21 @@ SQL statements to run after initialization, in the `template1` database.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      cluster:
+        initdb:
+          encoding: UTF8
+          localeCollate: C
+          localeCtype: C
+          dataChecksums: true
+          postInitApplicationSQL:
+            - CREATE EXTENSION IF NOT EXISTS pg_trgm;
+```

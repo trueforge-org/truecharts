@@ -5,6 +5,7 @@ title: target
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/externalSecret/target#full-examples) section for complete examples.
 
 :::
 
@@ -249,3 +250,20 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+externalSecret:
+  database:
+    target:
+      name: database-url
+      creationPolicy: Owner
+      deletionPolicy: Retain
+      template:
+        type: Opaque
+        data:
+          url: postgres://{{ .username }}:{{ .password }}@db:5432/app
+```

@@ -417,8 +417,7 @@
                       "type": "string",
                       "description": "A resource."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   },
                   "scope": {
                     "type": "string",
@@ -433,8 +432,7 @@
                       "type": "string",
                       "description": "An API group."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   },
                   "apiVersions": {
                     "type": "array",
@@ -444,8 +442,7 @@
                       "type": "string",
                       "description": "An API version."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   },
                   "operations": {
                     "type": "array",
@@ -455,8 +452,7 @@
                       "type": "string",
                       "description": "An operation."
                     },
-                    "x-helm-tpl": "On entries only",
-                    "x-docs-required": true
+                    "x-helm-tpl": "On entries only"
                   }
                 },
                 "additionalProperties": false,
@@ -469,15 +465,13 @@
                 ]
               },
               "description": "Operations and resources the webhook applies to.",
-              "minItems": 1,
-              "x-docs-required": true
+              "minItems": 1
             },
             "name": {
               "type": "string",
               "description": "Name of the webhook, a fully qualified name like `check.example.com`.",
               "minLength": 1,
-              "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-helm-tpl": true
             },
             "failurePolicy": {
               "oneOf": [
@@ -560,8 +554,7 @@
               },
               "description": "AdmissionReview versions the webhook accepts, eg `v1`.",
               "minItems": 1,
-              "x-helm-tpl": true,
-              "x-docs-required": true
+              "x-helm-tpl": true
             },
             "clientConfig": {
               "type": "object",
@@ -583,8 +576,7 @@
                       "type": "string",
                       "description": "Name of the Service.",
                       "minLength": 1,
-                      "x-helm-tpl": true,
-                      "x-docs-required": true
+                      "x-helm-tpl": true
                     },
                     "namespace": {
                       "allOf": [
@@ -593,8 +585,7 @@
                         }
                       ],
                       "description": "Namespace of the Service.",
-                      "x-helm-tpl": true,
-                      "x-docs-required": true
+                      "x-helm-tpl": true
                     },
                     "path": {
                       "type": "string",
@@ -626,8 +617,7 @@
                   "url",
                   "service"
                 ]
-              },
-              "x-docs-required": true
+              }
             },
             "namespaceSelector": {
               "allOf": [

@@ -2,6 +2,12 @@
 title: integrations
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/route/integrations#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.route.$name.integrations`
@@ -382,3 +388,42 @@ See [envoy](/truecharts-common/route/integrations/envoy) for all keys of this ob
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+route:
+  admin:
+    integrations:
+      certManager:
+        enabled: true
+        certificateIssuer: my-issuer
+```
+
+```yaml
+route:
+  main:
+    integrations:
+      certManager:
+        enabled: true
+        certificateIssuer: my-issuer
+```
+
+```yaml
+route:
+  main:
+    integrations:
+      envoy:
+        enabled: true
+        ipWhitelist:
+          - 192.168.0.0/16
+        auth:
+          type: authentik
+          internalHost: authentik.auth.svc.cluster.local
+        redirectRegex:
+          - regex: ^/old/(.*)
+            replacement: https://app.example.com/new
+            permanent: true
+```

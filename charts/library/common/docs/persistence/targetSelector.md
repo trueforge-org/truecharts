@@ -2,6 +2,12 @@
 title: targetSelector
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/persistence/targetSelector#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.$name.targetSelector`
@@ -105,3 +111,34 @@ Path within the volume that is mounted instead of its root.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  data:
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /data
+```
+
+```yaml
+persistence:
+  emptydir-memory:
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /dev/shm
+```
+
+```yaml
+persistence:
+  gpu:
+    targetSelector:
+      workload-name:
+        container-name:
+          mountPath: /dev/dri
+```

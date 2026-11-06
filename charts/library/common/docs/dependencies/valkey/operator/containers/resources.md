@@ -2,6 +2,12 @@
 title: resources
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/containers/resources#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.containers[].resources`
@@ -128,3 +134,19 @@ Name of the request within the claim. Uses every request of the claim when unset
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - resources:
+            limits:
+              example: 1
+            requests:
+              example: 1
+```

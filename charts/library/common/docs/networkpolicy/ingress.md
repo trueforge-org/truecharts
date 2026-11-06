@@ -2,6 +2,12 @@
 title: ingress
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/ingress#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.ingress`
@@ -487,3 +493,32 @@ Cilium only: ICMP types the rule allows.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+networkpolicy:
+  allow-same-namespace:
+    ingress:
+      - from:
+          - podSelector: {}
+```
+
+```yaml
+networkpolicy:
+  host-policy:
+    ingress:
+      - fromEntities:
+          - cluster
+```
+
+```yaml
+networkpolicy:
+  allow-ingress-from-gateway:
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: gateway-system
+```

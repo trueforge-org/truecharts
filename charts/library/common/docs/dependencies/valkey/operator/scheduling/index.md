@@ -2,6 +2,12 @@
 title: Valkey Operator Scheduling
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/scheduling#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.scheduling`
@@ -460,3 +466,22 @@ Zones the pods are pinned to. Unique, at most 32 zones.
 | Items | 1 to 32 |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      scheduling:
+        nodeSelector:
+          kubernetes.io/arch: amd64
+        tolerations:
+          - key: dedicated
+            operator: Equal
+            value: cache
+            effect: NoSchedule
+        priorityClassName: system-cluster-critical
+```

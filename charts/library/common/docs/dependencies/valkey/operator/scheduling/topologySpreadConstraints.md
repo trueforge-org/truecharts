@@ -2,6 +2,12 @@
 title: topologySpreadConstraints
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/scheduling/topologySpreadConstraints#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.scheduling.topologySpreadConstraints`
@@ -251,3 +257,18 @@ Pod label keys whose values are combined with `labelSelector`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      scheduling:
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: example
+            whenUnsatisfiable: DoNotSchedule
+```

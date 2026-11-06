@@ -2,6 +2,12 @@
 title: PostgreSQL Cluster
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/cluster#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.cluster`
@@ -475,3 +481,66 @@ See [storage](/truecharts-common/dependencies/postgresql/operator/cluster/storag
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      cluster:
+        storage:
+          size: 20Gi
+          storageClass: fast-storage
+          accessModes:
+            - ReadWriteOnce
+        walStorage:
+          size: 5Gi
+          storageClass: fast-storage
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      cluster:
+        instances: 2
+        singleNode: false
+        logLevel: info
+        primaryUpdateMethod: switchover
+        primaryUpdateStrategy: unsupervised
+        labels:
+          label1: label1
+        annotations:
+          annotation1: annotation1
+        env:
+          key: value
+        envFrom:
+          - secretRef:
+              name: my-secret
+              expandObjectName: true
+          - configMapRef:
+              name: my-configmap
+              expandObjectName: false
+        postgresql:
+          max_connections: '200'
+          shared_buffers: 256MB
+        preloadLibraries:
+          - pg_stat_statements
+        initdb:
+          encoding: UTF8
+          localeCollate: C
+          localeCtype: C
+          dataChecksums: true
+          postInitApplicationSQL:
+            - CREATE EXTENSION IF NOT EXISTS pg_trgm;
+```

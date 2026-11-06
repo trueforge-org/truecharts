@@ -2,6 +2,12 @@
 title: mutating
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/webhook/mutating#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.webhook.mutating`
@@ -71,3 +77,14 @@ See [webhooks](/truecharts-common/webhook/mutating/webhooks) for all keys of thi
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+webhook:
+  mutating:
+    enabled: true
+    type: example
+```

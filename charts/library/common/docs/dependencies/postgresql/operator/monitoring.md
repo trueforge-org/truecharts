@@ -2,6 +2,12 @@
 title: monitoring
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/monitoring#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.monitoring`
@@ -203,3 +209,19 @@ Expand the name of the ConfigMap or Secret with the name of the release.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      monitoring:
+        enablePodMonitor: true
+        disableDefaultQueries: false
+        customQueries:
+          - name: app_rows
+            key: queries.yaml
+```

@@ -2,6 +2,12 @@
 title: devshm
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/persistence/devshm#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.devshm`
@@ -108,3 +114,16 @@ See [iSCSI Authentication](/truecharts-common/persistence/iscsiConfig) for all k
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  devshm:
+    enabled: true
+    type: emptyDir
+    medium: Memory
+    mountPath: /dev/shm
+```

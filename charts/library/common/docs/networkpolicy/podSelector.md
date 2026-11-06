@@ -2,6 +2,12 @@
 title: podSelector
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/podSelector#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.podSelector`
@@ -121,3 +127,21 @@ Values of the label.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+networkpolicy:
+  advanced-matching:
+    podSelector:
+      matchExpressions:
+        - key: environment
+          operator: In
+          values:
+            - production
+            - staging
+        - key: app
+          operator: Exists
+```

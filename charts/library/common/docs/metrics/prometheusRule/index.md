@@ -2,6 +2,12 @@
 title: prometheusRule
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/metrics/prometheusRule#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.metrics.$name.prometheusRule`
@@ -457,3 +463,14 @@ Additional rules of the group, next to `rules`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+metrics:
+  example:
+    prometheusRule:
+      enabled: false
+```

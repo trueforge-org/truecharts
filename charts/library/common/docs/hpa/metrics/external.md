@@ -2,6 +2,12 @@
 title: external
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/hpa/metrics/external#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.hpa.$name.metrics[].external`
@@ -148,3 +154,22 @@ Target value, as a quantity.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+hpa:
+  main:
+    metrics:
+      - external:
+          metric:
+            name: queue_messages_ready
+            selector:
+              matchLabels:
+                queue: worker_tasks
+          target:
+            type: AverageValue
+            averageValue: 30
+```

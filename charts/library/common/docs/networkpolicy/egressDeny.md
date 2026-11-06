@@ -2,6 +2,12 @@
 title: egressDeny
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/egressDeny#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.egressDeny`
@@ -119,3 +125,15 @@ ICMP types the rule applies to.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+networkpolicy:
+  deny-metadata:
+    egressDeny:
+      - toCIDR:
+          - 169.254.169.254/32
+```

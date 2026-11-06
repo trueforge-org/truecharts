@@ -5,6 +5,7 @@ title: topologySpreadConstraints
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/podOptions/topologySpreadConstraints#full-examples) section for complete examples.
 
 :::
 
@@ -182,3 +183,30 @@ Whether the node taints are honored when the skew is calculated.
 | Allowed values | `"Honor"`, `"Ignore"` |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+podOptions:
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: my-app
+    - maxSkew: 2
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: ScheduleAnyway
+      minDomains: 2
+      nodeAffinityPolicy: Honor
+      nodeTaintsPolicy: Ignore
+      labelSelector:
+        matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+              - my-app
+```

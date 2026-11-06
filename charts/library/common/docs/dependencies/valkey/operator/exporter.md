@@ -2,6 +2,12 @@
 title: exporter
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/exporter#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.exporter`
@@ -105,3 +111,15 @@ See [securityContext](/truecharts-common/dependencies/valkey/operator/containers
 | Default | `{}` |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      exporter:
+        enabled: true
+```

@@ -5,6 +5,7 @@ title: src
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/persistence/volsync/src#full-examples) section for complete examples.
 
 :::
 
@@ -294,3 +295,41 @@ See [moverSecurityContext](/truecharts-common/persistence/volsync/src/moverSecur
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  restored:
+    volsync:
+      - src:
+          enabled: false
+```
+
+```yaml
+persistence:
+  backedup:
+    volsync:
+      - src:
+          enabled: true
+          trigger:
+            schedule: 0 0 * * *
+          pruneIntervalDays: 7
+          retain:
+            hourly: 6
+            daily: 5
+            weekly: 4
+            monthly: 3
+            yearly: 1
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
+          cacheCapacity: 1Gi
+          moverSecurityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+```

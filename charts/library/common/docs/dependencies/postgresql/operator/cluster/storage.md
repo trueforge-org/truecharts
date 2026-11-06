@@ -2,6 +2,12 @@
 title: storage
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/cluster/storage#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.cluster.storage`
@@ -176,3 +182,19 @@ API group of the data source reference.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      cluster:
+        storage:
+          size: 20Gi
+          storageClass: fast-storage
+          accessModes:
+            - ReadWriteOnce
+```

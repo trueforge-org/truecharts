@@ -2,6 +2,12 @@
 title: probeTimeouts
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/global/fallbackDefaults/probeTimeouts#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.global.fallbackDefaults.probeTimeouts`
@@ -341,3 +347,31 @@ Successful probes in a row before the probe succeeds.
 | Range | 1 to … |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+global:
+  fallbackDefaults:
+    probeTimeouts:
+      liveness:
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 5
+        successThreshold: 1
+      readiness:
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 5
+        successThreshold: 2
+      startup:
+        initialDelaySeconds: 10
+        periodSeconds: 5
+        timeoutSeconds: 2
+        failureThreshold: 60
+        successThreshold: 1
+```

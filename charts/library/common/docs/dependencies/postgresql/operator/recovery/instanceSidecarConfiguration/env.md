@@ -2,6 +2,12 @@
 title: env
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration/env#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env`
@@ -355,3 +361,17 @@ Whether the Secret or its key must exist.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      recovery:
+        instanceSidecarConfiguration:
+          env:
+            - name: example
+```

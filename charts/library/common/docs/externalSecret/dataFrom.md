@@ -2,6 +2,12 @@
 title: dataFrom
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/externalSecret/dataFrom#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.externalSecret.$name.dataFrom`
@@ -287,3 +293,28 @@ A setting of the store reference, passed on as is.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+externalSecret:
+  config:
+    dataFrom:
+      - extract:
+          key: my-app/config
+```
+
+```yaml
+externalSecret:
+  all-config:
+    dataFrom:
+      - find:
+          name:
+            regexp: ^my-app-.*
+        rewrite:
+          - regexp:
+              source: my-app-(.*)
+              target: app_$1
+```

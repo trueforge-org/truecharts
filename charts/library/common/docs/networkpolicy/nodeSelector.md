@@ -2,6 +2,12 @@
 title: nodeSelector
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/nodeSelector#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.nodeSelector`
@@ -119,3 +125,15 @@ Values of the label. Empty for `Exists` and `DoesNotExist`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+networkpolicy:
+  host-policy:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ''
+```

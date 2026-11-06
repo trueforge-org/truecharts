@@ -1012,6 +1012,10 @@ class Generator:
             if (examples_dir / alt).exists():
                 examples_text = (examples_dir / alt).read_text().strip("\n")
                 break
+        if not examples_text and not (page.handwritten or page.overview_only):
+            examples_text = self.auto_examples(page)
+            if not examples_text:
+                problems.append(f"{page.file}: the page has no examples, add examples/{page.example_files()[-1]}")
 
         title = page.title
         fm_title = title if re.fullmatch(r"[\w .()/&+-]+", title) else json.dumps(title)
@@ -1066,6 +1070,76 @@ class Generator:
         text = "\n".join(out).rstrip("\n") + "\n"
         text = re.sub(r"\n{3,}", "\n\n", text)
         return text, problems
+
+    def auto_examples(self, page: Page) -> str:
+        """Examples for a page without an example file: the part of the examples of other pages that is about the page."""
+        if not page.roots or (page.file, 0) not in self.resolved:
+            return ""
+        _, label, _ = self.resolved[(page.file, 0)]
+        segs = re.findall(r"\[\]|[^.\[\]]+", label)
+        found: dict[str, str] = {}
+        for _, data in self._example_blocks:
+            for concrete, value in find_subtrees(data, segs):
+                if page.applies and not (isinstance(value, dict) and str(value.get("type")) in page.applies):
+                    continue
+                text = to_yaml(wrap(concrete, value))
+                if 2 <= text.count("\n") + 1 <= 60:
+                    found.setdefault(text, text)
+        picked = sorted(found, key=lambda t: (t.count("\n"), t))[:3]
+        note = "These examples are the part of the examples of other pages that is about this page."
+        if not picked:
+            gen = self.generated_example(page)
+            if not gen:
+                return ""
+            picked, note = [gen], "A small example, built from the schema. It shows the keys that the page needs."
+        out = ["## Full Examples", "", note, ""]
+        for t in picked:
+            out += ["```yaml", t, "```", ""]
+        return "\n".join(out).rstrip("\n")
+
+    def schema_example(self, n: Node, depth: int = 0) -> Any:
+        """A small value for a schema: its example, default or first allowed value, else a placeholder of its type."""
+        if n.examples:
+            return n.examples[0]
+        if n.default is not MISSING and n.default not in (None, "", [], {}):
+            return n.default
+        for v in n.enum:
+            return v
+        types = [t for t in n.types if t != "null"]
+        if n.props or n.addl is not None or "object" in types:
+            if depth >= 4:
+                return {}
+            out: dict = {}
+            names = [k for k in n.props if k in n.required] or list(n.props)[:2]
+            for k in names:
+                out[k] = self.schema_example(self.schemas.node_multi(n.props[k]), depth + 1)
+            if not out and n.addl is not None:
+                out["example"] = self.schema_example(self.schemas.node(*n.addl), depth + 1)
+            return out
+        if n.items is not None or "array" in types:
+            if depth >= 4 or n.items is None:
+                return []
+            return [self.schema_example(self.schemas.node(*n.items), depth + 1)]
+        if "boolean" in types:
+            return True
+        if "integer" in types or "number" in types:
+            return max(n.minimum or 0, 1)
+        return "example"
+
+    def generated_example(self, page: Page) -> str:
+        """A last resort example for a page: the keys it needs, built from the schema."""
+        n, label, _ = self.resolved[(page.file, 0)]
+        value = self.schema_example(n)
+        if value in ({}, [], None):
+            return ""
+        segs = re.findall(r"\[\]|[^.\[\]]+", label)
+        data = wrap(["example" if x == "$name" else x for x in segs], value)
+        errs: list[str] = []
+        if isinstance(data, dict) and all(k in self.root_node.props for k in data):
+            validate_value(self.schemas, self.root_node, self.root_node, data, "", errs)
+        if errs:
+            return ""
+        return to_yaml(data)
 
     def child_pages(self, page: Page) -> list[Page]:
         if not page.file.endswith("index.md"):
@@ -1147,6 +1221,7 @@ class Generator:
 
     def build(self, examples_dir: Path) -> tuple[dict[str, str], list[str]]:
         outputs: dict[str, str] = {}
+        self._example_blocks = load_example_blocks(examples_dir, set(self.root_node.props))
         problems = list(self.errors) + self.check_coverage()
         for page in self.pages:
             if page.handwritten:
@@ -1287,6 +1362,47 @@ class _UniqueKeyLoader(yaml.SafeLoader):
                 )
             seen.add(key)
         return super().construct_mapping(node, deep)
+
+
+def load_example_blocks(examples_dir: Path, root_keys: set) -> list[tuple[str, dict]]:
+    """The yaml blocks of all example files that are complete values files (they start at a root key)."""
+    blocks: list[tuple[str, dict]] = []
+    if not examples_dir.exists():
+        return blocks
+    for f in sorted(examples_dir.rglob("*.md")):
+        for block in FENCE_RE.findall(f.read_text()):
+            try:
+                data = yaml.load(block, Loader=_UniqueKeyLoader)
+            except yaml.YAMLError:
+                continue
+            if isinstance(data, dict) and data and all(k in root_keys for k in data):
+                blocks.append((f.as_posix(), data))
+    return blocks
+
+
+def find_subtrees(data: Any, segs: list[str], concrete: list | None = None):
+    """Yield (concrete path, value) for the values of data that a values path like a.$name.b[] points to."""
+    concrete = concrete or []
+    if not segs:
+        yield concrete, data
+        return
+    seg, rest = segs[0], segs[1:]
+    if seg == "[]":
+        if isinstance(data, list):
+            for item in data:
+                yield from find_subtrees(item, rest, concrete + ["[]"])
+    elif isinstance(data, dict):
+        keys = list(data) if seg == "$name" else ([seg] if seg in data else [])
+        for k in keys:
+            yield from find_subtrees(data[k], rest, concrete + [k])
+
+
+def wrap(concrete: list, value: Any) -> Any:
+    out = value
+    for seg in reversed(concrete):
+        out = [out] if seg == "[]" else {seg: out}
+    return out
+
 
 
 def _type_ok(value: Any, types: list[str]) -> bool:

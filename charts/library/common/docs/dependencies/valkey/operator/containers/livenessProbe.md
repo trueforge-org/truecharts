@@ -2,6 +2,12 @@
 title: livenessProbe
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/containers/livenessProbe#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.containers[].livenessProbe`
@@ -375,3 +381,20 @@ Grace period before the container is stopped when this probe fails.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - livenessProbe:
+            exec:
+              command:
+                - example
+            httpGet:
+              port: 1
+```

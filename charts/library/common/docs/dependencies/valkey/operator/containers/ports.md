@@ -2,6 +2,12 @@
 title: ports
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/containers/ports#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.containers[].ports`
@@ -109,3 +115,16 @@ Host IP the `hostPort` is bound to.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - ports:
+            - containerPort: 1
+```

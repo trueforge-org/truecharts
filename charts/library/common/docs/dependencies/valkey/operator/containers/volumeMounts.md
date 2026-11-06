@@ -2,6 +2,12 @@
 title: volumeMounts
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/containers/volumeMounts#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.containers[].volumeMounts`
@@ -149,3 +155,17 @@ Options of the bind mount.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - volumeMounts:
+            - name: example
+              mountPath: example
+```

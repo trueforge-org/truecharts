@@ -2,6 +2,12 @@
 title: persistence
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/persistence#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.persistence`
@@ -77,3 +83,27 @@ Whether the volumes are retained when a node is deleted. Defaults to `global.fal
 | Default | `false` |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      persistence:
+        enabled: true
+        size: 2Gi
+```
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      persistence:
+        enabled: true
+        size: 5Gi
+        storageClass: fast-storage
+        retain: true
+```

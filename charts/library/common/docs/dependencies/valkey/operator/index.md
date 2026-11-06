@@ -2,6 +2,12 @@
 title: Valkey Operator
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator`
@@ -472,3 +478,53 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 | Default | `{}` |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      users:
+        - name: app
+          enabled: true
+          permissions: +@all -@dangerous
+          passwordSecret:
+            name: app-valkey-password
+            keys:
+              - password
+```
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      shards: 3
+      replicas: 1
+      config:
+        maxmemory-policy: allkeys-lru
+      persistence:
+        enabled: true
+        size: 2Gi
+      exporter:
+        enabled: true
+```
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      scheduling:
+        nodeSelector:
+          kubernetes.io/arch: amd64
+        tolerations:
+          - key: dedicated
+            operator: Equal
+            value: cache
+            effect: NoSchedule
+        priorityClassName: system-cluster-critical
+      podDisruptionBudget:
+        mode: Cluster
+```

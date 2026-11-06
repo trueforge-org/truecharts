@@ -5,6 +5,7 @@ title: tolerations
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/podOptions/tolerations#full-examples) section for complete examples.
 
 :::
 
@@ -128,3 +129,20 @@ podOptions:
 ```
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+podOptions:
+  tolerations:
+    - key: dedicated
+      operator: Equal
+      value: media
+      effect: NoSchedule
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+```

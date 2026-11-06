@@ -5,6 +5,7 @@ title: hostAliases
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/workload/podSpec/hostAliases#full-examples) section for complete examples.
 
 :::
 
@@ -91,3 +92,18 @@ workload:
 ```
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+workload:
+  workload-name:
+    podSpec:
+      hostAliases:
+        - ip: 10.10.10.100
+          hostnames:
+            - myserver.local
+            - storage.local
+```

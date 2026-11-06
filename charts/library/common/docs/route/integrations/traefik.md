@@ -2,6 +2,12 @@
 title: traefik
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/route/integrations/traefik#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.route.$name.integrations.traefik`
@@ -372,3 +378,34 @@ Middlewares set by the chart, same as an ingress.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+route:
+  main:
+    integrations:
+      traefik:
+        enabled: true
+        ipWhitelist:
+          - 192.168.0.0/16
+        ipStrategy:
+          depth: 1
+        auth:
+          type: authelia
+          internalHost: authelia.auth.svc.cluster.local
+          responseHeaders:
+            - Remote-User
+        themePark:
+          enabled: true
+          app: sonarr
+          theme: dark
+        redirectRegex:
+          - regex: ^/old/(.*)
+            replacement: https://app.example.com/new/${1}
+            permanent: true
+        middlewares:
+          - name: my-middleware
+```

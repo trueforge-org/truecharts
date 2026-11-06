@@ -2,6 +2,12 @@
 title: endpointSelector
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/endpointSelector#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.endpointSelector`
@@ -119,3 +125,18 @@ Values of the label. Empty for `Exists` and `DoesNotExist`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+networkpolicy:
+  example:
+    endpointSelector:
+      matchLabels:
+        example: example
+      matchExpressions:
+        - key: example
+          operator: example
+```

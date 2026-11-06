@@ -2,6 +2,12 @@
 title: envFrom
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/containers/envFrom#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.containers[].envFrom`
@@ -133,3 +139,19 @@ Whether the Secret may be missing.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - envFrom:
+            - prefix: example
+              configMapRef:
+                name: example
+                optional: true
+```

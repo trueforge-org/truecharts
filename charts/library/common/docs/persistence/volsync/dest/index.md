@@ -5,6 +5,7 @@ title: dest
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/persistence/volsync/dest#full-examples) section for complete examples.
 
 :::
 
@@ -181,3 +182,28 @@ See [moverSecurityContext](/truecharts-common/persistence/volsync/dest/moverSecu
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  backedup:
+    volsync:
+      - dest:
+          enabled: false
+```
+
+```yaml
+persistence:
+  restored:
+    volsync:
+      - dest:
+          enabled: true
+          capacity: 10Gi
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
+```

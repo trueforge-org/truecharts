@@ -2,6 +2,12 @@
 title: podSecurityContext
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/podSecurityContext#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.podSecurityContext`
@@ -416,3 +422,18 @@ User name the first process of the containers runs as, Windows only.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      podSecurityContext:
+        runAsNonRoot: true
+        fsGroup: 568
+        seccompProfile:
+          type: RuntimeDefault
+```

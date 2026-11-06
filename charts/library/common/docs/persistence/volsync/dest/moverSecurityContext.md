@@ -2,6 +2,12 @@
 title: moverSecurityContext
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/persistence/volsync/dest/moverSecurityContext#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.$name.volsync[].dest.moverSecurityContext`
@@ -418,3 +424,18 @@ User name the first process of the containers runs as, Windows only.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+persistence:
+  example:
+    volsync:
+      - dest:
+          moverSecurityContext:
+            appArmorProfile:
+              type: Unconfined
+            fsGroup: 1
+```

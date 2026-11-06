@@ -5,6 +5,7 @@ title: hosts
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/ingress/hosts#full-examples) section for complete examples.
 
 :::
 
@@ -186,3 +187,46 @@ Port number of the Service.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+ingress:
+  main:
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+```
+
+```yaml
+ingress:
+  main:
+    hosts:
+      - host: sonarr.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+```
+
+```yaml
+ingress:
+  main:
+    hosts:
+      - host: app.example.com
+        paths:
+          - path: /
+            pathType: Prefix
+          - path: /api
+            pathType: Prefix
+            overrideService:
+              name: api
+              port: 8080
+      - host: '{{ .Release.Name }}.example.com'
+        paths:
+          - path: /
+            pathType: Prefix
+```

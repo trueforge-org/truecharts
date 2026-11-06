@@ -2,6 +2,12 @@
 title: groups
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/metrics/prometheusRule/groups#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.metrics.$name.prometheusRule.groups`
@@ -309,3 +315,19 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+metrics:
+  example:
+    prometheusRule:
+      groups:
+        example:
+          name: example
+          rules:
+            - alert: example
+              record: example
+```

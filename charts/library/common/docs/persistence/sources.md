@@ -5,6 +5,7 @@ title: sources
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/persistence/sources#full-examples) section for complete examples.
 
 :::
 
@@ -486,3 +487,39 @@ Unit the resource is exposed in, eg `1Mi`. Defaults to `1`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  projected-vol:
+    sources:
+      - secret:
+          objectName: secret-name
+          optional: false
+          items:
+            - key: key1
+              path: secret/key1
+      - configMap:
+          objectName: configmap-name
+          expandObjectName: true
+          items:
+            - key: key2
+              path: config/key2
+      - serviceAccountToken:
+          audience: some-audience
+          expirationSeconds: 3600
+          path: token
+      - downwardAPI:
+          items:
+            - path: labels
+              fieldRef:
+                fieldPath: metadata.labels
+            - path: cpu-limit
+              resourceFieldRef:
+                containerName: container-name
+                resource: limits.cpu
+                divisor: 1m
+```

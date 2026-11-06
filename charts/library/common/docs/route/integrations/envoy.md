@@ -2,6 +2,12 @@
 title: envoy
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/route/integrations/envoy#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.route.$name.integrations.envoy`
@@ -302,3 +308,24 @@ A setting of the policy, passed on as is.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+route:
+  main:
+    integrations:
+      envoy:
+        enabled: true
+        ipWhitelist:
+          - 192.168.0.0/16
+        auth:
+          type: authentik
+          internalHost: authentik.auth.svc.cluster.local
+        redirectRegex:
+          - regex: ^/old/(.*)
+            replacement: https://app.example.com/new
+            permanent: true
+```

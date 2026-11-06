@@ -2,6 +2,12 @@
 title: webhooks
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/webhook/mutating/webhooks#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.webhook.mutating.webhooks`
@@ -312,3 +318,23 @@ See [namespaceSelector](/truecharts-common/webhook/mutating/webhooks/namespaceSe
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+webhook:
+  mutating:
+    webhooks:
+      - name: example
+        rules:
+          - apiGroups: []
+            apiVersions: []
+            operations: []
+            resources: []
+        admissionReviewVersions:
+          - example
+        clientConfig:
+          example: example
+```

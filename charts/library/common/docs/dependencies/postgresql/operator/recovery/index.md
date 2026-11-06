@@ -2,6 +2,12 @@
 title: PostgreSQL Recovery
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/recovery#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.recovery`
@@ -141,3 +147,19 @@ See [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/op
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      recovery:
+        method: object_store
+        credentials: my-s3
+        serverName: previous-cluster
+        pitrTarget:
+          time: '2026-01-01 12:00:00.00000+00'
+```

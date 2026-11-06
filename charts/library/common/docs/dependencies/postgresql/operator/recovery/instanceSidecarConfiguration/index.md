@@ -2,6 +2,12 @@
 title: instanceSidecarConfiguration
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator.backups.instanceSidecarConfiguration`
@@ -207,3 +213,19 @@ Interval in seconds at which the sidecar checks and enforces retention policies.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      recovery:
+        instanceSidecarConfiguration:
+          additionalContainerArgs:
+            - example
+          env:
+            - name: example
+```

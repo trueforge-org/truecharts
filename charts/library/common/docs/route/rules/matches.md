@@ -2,6 +2,12 @@
 title: matches
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/route/rules/matches#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.route.$name.rules[].matches`
@@ -234,3 +240,37 @@ HTTP method of the request, or the gRPC service and method.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+route:
+  admin:
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /admin
+```
+
+```yaml
+route:
+  grpc:
+    rules:
+      - matches:
+          - method:
+              service: my.package.Greeter
+              method: SayHello
+```
+
+```yaml
+route:
+  main:
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /
+```

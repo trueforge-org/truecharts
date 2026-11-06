@@ -2,6 +2,12 @@
 title: endpoints
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/metrics/endpoints#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.metrics.$name.endpoints`
@@ -259,3 +265,52 @@ A setting passed on as is.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+metrics:
+  pods:
+    endpoints:
+      - port: metrics
+        interval: 15s
+        path: /metrics
+```
+
+```yaml
+metrics:
+  main:
+    endpoints:
+      - port: main
+        interval: 30s
+        scrapeTimeout: 10s
+        path: /metrics
+        scheme: http
+        honorLabels: false
+```
+
+```yaml
+metrics:
+  secure:
+    endpoints:
+      - port: https
+        interval: 1m
+        path: /metrics
+        scheme: https
+        params:
+          format:
+            - prometheus
+        tlsConfig:
+          insecureSkipVerify: true
+        relabelings:
+          - sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: node
+        metricRelabelings:
+          - sourceLabels:
+              - __name__
+            regex: go_.*
+            action: drop
+```

@@ -2,6 +2,12 @@
 title: securityContext
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/workload/podSpec/securityContext#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.securityContext.pod`
@@ -119,3 +125,36 @@ Value of the sysctl.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+workload:
+  workload-name:
+    podSpec:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 568
+        sysctls:
+          - name: net.ipv4.ip_local_port_range
+            value: 1024 65535
+```
+
+```yaml
+workload:
+  workload-name:
+    podSpec:
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 568
+          - 1000
+        sysctls:
+          - name: net.ipv4.ip_unprivileged_port_start
+            value: '0'
+```

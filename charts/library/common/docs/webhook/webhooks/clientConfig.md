@@ -2,6 +2,12 @@
 title: clientConfig
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/webhook/webhooks/clientConfig#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.webhook.$name.webhooks[].clientConfig`
@@ -16,7 +22,7 @@ How the API server reaches the webhook, by `url` or `service`.
 | --- | --- |
 | Key | `webhook.$name.webhooks[].clientConfig` |
 | Type | `map` |
-| Required | ✅ |
+| Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
 
@@ -122,3 +128,41 @@ Port of the Service. Defaults to `443`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+webhook:
+  webhook-name:
+    webhooks:
+      - clientConfig:
+          caBundle: <base64 encoded ca bundle>
+          url: https://webhook.example.com/mutate
+```
+
+```yaml
+webhook:
+  selective-webhook:
+    webhooks:
+      - clientConfig:
+          service:
+            name: my-webhook-service
+            namespace: my-namespace
+            path: /validate
+            port: 443
+```
+
+```yaml
+webhook:
+  other-webhook-name:
+    webhooks:
+      - clientConfig:
+          caBundle: <base64 encoded ca bundle>
+          service:
+            name: my-webhook-service
+            namespace: my-namespace
+            path: /validate
+            port: 443
+```

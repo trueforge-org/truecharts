@@ -2,6 +2,12 @@
 title: PostgreSQL Operator
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.postgresql.operator`
@@ -387,3 +393,32 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 | Default | `{}` |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      pgVersion: 17
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      backups:
+        enabled: true
+        credentials: mys3
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      pgVersion: 17
+      type: postgis
+      instances: 3
+```

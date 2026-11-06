@@ -5,6 +5,7 @@ title: rules
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/route/rules#full-examples) section for complete examples.
 
 :::
 
@@ -419,3 +420,31 @@ A setting passed on as is.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+route:
+  dns:
+    rules:
+      - backendRefs:
+          - targetSelector: dns
+```
+
+```yaml
+route:
+  mqtt:
+    rules:
+      - backendRefs:
+          - targetSelector: mqtt
+```
+
+```yaml
+route:
+  passthrough:
+    rules:
+      - backendRefs:
+          - targetSelector: main
+```

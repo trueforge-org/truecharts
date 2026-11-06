@@ -5,6 +5,7 @@ title: PostgreSQL Backups
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/backups#full-examples) section for complete examples.
 
 :::
 
@@ -468,3 +469,54 @@ See [instanceSidecarConfiguration](/truecharts-common/dependencies/postgresql/op
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      backups:
+        enabled: true
+        credentials: mys3
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      backups:
+        enabled: true
+        credentials: my-s3
+        revision: '1'
+        retentionPolicy: 30d
+        scheduledBackups:
+          - name: daily-backup
+            schedule: 0 0 0 * * *
+            backupOwnerReference: self
+```
+
+```yaml
+dependencies:
+  postgresql:
+    operator:
+      backups:
+        enabled: true
+        credentials: my-s3
+        retentionPolicy: 30d
+        target: prefer-standby
+        jobs: 2
+        compression:
+          enabled: true
+        encryption:
+          enabled: true
+        scheduledBackups:
+          - name: daily-backup
+            schedule: 0 0 0 * * *
+            backupOwnerReference: self
+            immediate: true
+        manualBackups:
+          - name: before-upgrade
+```

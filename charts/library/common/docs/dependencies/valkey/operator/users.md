@@ -2,6 +2,12 @@
 title: users
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/users#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.users`
@@ -289,3 +295,21 @@ Raw ACL string appended after the generated rules, for example `+@all ~* &*`.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      users:
+        - name: app
+          enabled: true
+          permissions: +@all -@dangerous
+          passwordSecret:
+            name: app-valkey-password
+            keys:
+              - password
+```

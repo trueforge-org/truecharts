@@ -2,6 +2,12 @@
 title: object
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/hpa/metrics/object#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.hpa.$name.metrics[].object`
@@ -204,3 +210,23 @@ Name of the object.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+hpa:
+  main:
+    metrics:
+      - object:
+          metric:
+            name: requests_per_second
+          describedObject:
+            apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            name: main
+          target:
+            type: Value
+            value: 2k
+```

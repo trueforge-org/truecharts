@@ -2,6 +2,12 @@
 title: securityContext
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/valkey/operator/containers/securityContext#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.dependencies.valkey.operator.containers[].securityContext`
@@ -389,3 +395,18 @@ User name the first process of the container runs as, Windows only.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+dependencies:
+  valkey:
+    operator:
+      containers:
+        - securityContext:
+            allowPrivilegeEscalation: true
+            appArmorProfile:
+              type: Unconfined
+```

@@ -2,6 +2,12 @@
 title: varlogs
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/persistence/varlogs#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.varlogs`
@@ -108,3 +114,13 @@ See [iSCSI Authentication](/truecharts-common/persistence/iscsiConfig) for all k
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  varlogs:
+    enabled: false
+```

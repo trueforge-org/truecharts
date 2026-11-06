@@ -2,6 +2,12 @@
 title: listeners
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/gateway/listeners#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.gateway.$name.listeners`
@@ -352,3 +358,34 @@ Kind of the route, eg `HTTPRoute`.
 | Length | 1 to … |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+gateway:
+  main:
+    listeners:
+      - name: http
+        port: 80
+        protocol: HTTP
+```
+
+```yaml
+gateway:
+  nginx-gw:
+    listeners:
+      - name: https
+        port: 443
+        protocol: HTTPS
+```
+
+```yaml
+gateway:
+  traefik-gw:
+    listeners:
+      - name: http
+        port: 80
+        protocol: HTTP
+```

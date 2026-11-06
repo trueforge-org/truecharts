@@ -2,6 +2,12 @@
 title: validating
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/webhook/validating#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.webhook.validating`
@@ -71,3 +77,14 @@ See [webhooks](/truecharts-common/webhook/validating/webhooks) for all keys of t
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+webhook:
+  validating:
+    enabled: true
+    type: example
+```

@@ -2,6 +2,12 @@
 title: ingressDeny
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/ingressDeny#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.ingressDeny`
@@ -119,3 +125,17 @@ ICMP types the rule applies to.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+A small example, built from the schema. It shows the keys that the page needs.
+
+```yaml
+networkpolicy:
+  example:
+    ingressDeny:
+      - fromEndpoints:
+          - example
+        fromEntities:
+          - example
+```

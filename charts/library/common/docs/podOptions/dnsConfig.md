@@ -5,6 +5,7 @@ title: dnsConfig
 :::note
 
 - Examples under each key are only to be used as a placement guide
+- See the [Full Examples](/truecharts-common/podOptions/dnsConfig#full-examples) section for complete examples.
 
 :::
 
@@ -150,3 +151,22 @@ podOptions:
 ```
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+podOptions:
+  dnsConfig:
+    nameservers:
+      - 1.1.1.1
+      - 9.9.9.9
+    searches:
+      - my-namespace.svc.cluster.local
+      - svc.cluster.local
+    options:
+      - name: ndots
+        value: '2'
+      - name: edns0
+```

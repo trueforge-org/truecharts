@@ -2,6 +2,12 @@
 title: egress
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/networkpolicy/egress#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.networkpolicy.$name.egress`
@@ -241,3 +247,39 @@ Cilium only: kubernetes services the rule allows.
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+networkpolicy:
+  deny-metadata:
+    egress:
+      - toEntities:
+          - world
+```
+
+```yaml
+networkpolicy:
+  allow-external:
+    egress:
+      - to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+              except:
+                - 169.254.169.254/32
+```
+
+```yaml
+networkpolicy:
+  allow-database:
+    egress:
+      - to:
+          - podSelector:
+              matchLabels:
+                role: database
+        ports:
+          - protocol: TCP
+            port: 5432
+```

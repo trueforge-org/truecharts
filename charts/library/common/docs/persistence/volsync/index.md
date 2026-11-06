@@ -2,6 +2,12 @@
 title: volsync
 ---
 
+:::note
+
+- See the [Full Examples](/truecharts-common/persistence/volsync#full-examples) section for complete examples.
+
+:::
+
 ## Appears in
 
 - `.Values.persistence.$name.volsync`
@@ -208,3 +214,59 @@ See [dest](/truecharts-common/persistence/volsync/dest) for all keys of this obj
 | Default | unset |
 
 ---
+
+## Full Examples
+
+These examples are the part of the examples of other pages that is about this page.
+
+```yaml
+persistence:
+  restored:
+    volsync:
+      - name: mybackup
+        type: restic
+        credentials: mys3
+        src:
+          enabled: false
+        dest:
+          enabled: true
+          capacity: 10Gi
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
+```
+
+```yaml
+persistence:
+  backedup:
+    volsync:
+      - name: mybackup
+        type: restic
+        credentials: mys3
+        copyMethod: Snapshot
+        cleanupTempPVC: true
+        cleanupCachePVC: true
+        src:
+          enabled: true
+          trigger:
+            schedule: 0 0 * * *
+          pruneIntervalDays: 7
+          retain:
+            hourly: 6
+            daily: 5
+            weekly: 4
+            monthly: 3
+            yearly: 1
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: some-storage-class
+          volumeSnapshotClassName: some-snapshot-class
+          cacheCapacity: 1Gi
+          moverSecurityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+        dest:
+          enabled: false
+```
