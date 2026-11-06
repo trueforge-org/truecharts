@@ -60,12 +60,42 @@ Workloads to which the code-server addon is attached. Defaults to `main`.
 
 Container of the code-server add-on.
 
-See [Addon Container](/truecharts-common/addons/container) for all keys of this object.
+Takes the same keys as the [Container](/truecharts-common/workload/podSpec/containers) page, next to the keys below.
 
 | Field | Value |
 | --- | --- |
 | Key | `addons.codeserver.container` |
 | Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env`
+
+Environment variables of the code-server container.
+
+See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.codeserver.container.env` |
+| Type | `map or null` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.targetSelector`
+
+Workloads to which this container is attached.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.codeserver.container.targetSelector` |
+| Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

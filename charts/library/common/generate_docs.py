@@ -73,6 +73,7 @@ class Node:
     root_values: bool = False
     primary: bool = False
     internal: bool = False
+    extends: str | None = None  # values path of an object whose keys this object takes over
     page_specs: list[dict] = field(default_factory=list)  # x-docs-page on the node itself
     frag_specs: list[tuple[str, dict]] = field(default_factory=list)  # x-docs-page on a referenced schema
     alt_idents: list[str] = field(default_factory=list)  # refs inside oneOf or anyOf
@@ -156,6 +157,8 @@ class Schemas:
             n.primary = True
         if raw.get("x-docs-internal"):
             n.internal = True
+        if n.extends is None and raw.get("x-docs-extends"):
+            n.extends = raw["x-docs-extends"]
         # Later allOf entries are overrides of earlier ones, so they are read first.
         for sub in reversed(raw.get("allOf", [])):
             self._absorb(n, sub, file, "all" if mode == "base" else mode, via)
@@ -245,6 +248,19 @@ class Schemas:
         for a in raw.get("x-docs-appliesTo", []):
             if a not in n.applies:
                 n.applies.append(a)
+
+    def inherited_keys(self, n: Node, base: Node) -> set[str]:
+        """Keys of n that are a $ref to the very same schema as the key of base: documented on the page of base."""
+        out = set()
+        for k, sources in n.props.items():
+            if k not in base.props:
+                continue
+            raw, file = sources[0]
+            if isinstance(raw, dict) and "$ref" in raw:
+                target = self.follow(raw["$ref"], file)[0]
+                if any(target is r for r, _ in base.props[k]):
+                    out.add(k)
+        return out
 
     def children(self, n: Node):
         """Yield (key, Node) for the documented children of n."""
@@ -405,6 +421,7 @@ This page is for people who work on common. Charts based on common do not need i
 | `x-docs-appliesTo` | List of values of `type` | The key is only used for these types. It is left out of the page of the object, and shown on the page of the type. |
 | `x-docs-page` | `true`, an object or a list of objects | The key, or the schema file that is referenced, gets a page. See below. |
 | `x-docs-primary` | `true` | The key is the home of the objects it contains. When the same schema is used in several places, the page of the primary key documents it, and the others link to it. Used for `workload`, `service` and `ingress`. |
+| `x-docs-extends` | A values path, such as `workload.$name.podSpec.containers.$name` | The object takes over the keys of another object, and adds its own. The keys that are a `$ref` to the same schema as the key of the other object are left out of the docs, and the page says that it takes the same keys. Used for the container of an addon. |
 | `x-docs-internal` | `true` | The key is only for the internal use of common. It is shown in a separate section of its page, under a warning. A page of a key that is internal gets the warning at the top. |
 
 ## Pages
@@ -796,7 +813,14 @@ class Generator:
                 stack = stack + (node.identity,)
             if depth_limit is not None and depth >= depth_limit:
                 return
+            skip: set[str] = set()
+            if node.extends:
+                base, _, _ = self._resolve_root({"path": node.extends})
+                if base is not None:
+                    skip = self.schemas.inherited_keys(node, base)
             for k, c in self.schemas.children(node):
+                if k in skip:
+                    continue
                 walk(c, join(path, k), node, k, stack, depth + 1, False, child_typed, internal)
 
         walk(n, base_path, None, "", (), 0, True)
@@ -869,6 +893,10 @@ class Generator:
             lines += ["This key repeats the structure it is part of.", ""]
         if e.link is not None:
             lines += [f"See [{e.link.title}]({self.url(e.link)}) for all keys of this object.", ""]
+        if n.extends:
+            base_page = self.root_by_path.get(n.extends)
+            if base_page is not None:
+                lines += [f"Takes the same keys as the [{base_page.title}]({self.url(base_page)}) page, next to the keys below.", ""]
         if n.root_values:
             lines += [f"Takes the same keys as the [root values]({self.base_url}), next to the keys below.", ""]
         item = self.schemas.node(*n.items) if n.items else None

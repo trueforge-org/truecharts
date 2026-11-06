@@ -60,12 +60,26 @@ Workloads to which the netshoot container is attached. Defaults to `main`.
 
 Container configuration for the netshoot addon.
 
-See [Addon Container](/truecharts-common/addons/container) for all keys of this object.
+Takes the same keys as the [Container](/truecharts-common/workload/podSpec/containers) page, next to the keys below.
 
 | Field | Value |
 | --- | --- |
 | Key | `addons.netshoot.container` |
 | Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.targetSelector`
+
+Workloads to which this container is attached.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.netshoot.container.targetSelector` |
+| Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

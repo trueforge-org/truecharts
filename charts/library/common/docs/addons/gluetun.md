@@ -60,12 +60,42 @@ Workloads to which the Gluetun container is added. Defaults to the primary workl
 
 Container of the gluetun add-on.
 
-See [Addon Container](/truecharts-common/addons/container) for all keys of this object.
+Takes the same keys as the [Container](/truecharts-common/workload/podSpec/containers) page, next to the keys below.
 
 | Field | Value |
 | --- | --- |
 | Key | `addons.gluetun.container` |
 | Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.env`
+
+Environment variables of the gluetun container, for the VPN settings.
+
+See [Env](/truecharts-common/workload/podSpec/containers/env) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.env` |
+| Type | `map or null` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `container.targetSelector`
+
+Workloads to which this container is attached.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.gluetun.container.targetSelector` |
+| Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
@@ -252,7 +282,7 @@ Kubernetes type of the secret, eg `Opaque`.
 
 ## Full Examples
 
-Gluetun routes the traffic of the pod through a VPN. The container is added to the workloads in `targetSelector`, which defaults to `main`. Options of the container, like its security context, are set under `container`, see [Addon Container](/truecharts-common/addons/container).
+Gluetun routes the traffic of the pod through a VPN. The container is added to the workloads in `targetSelector`, which defaults to `main`. Options of the container, like its security context, are set under `container`, see [Addon Container](/truecharts-common/workload/podSpec/containers).
 
 ### OpenVPN with a provider
 

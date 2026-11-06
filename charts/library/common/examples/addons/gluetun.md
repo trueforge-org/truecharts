@@ -1,6 +1,6 @@
 ## Full Examples
 
-Gluetun routes the traffic of the pod through a VPN. The container is added to the workloads in `targetSelector`, which defaults to `main`. Options of the container, like its security context, are set under `container`, see [Addon Container](/truecharts-common/addons/container).
+Gluetun routes the traffic of the pod through a VPN. The container is added to the workloads in `targetSelector`, which defaults to `main`. Options of the container, like its security context, are set under `container`, see [Addon Container](/truecharts-common/workload/podSpec/containers).
 
 ### OpenVPN with a provider
 
