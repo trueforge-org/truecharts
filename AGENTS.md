@@ -3,7 +3,7 @@
 These are the instructions for AI coding agents working in the TrueCharts repository, including GitHub Copilot, OpenAI Codex/ChatGPT, Claude Code and any other tool that reads `AGENTS.md`.
 
 - **`AGENTS.md`** (this file) is the canonical, tool-agnostic source.
-- **`CLAUDE.md`** imports this file for Claude Code. The scoped files below are symlinked into `.claude/rules/`, where Claude Code loads each one by its `paths:` frontmatter. Keep `paths:` in sync with `applyTo:`, and add a symlink with the same file name for every new scoped file (e.g. `ln -s ../../.github/instructions/<name>.instructions.md .claude/rules/`), so relative links resolve from both places.
+- **`CLAUDE.md`** imports this file for Claude Code. It is copied daily from `trueforge-org/.github`, so put Claude-only TrueCharts rules in `.claude/rules/truecharts.md`. The scoped files below are symlinked into `.claude/rules/`, where Claude Code loads each one by its `paths:` frontmatter. Keep `paths:` in sync with `applyTo:`, and add a symlink with the same file name for every new scoped file (e.g. `ln -s ../../.github/instructions/<name>.instructions.md .claude/rules/`), so relative links resolve from both places.
 - **`.github/copilot-instructions.md`** is a short, self-contained summary for Copilot surfaces that only read that file.
 - **`.github/instructions/*.instructions.md`** hold area-specific rules. Copilot applies them automatically through `applyTo`. Other agents **must read the matching file before editing**:
 
