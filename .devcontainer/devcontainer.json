@@ -1,14 +1,23 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
-  "name": "TrueCharts",
+  "name": "TrueForge",
   "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:e3c2e09e415e4bd2e146275024affcb7585e02aea07109742dd2d06c86601a60",
   "initializeCommand": "mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.claude",
+  "postCreateCommand": "if [ -f package.json ]; then npm install; fi",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "mounts": [
     "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/config/.claude,type=bind,consistency=cached"
   ],
   "containerEnv": {
     "CLAUDE_CONFIG_DIR": "/config/.claude"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "moby": false
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24"
+    }
   },
   "customizations": {
     "vscode": {
@@ -34,7 +43,26 @@
         "yzhang.markdown-all-in-one",
         "searKing.preview-vscode",
         "DavidAnson.vscode-markdownlint",
-        "Anthropic.claude-code"
+        "Anthropic.claude-code",
+        "golang.go",
+        "mrmlnc.vscode-duplicate",
+        "IgorSbitnev.error-gutters",
+        "vivaldy22.go-auto-struct-tag",
+        "msyrus.go-doc",
+        "766b.go-outliner",
+        "premparihar.gotestexplorer",
+        "zxh404.vscode-proto3",
+        "ms-azuretools.vscode-docker",
+        "hashicorp.hcl",
+        "exiasr.hadolint",
+        "joao-peterson.gotag",
+        "timonwong.shellcheck",
+        "Codium.codium",
+        "GitHub.copilot",
+        "SimonSiefke.svg-preview",
+        "ecmel.vscode-html-css",
+        "hossaini.bootstrap-intellisense",
+        "astro-build.astro-vscode"
       ]
     }
   }
