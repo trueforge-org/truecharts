@@ -4,7 +4,6 @@
 
   {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $rootCtx -}}
   {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectData.clusterName "length" 253) -}}
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "CNPG Cluster") -}}
 
   {{/* Initialize variables */}}
   {{- $hibernation := "off" -}}
@@ -117,9 +116,6 @@
   {{- if (kindIs "slice" $objectData.cluster.preloadLibraries) -}}
     {{- $preloadLibraries = $objectData.cluster.preloadLibraries -}}
   {{- end -}}
-  {{- if eq $objectData.type "timescaledb" -}}
-    {{- $preloadLibraries = mustAppend $preloadLibraries "timescaledb" -}}
-  {{- end -}}
   {{- if eq $objectData.type "vectors" -}}
     {{- $preloadLibraries = mustAppend $preloadLibraries "vectors.so" -}}
   {{- end -}}
@@ -144,8 +140,8 @@
     {{- $walAccessModes = . -}}
   {{- end -}}
 
-  {{- with $objectData.cluster.skipEmptyWalArchiveCheck -}}
-    {{- $skipEmptyWalArchiveCheck = . -}}
+  {{- if (kindIs "bool" $objectData.cluster.skipEmptyWalArchiveCheck) -}}
+    {{- $skipEmptyWalArchiveCheck = $objectData.cluster.skipEmptyWalArchiveCheck -}}
   {{- end -}}
 
   {{- $imageName := $objectData.cluster.imageName -}}
@@ -273,6 +269,6 @@ spec:
     {{- include "tc.v1.common.lib.cnpg.cluster.bootstrap.recovery.externalCluster" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
   {{- end -}}
   {{- if $objectData.backups.enabled }}
-    {{- include "tc.v1.common.lib.cnpg.cluster.backup" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 -}}
+    {{- include "tc.v1.common.lib.cnpg.cluster.backup" (dict "rootCtx" $rootCtx "objectData" $objectData) | trim | nindent 2 -}}
   {{- end -}}
 {{- end -}}

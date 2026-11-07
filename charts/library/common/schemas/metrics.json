@@ -6,9 +6,13 @@
     "type": "object",
     "properties": {
       "enabled": {
-        "type": "boolean",
-        "description": "Create this monitor.",
-        "default": false
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this monitor. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
       },
       "primary": {
         "type": "boolean",
@@ -68,11 +72,24 @@
         },
         "additionalProperties": false,
         "description": "Labels that select the service or pods, instead of `targetSelector`.",
-        "default": {},
-        "x-helm-tpl": true
+        "default": {}
+      },
+      "matchLabels": {
+        "type": [
+          "object",
+          "string"
+        ],
+        "additionalProperties": {
+          "type": "string",
+          "description": "Value of the label."
+        },
+        "description": "Labels that select the service or pods."
       },
       "endpoints": {
-        "type": "array",
+        "type": [
+          "array",
+          "string"
+        ],
         "items": {
           "type": "object",
           "properties": {
@@ -149,16 +166,46 @@
           "additionalProperties": false,
           "description": "An endpoint that is scraped."
         },
-        "description": "Endpoints that are scraped.",
-        "x-helm-tpl": true
+        "description": "Endpoints that are scraped."
       },
       "prometheusRule": {
         "type": "object",
         "properties": {
           "enabled": {
-            "type": "boolean",
-            "description": "Create a PrometheusRule for this metrics object.",
-            "default": false
+            "type": [
+              "boolean",
+              "string"
+            ],
+            "description": "Create a PrometheusRule for this metrics object. Nothing is created when there are no rules.",
+            "x-helm-tpl": true
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
+            "description": "Labels of the PrometheusRule. They take precedence over the `labels` of the metrics object."
+          },
+          "annotations": {
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
+            "description": "Annotations of the PrometheusRule. They take precedence over the `annotations` of the metrics object."
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/additionalProperties/properties/prometheusRule/properties/groups/additionalProperties/properties/rules/items"
+                }
+              ],
+              "description": "An alerting or recording rule. Set `alert` or `record`."
+            },
+            "description": "Rules of a group named after the PrometheusRule. Use `groups` for more than one group."
           },
           "groups": {
             "type": "object",
@@ -359,6 +406,10 @@
       "nameOverride": {
         "type": "string",
         "description": "Suffix of the name, instead of the name of the object."
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "API key the exporter needs."
       }
     },
     "additionalProperties": false,

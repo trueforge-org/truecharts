@@ -34,7 +34,6 @@
       {{/* Perform validations */}} {{/* volumesnapshotclasss have a max name length of 253 */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName "length" 253) -}}
       {{- include "tc.v1.common.lib.volumesnapshotclass.validation" (dict "objectData" $objectData) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Volume Snapshot Class") -}}
 
       {{/* Set the name of the volumesnapshotclass */}}
       {{- $_ := set $objectData "name" $objectName -}}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "port": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port (number or name of a container port) to connect to."
+    },
+    "host": {
+      "type": "string",
+      "description": "Host to connect to, defaults to the pod IP."
+    }
+  },
+  "required": [
+    "port"
+  ],
+  "additionalProperties": false,
+  "description": "Connection to a TCP port of the container."
+}

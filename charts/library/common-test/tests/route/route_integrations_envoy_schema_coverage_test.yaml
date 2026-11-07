@@ -1,0 +1,190 @@
+suite: route integrations envoy schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - gateway.envoyproxy.io/v1alpha1/SecurityPolicy
+    - gateway.envoyproxy.io/v1alpha1/EnvoyExtensionPolicy
+    - gateway.envoyproxy.io/v1alpha1/BackendTrafficPolicy
+tests:
+  - it: should render route envoy integration with string enabled, empty auth and responseHeaders
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: "true"
+              ipWhitelist:
+                - 10.0.0.0/8
+              auth:
+                type: ""
+                responseHeaders:
+                  - X-Auth-User
+              themePark:
+                enabled: "true"
+                css: https://example.com/theme.css
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        isKind:
+          of: HTTPRoute
+
+  - it: should fail on unknown keys and missing required keys in route integrations envoy
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and missing required keys in route integrations envoy auth
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy/auth': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and missing required keys in route integrations envoy themePark
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              themePark:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy/themePark': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in route integrations envoy redirectRegex
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              redirectRegex:
+                - unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy/redirectRegex/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on missing required keys in route integrations envoy redirectRegex
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              redirectRegex:
+                - permanent: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy/redirectRegex/0': missing propert"
+
+  - it: should fail on a responseHeaders item that is not a string in route integrations envoy auth
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                type: forward
+                responseHeaders:
+                  - 5
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/route/my-route/integrations/envoy/auth/responseHeaders/0': got .*, want string"

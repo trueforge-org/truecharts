@@ -397,6 +397,13 @@
                   "buffering"
                 ]
               },
+              "maxResponseBodySize": {
+                "type": "integer",
+                "description": "Maximum size of the response body of the authentication service, in bytes.",
+                "x-docs-appliesTo": [
+                  "forward-auth"
+                ]
+              },
               "retryExpression": {
                 "type": "string",
                 "description": "Retry when the expression matches the response, eg `IsNetworkError() && Attempts() < 2`.",

@@ -42,20 +42,6 @@ A Secret.
 
 ---
 
-## `$name.expandObjectName`
-
-Prefix the name of the Secret with the chart fullname.
-
-| Field | Value |
-| --- | --- |
-| Key | `secret.$name.expandObjectName` |
-| Type | `bool` |
-| Required | ❌ |
-| Helm `tpl` | ✅ |
-| Default | `true` |
-
----
-
 ## `$name.data`
 
 Data of the Secret, keyed by name. Values are Helm `tpl` strings and are stored as plain text (`stringData`).

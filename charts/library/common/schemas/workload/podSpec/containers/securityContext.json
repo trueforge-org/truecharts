@@ -61,7 +61,7 @@
     },
     "runAsNonRoot": {
       "type": "boolean",
-      "description": "Whether the container must run as a non-root user (`runAsNonRoot`). Common always calculates it: `false` when `runAsUser` or `runAsGroup` is `0`, otherwise `true`.",
+      "description": "Whether the container must run as a non-root user (`runAsNonRoot`). Calculated from `runAsUser` and `runAsGroup` when not set.",
       "x-docs-required": true
     },
     "capabilities": {

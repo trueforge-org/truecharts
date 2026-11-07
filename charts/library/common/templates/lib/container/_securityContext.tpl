@@ -86,10 +86,12 @@ objectData: The object data to be used to render the container.
     {{- end -}}
   {{- end -}}
 
-  {{- if or (eq (int $secContext.runAsUser) 0) (eq (int $secContext.runAsGroup) 0) -}}
-    {{- $_ := set $secContext "runAsNonRoot" false -}}
-  {{- else -}}
-    {{- $_ := set $secContext "runAsNonRoot" true -}}
+  {{- if or (not (hasKey $secContext "runAsNonRoot")) (kindIs "invalid" (get $secContext "runAsNonRoot")) -}}
+    {{- if eq (int $secContext.runAsUser) 0 -}}
+      {{- $_ := set $secContext "runAsNonRoot" false -}}
+    {{- else -}}
+      {{- $_ := set $secContext "runAsNonRoot" true -}}
+    {{- end -}}
   {{- end -}}
 
   {{- if $secContext.privileged -}} {{/* When privileged is true, allowPrivilegeEscalation is required */}}
@@ -113,11 +115,6 @@ objectData: The object data to be used to render the container.
 
   {{- if not $secContext.seccompProfile -}}
     {{- fail "Container - Expected [securityContext.seccompProfile] to be defined" -}}
-  {{- end -}}
-
-  {{- $profiles := (list "RuntimeDefault" "Localhost" "Unconfined") -}}
-  {{- if not (mustHas $secContext.seccompProfile.type $profiles) -}}
-    {{- fail (printf "Container - Expected [securityContext.seccompProfile] to be one of [%s], but got [%s]" (join ", " $profiles) $secContext.seccompProfile.type) -}}
   {{- end -}}
 
   {{- if eq $secContext.seccompProfile.type "Localhost" -}}

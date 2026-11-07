@@ -1,0 +1,38 @@
+workload:
+  main:
+    enabled: true
+    podSpec:
+      containers:
+        main:
+          enabled: true
+          args:
+            - --port
+            - "8080"
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        enabled: true
+        port: 8080
+        protocol: http
+
+route:
+  main:
+    enabled: true
+    gateway: test
+    gatewayNamespace: test
+    hostnames:
+      - chart-example.local
+    tls:
+      - hosts:
+          - chart-example.local
+        secretName: chart-example-tls

@@ -49,14 +49,16 @@ global:
         successThreshold: 1
 ```
 
-### Topology
+### Scheduling and routes
 
-The topology key of the default topology spread constraints:
+The topology key used to spread the pods, whether a Deployment with a `ReadWriteOnce` volume may use a rolling update, and the default listener port of routes:
 
 ```yaml
 global:
   fallbackDefaults:
     topologyKey: topology.kubernetes.io/zone
+    allowRollingUpdateWithRWO: true
+    routeListenerPort: 8443
 ```
 
 ### CloudNativePG
@@ -67,6 +69,6 @@ The default PostgreSQL version of CNPG clusters, and whether the check for an em
 global:
   fallbackDefaults:
     cnpg:
-      pgVersion: 16
+      pgVersion: 17
       skipEmptyWalArchiveCheck: true
 ```

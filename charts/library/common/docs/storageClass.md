@@ -196,7 +196,7 @@ Parameters passed to the provisioner. Supports Helm `tpl` on values.
 
 ## `$name.parameters.$name`
 
-Value of the parameter. Numbers and booleans are rendered as a string.
+Value of the parameter.
 
 | Field | Value |
 | --- | --- |
@@ -302,7 +302,7 @@ storageClass:
     parameters:
       server: nfs.example.com
       share: /exports
-      mountPermissions: "0"
+      mountPermissions: 0
       subDir: data
     mountOptions:
       - nfsvers=4.1

@@ -1,0 +1,23 @@
+suite: postgresql operator depconfig schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should render the connection details of postgresql depconfig creds
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        depconfig:
+          creds:
+            plainhost: my-host
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster

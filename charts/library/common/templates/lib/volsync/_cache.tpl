@@ -13,8 +13,12 @@ cacheStorageClassName: {{ $target.cacheStorageClassName }}
   {{- end -}}
 
   {{- with $target.cacheAccessModes }}
+    {{- $modes := . -}}
+    {{- if kindIs "string" $modes -}}
+      {{- $modes = list $modes -}}
+    {{- end }}
 cacheAccessModes:
-    {{- range . }}
+    {{- range $modes }}
   - {{ . }}
     {{- end }}
   {{- end -}}

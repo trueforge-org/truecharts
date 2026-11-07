@@ -1,0 +1,24 @@
+suite: valkey operator depconfig schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should render the connection details of valkey depconfig creds
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        depconfig:
+          creds:
+            plainhost: my-host
+            url: redis://example
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster

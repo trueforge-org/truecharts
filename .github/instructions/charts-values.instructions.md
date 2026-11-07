@@ -19,7 +19,7 @@ These rules apply to `values.yaml` and `ci/*-values.yaml` of application charts.
 - The primary workload, container, service and port are named `main`. Keep existing object names, ports, keys and persistence `mountPath`s stable, because renaming them breaks upgrades and needs a **major** bump.
 - Keep the restricted security defaults of `common` (see `AGENTS.md` → Security). Relax one (e.g. `runAsUser: 0`, `readOnlyRootFilesystem: false`, an added capability) only when the app requires it, and leave a short comment explaining why.
 - Give credentials with `secretKeyRef` to a Secret, never as plain `env` values or in a `configmap`. Plain values are fine for hosts and ports.
-- `externalSecret` and `networkpolicy` are available, but do not enable them by default.
+- `externalSecret` and `networkPolicy` are available, but do not enable them by default.
 - All user data and configuration must be stored on `persistence` volumes and survive restarts and upgrades.
 - Most `common` value strings are rendered with `tpl`, so you can reference other values, e.g. `"{{ .Values.service.main.ports.main.port }}"`.
 - The app must work without manual config-file editing, with sensible, secure defaults.
@@ -43,4 +43,4 @@ Use the built-in options of `common`, never Helm chart dependencies or custom de
   ```
 
 - The same details are in `.Values.dependencies.<name>.depconfig.creds`, as quoted strings. Only use the host and port from there, with `| trimAll "\""`.
-- The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail rendering when enabled. MongoDB, Solr, ClickHouse and Memcached are no longer available. See `charts/library/common/docs/dependencies.md`.
+- The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail rendering when enabled. MongoDB, Solr, ClickHouse and Memcached are no longer available. See `charts/library/common/docs/dependencies/index.md`.

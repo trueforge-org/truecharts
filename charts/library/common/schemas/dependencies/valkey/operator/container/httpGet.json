@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Path to request."
+    },
+    "port": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Port (number or name of a container port) to request."
+    },
+    "host": {
+      "type": "string",
+      "description": "Host to request, defaults to the pod IP."
+    },
+    "scheme": {
+      "type": "string",
+      "enum": [
+        "HTTP",
+        "HTTPS"
+      ],
+      "description": "Scheme to use."
+    },
+    "httpHeaders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the header."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the header."
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Headers to set in the request."
+    },
+    "protocol": {
+      "type": "string",
+      "enum": [
+        "HTTP1",
+        "HTTP2"
+      ],
+      "description": "HTTP protocol version to use."
+    }
+  },
+  "required": [
+    "port"
+  ],
+  "additionalProperties": false,
+  "description": "Request to an HTTP endpoint of the container."
+}

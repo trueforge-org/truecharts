@@ -1,0 +1,123 @@
+suite: postgresql operator settings schema coverage failures
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should fail on unknown keys and enums in postgresql operator
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          bogus: 1
+          type: X
+          mode: X
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/type'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/mode'': value must be one of'
+
+- it: should fail on unknown keys and types in postgresql operator monitoring
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          monitoring:
+            bogus: 1
+            customQueries:
+            - bogus: 1
+              expandObjectName: []
+              metrics:
+              - a:
+                  bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/monitoring'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/monitoring/customQueries/0'': additional properties'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/monitoring/customQueries/0/expandObjectName'': got array'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/monitoring/customQueries/0/metrics/0/a'': additional properties'
+
+- it: should fail on unknown keys and types in postgresql operator pooler
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          pooler:
+            bogus: 1
+            enabled: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/pooler'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/pooler/enabled'': got array'
+
+- it: should fail on unknown keys and types in postgresql operator backups
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          backups:
+            bogus: 1
+            enabled: []
+            encryption:
+              bogus: 1
+              enabled: []
+            compression:
+              bogus: 1
+            jobs: x
+            scheduledBackups:
+            - bogus: 1
+            manualBackups:
+            - bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups/enabled'': got array'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups/encryption'': additional properties'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups/encryption/enabled'': got array'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups/compression'': additional properties'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups/scheduledBackups/0'': additional properties'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/backups/manualBackups/0'': additional properties'
+
+- it: should fail on unknown keys and types in postgresql operator recovery
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          recovery:
+            destinationPath: 1
+            pitrTarget:
+              bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/recovery/destinationPath'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/postgresql/operator/recovery/pitrTarget'': additional properties'

@@ -51,14 +51,14 @@ A ServiceMonitor or PodMonitor, keyed by name.
 
 ## `$name.enabled`
 
-Create this monitor.
+Create this monitor. Supports Helm `tpl`.
 
 | Field | Value |
 | --- | --- |
 | Key | `metrics.$name.enabled` |
 | Type | `bool` |
 | Required | ❌ |
-| Helm `tpl` | ❌ |
+| Helm `tpl` | ✅ |
 | Default | `false` |
 
 ---
@@ -99,9 +99,9 @@ Labels that select the service or pods, instead of `targetSelector`.
 | Field | Value |
 | --- | --- |
 | Key | `metrics.$name.selector` |
-| Type | `map` |
+| Type | `map or string` |
 | Required | ❌ |
-| Helm `tpl` | ✅ |
+| Helm `tpl` | ❌ |
 | Default | `{}` |
 
 ---
@@ -204,6 +204,34 @@ Values of the label. Empty for `Exists` and `DoesNotExist`.
 
 ---
 
+## `$name.matchLabels`
+
+Labels that select the service or pods.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.matchLabels` |
+| Type | `map or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.matchLabels.$name`
+
+Value of the label.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.matchLabels.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
 ## `$name.endpoints`
 
 Endpoints that are scraped.
@@ -213,9 +241,9 @@ See [endpoints](/truecharts-common/metrics/endpoints) for all keys of this objec
 | Field | Value |
 | --- | --- |
 | Key | `metrics.$name.endpoints` |
-| Type | `list of map` |
+| Type | `list of map or string` |
 | Required | ❌ |
-| Helm `tpl` | ✅ |
+| Helm `tpl` | ❌ |
 | Default | unset |
 
 ---
@@ -289,6 +317,20 @@ Suffix of the name, instead of the name of the object.
 | Field | Value |
 | --- | --- |
 | Key | `metrics.$name.nameOverride` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.apiKey`
+
+API key the exporter needs.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.apiKey` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

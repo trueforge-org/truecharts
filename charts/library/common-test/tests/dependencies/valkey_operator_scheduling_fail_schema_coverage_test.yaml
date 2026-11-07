@@ -1,0 +1,378 @@
+suite: valkey operator scheduling schema coverage failures
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should fail on unknown keys, missing required keys and enums in valkey operator scheduling
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            bogus: 1
+            nodeSelector:
+              a: 1
+            priorityClassName: 1
+            tolerations:
+            - bogus: 1
+              operator: X
+              effect: X
+              key: 1
+              value: 1
+              tolerationSeconds: x
+            topologySpreadConstraints:
+            - bogus: 1
+              maxSkew: 0
+              minDomains: 0
+              whenUnsatisfiable: X
+              nodeAffinityPolicy: X
+              nodeTaintsPolicy: X
+              matchLabelKeys:
+              - 1
+              labelSelector:
+                bogus: 1
+              topologyKey: 1
+            - topologyKey: 1
+              maxSkew: 1
+              whenUnsatisfiable: DoNotSchedule
+            - {}
+            node:
+              bogus: 1
+              spread:
+                bogus: 1
+                shard:
+                  bogus: 1
+                  mode: X
+                primaries:
+                  bogus: 1
+                  mode: X
+                pods:
+                  bogus: 1
+                  mode: X
+            zone:
+              bogus: 1
+              spread:
+                shard:
+                  mode: X
+              pinning:
+                bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/nodeSelector/a'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/priorityClassName'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/tolerations/0'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/tolerations/0/operator'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/tolerations/0/effect'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/tolerations/0/key'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/tolerations/0/value'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/tolerations/0/tolerationSeconds'': got string, want integer'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/2'': missing properties ''maxSkew'', ''topologyKey'', ''whenUnsatisfiable'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/maxSkew'': minimum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/minDomains'': minimum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/whenUnsatisfiable'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/nodeAffinityPolicy'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/nodeTaintsPolicy'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/matchLabelKeys/0'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/topologySpreadConstraints/0/labelSelector'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread/shard'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread/shard/mode'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread/primaries'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread/primaries/mode'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread/pods'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/node/spread/pods/mode'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/spread/shard/mode'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning'': missing property ''zones'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning'': additional properties ''bogus'' not allowed'
+- it: should fail on bounds, patterns and duplicates in valkey operator scheduling zone pinning
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            zone:
+              pinning:
+                zones:
+                - -a
+                - a
+                - a
+                - bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+                - ''
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning/zones/0'': .* does not match pattern'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning/zones'': items at 1 and 2 are equal'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning/zones/3'': maxLength: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning/zones/4'': minLength: got'
+- it: should fail on an empty list in valkey operator scheduling zone pinning
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            zone:
+              pinning:
+                zones: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning/zones'': minItems: got'
+- it: should fail on too many items in valkey operator scheduling zone pinning
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            zone:
+              pinning:
+                zones:
+                - z0
+                - z1
+                - z2
+                - z3
+                - z4
+                - z5
+                - z6
+                - z7
+                - z8
+                - z9
+                - z10
+                - z11
+                - z12
+                - z13
+                - z14
+                - z15
+                - z16
+                - z17
+                - z18
+                - z19
+                - z20
+                - z21
+                - z22
+                - z23
+                - z24
+                - z25
+                - z26
+                - z27
+                - z28
+                - z29
+                - z30
+                - z31
+                - z32
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/zone/pinning/zones'': maxItems: got'
+- it: should fail on unknown keys, missing required keys and bounds in valkey operator scheduling nodeAffinity
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            affinity:
+              bogus: 1
+              nodeAffinity:
+                bogus: 1
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  bogus: 1
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - bogus: 1
+                  weight: 0
+                  preference:
+                    bogus: 1
+                    matchExpressions:
+                    - bogus: 1
+                      operator: X
+                    - key: k
+                    matchFields:
+                    - bogus: 1
+                      operator: X
+                    - key: k
+                - weight: 101
+                - preference: {}
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution'': missing property ''nodeSelectorTerms'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/weight'': minimum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/1/weight'': maximum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/2'': missing property ''weight'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchExpressions/1'': missing property ''operator'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchFields/1'': missing property ''operator'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/1'': missing property ''preference'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchExpressions/0'': missing property ''key'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchExpressions/0'': additional properties ''bogus''
+        not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchExpressions/0/operator'': value must be one of'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchFields/0'': missing property ''key'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchFields/0'': additional properties ''bogus'' not
+        allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/preference/matchFields/0/operator'': value must be one of'
+- it: should fail on an empty nodeSelectorTerms in valkey operator scheduling nodeAffinity
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            affinity:
+              nodeAffinity:
+                requiredDuringSchedulingIgnoredDuringExecution:
+                  nodeSelectorTerms: []
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution/nodeSelectorTerms'': minItems: got'
+- it: should fail on unknown keys, missing required keys and bounds in valkey operator scheduling podAffinity
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            affinity:
+              podAffinity:
+                bogus: 1
+                requiredDuringSchedulingIgnoredDuringExecution:
+                - bogus: 1
+                  namespaces:
+                  - 1
+                  matchLabelKeys:
+                  - 1
+                  mismatchLabelKeys:
+                  - 1
+                  labelSelector:
+                    bogus: 1
+                  namespaceSelector:
+                    bogus: 1
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - bogus: 1
+                  weight: 0
+                  podAffinityTerm: {}
+                - weight: 101
+                  podAffinityTerm:
+                    topologyKey: a
+                - podAffinityTerm:
+                    topologyKey: a
+              podAntiAffinity:
+                bogus: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAntiAffinity'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0'': missing property ''topologyKey'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0/namespaces/0'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0/matchLabelKeys/0'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0/mismatchLabelKeys/0'': got number, want string'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0/labelSelector'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/requiredDuringSchedulingIgnoredDuringExecution/0/namespaceSelector'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/preferredDuringSchedulingIgnoredDuringExecution/0'': additional properties ''bogus'' not allowed'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/weight'': minimum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/preferredDuringSchedulingIgnoredDuringExecution/1/weight'': maximum: got'
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/preferredDuringSchedulingIgnoredDuringExecution/0/podAffinityTerm'': missing property ''topologyKey'''
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/preferredDuringSchedulingIgnoredDuringExecution/2'': missing property ''weight'''
+- it: should fail on a missing podAffinityTerm in valkey operator scheduling podAffinity
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          scheduling:
+            affinity:
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: 'at ''/dependencies/valkey/operator/scheduling/affinity/podAffinity/preferredDuringSchedulingIgnoredDuringExecution/0'': missing property ''podAffinityTerm'''

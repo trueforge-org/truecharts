@@ -178,6 +178,34 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 ---
 
+## `$name.binaryData`
+
+Binary entries of the ConfigMap, keyed by file name. Values must be base64 encoded.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.binaryData` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.binaryData.$name`
+
+Base64 encoded content of the ConfigMap entry
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.binaryData.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
 ## Full Examples
 
 ### Basic ConfigMap
@@ -225,6 +253,20 @@ configmap:
     expandObjectName: false
     data:
       key: value
+```
+
+### Binary data
+
+`binaryData` takes base64 encoded values:
+
+```yaml
+configmap:
+  binary-configmap:
+    enabled: true
+    data:
+      text: some text
+    binaryData:
+      logo.png: aGVsbG8gd29ybGQ=
 ```
 
 ### Use it in a volume

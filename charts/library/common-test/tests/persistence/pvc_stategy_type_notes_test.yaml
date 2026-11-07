@@ -6,7 +6,7 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should warn about the default Recreate strategy with RWO
+  - it: should not warn about the default strategy with RWO
     template: NOTES.txt
     set:
       workload:
@@ -22,10 +22,10 @@ tests:
           accessModes:
             - ReadWriteOnce
     asserts:
-      - matchRegexRaw:
-          pattern: "WARNING: The \\[accessModes\\] on volume\\(s\\) \\[my-volume1\\] is set to \\[ReadWriteOnce\\] with a single replica and an strategy of \\[Recreate\\]"
+      - notMatchRegexRaw:
+          pattern: "WARNING"
 
-  - it: should not warn when RollingUpdate is changed to Recreate
+  - it: should warn when RollingUpdate is changed to Recreate
     template: NOTES.txt
     set:
       workload:
@@ -42,10 +42,10 @@ tests:
           accessModes:
             - ReadWriteOnce
     asserts:
-      - notMatchRegexRaw:
-          pattern: "WARNING"
+      - matchRegexRaw:
+          pattern: "WARNING: Strategy \\[RollingUpdate\\] of workload \\[some-workload\\] was changed to \\[Recreate\\], because it has a single replica and \\[ReadWriteOnce\\] volume\\(s\\) \\[my-volume1\\]. Set \\[allowRollingUpdateWithRWO\\] to keep it"
 
-  - it: should warn about RWO with more than 1 replica
+  - it: should warn about the risks when opted in
     template: NOTES.txt
     set:
       workload:
@@ -53,7 +53,8 @@ tests:
           enabled: true
           primary: true
           type: Deployment
-          replicas: 2
+          strategy: RollingUpdate
+          allowRollingUpdateWithRWO: true
           podSpec: {}
       persistence:
         my-volume1:
@@ -63,4 +64,25 @@ tests:
             - ReadWriteOnce
     asserts:
       - matchRegexRaw:
-          pattern: "WARNING: The \\[accessModes\\] on volume\\(s\\) \\[my-volume1\\] is set to \\[ReadWriteOnce\\] with a more than 1 replica"
+          pattern: "WARNING: Workload \\[some-workload\\] uses strategy \\[RollingUpdate\\] with \\[ReadWriteOnce\\] volume\\(s\\) \\[my-volume1\\], because \\[allowRollingUpdateWithRWO\\] is set. Two pods use the same data during an update. The update gets stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI"
+
+  - it: should warn when RWOP changes the strategy
+    template: NOTES.txt
+    set:
+      workload:
+        some-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          strategy: RollingUpdate
+          allowRollingUpdateWithRWO: true
+          podSpec: {}
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          accessModes:
+            - ReadWriteOncePod
+    asserts:
+      - matchRegexRaw:
+          pattern: "WARNING: Volume\\(s\\) \\[my-volume1\\] are set to \\[ReadWriteOncePod\\], which only allows one pod. Strategy \\[RollingUpdate\\] of workload \\[some-workload\\] was changed to \\[Recreate\\]"

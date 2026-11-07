@@ -1,0 +1,329 @@
+suite: dependencies security context test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+set:
+  # The way most charts that have to run as root set it
+  securityContext:
+    container:
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      readOnlyRootFilesystem: false
+      privileged: true
+      allowPrivilegeEscalation: true
+      capabilities:
+        add:
+          - NET_ADMIN
+    pod:
+      fsGroup: 0
+tests:
+  - it: should not run the clickhouse dependency as root when the chart does
+    set:
+      dependencies:
+        clickhouse:
+          enabled: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.privileged
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value: []
+
+  - it: should not run the mariadb dependency as root when the chart does
+    set:
+      dependencies:
+        mariadb:
+          enabled: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.privileged
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value: []
+
+  - it: should not run the memcached dependency as root when the chart does
+    set:
+      dependencies:
+        memcached:
+          enabled: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.privileged
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value: []
+
+  - it: should not run the mongodb dependency as root when the chart does
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.privileged
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value: []
+
+  - it: should not run the postgresql dependency as root when the chart does
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          mode: standalone
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.privileged
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value: []
+
+  - it: should not run the valkey dependency as root when the chart does
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.privileged
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value: []
+
+  - it: should allow a dependency to override its security context
+    set:
+      dependencies:
+        valkey:
+          enabled: true
+          securityContext:
+            container:
+              runAsUser: 1000
+            pod:
+              fsGroup: 1000
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 1000
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 568
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 1000
+
+  - it: should keep the security context of the chart on its own workloads
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              my-container:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      dependencies:
+        valkey:
+          enabled: true
+    asserts:
+      - documentSelector: &workloadDoc
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.spec.containers[0].securityContext.runAsUser
+          value: 0
+      - documentSelector: *workloadDoc
+        equal:
+          path: spec.template.spec.securityContext.fsGroup
+          value: 0

@@ -4,6 +4,7 @@ title: Workload
 
 :::note
 
+- Examples under each key are only to be used as a placement guide
 - See the [Full Examples](/truecharts-common/workload#full-examples) section for complete examples.
 
 :::
@@ -55,6 +56,39 @@ See [Pod Spec](/truecharts-common/workload/podSpec) for all keys of this object.
 
 ---
 
+## `allowRollingUpdateWithRWO`
+
+Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`.
+
+:::caution
+
+Rolling updates with `ReadWriteOnce` storage are not safe for every app or storage:
+
+- An update gets stuck if the storage stays locked to the old pod. This can happen on the same node with storage like iSCSI, and on another node with any `ReadWriteOnce` storage.
+- Two pods use the same data during an update, which can damage data of apps that expect to be alone, for example with SQLite or database migrations.
+
+Common shows a warning in the notes when this is enabled.
+
+:::
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.allowRollingUpdateWithRWO` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+Example
+
+```yaml
+workload:
+  example:
+    allowRollingUpdateWithRWO: true
+```
+
+---
+
 ## `suspend`
 
 Whether the CronJob is suspended, so no new Jobs start (`suspend`). Forced to `true` when `stopAll` is enabled.
@@ -94,6 +128,41 @@ Whether this is the primary workload of the chart. A chart needs one primary wor
 | Required | ✅ |
 | Helm `tpl` | ❌ |
 | Default | `false` |
+
+---
+
+## `extraSelectorLabels`
+
+Additional labels that are added to the selector of the workload and to the labels of its pods.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.extraSelectorLabels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+Example
+
+```yaml
+workload:
+  example:
+    extraSelectorLabels:
+      app.example.com/component: worker
+```
+
+---
+
+## `extraSelectorLabels.$name`
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.extraSelectorLabels.$name` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
@@ -192,7 +261,7 @@ Kind of the workload: `Deployment`, `DaemonSet`, `StatefulSet`, `CronJob` or `Jo
 
 ## `dbWait`
 
-Not used by common itself. Kept for compatibility with existing values.
+Whether init containers that wait for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload. The workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves.
 
 | Field | Value |
 | --- | --- |
@@ -278,6 +347,8 @@ workload:
     labels:
       key: value
     annotations:
+      key: value
+    extraSelectorLabels:
       key: value
     serviceAccountName: some-service-account
     dbWait: true

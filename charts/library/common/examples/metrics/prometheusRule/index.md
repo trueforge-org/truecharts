@@ -15,6 +15,10 @@ metrics:
         path: /metrics
     prometheusRule:
       enabled: true
+      labels:
+        release: prometheus
+      annotations:
+        description: Alerts for my-app
       groups:
         availability:
           rules:
@@ -34,4 +38,26 @@ metrics:
                 severity: warning
               annotations:
                 summary: my-app returns many errors
+```
+
+### Rules without groups
+
+```yaml
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    targetSelector: main
+    endpoints:
+      - port: main
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: MyAppRestarting
+          expr: increase(kube_pod_container_status_restarts_total{container="my-app"}[1h]) > 3
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: my-app restarts often
 ```

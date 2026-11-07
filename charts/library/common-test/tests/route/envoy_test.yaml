@@ -1,0 +1,407 @@
+suite: route envoy gateway integration test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+    - gateway.envoyproxy.io/v1alpha1/SecurityPolicy
+    - gateway.envoyproxy.io/v1alpha1/EnvoyExtensionPolicy
+    - gateway.envoyproxy.io/v1alpha1/BackendTrafficPolicy
+tests:
+  - it: should create one security policy with the whitelist and authelia
+    set:
+      service: &service
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+                - 192.168.1.1
+                - fd00::1
+              auth:
+                type: authelia
+                internalHost: authelia.authelia.svc.cluster.local:9091
+    asserts:
+      - documentSelector: &sp
+          path: kind
+          value: SecurityPolicy
+        isAPIVersion:
+          of: gateway.envoyproxy.io/v1alpha1
+      - documentSelector: *sp
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentSelector: *sp
+        equal:
+          path: spec.targetRefs
+          value:
+            - group: gateway.networking.k8s.io
+              kind: HTTPRoute
+              name: test-release-name-common-test
+      - documentSelector: *sp
+        equal:
+          path: spec.authorization
+          value:
+            defaultAction: Deny
+            rules:
+              - name: ip-whitelist
+                action: Allow
+                principal:
+                  clientCIDRs:
+                    - 10.0.0.0/8
+                    - 192.168.1.1/32
+                    - fd00::1/128
+      - documentSelector: *sp
+        equal:
+          path: spec.extAuth
+          value:
+            failOpen: false
+            headersToExtAuth:
+              - accept
+              - sec-fetch-mode
+              - sec-fetch-dest
+              - x-requested-with
+              - cookie
+              - authorization
+              - proxy-authorization
+              - x-forwarded-proto
+            http:
+              backendRefs:
+                - name: authelia
+                  namespace: authelia
+                  port: 9091
+              path: /api/authz/ext-authz/
+              headersToBackend:
+                - Remote-User
+                - Remote-Groups
+                - Remote-Email
+                - Remote-Name
+
+  - it: should use the authentik endpoint, and a service in the namespace of the route
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                type: authentik
+                internalHost: outpost:9000
+    asserts:
+      - documentSelector: *sp
+        equal:
+          path: spec.extAuth.http.backendRefs[0]
+          value:
+            name: outpost
+            namespace: test-release-namespace
+            port: 9000
+      - documentSelector: *sp
+        equal:
+          path: spec.extAuth.http.path
+          value: /outpost.goauthentik.io/auth/envoy
+      - documentSelector: *sp
+        contains:
+          path: spec.extAuth.http.headersToBackend
+          content: X-authentik-username
+
+  - it: should not create a policy without settings for it
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+    asserts:
+      - containsDocument:
+          kind: SecurityPolicy
+          apiVersion: gateway.envoyproxy.io/v1alpha1
+          any: true
+        not: true
+      - containsDocument:
+          kind: EnvoyExtensionPolicy
+          apiVersion: gateway.envoyproxy.io/v1alpha1
+          any: true
+        not: true
+
+  - it: should add the theme park stylesheet with lua
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              themePark:
+                enabled: true
+                css: https://theme-park.dev/css/base/sonarr/nord.css
+    asserts:
+      - documentSelector: &ep
+          path: kind
+          value: EnvoyExtensionPolicy
+        equal:
+          path: spec.lua[0].type
+          value: Inline
+      - documentSelector: *ep
+        matchRegex:
+          path: spec.lua[0].inline
+          pattern: 'href="https://theme-park.dev/css/base/sonarr/nord.css"'
+      - documentSelector: *ep
+        matchRegex:
+          path: spec.lua[0].inline
+          pattern: 'remove\("accept-encoding"\)'
+
+  - it: should merge other settings into the policies, so nothing replaces the auth
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: authelia:9091
+              themePark:
+                enabled: true
+                css: https://example.com/a.css
+              securityPolicy:
+                cors:
+                  allowOrigins:
+                    - https://example.com
+              extensionPolicy:
+                lua:
+                  - type: Inline
+                    inline: "-- mine"
+              backendTrafficPolicy:
+                timeout:
+                  http:
+                    requestTimeout: 30s
+    asserts:
+      - hasDocuments:
+          count: 5
+      - documentSelector: *sp
+        exists:
+          path: spec.extAuth
+      - documentSelector: *sp
+        equal:
+          path: spec.cors.allowOrigins[0]
+          value: https://example.com
+      - documentSelector: *ep
+        equal:
+          path: spec.lua[0].inline
+          value: "-- mine"
+      - documentSelector: *ep
+        matchRegex:
+          path: spec.lua[1].inline
+          pattern: envoy_on_response
+      - documentSelector:
+          path: kind
+          value: BackendTrafficPolicy
+        equal:
+          path: spec.timeout.http.requestTimeout
+          value: 30s
+      - documentSelector:
+          path: kind
+          value: BackendTrafficPolicy
+        equal:
+          path: spec.targetRefs[0].kind
+          value: HTTPRoute
+
+  - it: should redirect with a rule before the other rules
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              redirectRegex:
+                - regex: ^/old/.*
+                  replacement: https://new.example.com:8443/new
+                  permanent: true
+                - regex: ^/temp$
+                  replacement: /other
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0]
+          value:
+            matches:
+              - path:
+                  type: RegularExpression
+                  value: ^/old/.*
+            filters:
+              - type: RequestRedirect
+                requestRedirect:
+                  scheme: https
+                  hostname: new.example.com
+                  port: 8443
+                  path:
+                    type: ReplaceFullPath
+                    replaceFullPath: /new
+                  statusCode: 301
+      - documentSelector: *route
+        equal:
+          path: spec.rules[1].filters[0].requestRedirect
+          value:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /other
+            statusCode: 302
+      - documentSelector: *route
+        equal:
+          path: spec.rules[2].backendRefs[0].name
+          value: test-release-name-common-test
+
+  - it: should not render policies on stopAll
+    set:
+      global:
+        stopAll: true
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+    asserts:
+      - containsDocument:
+          kind: SecurityPolicy
+          apiVersion: gateway.envoyproxy.io/v1alpha1
+          any: true
+        not: true
+
+  - it: should fail with capture groups in a redirect
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              redirectRegex:
+                - regex: ^/old/(.*)
+                  replacement: /new/${1}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [integrations.envoy.redirectRegex] does not support capture groups in [replacement], but got [/new/${1}]. Use a fixed target
+
+  - it: should fail with both auth and extAuth
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: authelia:9091
+              securityPolicy:
+                extAuth: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected only one of [auth, securityPolicy.extAuth] in [route.main.integrations.envoy]
+
+  - it: should fail with both ipWhitelist and authorization
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              ipWhitelist:
+                - 10.0.0.0/8
+              securityPolicy:
+                authorization: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected only one of [ipWhitelist, securityPolicy.authorization] in [route.main.integrations.envoy]
+
+  - it: should fail with a target on a policy
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              securityPolicy:
+                targetRefs: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - [route.main.integrations.envoy.securityPolicy] always targets the route, do not set a target
+
+  - it: should fail with an auth host that is not a service
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: https://auth.example.com
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [integrations.envoy.auth.internalHost] to be [service:port] or [service.namespace.svc.cluster.local:port], but got [https://auth.example.com]
+
+  - it: should fail with a css that is not a plain url, as it ends up in lua and html
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          gateway: external
+          integrations:
+            envoy:
+              enabled: true
+              themePark:
+                enabled: true
+                css: 'https://a.com/"><script>'
+    asserts:
+      - failedTemplate:
+          errorMessage: Route - Expected [integrations.envoy.themePark.css] to be a http(s) URL, but got [https://a.com/"><script>]

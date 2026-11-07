@@ -1,0 +1,83 @@
+suite: configMapsFromFolder schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render configMaps from folder with overrides of every type
+    set:
+      configMapsFromFolder:
+        enabled: true
+        basePath: files/configMaps
+        configMapsOverrides:
+          test-config:
+            forceRename: my-renamed-configmap
+            annotations:
+              my-annotation: my-value
+            labels:
+              my-label: my-value
+            fileAttributeOverrides:
+              template.tpl:
+                escaped: true
+              .gitkeep:
+                exclude: true
+          test-scripts:
+            forceRename: null
+          binary-test:
+            fileAttributeOverrides:
+              test.png:
+                binary: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentSelector:
+          path: metadata.name
+          value: my-renamed-configmap
+      - equal:
+          path: metadata.annotations.my-annotation
+          value: my-value
+        documentSelector:
+          path: metadata.name
+          value: my-renamed-configmap
+      - isKind:
+          of: ConfigMap
+        documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-test-scripts
+
+  - it: should fail on unknown keys in configMapsFromFolder
+    set:
+      configMapsFromFolder:
+        enabled: true
+        basePath: files/configMaps
+        unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/configMapsFromFolder': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in a configMapsFromFolder override
+    set:
+      configMapsFromFolder:
+        enabled: true
+        basePath: files/configMaps
+        configMapsOverrides:
+          test-config:
+            unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/configMapsFromFolder/configMapsOverrides/test-config': (additional properties|additionalProperties)"
+
+  - it: should fail on unknown keys in a configMapsFromFolder fileAttributeOverrides entry
+    set:
+      configMapsFromFolder:
+        enabled: true
+        basePath: files/configMaps
+        configMapsOverrides:
+          test-config:
+            fileAttributeOverrides:
+              settings.yaml:
+                unknown: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/configMapsFromFolder/configMapsOverrides/test-config/fileAttributeOverrides/settings.yaml': (additional properties|additionalProperties)"

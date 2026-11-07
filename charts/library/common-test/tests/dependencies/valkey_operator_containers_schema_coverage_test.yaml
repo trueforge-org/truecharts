@@ -1,0 +1,373 @@
+suite: valkey operator containers schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should render valkey operator container command, args, env and envFrom
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: server
+            image: example.com/valkey:9.0.0
+            command:
+            - valkey-server
+            args:
+            - --port
+            - '6379'
+            workingDir: /data
+            env:
+            - name: FOO
+              value: bar
+            envFrom:
+            - prefix: X_
+              configMapRef:
+                name: my-config
+                optional: true
+              secretRef:
+                name: my-secret
+                optional: false
+            terminationMessagePath: /dev/termination-log
+            stdin: true
+            stdinOnce: false
+            tty: true
+            resources:
+              limits:
+                cpu: 1
+                memory: 1Gi
+              requests:
+                cpu: 100m
+              claims:
+              - name: gpu
+                request: a
+            securityContext:
+              readOnlyRootFilesystem: true
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].name
+      value: server
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].command
+      value:
+      - valkey-server
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].args
+      value:
+      - --port
+      - '6379'
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].env[0].name
+      value: FOO
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].envFrom[0].configMapRef.name
+      value: my-config
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].envFrom[0].secretRef.name
+      value: my-secret
+- it: should render valkey operator container env valueFrom references
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: server
+            env:
+            - name: POD
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
+            - name: CPU
+              valueFrom:
+                resourceFieldRef:
+                  containerName: server
+                  resource: limits.cpu
+                  divisor: 1m
+            - name: CPU2
+              valueFrom:
+                resourceFieldRef:
+                  resource: limits.cpu
+                  divisor: 1
+            - name: CM
+              valueFrom:
+                configMapKeyRef:
+                  name: my-config
+                  key: k
+                  optional: true
+            - name: SEC
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: k
+                  optional: false
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].env[0].valueFrom.fieldRef.fieldPath
+      value: metadata.name
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].env[3].valueFrom.configMapKeyRef.key
+      value: k
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].env[4].valueFrom.secretKeyRef.name
+      value: my-secret
+- it: should render valkey operator container pull policy, restart policy and termination message policy
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: pull-0
+            image: example.com/x:1
+            imagePullPolicy: Always
+          - name: pull-1
+            image: example.com/x:1
+            imagePullPolicy: Never
+          - name: pull-2
+            image: example.com/x:1
+            imagePullPolicy: IfNotPresent
+          - name: restart-0
+            image: example.com/x:1
+            restartPolicy: Always
+          - name: restart-1
+            image: example.com/x:1
+            restartPolicy: Never
+          - name: restart-2
+            image: example.com/x:1
+            restartPolicy: OnFailure
+          - name: term-0
+            image: example.com/x:1
+            terminationMessagePolicy: File
+          - name: term-1
+            image: example.com/x:1
+            terminationMessagePolicy: FallbackToLogsOnError
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[1].imagePullPolicy
+      value: Never
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[5].restartPolicy
+      value: OnFailure
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[7].terminationMessagePolicy
+      value: FallbackToLogsOnError
+- it: should render valkey operator container ports
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: side
+            image: example.com/x:1
+            ports:
+            - name: p0
+              containerPort: 8000
+              hostPort: 9000
+              protocol: TCP
+              hostIP: 127.0.0.1
+            - name: p1
+              containerPort: 8001
+              hostPort: 9001
+              protocol: UDP
+              hostIP: 127.0.0.1
+            - name: p2
+              containerPort: 8002
+              hostPort: 9002
+              protocol: SCTP
+              hostIP: 127.0.0.1
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].ports[2].protocol
+      value: SCTP
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].ports[0].containerPort
+      value: 8000
+- it: should render valkey operator container volumeMounts, volumeDevices and resizePolicy
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: side
+            image: example.com/x:1
+            volumeMounts:
+            - name: v0
+              mountPath: /m0
+              readOnly: true
+              recursiveReadOnly: Disabled
+              subPath: a
+              subPathExpr: $(X)
+              mountPropagation: None
+              bindMountOptions:
+              - rbind
+            - name: v1
+              mountPath: /m1
+              readOnly: true
+              recursiveReadOnly: IfPossible
+              subPath: a
+              subPathExpr: $(X)
+              mountPropagation: HostToContainer
+              bindMountOptions:
+              - rbind
+            - name: v2
+              mountPath: /m2
+              readOnly: true
+              recursiveReadOnly: Enabled
+              subPath: a
+              subPathExpr: $(X)
+              mountPropagation: Bidirectional
+              bindMountOptions:
+              - rbind
+            volumeDevices:
+            - name: blk
+              devicePath: /dev/blk
+            resizePolicy:
+            - resourceName: cpu
+              restartPolicy: NotRequired
+            - resourceName: memory
+              restartPolicy: RestartContainer
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].volumeMounts[2].recursiveReadOnly
+      value: Enabled
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].volumeDevices[0].devicePath
+      value: /dev/blk
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].resizePolicy[1].restartPolicy
+      value: RestartContainer
+- it: should render valkey operator container restartPolicyRules
+  template: common.yaml
+  set:
+    dependencies:
+      valkey:
+        enabled: true
+        mode: operator
+        operator:
+          containers:
+          - name: side
+            image: example.com/x:1
+            restartPolicy: Always
+            restartPolicyRules:
+            - action: Restart
+              exitCodes:
+                operator: In
+                values:
+                - 1
+                - 2
+            - action: RestartAllContainers
+              exitCodes:
+                operator: NotIn
+  asserts:
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    isKind:
+      of: ValkeyCluster
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].restartPolicyRules[0].exitCodes.values
+      value:
+      - 1
+      - 2
+  - documentSelector:
+      path: kind
+      value: ValkeyCluster
+    equal:
+      path: spec.containers[0].restartPolicyRules[1].action
+      value: RestartAllContainers

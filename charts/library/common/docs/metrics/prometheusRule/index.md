@@ -36,15 +36,177 @@ A PrometheusRule with alerting and recording rules.
 
 ## `enabled`
 
-Create a PrometheusRule for this metrics object.
+Create a PrometheusRule for this metrics object. Nothing is created when there are no rules.
 
 | Field | Value |
 | --- | --- |
 | Key | `metrics.$name.prometheusRule.enabled` |
 | Type | `bool` |
 | Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `labels`
+
+Labels of the PrometheusRule. They take precedence over the `labels` of the metrics object.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.labels` |
+| Type | `map` |
+| Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `false` |
+| Default | unset |
+
+---
+
+## `annotations`
+
+Annotations of the PrometheusRule. They take precedence over the `annotations` of the metrics object.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules`
+
+Rules of a group named after the PrometheusRule. Use `groups` for more than one group.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[]`
+
+An alerting or recording rule. Set `alert` or `record`.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].alert`
+
+Name of the alert rule.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].alert` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].record`
+
+Name of the recording rule.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].record` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].expr`
+
+PromQL expression to evaluate.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].expr` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].for`
+
+Duration the expression must be true before the alert fires.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].for` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].keep_firing_for`
+
+Duration the alert keeps firing after the expression is no longer true.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].keep_firing_for` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].labels`
+
+Labels added to the alert or recording rule.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].labels` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `rules[].annotations`
+
+Annotations added to the alert or recording rule.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `metrics.$name.prometheusRule.rules[].annotations` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
@@ -319,6 +481,10 @@ metrics:
         path: /metrics
     prometheusRule:
       enabled: true
+      labels:
+        release: prometheus
+      annotations:
+        description: Alerts for my-app
       groups:
         availability:
           rules:
@@ -338,4 +504,26 @@ metrics:
                 severity: warning
               annotations:
                 summary: my-app returns many errors
+```
+
+### Rules without groups
+
+```yaml
+metrics:
+  main:
+    enabled: true
+    type: servicemonitor
+    targetSelector: main
+    endpoints:
+      - port: main
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: MyAppRestarting
+          expr: increase(kube_pod_container_status_restarts_total{container="my-app"}[1h]) > 3
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: my-app restarts often
 ```

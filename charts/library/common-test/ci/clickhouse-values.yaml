@@ -16,6 +16,18 @@ workload:
           args:
             - --port
             - "8080"
+          env:
+            CLICKHOUSE_HOST: '{{ .Values.dependencies.clickhouse.depconfig.creds.plainhost | trimAll "\"" }}'
+            CLICKHOUSE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
+                key: url
+            CLICKHOUSE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "clickhousecreds" }}'
+                key: clickhouse-password
           probes:
             liveness:
               enabled: true
@@ -24,5 +36,6 @@ workload:
             startup:
               enabled: true
 
-clickhouse:
-  enabled: true
+dependencies:
+  clickhouse:
+    enabled: true

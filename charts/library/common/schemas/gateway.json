@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this Gateway. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary Gateway, used in the chart context. Only 1 Gateway can be primary."
+      },
+      "namespace": {
+        "type": "string",
+        "description": "Namespace of the Gateway. Defaults to the release namespace."
+      },
+      "nameOverride": {
+        "type": "string",
+        "description": "Suffix of the Gateway name, instead of the key of the object."
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations of the Gateway."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels of the Gateway."
+      },
+      "gatewayClassName": {
+        "type": "string",
+        "description": "Name of the GatewayClass the Gateway uses.",
+        "examples": [
+          "traefik"
+        ]
+      },
+      "targetSelector": {
+        "type": "string",
+        "description": "Key of a `gatewayClass` object of this chart. Its name is used as `gatewayClassName`.",
+        "examples": [
+          "main"
+        ]
+      },
+      "addresses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Type of the address, like `IPAddress` or `Hostname`. Defaults to `IPAddress` in Gateway API."
+            },
+            "value": {
+              "type": "string",
+              "description": "The address value, like an IP address or a hostname."
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "additionalProperties": false,
+          "description": "A requested address for the gateway."
+        },
+        "description": "Requested addresses of the Gateway, passed on as is."
+      },
+      "infrastructure": {
+        "type": "object",
+        "description": "Infrastructure settings of the Gateway, passed on as is.",
+        "properties": {
+          "annotations": {
+            "allOf": [
+              {
+                "$ref": "special/annotations.json"
+              }
+            ],
+            "description": "Annotations for the resources created for the Gateway."
+          },
+          "labels": {
+            "allOf": [
+              {
+                "$ref": "special/labels.json"
+              }
+            ],
+            "description": "Labels for the resources created for the Gateway."
+          },
+          "parametersRef": {
+            "type": "object",
+            "properties": {
+              "group": {
+                "type": "string",
+                "description": "API group of the parameters resource."
+              },
+              "kind": {
+                "type": "string",
+                "description": "Kind of the parameters resource."
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the parameters resource."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Implementation specific parameters of the gateway."
+          }
+        },
+        "additionalProperties": false
+      },
+      "allowedListeners": {
+        "type": "object",
+        "properties": {
+          "namespaces": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "type": "string",
+                "enum": [
+                  "All",
+                  "Selector",
+                  "Same",
+                  "None"
+                ],
+                "description": "Where ListenerSets can attach from: `All`, `Same`, `Selector` or `None`.",
+                "default": "None"
+              },
+              "selector": {
+                "allOf": [
+                  {
+                    "$ref": "special/labelSelector.json"
+                  }
+                ],
+                "description": "Label selector of the namespaces, used with `from: Selector`."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Namespaces from which ListenerSets can attach."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Which ListenerSets can attach to the Gateway."
+      },
+      "tls": {
+        "type": "object",
+        "description": "TLS settings that apply to the whole Gateway, passed on as is.",
+        "properties": {
+          "frontend": {
+            "type": "object",
+            "description": "TLS settings for connections from clients, passed on as is.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          },
+          "backend": {
+            "type": "object",
+            "description": "TLS settings for connections to backends, passed on as is.",
+            "additionalProperties": {
+              "description": "A setting passed on as is."
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "listeners": {
+        "type": "array",
+        "items": {
+          "allOf": [
+            {
+              "$ref": "listener.json"
+            }
+          ],
+          "description": "A listener of the Gateway, see [Gateway](/truecharts-common/gateway)."
+        },
+        "description": "Listeners of the Gateway. Each one needs a `name`, `port` and `protocol`, see [listener](/truecharts-common/gateway)."
+      }
+    },
+    "additionalProperties": false,
+    "description": "A Gateway, keyed by name.",
+    "default": {}
+  },
+  "description": "Gateways, keyed by name. Every enabled entry renders a Gateway API `Gateway`, see [Gateway](/truecharts-common/gateway)."
+}

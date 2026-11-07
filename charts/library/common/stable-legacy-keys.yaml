@@ -1,0 +1,7 @@
+# Legacy or wrong keys that charts under charts/stable and charts/incubator still set, but that no template of
+# common reads. The templates of common are leading, so these keys are not in the values schema.
+# test_schema.py leaves them out of a chart's values before it validates the chart, and
+# generate_complete_values_structure.py ignores them, so they do not end up in the schema.
+# Paths are relative to the chart values; `*` matches any one key. Remove an entry once no chart sets the key anymore.
+# Currently empty: all charts were fixed.
+keys: []

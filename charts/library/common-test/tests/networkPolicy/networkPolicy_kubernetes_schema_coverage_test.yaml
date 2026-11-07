@@ -1,0 +1,188 @@
+suite: networkPolicy kubernetes rules schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render kubernetes networkPolicy pod selector with expressions
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          podSelector:
+            matchLabels:
+              app: web
+            matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                  - frontend
+              - key: legacy
+                operator: DoesNotExist
+              - key: other
+                operator: NotIn
+                values:
+                  - a
+              - key: present
+                operator: Exists
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: NetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.podSelector.matchLabels.app
+          value: web
+      - documentIndex: 0
+        equal:
+          path: spec.podSelector.matchExpressions[0].operator
+          value: In
+
+  - it: should render kubernetes networkPolicy with templated pod selector
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          podSelector: "{{ dict \"matchLabels\" (dict \"app\" \"web\") | toYaml }}"
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: NetworkPolicy
+
+  - it: should render kubernetes networkPolicy ingress rules
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          targetAllPods: true
+          ingress:
+            - from:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except:
+                      - 10.1.0.0/16
+                - podSelector:
+                    matchLabels:
+                      app: web
+                  namespaceSelector:
+                    matchLabels:
+                      team: a
+                    matchExpressions:
+                      - key: env
+                        operator: In
+                        values:
+                          - prod
+              ports:
+                - protocol: TCP
+                  port: 8080
+                  endPort: 8090
+                - protocol: UDP
+                  port: http
+                - protocol: SCTP
+                  port: null
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: NetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.ingress[0].from[0].ipBlock.cidr
+          value: 10.0.0.0/8
+      - documentIndex: 0
+        equal:
+          path: spec.ingress[0].ports[0].port
+          value: 8080
+
+  - it: should render kubernetes networkPolicy egress rules
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          targetAllPods: true
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 192.168.0.0/16
+              ports:
+                - protocol: TCP
+                  port: 443
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: NetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.egress[0].to[0].ipBlock.cidr
+          value: 192.168.0.0/16
+
+  - it: should fail on unknown keys, missing required keys and bounds in kubernetes ingress rules
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          ingress:
+            - bogus: 1
+              from:
+                - bogus: 1
+                  ipBlock:
+                    bogus: 1
+                    except:
+                      - 1
+                  podSelector:
+                    bogus: 1
+                    matchExpressions:
+                      - bogus: 1
+                        operator: Other
+                        values:
+                          - 1
+              ports:
+                - bogus: 1
+                  protocol: ICMP
+                  port: true
+                  endPort: 0
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0': additional properties 'bogus' not allowed"
+
+  - it: should fail on unknown keys and missing required keys in kubernetes egress rules
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          egress:
+            - bogus: 1
+              to:
+                - ipBlock:
+                    except:
+                      - 1
+                  namespaceSelector:
+                    matchExpressions:
+                      - values:
+                          - 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/egress/0': additional properties 'bogus' not allowed"
+
+  - it: should fail on a pod selector matching no branch in networkPolicy
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          podSelector: not-a-template
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/podSelector'"
+
+  - it: should fail on unknown keys in networkPolicy pod selector
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          podSelector:
+            bogus: 1
+            matchLabels:
+              a: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/podSelector'"

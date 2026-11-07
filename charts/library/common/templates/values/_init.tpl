@@ -6,26 +6,14 @@
 
 {{- define "tc.v1.common.values.init" -}}
   {{- if .Values.common -}}
+    {{- $commonDefaults := mustDeepCopy .Values.common -}}
     {{- $commonValues := mustDeepCopy .Values.common -}}
     {{- $chartValues := mustDeepCopy (omit .Values "common") -}}
     {{- $mergedValues := mustMergeOverwrite $commonValues $chartValues -}}
-    {{- range $name, $dependencyValues := .Values.dependencies -}}
-      {{ $enabled := (include "tc.v1.common.lib.util.enabled" (dict
-                      "rootCtx" $ "objectData" $dependencyValues
-                      "name" $name "caller" "dependency"
-                      "key" "dependencies")) }}
-      {{- if eq $enabled "true" -}}
-        {{- $dependencyValues := omit $dependencyValues "global " -}}
-        {{- $dependencyValues := omit $dependencyValues "securityContext  " -}}
-        {{- $dependencyValues := omit $dependencyValues "podOptions " -}}
-        {{- $mergedValues = mustMergeOverwrite $mergedValues $dependencyValues -}}
-      {{- end -}}
-      {{- range $mergedValues.addons -}}
-        {{- if .enabled -}}
-          {{- $mergedValues = mustMergeOverwrite $mergedValues . -}}
-        {{- end -}}
-      {{- end -}}
-    {{- end -}}
+
+    {{/* Merge the objects of the enabled dependencies into the collections of the chart */}}
+    {{- include "tc.v1.common.values.dependencies" (dict "rootCtx" $ "mergedValues" $mergedValues "commonValues" $commonDefaults) -}}
+
     {{- $_ := set . "Values" (mustDeepCopy $mergedValues) -}}
   {{- end -}}
 {{- end -}}

@@ -16,9 +16,10 @@ title: Resources
 - `.Values.addons.gluetun.container.resources`
 - `.Values.addons.netshoot.container.resources`
 - `.Values.addons.tailscale.container.resources`
-- `.Values.cnpg.$name.cluster.resources`
-- `.Values.workload.$name.podSpec.containers.$name.resources`
-- `.Values.workload.$name.podSpec.initContainers.$name.resources`
+- `.Values.dependencies.valkey.operator.resources`
+- `.Values.persistence.$name.volsync[].resources`
+- `.Values.dependencies.postgresql.operator.cluster.resources`
+- and 2 more places
 
 ---
 

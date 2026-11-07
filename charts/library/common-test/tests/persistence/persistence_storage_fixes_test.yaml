@@ -157,6 +157,46 @@ tests:
       - failedTemplate:
           errorMessage: Persistence - Expected non-empty [iscsi] object on [iscsi] type
 
+  - it: should render a volsync source and destination cacheAccessModes as a string
+    set:
+      persistence:
+        my-volume1:
+          enabled: true
+          type: pvc
+          volsync:
+            - name: my-volsync
+              type: restic
+              credentials: my-creds
+              dest:
+                enabled: true
+                cacheAccessModes: ReadWriteOnce
+              src:
+                enabled: true
+                cacheAccessModes: ReadWriteMany
+      credentials:
+        my-creds:
+          type: s3
+          url: https://s3.example.com
+          bucket: my-bucket
+          accessKey: some-key
+          secretKey: some-secret
+          encrKey: some-encr
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ReplicationDestination
+        equal:
+          path: spec.restic.cacheAccessModes
+          value:
+            - ReadWriteOnce
+      - documentSelector:
+          path: kind
+          value: ReplicationSource
+        equal:
+          path: spec.restic.cacheAccessModes
+          value:
+            - ReadWriteMany
+
   - it: should render a pvc with static custom mode
     set:
       persistence:
@@ -174,6 +214,26 @@ tests:
         matchRegex:
           path: metadata.name
           pattern: ^test-release-name-common-test-my-volume1-[0-9]+$
+
+  - it: should render storage class boolean and number parameters
+    set:
+      storageClass:
+        my-sc:
+          enabled: true
+          provisioner: some.provisioner.io
+          parameters:
+            flag: true
+            count: 5
+            name: value
+    asserts:
+      - isKind:
+          of: StorageClass
+      - equal:
+          path: parameters
+          value:
+            flag: "true"
+            count: "5"
+            name: value
 
   - it: should fail on a string volumeSnapshotClass parameters
     set:

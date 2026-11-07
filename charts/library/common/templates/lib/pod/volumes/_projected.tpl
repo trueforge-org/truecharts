@@ -80,9 +80,6 @@ objectData: The object data to be used to render the volume.
   {{- $rootCtx := .rootCtx -}}
   {{- $source := .source -}}
 
-  {{- if not (kindIs "map" $source) -}}
-    {{- fail (printf "Persistence - Expected [downwardAPI] in [sources] to be a map on [downwardAPI] type, but got [%s]" (kindOf $source)) -}}
-  {{- end -}}
 
   {{- if not $source.items -}}
     {{- fail "Persistence - Expected non-empty [items] on [downwardAPI] type" -}}
@@ -136,9 +133,6 @@ objectData: The object data to be used to render the volume.
     {{- fail (printf "Persistence - Expected non-empty [items] on [%s] type" $type) -}}
   {{- end -}}
 
-  {{- if not (kindIs "slice" $source.items) -}}
-    {{- fail (printf "Persistence - Expected [items] to be a slice on [%s] type, but got [%s]" $type (kindOf $source.items)) -}}
-  {{- end -}}
 
   {{- $objectName := tpl $source.objectName $rootCtx -}}
 

@@ -329,7 +329,7 @@ tests:
                 service:
                   name: svc
                   namespace: test-release-namespace
-                  port: "8443"
+                  port: 8443
               namespaceSelector:
                 matchLabels:
                   team: "{{ .Release.Name }}"

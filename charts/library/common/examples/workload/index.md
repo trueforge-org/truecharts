@@ -21,6 +21,8 @@ workload:
       key: value
     annotations:
       key: value
+    extraSelectorLabels:
+      key: value
     serviceAccountName: some-service-account
     dbWait: true
     podSpec:

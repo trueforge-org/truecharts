@@ -102,32 +102,6 @@
                   ],
                   "description": "Arguments that are appended **after** `args`, as a string or a list.",
                   "x-helm-tpl": true
-                },
-                "envList": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string",
-                        "description": "Name of the environment variable.",
-                        "x-docs-required": true
-                      },
-                      "value": {
-                        "type": [
-                          "string",
-                          "number",
-                          "boolean"
-                        ],
-                        "description": "Value of the environment variable. Supports Helm `tpl` on strings.",
-                        "x-helm-tpl": true
-                      }
-                    },
-                    "additionalProperties": false,
-                    "description": "An environment variable."
-                  },
-                  "description": "Environment variables of the container as a list of name and value pairs.",
-                  "x-helm-tpl": "On value only"
                 }
               },
               "additionalProperties": false,
@@ -316,6 +290,13 @@
           3
         ]
       },
+      "allowRollingUpdateWithRWO": {
+        "type": "boolean",
+        "description": "Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Overrules `global.fallbackDefaults.allowRollingUpdateWithRWO`. `ReadWriteOncePod` volumes always use `Recreate`.\n\n:::caution\n\nRolling updates with `ReadWriteOnce` storage are not safe for every app or storage:\n\n- An update gets stuck if the storage stays locked to the old pod. This can happen on the same node with storage like iSCSI, and on another node with any `ReadWriteOnce` storage.\n- Two pods use the same data during an update, which can damage data of apps that expect to be alone, for example with SQLite or database migrations.\n\nCommon shows a warning in the notes when this is enabled.\n\n:::",
+        "examples": [
+          true
+        ]
+      },
       "strategy": {
         "type": "string",
         "enum": [
@@ -323,7 +304,7 @@
           "RollingUpdate",
           "OnDelete"
         ],
-        "description": "Update strategy of the workload. Deployments accept `Recreate` and `RollingUpdate`, StatefulSets and DaemonSets accept `RollingUpdate` and `OnDelete`. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`.\n\nA Deployment with a single replica uses `Recreate` if it mounts a `ReadWriteOnce` volume.",
+        "description": "Update strategy of the workload. Deployments accept `Recreate` and `RollingUpdate`, StatefulSets and DaemonSets accept `RollingUpdate` and `OnDelete`. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`.\n\nA single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. Set `allowRollingUpdateWithRWO` to keep `RollingUpdate` with `ReadWriteOnce`.",
         "x-docs-appliesTo": [
           "Deployment",
           "StatefulSet",
@@ -505,6 +486,20 @@
         "default": false,
         "x-docs-required": true
       },
+      "extraSelectorLabels": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Additional labels that are added to the selector of the workload and to the labels of its pods.",
+        "default": {},
+        "examples": [
+          {
+            "app.example.com/component": "worker"
+          }
+        ]
+      },
       "annotationsList": {
         "allOf": [
           {
@@ -576,7 +571,7 @@
       },
       "dbWait": {
         "type": "boolean",
-        "description": "Not used by common itself. Kept for compatibility with existing values."
+        "description": "Whether init containers that wait for the enabled dependencies (mariadb, postgresql, mongodb, clickhouse, valkey) are added to the workload. The workloads of [dependencies](/truecharts-common/dependencies) default to `false`, so they do not wait for themselves."
       }
     },
     "additionalProperties": false,

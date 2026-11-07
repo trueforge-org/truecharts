@@ -60,7 +60,7 @@ Key that encrypts the backups.
 
 ## `$name.type`
 
-Type of the credentials. Only `s3` is supported.
+Type of the credentials, eg `s3`.
 
 | Field | Value |
 | --- | --- |
@@ -69,7 +69,6 @@ Type of the credentials. Only `s3` is supported.
 | Required | ✅ |
 | Helm `tpl` | ❌ |
 | Default | unset |
-| Allowed values | `"s3"` |
 | Length | 1 to … |
 
 Example
@@ -359,7 +358,7 @@ credentials:
 
 ### Use them for backups
 
-A CNPG cluster refers to the credentials by name, see [CNPG](/truecharts-common/cnpg):
+The PostgreSQL dependency refers to the credentials by name, see [PostgreSQL](/truecharts-common/dependencies/postgresql):
 
 ```yaml
 credentials:

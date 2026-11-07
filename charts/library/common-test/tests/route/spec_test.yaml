@@ -1,0 +1,937 @@
+suite: route spec test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should default to the primary service without rules
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules
+          value: 
+            - backendRefs:
+                - group: ""
+                  kind: Service
+                  name: test-release-name-common-test
+                  namespace: test-release-namespace
+                  port: 8080
+                  weight: 1
+
+  - it: should not use the route name for the default backend
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        a-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+        b-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-b-route
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: test-release-name-common-test
+
+  - it: should resolve backendRefs targetSelector and its primary port
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: other
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: test-release-name-common-test-other
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 9090
+
+  - it: should allow overriding the port of a targetSelector
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: other
+                  port: 1234
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 1234
+
+  - it: should keep an explicit backend name as is
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - name: external
+                  namespace: ext
+                  port: 1234
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: external
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].namespace
+          value: ext
+
+  - it: should keep a backend weight of 0
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+                  weight: 0
+                - targetSelector: other
+                  weight: 100
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].weight
+          value: 0
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[1].weight
+          value: 100
+
+  - it: should default the backend namespace to the namespace of the route
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          namespace: route-namespace
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: metadata.namespace
+          value: route-namespace
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].namespace
+          value: route-namespace
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].namespace
+          value: route-namespace
+
+  - it: should render rule filters, timeouts, retry, name and matches on HTTPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - name: my-rule
+              matches:
+                - path:
+                    type: PathPrefix
+                    value: /api
+              filters:
+                - type: RequestHeaderModifier
+                  requestHeaderModifier:
+                    add:
+                      - name: X-Test
+                        value: test
+              timeouts:
+                request: 10s
+                backendRequest: 5s
+              retry:
+                attempts: 2
+              backendRefs:
+                - targetSelector: main
+                  filters:
+                    - type: ResponseHeaderModifier
+                      responseHeaderModifier:
+                        remove:
+                          - X-Secret
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].name
+          value: my-rule
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: /api
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].filters[0].type
+          value: RequestHeaderModifier
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].timeouts
+          value: 
+            request: 10s
+            backendRequest: 5s
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].retry.attempts
+          value: 2
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].filters[0].type
+          value: ResponseHeaderModifier
+
+  - it: should not add a backend to a redirect rule
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - filters:
+                - type: RequestRedirect
+                  requestRedirect:
+                    scheme: https
+                    statusCode: 301
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        notExists:
+          path: spec.rules[0].backendRefs
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].filters[0].requestRedirect.statusCode
+          value: 301
+
+  - it: should default to the primary service when a rule has only matches
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - matches:
+                - path:
+                    type: Exact
+                    value: /a
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: test-release-name-common-test
+
+  - it: should render matches and filters on GRPCRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: GRPCRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - matches:
+                - method:
+                    service: my.Service
+                    method: Get
+              filters:
+                - type: RequestHeaderModifier
+                  requestHeaderModifier:
+                    add:
+                      - name: X-Test
+                        value: test
+              backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: GRPCRoute
+        equal:
+          path: spec.rules[0].matches[0].method.service
+          value: my.Service
+      - documentSelector:
+          path: kind
+          value: GRPCRoute
+        equal:
+          path: spec.rules[0].filters[0].type
+          value: RequestHeaderModifier
+      - documentSelector:
+          path: kind
+          value: GRPCRoute
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1
+
+  - it: should use v1 for TCPRoute when cluster serves nothing known
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: TCPRoute
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1
+
+  - it: should use v1 for TCPRoute when cluster serves v1
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1/TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: TCPRoute
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1
+
+  - it: should use v1alpha2 for TCPRoute when cluster serves v1alpha2
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1alpha2/TCPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: TCPRoute
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1alpha2
+
+  - it: should use v1alpha3 for TLSRoute when cluster serves v1alpha3,v1alpha2
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1alpha3/TLSRoute
+        - gateway.networking.k8s.io/v1alpha2/TLSRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TLSRoute
+          hostnames:
+            - a.example.com
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: TLSRoute
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1alpha3
+
+  - it: should use v1alpha2 for UDPRoute when cluster serves v1alpha2
+    capabilities:
+      apiVersions:
+        - gateway.networking.k8s.io/v1alpha2/UDPRoute
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: UDPRoute
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+    asserts:
+      - documentSelector:
+          path: kind
+          value: UDPRoute
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1alpha2
+
+  - it: should render TCPRoute with the primary service when no rules are set
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          kind: TCPRoute
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - documentSelector:
+          path: kind
+          value: TCPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: TCPRoute
+        notExists:
+          path: spec.hostnames
+
+  - it: should template and quote hostnames
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+          hostnames:
+            - "*.example.com"
+            - "{{ .Release.Name }}.example.com"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.hostnames
+          value: 
+            - "*.example.com"
+            - test-release-name.example.com
+
+  - it: should render checksum annotations, same as an ingress
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        exists:
+          path: metadata.annotations["checksum/secrets"]
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        exists:
+          path: metadata.annotations["checksum/services"]
+
+  - it: should render parentRefs port and sectionName, and default the namespace
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - name: some-gateway
+              sectionName: https
+              port: 443
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0]
+          value: 
+            group: gateway.networking.k8s.io
+            kind: Gateway
+            name: some-gateway
+            namespace: test-release-namespace
+            sectionName: https
+            port: 443
+
+  - it: should attach to several gateways in this chart through parentRefs targetSelector
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      gateway:
+        first:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        second:
+          enabled: true
+          namespace: gateway-namespace
+          gatewayClassName: some-class
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+      route:
+        my-route:
+          enabled: true
+          parentRefs:
+            - targetSelector: first
+            - targetSelector: second
+              sectionName: https
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[0].name
+          value: test-release-name-common-test
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[1].name
+          value: test-release-name-common-test-second
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[1].namespace
+          value: gateway-namespace
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.parentRefs[1].sectionName
+          value: https
+
+  - it: should not render a disabled route when enabled is templated
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+        other:
+          enabled: true
+          ports:
+            other:
+              enabled: true
+              primary: true
+              port: 9090
+      route:
+        my-route:
+          enabled: "{{ false }}"
+          parentRefs:
+            - name: some-gateway
+    asserts:
+      - notFailedTemplate: {}
+      - containsDocument:
+          kind: HTTPRoute
+          apiVersion: gateway.networking.k8s.io/v1
+          any: true
+        not: true

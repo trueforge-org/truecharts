@@ -1,0 +1,265 @@
+suite: networkPolicy cilium schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render cilium networkPolicy rule lists
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          targetSelector: my-workload
+          description: test
+          ingress:
+            - fromEndpoints:
+                - matchLabels:
+                    app: a
+              fromEntities:
+                - cluster
+              fromCIDR:
+                - 10.0.0.0/8
+              fromCIDRSet:
+                - cidr: 10.0.0.0/8
+              toPorts:
+                - ports:
+                    - port: "80"
+              icmps:
+                - fields:
+                    - type: 8
+          ingressDeny:
+            - fromEndpoints:
+                - matchLabels:
+                    app: b
+              fromEntities:
+                - world
+              fromCIDR:
+                - 10.1.0.0/16
+              fromCIDRSet:
+                - cidr: 10.1.0.0/16
+              toPorts:
+                - ports:
+                    - port: "22"
+              icmps:
+                - fields:
+                    - type: 8
+          egress:
+            - toEndpoints:
+                - matchLabels:
+                    app: c
+              toEntities:
+                - world
+              toCIDR:
+                - 10.2.0.0/16
+              toCIDRSet:
+                - cidr: 10.2.0.0/16
+              toPorts:
+                - ports:
+                    - port: "443"
+              icmps:
+                - fields:
+                    - type: 8
+              toFQDNs:
+                - matchName: example.com
+              toServices:
+                - k8sService:
+                    serviceName: svc
+                    namespace: ns
+          egressDeny:
+            - toEndpoints:
+                - matchLabels:
+                    app: d
+              toEntities:
+                - cluster
+              toCIDR:
+                - 10.3.0.0/16
+              toCIDRSet:
+                - cidr: 10.3.0.0/16
+              toPorts:
+                - ports:
+                    - port: "25"
+              icmps:
+                - fields:
+                    - type: 8
+          enableDefaultDeny:
+            ingress: true
+            egress: true
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: CiliumNetworkPolicy
+      - documentIndex: 1
+        equal:
+          path: spec.ingress[0].fromCIDR[0]
+          value: 10.0.0.0/8
+      - documentIndex: 1
+        equal:
+          path: spec.egressDeny[0].toEntities[0]
+          value: cluster
+
+  - it: should render cilium networkPolicy endpoint selector with expressions
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          endpointSelector:
+            matchLabels:
+              app: web
+            matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                  - frontend
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumNetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.endpointSelector.matchExpressions[0].key
+          value: tier
+
+  - it: should render cilium networkPolicy endpoint selector with templated expressions
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          endpointSelector:
+            matchExpressions: "{{ \"x\" }}"
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumNetworkPolicy
+
+  - it: should render cilium clusterwide networkPolicy node selector with expressions
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          nodeSelector:
+            matchLabels:
+              node: a
+            matchExpressions:
+              - key: tier
+                operator: Exists
+                values:
+                  - a
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumClusterwideNetworkPolicy
+      - documentIndex: 0
+        equal:
+          path: spec.nodeSelector.matchLabels.node
+          value: a
+
+  - it: should render cilium clusterwide networkPolicy node selector with templated expressions
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          nodeSelector:
+            matchExpressions: "{{ \"x\" }}"
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumClusterwideNetworkPolicy
+
+  - it: should render cilium networkPolicy with templated node selector
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          clusterwide: true
+          nodeSelector: "{{ dict \"matchLabels\" (dict \"a\" \"b\") | toYaml }}"
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumClusterwideNetworkPolicy
+
+  - it: should render cilium networkPolicy with templated endpoint selector
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          endpointSelector: "{{ dict \"matchLabels\" (dict \"a\" \"b\") | toYaml }}"
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: CiliumNetworkPolicy
+
+  - it: should fail on unknown keys in cilium ingressDeny and egressDeny rules
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          ingressDeny:
+            - bogus: 1
+              fromCIDR:
+                - 1
+          egressDeny:
+            - bogus: 1
+              toCIDR:
+                - 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingressDeny/0': additional properties 'bogus' not allowed"
+
+  - it: should fail on unknown keys in cilium ingress and egress rules
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          ingress:
+            - bogus: 1
+              fromCIDR:
+                - 1
+          egress:
+            - bogus: 1
+              toCIDR:
+                - 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/ingress/0': additional properties 'bogus' not allowed"
+
+  - it: should fail on unknown keys in cilium selectors and enableDefaultDeny
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: cilium
+          clusterwide: 1
+          endpointSelector:
+            bogus: 1
+            matchExpressions:
+              - bogus: 1
+                key: 1
+          nodeSelector:
+            bogus: 1
+            matchExpressions:
+              - bogus: 1
+                values:
+                  - 1
+          enableDefaultDeny:
+            bogus: 1
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/endpointSelector': additional properties 'bogus' not allowed"

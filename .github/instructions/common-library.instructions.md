@@ -15,7 +15,7 @@ Area rules live in separate files. Read the matching one before editing:
 | --- | --- |
 | `charts/library/common/templates/**` | [`common-library-templates.instructions.md`](common-library-templates.instructions.md) |
 | `charts/library/common/schemas/**`, `values.schema.source.json`, `values.schema.json` | [`common-library-schema.instructions.md`](common-library-schema.instructions.md) |
-| `charts/library/common/values.yaml`, `templates/lib/dependencies/**`, `docs/dependencies.md` | [`common-library-dependencies.instructions.md`](common-library-dependencies.instructions.md) |
+| `charts/library/common/values.yaml`, `templates/lib/dependencies/**`, `docs/dependencies/index.md` | [`common-library-dependencies.instructions.md`](common-library-dependencies.instructions.md) |
 | `charts/library/common/docs/**`, `examples/**`, `*.py`, structure files | [`common-library-docs.instructions.md`](common-library-docs.instructions.md) |
 | `charts/library/common-test/**` | [`common-library-tests.instructions.md`](common-library-tests.instructions.md) |
 

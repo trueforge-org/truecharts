@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "A valkey ACL user, with its password, permissions and key access.",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^_]",
+      "description": "Name of the user. Can not start with `_`."
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the user can authenticate. Users are enabled when unset."
+    },
+    "passwordSecret": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the Secret with the passwords. Defaults to the users Secret of the cluster."
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Keys of the Secret with the passwords, several keys allow rotation. Defaults to the name of the user."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Secret with the passwords of the user."
+    },
+    "nopass": {
+      "type": "boolean",
+      "description": "Whether the user can authenticate without a password."
+    },
+    "resetpass": {
+      "type": "boolean",
+      "description": "Whether the ACL rules of the user are reset before the other settings are applied."
+    },
+    "commands": {
+      "type": "object",
+      "properties": {
+        "allow": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(@[A-Za-z]+|[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*(\\.[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*)*(\\|[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*(\\.[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*)*)?)$"
+          },
+          "description": "Commands, or categories (`@category`), the user can run."
+        },
+        "deny": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(@[A-Za-z]+|[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*(\\.[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*)*(\\|[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*(\\.[A-Za-z0-9_]+(-[A-Za-z0-9_]+)*)*)?)$"
+          },
+          "description": "Commands, or categories (`@category`), the user can not run."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Commands the user can and can not run."
+    },
+    "keys": {
+      "type": "object",
+      "properties": {
+        "readWrite": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key patterns the user can read and write."
+        },
+        "readOnly": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key patterns the user can only read."
+        },
+        "writeOnly": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Key patterns the user can only write."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Key patterns the user can access."
+    },
+    "channels": {
+      "type": "object",
+      "properties": {
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Pub/sub channel patterns the user can access."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Pub/sub channels the user can access."
+    },
+    "permissions": {
+      "type": "string",
+      "description": "Raw ACL string appended after the generated rules, for example `+@all ~* &*`."
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false
+}

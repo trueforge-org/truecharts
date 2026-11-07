@@ -593,7 +593,10 @@
                       "x-helm-tpl": true
                     },
                     "port": {
-                      "type": "string",
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
                       "description": "Port of the Service. Defaults to `443`.",
                       "x-helm-tpl": true
                     }

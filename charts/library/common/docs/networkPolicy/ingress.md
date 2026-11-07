@@ -318,7 +318,7 @@ CIDR range to match.
 | --- | --- |
 | Key | `networkPolicy.$name.ingress[].from[].ipBlock.cidr` |
 | Type | `string` |
-| Required | ❌ |
+| Required | ✅ |
 | Helm `tpl` | ❌ |
 | Default | unset |
 
@@ -410,46 +410,114 @@ End of an inclusive port range.
 
 ---
 
+## `[].fromEntities`
+
+Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingress[].fromEntities` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].fromEndpoints`
+
+Cilium only: endpoints, by labels, the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingress[].fromEndpoints` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].fromCIDR`
+
+Cilium only: CIDRs the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingress[].fromCIDR` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].fromCIDRSet`
+
+Cilium only: CIDRs with exceptions the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingress[].fromCIDRSet` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].toPorts`
+
+Cilium only: ports, with optional L7 rules, the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingress[].toPorts` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].icmps`
+
+Cilium only: ICMP types the rule allows.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingress[].icmps` |
+| Type | `list of any` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
 ## Full Examples
 
 These examples are the part of the examples of other pages that is about this page.
 
 ```yaml
 networkPolicy:
-  allow-production:
+  allow-same-namespace:
     ingress:
       - from:
-          - namespaceSelector:
-              matchLabels:
-                environment: production
+          - podSelector: {}
 ```
 
 ```yaml
 networkPolicy:
-  allow-frontend:
+  deny-ingress:
     ingress:
-      - from:
-          - podSelector:
-              matchLabels:
-                role: frontend
-        ports:
-          - protocol: TCP
-            port: 8080
+      - fromEntities:
+          - cluster
 ```
 
 ```yaml
 networkPolicy:
-  worker-policy:
+  host-policy:
     ingress:
-      - from:
-          - podSelector:
-              matchExpressions:
-                - key: tier
-                  operator: NotIn
-                  values:
-                    - experimental
-        ports:
-          - protocol: TCP
-            port: 9000
-            endPort: 9010
+      - fromEntities:
+          - cluster
 ```
