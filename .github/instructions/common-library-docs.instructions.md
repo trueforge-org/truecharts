@@ -32,6 +32,16 @@ These rules apply to `charts/library/common/docs/`, `examples/`, the structure f
   - Then run `python3 charts/library/common/generate_docs.py`.
   - `python3 charts/library/common/generate_docs.py --check` is run by CI and `run_common_tests.sh`. It fails when the pages are not up to date, a key or page is not covered, a link or anchor is broken (case sensitive), an example file has no page, an example has invalid or duplicate YAML or uses keys, types or values the schema does not allow, or markdownlint reports errors on `docs/` and `examples/` (when `markdownlint` is installed). A block with `# docs-example: partial` on its first line is not checked against the schema.
 
+## Example files
+
+Read these rules before you write a file in `examples/`.
+
+- The file starts with `## Full Examples`. Use `###` headings for variants, with a sentence between the heading and the block when it helps. Several examples per page are welcome, for example one for each type or option.
+- Write realistic YAML in ```yaml blocks, starting at the root key (`workload:`, `persistence:`). Use only keys, types, enum values and patterns that the schema (`schemas/`) allows. Do not repeat a key in one block. Use obvious placeholders for secrets, never real credentials, and fake digests for images.
+- A block that is only a fragment, or that is not meant to be valid, starts with `# docs-example: partial`.
+- Do not copy an example from another page, and do not fill a page with `{}` or `[]`.
+- Check your work: run `python3 charts/library/common/generate_docs.py --no-lint --output <empty scratch folder>` and read the lines that start with `examples/`. Each one is an error to fix. Then run `markdownlint` with `MD041` turned off for `examples/`.
+
 ## Generated structure files
 
 - `complete-values-structure.yaml` is rebuilt on every run from the `common` and `common-test` values files, the `set:` blocks of the `common-test` unittests, and the values files of charts under `charts/stable` and `charts/incubator`. Charts only add keys under root-level keys defined by the library, never new root-level keys.
