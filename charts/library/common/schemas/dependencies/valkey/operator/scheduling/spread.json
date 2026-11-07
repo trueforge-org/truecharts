@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Spreads pods across a topology (the nodes or the zones), with an optional hard or soft requirement.",
+  "properties": {
+    "shard": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "Disabled",
+            "Preferred",
+            "Required"
+          ],
+          "description": "`Disabled`, `Preferred` (best effort) or `Required` (hard constraint)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Spread of the pods of each shard. Disabled when unset."
+    },
+    "primaries": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "Disabled",
+            "Preferred",
+            "Required"
+          ],
+          "description": "`Disabled`, `Preferred` (best effort) or `Required` (hard constraint)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Spread of the pod that starts as the primary of each shard (node-index 0). Disabled when unset."
+    },
+    "pods": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "Disabled",
+            "Preferred",
+            "Required"
+          ],
+          "description": "`Disabled`, `Preferred` (best effort) or `Required` (hard constraint)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Spread of all the pods of the cluster. Disabled when unset."
+    }
+  },
+  "additionalProperties": false
+}

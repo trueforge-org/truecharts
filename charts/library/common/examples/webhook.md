@@ -63,7 +63,7 @@ webhook:
             name: my-webhook-service
             namespace: my-namespace
             path: /validate
-            port: "443"
+            port: 443
         rules:
           - scope: Namespaced
             apiGroups:
@@ -96,7 +96,7 @@ webhook:
             name: my-webhook-service
             namespace: my-namespace
             path: /validate
-            port: "443"
+            port: 443
         namespaceSelector:
           matchLabels:
             admission: enabled

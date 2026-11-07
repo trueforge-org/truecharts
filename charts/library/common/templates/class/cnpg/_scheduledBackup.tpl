@@ -5,7 +5,6 @@
   {{/* Naming */}}
   {{- $backupName := printf "%v-sched-backup-%v" $objectData.name $objectData.backupName -}}
   {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $backupName "length" 253) -}}
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "CNPG Scheduled Backup") -}}
 
   {{/* Metadata */}}
   {{- $objLabels := $objectData.labels | default dict -}}
@@ -55,4 +54,7 @@ spec:
   immediate: {{ $immediate }}
   cluster:
     name: {{ $objectData.clusterName }}
+  method: plugin
+  pluginConfiguration:
+    name: {{ include "tc.v1.common.lib.cnpg.barman.pluginName" . }}
 {{- end -}}

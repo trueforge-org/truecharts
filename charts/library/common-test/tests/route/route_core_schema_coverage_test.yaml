@@ -5,7 +5,38 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should render each route kind with primary, labels, annotations, nameOverride and hostnames
+  - it: should render a route with string enabled, required, labels and listenerPort
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: "true"
+          primary: false
+          required: true
+          gateway: some-gateway
+          labels:
+            my-label: my-value
+          listenerPort: 8443
+    asserts:
+      - documentSelector: &route
+          path: kind
+          value: HTTPRoute
+        isKind:
+          of: HTTPRoute
+      - documentSelector: *route
+        equal:
+          path: metadata.labels.my-label
+          value: my-value
+
+  - it: should render a route with a null targetSelector and parentRefs
     set:
       service: &service
         my-service:
@@ -19,210 +50,92 @@ tests:
       route:
         my-route:
           enabled: true
-          primary: true
-          kind: GRPCRoute
-          nameOverride: custom
-          labels:
-            my-label: my-value
-          annotations:
-            my-ann: my-value
-          hostnames:
-            - app.example.com
+          targetSelector: null
           parentRefs:
             - name: some-gateway
-              namespace: gw-ns
     asserts:
-      - documentSelector:
-          path: kind
-          value: GRPCRoute
-        equal:
-          path: metadata.labels.my-label
-          value: my-value
-      - documentSelector:
-          path: kind
-          value: GRPCRoute
-        equal:
-          path: metadata.annotations.my-ann
-          value: my-value
-      - documentSelector:
-          path: kind
-          value: GRPCRoute
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-custom
-      - documentSelector:
-          path: kind
-          value: GRPCRoute
-        equal:
-          path: spec.hostnames[0]
-          value: app.example.com
-
-  - it: should render kind HTTPRoute
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          kind: HTTPRoute
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: kind
-          value: HTTPRoute
-
-  - it: should render kind TCPRoute
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          kind: TCPRoute
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - documentSelector:
-          path: kind
-          value: TCPRoute
-        equal:
-          path: kind
-          value: TCPRoute
-
-  - it: should render kind TLSRoute
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          kind: TLSRoute
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - documentSelector:
-          path: kind
-          value: TLSRoute
-        equal:
-          path: kind
-          value: TLSRoute
-
-  - it: should render kind UDPRoute
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          kind: UDPRoute
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - documentSelector:
-          path: kind
-          value: UDPRoute
-        equal:
-          path: kind
-          value: UDPRoute
-
-  - it: should fail on an invalid route kind
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          kind: FooRoute
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/kind'"
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
 
   - it: should fail on unknown keys in route
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
+          gateway: some-gateway
           unknownKey: value
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
     asserts:
       - failedTemplate:
           errorPattern: "at '/route/my-route': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on a non-boolean primary in route
+  - it: should fail on listenerPort below the minimum in route
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          primary: "yes"
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
+          listenerPort: 0
     asserts:
       - failedTemplate:
-          errorPattern: "at '/route/my-route/primary'"
+          errorPattern: "at '/route/my-route/listenerPort'"
 
-  - it: should fail on a non-string nameOverride in route
+  - it: should fail on listenerPort above the maximum in route
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          nameOverride: 1
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
+          listenerPort: 65536
     asserts:
       - failedTemplate:
-          errorPattern: "at '/route/my-route/nameOverride'"
+          errorPattern: "at '/route/my-route/listenerPort'"
 
-  - it: should fail on a non-array hostnames in route
+  - it: should fail on unknown keys in route tls
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          hostnames: app.example.com
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
+          tls:
+            - secretName: my-secret
+              unknownKey: value
     asserts:
       - failedTemplate:
-          errorPattern: "at '/route/my-route/hostnames'"
-
-  - it: should fail on a non-object annotations in route
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          annotations: foo
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/annotations'"
-
-  - it: should fail on a non-object labels in route
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          labels: foo
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/labels'"
+          errorPattern: "at '/route/my-route/tls/0': additional properties 'unknownKey' not allowed"

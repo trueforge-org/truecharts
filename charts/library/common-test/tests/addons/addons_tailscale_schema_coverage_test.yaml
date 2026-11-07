@@ -137,7 +137,7 @@ tests:
             name: TS_ROUTES
             value: 10.0.0.0/24
 
-  - it: should render the tailscale addon flat options
+  - it: should render the tailscale addon settings
     set:
       workload: &workload
         my-workload:
@@ -172,24 +172,34 @@ tests:
           enabled: true
           targetSelector:
             - my-workload
-          config: /etc/tailscale/config.json
-          authkey: placeholder-key
-          userspace: true
-          auth_once: true
-          accept_dns: false
-          routes: 10.0.0.0/24
-          dest_ip: 10.0.0.1
-          sock5_server: ":1080"
-          extra_args: --advertise-tags=tag:test
-          daemon_extra_args: --debug=localhost:9999
-          outbound_http_proxy_listen: ":1055"
+          settings:
+            config: /etc/tailscale/config.json
+            authkey: placeholder-key
+            userspace: true
+            auth_once: true
+            accept_dns: false
+            routes: 10.0.0.0/24
+            dest_ip: 10.0.0.1
+            sock5_server: ":1080"
+            extra_args: --advertise-tags=tag:test
+            daemon_extra_args: --debug=localhost:9999
+            outbound_http_proxy_listen: ":1055"
     asserts:
       - documentSelector:
           path: kind
           value: Deployment
+        contains:
+          path: spec.template.spec.containers[1].env
+          content:
+            name: TS_DEST_IP
+            value: 10.0.0.1
+      - documentSelector:
+          path: kind
+          value: Secret
         equal:
-          path: spec.template.spec.containers[1].name
-          value: test-release-name-common-test-tailscale
+          path: stringData.TS_AUTH_KEY
+          value: placeholder-key
+
   - it: should fail on unknown keys in addons tailscale
     set:
       workload: &workload
@@ -265,6 +275,45 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/addons/tailscale/targetSelector'"
+
+  - it: should fail on unknown keys in addons tailscale settings
+    set:
+      workload: &workload
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        tailscale:
+          enabled: true
+          settings:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/addons/tailscale/settings': additional properties 'unknownKey' not allowed"
 
   - it: should fail on unknown keys in addons tailscale container
     set:
@@ -394,3 +443,65 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/addons/tailscale/container/securityContext/capabilities': additional properties 'unknownKey' not allowed"
+
+  - it: should evaluate string enabled values of the tailscale addon probes
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          targetSelector: my-workload
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      addons:
+        tailscale:
+          enabled: true
+          targetSelector:
+            - my-workload
+          container:
+            enabled: true
+            imageSelector: tailscaleImage
+            probes:
+              liveness:
+                enabled: "false"
+              readiness:
+                enabled: "{{ false }}"
+              startup:
+                enabled: "false"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[1].livenessProbe
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[1].readinessProbe
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notExists:
+          path: spec.template.spec.containers[1].startupProbe

@@ -7,11 +7,7 @@
     {{- fail "Middleware (redirect-scheme) - Expected [scheme] to be set" -}}
   {{- end -}}
 
-  {{- if hasKey $mw "permanent" -}}
-    {{- if not (kindIs "bool" $mw.permanent) -}}
-      {{- fail (printf "Middleware (redirect-scheme) - Expected [permanent] to be a boolean, but got [%s]" (kindOf $mw.permanent)) -}}
-    {{- end -}}
-  {{- end }}
+  {{- /* Keeps the newline before the next line */}}
   redirectScheme:
     scheme: {{ $mw.scheme }}
     {{- include "tc.v1.common.class.traefik.middleware.helper.bool" (dict "key" "permanent" "value" $mw.permanent) | nindent 4 }}

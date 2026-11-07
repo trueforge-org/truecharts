@@ -122,7 +122,7 @@ Port of the Service. Defaults to `443`.
 | Field | Value |
 | --- | --- |
 | Key | `webhook.$name.webhooks[].clientConfig.service.port` |
-| Type | `string` |
+| Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
 | Default | unset |

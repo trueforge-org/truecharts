@@ -52,6 +52,7 @@ fallbackDefaults:
   vctSize: 100Gi
   accessModes:
     - ReadWriteOnce
+  allowRollingUpdateWithRWO: false
   vctAccessModes:
     - ReadWriteOnce
   probeTimeouts:
@@ -74,8 +75,9 @@ fallbackDefaults:
       failureThreshold: 60
       successThreshold: 1
   topologyKey: kubernetes.io/hostname
+  routeListenerPort: 443
   cnpg:
-    pgVersion: 16
+    pgVersion: 18
     skipEmptyWalArchiveCheck: true
 traefik:
   commonMiddlewares:
@@ -176,7 +178,7 @@ global:
 
 ## `diagnosticMode`
 
-Diagnostic mode for the chart.
+Diagnostic mode for the chart and its dependencies.
 
 | Field | Value |
 | --- | --- |
@@ -190,12 +192,12 @@ Diagnostic mode for the chart.
 
 ## `diagnosticMode.enabled`
 
-Run the containers of the chart with a sleep command instead of the app, to debug them.
+Run the containers of the chart and its dependencies with a sleep command instead of the app, to debug them.
 
 | Field | Value |
 | --- | --- |
 | Key | `global.diagnosticMode.enabled` |
-| Type | `bool` |
+| Type | `bool or string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `false` |

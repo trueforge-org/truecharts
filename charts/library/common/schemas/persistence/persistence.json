@@ -271,6 +271,61 @@
       },
       "additionalProperties": false,
       "description": "Built-in in-memory `emptyDir` volume mounted at `/dev/shm` in all containers of all workloads, for shared memory. Enabled by default."
+    },
+    "crontab": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Create the built-in `crontab` volume. Set to `false` to remove it.",
+          "default": true,
+          "x-helm-tpl": true
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "pvc",
+            "hostPath",
+            "emptyDir",
+            "nfs",
+            "iscsi",
+            "device",
+            "configmap",
+            "secret",
+            "vct"
+          ],
+          "description": "Type of the volume, `emptyDir` for the built-in volumes. See [Persistence](/truecharts-common/persistence) for the other types.",
+          "default": "emptyDir"
+        },
+        "mountPath": {
+          "type": "string",
+          "description": "Path the volume is mounted at in the selected containers. Defaults to `/var/spool/cron/crontabs/`.",
+          "default": "/var/spool/cron/crontabs/"
+        },
+        "medium": {
+          "type": "string",
+          "description": "Medium of the `emptyDir`. `Memory` keeps the data in RAM (tmpfs), an empty string uses the disk of the node. Defaults to `Memory`.",
+          "default": "Memory"
+        },
+        "targetSelectAll": {
+          "type": "boolean",
+          "description": "Mount the volume in all containers of all workloads. Defaults to `true`.",
+          "default": true
+        },
+        "iscsi": {
+          "allOf": [
+            {
+              "$ref": "../special/iscsi.json"
+            }
+          ],
+          "description": "iSCSI settings, only used when `type` is `iscsi`. See [iSCSI](/truecharts-common/persistence/iscsi)."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Enabled by default."
     }
   },
   "additionalProperties": {
@@ -969,6 +1024,14 @@
               ],
               "description": "Additional annotations for the VolSync resources"
             },
+            "resources": {
+              "allOf": [
+                {
+                  "$ref": "../workload/podSpec/containers/resources.json"
+                }
+              ],
+              "description": "Define the resources of the VolSync mover"
+            },
             "src": {
               "type": "object",
               "properties": {
@@ -1026,12 +1089,15 @@
                   "description": "Days between prunes of old snapshots. Defaults to `7`."
                 },
                 "accessModes": {
-                  "type": "array",
+                  "type": [
+                    "array",
+                    "string"
+                  ],
                   "items": {
                     "type": "string",
                     "description": "An access mode, for example `ReadWriteOnce`."
                   },
-                  "description": "Access modes of the PVC used for the source."
+                  "description": "Access modes of the PVC used for the source, a single mode as a string or a list."
                 },
                 "storageClassName": {
                   "type": "string",
@@ -1053,27 +1119,181 @@
                   "description": "Define the storageClassName of the cache PVC"
                 },
                 "cacheAccessModes": {
-                  "type": "array",
+                  "type": [
+                    "array",
+                    "string"
+                  ],
                   "items": {
                     "type": "string",
                     "description": "An access mode, for example `ReadWriteOnce`."
                   },
-                  "description": "Access modes of the cache PVC."
+                  "description": "Access modes of the cache PVC, a single mode as a string or a list."
                 },
                 "moverSecurityContext": {
                   "type": "object",
                   "properties": {
+                    "appArmorProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the AppArmor profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Name of the profile loaded on the node, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "AppArmor profile of the containers of the pod."
+                    },
                     "fsGroup": {
                       "type": "integer",
                       "description": "Group ID owning the volumes of the pod, and the files created in them."
+                    },
+                    "fsGroupChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "OnRootMismatch",
+                        "Always"
+                      ],
+                      "description": "Whether the ownership of the volumes is changed on mount."
                     },
                     "runAsGroup": {
                       "type": "integer",
                       "description": "Group ID of the first process of the containers of the pod."
                     },
+                    "runAsNonRoot": {
+                      "type": "boolean",
+                      "description": "Whether the containers of the pod must run as a non-root user."
+                    },
                     "runAsUser": {
                       "type": "integer",
                       "description": "User ID of the first process of the containers of the pod."
+                    },
+                    "seLinuxChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Recursive",
+                        "MountOption"
+                      ],
+                      "description": "How the SELinux labels of the volumes are changed."
+                    },
+                    "seLinuxOptions": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string",
+                          "description": "SELinux level label."
+                        },
+                        "role": {
+                          "type": "string",
+                          "description": "SELinux role label."
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "SELinux type label."
+                        },
+                        "user": {
+                          "type": "string",
+                          "description": "SELinux user label."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "SELinux options of the containers of the pod."
+                    },
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the seccomp profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Path of the profile on the node, relative to the kubelet seccomp directory, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Seccomp profile of the containers of the pod."
+                    },
+                    "supplementalGroups": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "description": "A group ID."
+                      },
+                      "description": "Additional group IDs of the containers of the pod."
+                    },
+                    "supplementalGroupsPolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Merge",
+                        "Strict"
+                      ],
+                      "description": "How the supplemental groups are computed, with the groups of the image."
+                    },
+                    "sysctls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A sysctl.",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the sysctl."
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "Value of the sysctl."
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Namespaced sysctls set for the pod."
+                    },
+                    "windowsOptions": {
+                      "type": "object",
+                      "properties": {
+                        "gmsaCredentialSpec": {
+                          "type": "string",
+                          "description": "Contents of the GMSA credential spec, Windows only."
+                        },
+                        "gmsaCredentialSpecName": {
+                          "type": "string",
+                          "description": "Name of the GMSA credential spec, Windows only."
+                        },
+                        "hostProcess": {
+                          "type": "boolean",
+                          "description": "Whether the containers run as HostProcess containers, Windows only."
+                        },
+                        "runAsUserName": {
+                          "type": "string",
+                          "description": "User name the first process of the containers runs as, Windows only."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Windows specific options of the pod."
                     }
                   },
                   "additionalProperties": false,
@@ -1105,12 +1325,15 @@
                   ]
                 },
                 "accessModes": {
-                  "type": "array",
+                  "type": [
+                    "array",
+                    "string"
+                  ],
                   "items": {
                     "type": "string",
                     "description": "An access mode, for example `ReadWriteOnce`."
                   },
-                  "description": "Access modes of the restored volume."
+                  "description": "Access modes of the restored volume, a single mode as a string or a list."
                 },
                 "storageClassName": {
                   "type": "string",
@@ -1132,27 +1355,181 @@
                   "description": "Define the storageClassName of the cache PVC"
                 },
                 "cacheAccessModes": {
-                  "type": "array",
+                  "type": [
+                    "array",
+                    "string"
+                  ],
                   "items": {
                     "type": "string",
                     "description": "An access mode, for example `ReadWriteOnce`."
                   },
-                  "description": "Access modes of the cache PVC."
+                  "description": "Access modes of the cache PVC, a single mode as a string or a list."
                 },
                 "moverSecurityContext": {
                   "type": "object",
                   "properties": {
+                    "appArmorProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the AppArmor profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Name of the profile loaded on the node, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "AppArmor profile of the containers of the pod."
+                    },
                     "fsGroup": {
                       "type": "integer",
                       "description": "Group ID owning the volumes of the pod, and the files created in them."
+                    },
+                    "fsGroupChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "OnRootMismatch",
+                        "Always"
+                      ],
+                      "description": "Whether the ownership of the volumes is changed on mount."
                     },
                     "runAsGroup": {
                       "type": "integer",
                       "description": "Group ID of the first process of the containers of the pod."
                     },
+                    "runAsNonRoot": {
+                      "type": "boolean",
+                      "description": "Whether the containers of the pod must run as a non-root user."
+                    },
                     "runAsUser": {
                       "type": "integer",
                       "description": "User ID of the first process of the containers of the pod."
+                    },
+                    "seLinuxChangePolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Recursive",
+                        "MountOption"
+                      ],
+                      "description": "How the SELinux labels of the volumes are changed."
+                    },
+                    "seLinuxOptions": {
+                      "type": "object",
+                      "properties": {
+                        "level": {
+                          "type": "string",
+                          "description": "SELinux level label."
+                        },
+                        "role": {
+                          "type": "string",
+                          "description": "SELinux role label."
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "SELinux type label."
+                        },
+                        "user": {
+                          "type": "string",
+                          "description": "SELinux user label."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "SELinux options of the containers of the pod."
+                    },
+                    "seccompProfile": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Unconfined",
+                            "RuntimeDefault",
+                            "Localhost"
+                          ],
+                          "description": "Type of the seccomp profile."
+                        },
+                        "localhostProfile": {
+                          "type": "string",
+                          "description": "Path of the profile on the node, relative to the kubelet seccomp directory, with the `Localhost` type."
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ],
+                      "additionalProperties": false,
+                      "description": "Seccomp profile of the containers of the pod."
+                    },
+                    "supplementalGroups": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "description": "A group ID."
+                      },
+                      "description": "Additional group IDs of the containers of the pod."
+                    },
+                    "supplementalGroupsPolicy": {
+                      "type": "string",
+                      "enum": [
+                        "Merge",
+                        "Strict"
+                      ],
+                      "description": "How the supplemental groups are computed, with the groups of the image."
+                    },
+                    "sysctls": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "A sysctl.",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "Name of the sysctl."
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "Value of the sysctl."
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Namespaced sysctls set for the pod."
+                    },
+                    "windowsOptions": {
+                      "type": "object",
+                      "properties": {
+                        "gmsaCredentialSpec": {
+                          "type": "string",
+                          "description": "Contents of the GMSA credential spec, Windows only."
+                        },
+                        "gmsaCredentialSpecName": {
+                          "type": "string",
+                          "description": "Name of the GMSA credential spec, Windows only."
+                        },
+                        "hostProcess": {
+                          "type": "boolean",
+                          "description": "Whether the containers run as HostProcess containers, Windows only."
+                        },
+                        "runAsUserName": {
+                          "type": "string",
+                          "description": "User name the first process of the containers runs as, Windows only."
+                        }
+                      },
+                      "additionalProperties": false,
+                      "description": "Windows specific options of the pod."
                     }
                   },
                   "additionalProperties": false,
@@ -1448,5 +1825,5 @@
     "default": {},
     "x-docs-required": true
   },
-  "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp` and `devshm`, which are enabled by default."
+  "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp`, `devshm` and `crontab`, which are enabled by default."
 }

@@ -48,15 +48,6 @@
         "title": "Chart Context"
       }
     },
-    "createChartContextConfigmap": {
-      "type": "boolean",
-      "default": false,
-      "description": "Creates a ConfigMap `chart-context` with the generated `chartContext`. Only used in CI and unittests, to check the generated chart context.",
-      "x-helm-tpl": false,
-      "x-docs-page": {
-        "file": "chartContext.md"
-      }
-    },
     "common": {
       "$ref": "schemas/common.json",
       "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself.",
@@ -302,12 +293,27 @@
         "title": "ConfigMap"
       }
     },
+    "configMapsFromFolder": {
+      "$ref": "schemas/configMapsFromFolder.json",
+      "description": "Generate ConfigMaps from the folders in a directory of the parent chart.",
+      "x-docs-page": {
+        "title": "ConfigMaps From Folder"
+      }
+    },
     "secret": {
       "$ref": "schemas/secret.json",
       "description": "Secrets, keyed by name.",
       "default": {},
       "x-docs-page": {
         "title": "Secret"
+      }
+    },
+    "externalSecret": {
+      "$ref": "schemas/externalSecret.json",
+      "description": "ExternalSecrets, keyed by name. The External Secrets Operator syncs them into Secrets from an external store.",
+      "default": {},
+      "x-docs-page": {
+        "title": "External Secret"
       }
     },
     "serviceAccount": {
@@ -337,8 +343,8 @@
       "$ref": "schemas/images.json#/properties/gluetunImage",
       "description": "Image of the gluetun VPN client, used by the gluetun addon.",
       "default": {
-        "repository": "oci.trueforge.org/tccr/gluetun",
-        "tag": "v3.40.0@sha256:a8189e29155e0f8142be1500ae068a92b189b1b25abbba036321e74d6389bf2b",
+        "repository": "oci.trueforge.org/containerforge/gluetun",
+        "tag": "3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -349,8 +355,8 @@
       "$ref": "schemas/images.json#/properties/netshootImage",
       "description": "Image of netshoot, a network troubleshooting toolbox, used by the netshoot addon.",
       "default": {
-        "repository": "oci.trueforge.org/tccr/netshoot",
-        "tag": "v0.14.0@sha256:28ede4317d22391e7d89a15eb78dc2afc3587ece02c76c983dde7239a0e43679",
+        "repository": "oci.trueforge.org/containerforge/netshoot",
+        "tag": "1.0.0@sha256:ecb3a85aed66ac72c76f9cb608656f7dbc810bb349eb301d1ea4d7a7f7ab9027",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -361,8 +367,8 @@
       "$ref": "schemas/images.json#/properties/tailscaleImage",
       "description": "Image of Tailscale, used by the tailscale addon.",
       "default": {
-        "repository": "oci.trueforge.org/tccr/tailscale",
-        "tag": "v1.88.3@sha256:878612592f133bc0728e978558b10a1c457371ac5949985d0584664c8e92c2f9",
+        "repository": "oci.trueforge.org/containerforge/tailscale",
+        "tag": "1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -386,7 +392,7 @@
       "description": "Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/ubuntu",
-        "tag": "26.4@sha256:a3ec289cfc10acc23a20cfb4fe5033c944ce3073dc4a53157c093ffb52f983b1",
+        "tag": "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -410,7 +416,91 @@
       "description": "Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/postgresql-client",
-        "tag": "9.6.24@sha256:65e2aaef5c5decd8ed06f5c41cb77de6406e44006d6f3db12d0faac3f88fa1c8",
+        "tag": "18.6.0@sha256:7c1565c07970e1cf3a5090b78204e282fa5a8857bec00d472c4b3ec72666d7b4",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresql18Image": {
+      "$ref": "schemas/images.json#/properties/postgresql18Image",
+      "description": "Image of the postgresql dependency (PostgreSQL 18), used when `dependencies.postgresql` runs in standalone mode.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/postgresql",
+        "tag": "18.6.0@sha256:afbcd31f4e0d4d6174dced7c68819e0493b2194c5a0f6b783e16ed137944555b",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "clickhouseImage": {
+      "$ref": "schemas/images.json#/properties/clickhouseImage",
+      "description": "Image of the clickhouse dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/clickhouse",
+        "tag": "26.10.2.103@sha256:5ea8293b50edf862efaa9362629ccfabcf93e2ffed5da552bde9fcb82d844b68",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "mariadbImage": {
+      "$ref": "schemas/images.json#/properties/mariadbImage",
+      "description": "Image of the mariadb dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/mariadb",
+        "tag": "11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "memcachedImage": {
+      "$ref": "schemas/images.json#/properties/memcachedImage",
+      "description": "Image of the memcached dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/memcache",
+        "tag": "1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "mongodbImage": {
+      "$ref": "schemas/images.json#/properties/mongodbImage",
+      "description": "Image of the mongodb dependency.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/mongodb",
+        "tag": "9.0.4@sha256:1ee3da52f298ea42c4d8a423bd1ad49845bac521c49181c9cddd74b7a27fcd03",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "valkeyImage": {
+      "$ref": "schemas/images.json#/properties/valkeyImage",
+      "description": "Image of the valkey dependency, used in `standalone` mode and, via `dependencies.valkey.operator.imageSelector`, for the nodes in `operator` mode.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/valkey",
+        "tag": "9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "valkeyExporterImage": {
+      "$ref": "schemas/images.json#/properties/valkeyExporterImage",
+      "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`.",
+      "default": {
+        "repository": "oci.trueforge.org/containerforge/redis-exporter",
+        "tag": "1.94.0@sha256:4e7642d5892fe7a74811af07444bc08550d2ab6d334a9f0323b399e6823f2a17",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -458,7 +548,7 @@
       "description": "Image of PostgreSQL 15 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 15`.",
       "default": {
         "repository": "ghcr.io/cloudnative-pg/postgresql",
-        "tag": "15.19@sha256:11274300143f02d369ea2ff6082b028b6b662915f06bf59f26b808b53823475a",
+        "tag": "15.19-standard-trixie@sha256:f617efc030d3099362e7fca616bb6d83d102599abf9b7b5e225482e4d0306aa3",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -470,7 +560,31 @@
       "description": "Image of PostgreSQL 16 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 16`.",
       "default": {
         "repository": "ghcr.io/cloudnative-pg/postgresql",
-        "tag": "16.15@sha256:34cd4159d07b3410a1b29da35072e2e927a0905e717a61afa3814624a2e8859a",
+        "tag": "16.15-standard-trixie@sha256:1ec419e997a8bde5263b6951f4c5ebc4aa2e1937927001f2561025c0a816e174",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgres17Image": {
+      "$ref": "schemas/images.json#/properties/postgres17Image",
+      "description": "Image of PostgreSQL 17 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 17`.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgresql",
+        "tag": "17.11-standard-trixie@sha256:ed6923f9ba2399cf9070379a353c710c29ced8a294be73986a2c3dae7e599ce3",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgres18Image": {
+      "$ref": "schemas/images.json#/properties/postgres18Image",
+      "description": "Image of PostgreSQL 18 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 18`.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgresql",
+        "tag": "18.6-standard-trixie@sha256:39add80f5b1e573e2f6b641c66fd1a2f8dede67ca0330e870285bc1078551390",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -482,7 +596,7 @@
       "description": "Image of PostgreSQL 15 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `postgis` type.",
       "default": {
         "repository": "ghcr.io/cloudnative-pg/postgis",
-        "tag": "15-3.4@sha256:4596b193991cd2463a07d40e3d3d62c59f046a7dece8f163ad1aba15925a38e4",
+        "tag": "15-3.6-standard-trixie@sha256:8e7f7463b0f99592378c97b8388eab2ddc424f902b401d98475c580b9eaff114",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -494,7 +608,31 @@
       "description": "Image of PostgreSQL 16 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `postgis` type.",
       "default": {
         "repository": "ghcr.io/cloudnative-pg/postgis",
-        "tag": "16-3.4@sha256:bb5a8590a8c934767482e34e1d103253f412aec703b77bbc52ad9044bf6e56f9",
+        "tag": "16-3.6-standard-trixie@sha256:b7eb0a782570f5d04e6f7c6af6927002c532f9175c5879ed2aead61c51daae6f",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresPostgis17Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis17Image",
+      "description": "Image of PostgreSQL 17 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `postgis` type.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgis",
+        "tag": "17-3.6-standard-trixie@sha256:73593f14ce3ef6f5401a9867e6bbbcd9b8814029435d8d9dd32104458e06f769",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresPostgis18Image": {
+      "$ref": "schemas/images.json#/properties/postgresPostgis18Image",
+      "description": "Image of PostgreSQL 18 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 18` and the `postgis` type.",
+      "default": {
+        "repository": "ghcr.io/cloudnative-pg/postgis",
+        "tag": "18-3.6-standard-trixie@sha256:17f7fe666f6048120ed1a04f21e34791ed1ea5d7ddec83bab0931d4adf0748f0",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -506,7 +644,7 @@
       "description": "Image of PostgreSQL 15 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectors` type.",
       "default": {
         "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
-        "tag": "15.7-v0.2.1@sha256:dbdeddf0d635f76df41f745407816c87c7468df35e3b7b0665ca4e0500ff3048",
+        "tag": "15.13-v0.4.0@sha256:dfdb863025674baf23ff245e18c3a6d3db54838fb26ebfa9b81c171c61dc4c90",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -518,7 +656,19 @@
       "description": "Image of PostgreSQL 16 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectors` type.",
       "default": {
         "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
-        "tag": "16.3-v0.2.1@sha256:f1a19d4fc4073b0671a72ad34ef012aa20d21b3ddf5b4b0c9077d54450db679a",
+        "tag": "16.9-v0.4.0@sha256:d92dedeeb2c1c70110b72270e3f5ba90f222dcc6fb93988d9adb4d0da15a6a9d",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresVectors17Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectors17Image",
+      "description": "Image of PostgreSQL 17 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `vectors` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-pgvecto.rs",
+        "tag": "17.5-v0.4.0@sha256:cfa59ddef46bf642e3f6be9ad1878317ae5d4015707d02349bf1569d76b564e0",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -549,6 +699,30 @@
         "file": "image.md"
       }
     },
+    "postgresVectorchord17Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord17Image",
+      "description": "Image of PostgreSQL 17 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `vectorchord` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-vectorchord",
+        "tag": "17.11-1.1.1@sha256:bb7eb8442f76b1e74911f28585019a77022911f8cfa2ddcfb166ea6af85abd09",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
+    "postgresVectorchord18Image": {
+      "$ref": "schemas/images.json#/properties/postgresVectorchord18Image",
+      "description": "Image of PostgreSQL 18 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 18` and the `vectorchord` type.",
+      "default": {
+        "repository": "ghcr.io/tensorchord/cloudnative-vectorchord",
+        "tag": "18.6-1.1.1@sha256:c7672bc011351a587cc292a94aac7eeebb593ed2e120077bd9c9944c9467db93",
+        "pullPolicy": "IfNotPresent"
+      },
+      "x-docs-page": {
+        "file": "image.md"
+      }
+    },
     "ingress": {
       "$ref": "schemas/ingress/ingress.json",
       "description": "Ingresses, keyed by name. Each one routes external traffic to a service. See [ingress](/truecharts-common/ingress).",
@@ -565,11 +739,39 @@
         "title": "Certificate"
       }
     },
+    "gatewayClass": {
+      "$ref": "schemas/gatewayClass.json",
+      "description": "Gateway API GatewayClasses, keyed by name.",
+      "x-docs-page": {
+        "title": "Gateway Class"
+      }
+    },
+    "gateway": {
+      "$ref": "schemas/gateway.json",
+      "description": "Gateway API Gateways, keyed by name. See [gateway](/truecharts-common/gateway).",
+      "x-docs-page": {
+        "title": "Gateway"
+      }
+    },
+    "listenerSet": {
+      "$ref": "schemas/listenerSet.json",
+      "description": "Gateway API ListenerSets, keyed by name. Each one adds listeners to an existing Gateway.",
+      "x-docs-page": {
+        "title": "Listener Set"
+      }
+    },
     "route": {
       "$ref": "schemas/route.json",
       "description": "Gateway API routes (HTTPRoute, GRPCRoute, TCPRoute, TLSRoute, UDPRoute), keyed by name. See [route](/truecharts-common/route).",
       "x-docs-page": {
         "title": "Route"
+      }
+    },
+    "networkPolicy": {
+      "$ref": "schemas/networkPolicy.json",
+      "description": "Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy).",
+      "x-docs-page": {
+        "title": "Network Policy"
       }
     },
     "podDisruptionBudget": {
@@ -621,49 +823,8 @@
       "$ref": "schemas/dependencies.json",
       "description": "Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies).",
       "x-docs-page": {
-        "title": "Dependencies"
-      }
-    },
-    "cnpg": {
-      "$ref": "schemas/cnpg.json",
-      "description": "CloudNativePG clusters, keyed by name (`main` by default). See [cnpg](/truecharts-common/cnpg).",
-      "x-docs-page": {
-        "title": "CNPG"
-      }
-    },
-    "redis": {
-      "$ref": "schemas/redis.json",
-      "description": "Redis dependency configuration. See [redis](/truecharts-common/redis).",
-      "x-docs-page": {
-        "title": "Redis"
-      }
-    },
-    "mariadb": {
-      "$ref": "schemas/mariadb.json",
-      "description": "MariaDB dependency configuration. See [mariadb](/truecharts-common/mariadb).",
-      "x-docs-page": {
-        "title": "MariaDB"
-      }
-    },
-    "mongodb": {
-      "$ref": "schemas/mongodb.json",
-      "description": "MongoDB dependency configuration. See [mongodb](/truecharts-common/mongodb).",
-      "x-docs-page": {
-        "title": "MongoDB"
-      }
-    },
-    "clickhouse": {
-      "$ref": "schemas/clickhouse.json",
-      "description": "ClickHouse dependency configuration. See [clickhouse](/truecharts-common/clickhouse).",
-      "x-docs-page": {
-        "title": "ClickHouse"
-      }
-    },
-    "solr": {
-      "$ref": "schemas/solr.json",
-      "description": "Solr dependency configuration. See [solr](/truecharts-common/solr).",
-      "x-docs-page": {
-        "title": "Solr"
+        "title": "Dependencies",
+        "handwritten": true
       }
     },
     "extraTpl": {
@@ -674,97 +835,6 @@
       "x-helm-tpl": true,
       "x-docs-page": {
         "title": "Extra Templates"
-      }
-    },
-    "alpineImage": {
-      "$ref": "schemas/images.json#/properties/alpineImage",
-      "description": "Alpine image, for helper containers.",
-      "default": {
-        "repository": "oci.trueforge.org/tccr/alpine",
-        "tag": "v3.22.1@sha256:6dc807ae4f2867cb2d00d061f8f579f1966420ad792c179ac68072ab235109f8",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "scratchImage": {
-      "$ref": "schemas/images.json#/properties/scratchImage",
-      "description": "Empty scratch image, for helper containers.",
-      "default": {
-        "repository": "oci.trueforge.org/containerforge/scratch",
-        "tag": "1.0.0@sha256:84182a2371dd7584ad752326b7150b4e928c640b7f70a249a3994b40f1db11fd",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "wgetImage": {
-      "$ref": "schemas/images.json#/properties/wgetImage",
-      "description": "Image with `wget`, for helper containers.",
-      "default": {
-        "repository": "oci.trueforge.org/containerforge/ubuntu",
-        "tag": "26.4@sha256:a3ec289cfc10acc23a20cfb4fe5033c944ce3073dc4a53157c093ffb52f983b1",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "yqImage": {
-      "$ref": "schemas/images.json#/properties/yqImage",
-      "description": "Image with `yq`, for helper containers.",
-      "default": {
-        "repository": "oci.trueforge.org/containerforge/go-yq",
-        "tag": "4.54.1@sha256:c72dd476916ea3c51292adf9914780a2c4a978def8479053bb1ea37993cdbd53",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "redisClientImage": {
-      "$ref": "schemas/images.json#/properties/redisClientImage",
-      "description": "Image of the Redis client, used by the init container that waits for the redis dependency.",
-      "default": {
-        "repository": "oci.trueforge.org/containerforge/valkey-tools",
-        "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "openvpnImage": {
-      "$ref": "schemas/images.json#/properties/openvpnImage",
-      "description": "Image of the OpenVPN client, for the OpenVPN addon.",
-      "default": {
-        "repository": "oci.trueforge.org/tccr/openvpn-client",
-        "tag": "latest@sha256:9bfdf50791d6e51056e31c03f73c9db329b2b72e7746155cfdc63e0c8b49b55a",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "wireguardImage": {
-      "$ref": "schemas/images.json#/properties/wireguardImage",
-      "description": "Image of WireGuard, for the WireGuard addon.",
-      "default": {
-        "repository": "oci.trueforge.org/tccr/wireguard",
-        "tag": "v1.0.20210914@sha256:683b8b74d64ebd07f9955147539834c2a4b60fee51d2a36fa76b9aba689601bf",
-        "pullPolicy": "IfNotPresent"
-      },
-      "x-docs-page": {
-        "file": "image.md"
-      }
-    },
-    "networkPolicy": {
-      "$ref": "schemas/networkPolicy.json",
-      "description": "Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy).",
-      "x-docs-page": {
-        "title": "Network Policy"
       }
     }
   },

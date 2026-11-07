@@ -22,8 +22,5 @@
     {{- fail "Ingress - Expected a non-empty [integrations.certManager.certificateIssuer]" -}}
   {{- end -}}
 
-  {{- if not (kindIs "string" $certManager.certificateIssuer) -}}
-    {{- fail (printf "Ingress - Expected [integrations.certManager.certificateIssuer] to be a [string], but got [%s]" (kindOf $certManager.certificateIssuer)) -}}
-  {{- end -}}
 
 {{- end -}}

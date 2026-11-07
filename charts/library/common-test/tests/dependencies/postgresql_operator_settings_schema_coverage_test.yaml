@@ -1,0 +1,143 @@
+suite: postgresql operator settings schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should render postgresql operator type and mode
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          type: postgis
+          mode: standalone
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+
+- it: should render postgresql operator type vectors
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          type: vectors
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+
+- it: should render postgresql operator type vectorchord
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          type: vectorchord
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+
+- it: should render postgresql operator monitoring and pooler
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          monitoring:
+            enablePodMonitor: true
+            customQueries:
+            - name: my-queries
+              key: queries
+              query: SELECT 1
+              expandObjectName: false
+          pooler:
+            enabled: true
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+  - documentSelector:
+      path: kind
+      value: Pooler
+    isKind:
+      of: Pooler
+
+- it: should render postgresql operator backups with encryption disabled
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          backups:
+            enabled: false
+            jobs: 2
+            encryption:
+              enabled: false
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+
+- it: should render postgresql operator type postgres
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          type: postgres
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+
+- it: should render postgresql operator string toggles in pooler and monitoring queries
+  template: common.yaml
+  set:
+    dependencies:
+      postgresql:
+        enabled: true
+        mode: operator
+        operator:
+          pooler:
+            enabled: "true"
+          monitoring:
+            customQueries:
+            - name: my-queries
+              key: queries
+              query: SELECT 1
+              expandObjectName: "false"
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster

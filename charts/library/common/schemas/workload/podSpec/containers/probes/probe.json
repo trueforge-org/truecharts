@@ -7,8 +7,9 @@
         "boolean",
         "string"
       ],
-      "description": "Whether the probe is added to the container. Only a boolean is evaluated, any other value counts as `true`.",
-      "x-docs-required": true
+      "description": "Whether the probe is added to the container.",
+      "x-docs-required": true,
+      "x-helm-tpl": true
     },
     "type": {
       "oneOf": [

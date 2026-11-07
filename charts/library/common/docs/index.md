@@ -23,8 +23,7 @@ The pages are generated from the schema. The keywords the generator reads are on
 | [`global`](/truecharts-common/global) | `map` | Global values that apply to the chart and its dependencies. See [global](/truecharts-common/global). |
 | [`namespace`](/truecharts-common/namespace) | `string` | Namespace to create all objects in, unless overridden at the object level. Does not apply to chart dependencies, use `global.namespace` for that. |
 | [`image`](/truecharts-common/image) | `map` | The main image of the chart, used by containers that do not select another image with `imageSelector`. See [image](/truecharts-common/image). |
-| [`chartContext`](/truecharts-common/chartContext#chartcontext) | `map` | Details about the release that common works out on every render, such as the URL of the app. Common sets these itself. |
-| [`createChartContextConfigmap`](/truecharts-common/chartContext#createchartcontextconfigmap) | `bool` | Creates a ConfigMap `chart-context` with the generated `chartContext`. Only used in CI and unittests, to check the generated chart context. |
+| [`chartContext`](/truecharts-common/chartContext) | `map` | Details about the release that common works out on every render, such as the URL of the app. Common sets these itself. |
 | [`common`](/truecharts-common/common) | `any` | Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself. |
 | [`securityContext`](/truecharts-common/securityContext) | `map` | Default security contexts for all containers and pods, unless overridden at the container or pod level. See [securityContext](/truecharts-common/securityContext). |
 | [`resources`](/truecharts-common/workload/podSpec/containers/resources) | `map` | Default CPU and memory resources of each container, unless overridden at the container level. They apply to every container, not to the pod as a whole. See [resources](/truecharts-common/workload/podSpec/containers/resources). |
@@ -43,7 +42,9 @@ The pages are generated from the schema. The keywords the generator reads are on
 | [`volumeSnapshots`](/truecharts-common/volumeSnapshots) | `map` | VolumeSnapshots, keyed by name. |
 | [`imagePullSecret`](/truecharts-common/imagePullSecret) | `map` | Image pull secrets, keyed by name, for pulling images from a private registry. |
 | [`configmap`](/truecharts-common/configmap) | `map` | ConfigMaps, keyed by name. |
+| [`configMapsFromFolder`](/truecharts-common/configMapsFromFolder) | `map` | Generate ConfigMaps from the folders in a directory of the parent chart. |
 | [`secret`](/truecharts-common/secret) | `map` | Secrets, keyed by name. |
+| [`externalSecret`](/truecharts-common/externalSecret) | `map` | ExternalSecrets, keyed by name. The External Secrets Operator syncs them into Secrets from an external store. |
 | [`serviceAccount`](/truecharts-common/serviceAccount) | `map` | ServiceAccounts, keyed by name. |
 | [`rbac`](/truecharts-common/rbac) | `map` | Roles and RoleBindings (or ClusterRoles and ClusterRoleBindings), keyed by name. |
 | [`notes`](/truecharts-common/notes) | `map` | Content of `NOTES.txt`, shown after install and upgrade. |
@@ -54,20 +55,38 @@ The pages are generated from the schema. The keywords the generator reads are on
 | [`ubuntuImage`](/truecharts-common/image) | `map` | Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers. |
 | [`kubectlImage`](/truecharts-common/image) | `map` | Image of kubectl, for containers that select it with `imageSelector: kubectlImage`. |
 | [`postgresClientImage`](/truecharts-common/image) | `map` | Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency. |
+| [`postgresql18Image`](/truecharts-common/image) | `map` | Image of the postgresql dependency (PostgreSQL 18), used when `dependencies.postgresql` runs in standalone mode. |
+| [`clickhouseImage`](/truecharts-common/image) | `map` | Image of the clickhouse dependency. |
+| [`mariadbImage`](/truecharts-common/image) | `map` | Image of the mariadb dependency. |
+| [`memcachedImage`](/truecharts-common/image) | `map` | Image of the memcached dependency. |
+| [`mongodbImage`](/truecharts-common/image) | `map` | Image of the mongodb dependency. |
+| [`valkeyImage`](/truecharts-common/image) | `map` | Image of the valkey dependency, used in `standalone` mode and, via `dependencies.valkey.operator.imageSelector`, for the nodes in `operator` mode. |
+| [`valkeyExporterImage`](/truecharts-common/image) | `map` | Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`. |
 | [`mariadbClientImage`](/truecharts-common/image) | `map` | Image of the MariaDB client, used by the init container that waits for the mariadb dependency. |
 | [`valkeyClientImage`](/truecharts-common/image) | `map` | Image of the Valkey client tools, used by the init container that waits for the valkey dependency. |
 | [`mongodbClientImage`](/truecharts-common/image) | `map` | Image of the MongoDB shell, used by the init container that waits for the mongodb dependency. |
 | [`postgres15Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 15 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 15`. |
 | [`postgres16Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 16 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 16`. |
+| [`postgres17Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 17 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 17`. |
+| [`postgres18Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 18 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 18`. |
 | [`postgresPostgis15Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 15 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `postgis` type. |
 | [`postgresPostgis16Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 16 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `postgis` type. |
+| [`postgresPostgis17Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 17 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `postgis` type. |
+| [`postgresPostgis18Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 18 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 18` and the `postgis` type. |
 | [`postgresVectors15Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 15 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectors` type. |
 | [`postgresVectors16Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 16 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectors` type. |
+| [`postgresVectors17Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 17 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `vectors` type. |
 | [`postgresVectorchord15Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 15 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectorchord` type. |
 | [`postgresVectorchord16Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 16 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectorchord` type. |
+| [`postgresVectorchord17Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 17 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `vectorchord` type. |
+| [`postgresVectorchord18Image`](/truecharts-common/image) | `map` | Image of PostgreSQL 18 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 18` and the `vectorchord` type. |
 | [`ingress`](/truecharts-common/ingress) | `map` | Ingresses, keyed by name. Each one routes external traffic to a service. See [ingress](/truecharts-common/ingress). |
 | [`certificate`](/truecharts-common/certificate) | `map` | cert-manager Certificates, keyed by name. |
+| [`gatewayClass`](/truecharts-common/gatewayClass) | `map` | Gateway API GatewayClasses, keyed by name. |
+| [`gateway`](/truecharts-common/gateway) | `map` | Gateway API Gateways, keyed by name. See [gateway](/truecharts-common/gateway). |
+| [`listenerSet`](/truecharts-common/listenerSet) | `map` | Gateway API ListenerSets, keyed by name. Each one adds listeners to an existing Gateway. |
 | [`route`](/truecharts-common/route) | `map` | Gateway API routes (HTTPRoute, GRPCRoute, TCPRoute, TLSRoute, UDPRoute), keyed by name. See [route](/truecharts-common/route). |
+| [`networkPolicy`](/truecharts-common/networkPolicy) | `map` | Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy). |
 | [`podDisruptionBudget`](/truecharts-common/podDisruptionBudget) | `map` | Pod Disruption Budgets, keyed by name. |
 | [`webhook`](/truecharts-common/webhook) | `map` | Webhook configurations (validating and mutating), keyed by name. |
 | [`priorityClass`](/truecharts-common/priorityClass) | `map` | PriorityClasses, keyed by name. |
@@ -75,21 +94,7 @@ The pages are generated from the schema. The keywords the generator reads are on
 | [`metrics`](/truecharts-common/metrics) | `map` | ServiceMonitors, PodMonitors and PrometheusRules, keyed by name. See [metrics](/truecharts-common/metrics). |
 | [`addons`](/truecharts-common/addons) | `map` | Addons that add containers or objects to the workloads, such as a VPN, Tailscale or code-server. See [addons](/truecharts-common/addons). |
 | [`dependencies`](/truecharts-common/dependencies) | `map` | Services the app needs, such as a database or cache, deployed with the chart. See [dependencies](/truecharts-common/dependencies). |
-| [`cnpg`](/truecharts-common/cnpg) | `map` | CloudNativePG clusters, keyed by name (`main` by default). See [cnpg](/truecharts-common/cnpg). |
-| [`redis`](/truecharts-common/redis) | `map` | Redis dependency configuration. See [redis](/truecharts-common/redis). |
-| [`mariadb`](/truecharts-common/mariadb) | `map` | MariaDB dependency configuration. See [mariadb](/truecharts-common/mariadb). |
-| [`mongodb`](/truecharts-common/mongodb) | `map` | MongoDB dependency configuration. See [mongodb](/truecharts-common/mongodb). |
-| [`clickhouse`](/truecharts-common/clickhouse) | `map` | ClickHouse dependency configuration. See [clickhouse](/truecharts-common/clickhouse). |
-| [`solr`](/truecharts-common/solr) | `map` | Solr dependency configuration. See [solr](/truecharts-common/solr). |
 | [`extraTpl`](/truecharts-common/extraTpl) | `list of map or string` | Extra Kubernetes resources to render, one per list item, as a YAML object or as a string. Helm `tpl` is resolved in each item. |
-| [`alpineImage`](/truecharts-common/image) | `map` | Alpine image, for helper containers. |
-| [`scratchImage`](/truecharts-common/image) | `map` | Empty scratch image, for helper containers. |
-| [`wgetImage`](/truecharts-common/image) | `map` | Image with `wget`, for helper containers. |
-| [`yqImage`](/truecharts-common/image) | `map` | Image with `yq`, for helper containers. |
-| [`redisClientImage`](/truecharts-common/image) | `map` | Image of the Redis client, used by the init container that waits for the redis dependency. |
-| [`openvpnImage`](/truecharts-common/image) | `map` | Image of the OpenVPN client, for the OpenVPN addon. |
-| [`wireguardImage`](/truecharts-common/image) | `map` | Image of WireGuard, for the WireGuard addon. |
-| [`networkPolicy`](/truecharts-common/networkPolicy) | `map` | Network policies, keyed by name. See [networkPolicy](/truecharts-common/networkPolicy). |
 
 ---
 
@@ -220,23 +225,3 @@ addons:
   netshoot:
     enabled: true
 ```
-
-## Keys that the values schema rejects
-
-The values schema of `common` lists every key that `common` reads. Some keys in existing values files are silently ignored, because no template reads them. Charts do not validate your values against the schema yet, but once they do, these keys will fail the install or upgrade with an error like `Additional property apiKey is not allowed`. You can clean them up now. They do nothing today, so removing them does not change anything, and the table says when moving one does.
-
-These are the most common ones:
-
-| Ignored key | What to do |
-| --- | --- |
-| `ingress.$name.autoLink` | Remove it. |
-| `metrics.$name.apiKey` | Remove it. For `bazarr` and `sabnzbd`, this key is in use: move it to `exportarr.apiKey`, which their exportarr container reads from the next major version of these charts. |
-| `metrics.$name.matchLabels` | Move it to `metrics.$name.selector.matchLabels`. This starts selecting with these labels. |
-| `metrics.$name.prometheusRule.labels`, `metrics.$name.prometheusRule.rules` | Remove them. Rules go in `metrics.$name.prometheusRule.groups`. |
-| `cnpg.$name.username` | Remove it on an existing database. The database keeps the user it has, and `cnpg.$name.user` sets the user of a new database. |
-| `cnpg.$name.primaryUpdateStrategy` | Move it to `cnpg.$name.cluster.primaryUpdateStrategy`. This starts using the strategy. |
-| `cnpg.$name.storage.size` | Move it to `cnpg.$name.cluster.storage.size`, or remove it to keep the current size. A moved value starts to apply, and a volume can not shrink. |
-| `cnpg.$name.storage.walsize` | Move it to `cnpg.$name.cluster.walStorage.size`, or remove it to keep the current size. A moved value starts to apply, and a volume can not shrink. |
-| `service.$name.portsList` | Move each entry to `service.$name.ports.$name`. This starts creating these ports. |
-
-Any other key that the schema rejects is a mistake in the values too: a misspelling, or a key in the wrong place. Find the right key in these docs, or remove it.

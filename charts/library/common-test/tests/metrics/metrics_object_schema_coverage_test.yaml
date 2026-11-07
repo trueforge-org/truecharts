@@ -18,11 +18,14 @@ tests:
               port: 8080
       metrics:
         my-metrics:
-          enabled: true
+          enabled: "true"
           primary: true
           type: servicemonitor
           nameOverride: extra
+          apiKey: placeholder-api-key
           targetSelector: my-service
+          matchLabels:
+            app: placeholder
           endpoints:
             - port: main
     asserts:
@@ -35,6 +38,21 @@ tests:
       - documentSelector: *sm
         isAPIVersion:
           of: monitoring.coreos.com/v1
+
+  - it: should render a servicemonitor with matchLabels as a string
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          matchLabels: "app: placeholder"
+          endpoints:
+            - port: main
+    asserts:
+      - documentSelector: *sm
+        isKind:
+          of: ServiceMonitor
 
   - it: should render a podmonitor
     set:
@@ -81,7 +99,21 @@ tests:
           type: invalid
           primary: notabool
           nameOverride: [a]
+          apiKey: [a]
           targetSelector: [a]
     asserts:
       - failedTemplate:
           errorPattern: "at '/metrics/my-metrics/type'"
+
+  - it: should fail on a wrong value type for matchLabels values
+    set:
+      service: *service
+      metrics:
+        my-metrics:
+          enabled: true
+          type: servicemonitor
+          matchLabels:
+            app: [a]
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/metrics/my-metrics/matchLabels/app'"

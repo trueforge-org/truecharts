@@ -64,7 +64,7 @@ workload:
 
 Update strategy of the workload. Deployments accept `Recreate` and `RollingUpdate`, StatefulSets and DaemonSets accept `RollingUpdate` and `OnDelete`. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`.
 
-A Deployment with a single replica uses `Recreate` if it mounts a `ReadWriteOnce` volume.
+A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. Set `allowRollingUpdateWithRWO` to keep `RollingUpdate` with `ReadWriteOnce`.
 
 | Field | Value |
 | --- | --- |

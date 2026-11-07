@@ -12,6 +12,7 @@ title: iSCSI Authentication
 ## Appears in
 
 - `.Values.persistence.$name.iscsi`
+- `.Values.persistence.crontab.iscsi`
 - `.Values.persistence.devshm.iscsi`
 - `.Values.persistence.shared.iscsi`
 - `.Values.persistence.tmp.iscsi`

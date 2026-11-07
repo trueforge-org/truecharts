@@ -250,9 +250,44 @@ Topology key of the default topology spread constraints, used when `defaultSprea
 
 ---
 
+## `allowRollingUpdateWithRWO`
+
+Keep `strategy: RollingUpdate` on a single replica Deployment with `ReadWriteOnce` volumes, instead of changing it to `Recreate`. Can be overruled with `workload.$name.allowRollingUpdateWithRWO`. Updates can get stuck if the storage stays locked to the old pod, which can happen on the same node with storage like iSCSI, and two pods use the same data during an update.
+
+:::caution
+
+Enabling this applies to all workloads of the chart that set `strategy: RollingUpdate`. Common shows a warning in the notes for each of them.
+
+:::
+
+| Field | Value |
+| --- | --- |
+| Key | `global.fallbackDefaults.allowRollingUpdateWithRWO` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `routeListenerPort`
+
+Port of the listeners created for route TLS. Can be overruled per route with `route.$name.listenerPort`. Traefik needs the port of its entrypoint here, which is not always the port it is exposed on.
+
+| Field | Value |
+| --- | --- |
+| Key | `global.fallbackDefaults.routeListenerPort` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `443` |
+| Range | 1 to 65535 |
+
+---
+
 ## `cnpg`
 
-Defaults of the CNPG clusters.
+Defaults of the CNPG clusters of the postgresql dependency.
 
 | Field | Value |
 | --- | --- |
@@ -260,7 +295,7 @@ Defaults of the CNPG clusters.
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `{"pgVersion": 16, "skipEmptyWalArchiveCheck": true}` |
+| Default | `{"pgVersion": 18, "skipEmptyWalArchiveCheck": true}` |
 
 ---
 
@@ -271,17 +306,16 @@ Major PostgreSQL version of a cluster that sets no `pgVersion`.
 | Field | Value |
 | --- | --- |
 | Key | `global.fallbackDefaults.cnpg.pgVersion` |
-| Type | `int or string` |
+| Type | `int` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `16` |
-| Allowed values | `15`, `16`, `"15"`, `"16"` |
+| Default | `18` |
 
 ---
 
 ## `cnpg.skipEmptyWalArchiveCheck`
 
-Skip the check that the WAL archive of a new cluster is empty. Can be overruled per cluster with `cluster.skipEmptyWalArchiveCheck`.
+Skip the check that the WAL archive of a new cluster is empty.
 
 | Field | Value |
 | --- | --- |
@@ -344,14 +378,16 @@ global:
         successThreshold: 1
 ```
 
-### Topology
+### Scheduling and routes
 
-The topology key of the default topology spread constraints:
+The topology key used to spread the pods, whether a Deployment with a `ReadWriteOnce` volume may use a rolling update, and the default listener port of routes:
 
 ```yaml
 global:
   fallbackDefaults:
     topologyKey: topology.kubernetes.io/zone
+    allowRollingUpdateWithRWO: true
+    routeListenerPort: 8443
 ```
 
 ### CloudNativePG
@@ -362,6 +398,6 @@ The default PostgreSQL version of CNPG clusters, and whether the check for an em
 global:
   fallbackDefaults:
     cnpg:
-      pgVersion: 16
+      pgVersion: 17
       skipEmptyWalArchiveCheck: true
 ```

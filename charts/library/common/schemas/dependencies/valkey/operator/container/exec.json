@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Command to run in the container."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Run a command in the container."
+}

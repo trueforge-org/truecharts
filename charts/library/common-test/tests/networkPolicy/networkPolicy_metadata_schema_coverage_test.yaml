@@ -1,0 +1,153 @@
+suite: networkPolicy metadata schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render networkPolicy metadata, primary and expanded name
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      networkPolicy:
+        my-policy:
+          enabled: true
+          primary: true
+          expandObjectName: false
+          namespace: policy-ns
+          type: kubernetes
+          targetSelector: my-workload
+          labels:
+            lbl: val
+          annotations:
+            ann: val
+          labelsList:
+            - name: lbl-list
+              value: val-list
+          annotationsList:
+            - name: ann-list
+              value: val-list
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        isKind:
+          of: NetworkPolicy
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.name
+          value: my-policy
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.namespace
+          value: policy-ns
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.labels.lbl
+          value: val
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.labels.lbl-list
+          value: val-list
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.annotations.ann
+          value: val
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.annotations.ann-list
+          value: val-list
+
+  - it: should render networkPolicy with templated enabled, primary, type and expandObjectName
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      networkPolicy:
+        my-policy:
+          enabled: "{{ true }}"
+          primary: "{{ false }}"
+          expandObjectName: "{{ true }}"
+          type: "{{ \"kubernetes\" }}"
+          targetSelectorRegex:
+            - "my-.*"
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        isKind:
+          of: NetworkPolicy
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+
+  - it: should render networkPolicy policyTypes
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+      networkPolicy:
+        my-policy:
+          enabled: true
+          policyTypes:
+            - Ingress
+            - Egress
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.policyTypes
+          value:
+            - Ingress
+            - Egress
+
+  - it: should fail on unknown keys and wrong types in networkPolicy metadata
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          bogus: 1
+          type: other
+          policyTypes:
+            - Other
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy': additional properties 'bogus' not allowed"
+
+  - it: should fail on invalid type and policyTypes in networkPolicy
+    set:
+      networkPolicy:
+        my-policy:
+          enabled: true
+          type: other
+          policyTypes:
+            - Other
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/networkPolicy/my-policy/policyTypes/0'"

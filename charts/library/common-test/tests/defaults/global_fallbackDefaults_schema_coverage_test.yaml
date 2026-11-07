@@ -22,8 +22,10 @@ tests:
           vctAccessModes:
             - ReadWriteOnce
           topologyKey: kubernetes.io/hostname
+          allowRollingUpdateWithRWO: false
+          routeListenerPort: 443
           cnpg:
-            pgVersion: 16
+            pgVersion: 18
             skipEmptyWalArchiveCheck: true
           probeTimeouts:
             liveness: &probe
@@ -124,6 +126,7 @@ tests:
           serviceProtocol: ""
           serviceType: ""
           vctSize: ""
+          routeListenerPort: 0
       service:
         my-service:
           enabled: true
@@ -135,7 +138,25 @@ tests:
               port: 12345
     asserts:
       - failedTemplate:
-          errorPattern: "at '/global/fallbackDefaults/pvcSize': minLength"
+          errorPattern: "at '/global/fallbackDefaults/routeListenerPort': "
+
+  - it: should fail on a too high routeListenerPort in global fallbackDefaults
+    set:
+      global:
+        fallbackDefaults:
+          routeListenerPort: 65536
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/global/fallbackDefaults/routeListenerPort': "
 
   - it: should fail on probeTimeouts below the minimum in global fallbackDefaults
     set:

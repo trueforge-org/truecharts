@@ -284,7 +284,7 @@ Custom widget settings as a map of `key: value`. Each entry sets a `gethomepage.
 
 ## `widget.custom.$name`
 
-Value of the widget setting. Supports Helm `tpl`, empty values are skipped. Numbers and booleans are rendered as a string.
+Value of the widget setting. Supports Helm `tpl`, empty values are skipped.
 
 | Field | Value |
 | --- | --- |
@@ -348,7 +348,7 @@ ingress:
           type: sonarr
           url: http://sonarr.media.svc.cluster.local:8989
           custom:
-            enableQueue: "true"
+            enableQueue: true
           customkv:
             - key: key
               value: <api key>

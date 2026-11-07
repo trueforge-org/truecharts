@@ -19,7 +19,7 @@
   {{- $reqFields := list "url" "bucket" "encrKey" "accessKey" "secretKey" -}}
   {{- range $key := $reqFields -}}
     {{- if not (get $credentials $key) -}}
-      {{- fail (printf "VolSync - Expected non-empty [%s] in [credentials.%s]" $key $credName) -}}
+      {{- fail (printf "%s - Expected non-empty [%s] in [credentials.%s]" $caller $key $credName) -}}
     {{- end -}}
   {{- end -}}
 
