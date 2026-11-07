@@ -1,6 +1,6 @@
 # Copilot instructions for TrueCharts
 
-This is a condensed summary. The full, canonical instructions are in [`AGENTS.md`](../AGENTS.md). Area-specific rules are in [`.github/instructions/charts*.instructions.md`](instructions/) for app charts and [`.github/instructions/common-library*.instructions.md`](instructions/) for the `common` library and `common-test` (one file per area). Keep this file in sync with them.
+This is a condensed summary. The full, canonical instructions are in [`AGENTS.md`](../AGENTS.md). Area-specific rules are in [`.github/instructions/charts*.instructions.md`](instructions/) for app charts and [`.github/instructions/common-library*.instructions.md`](instructions/) for the `common` library and `common-test` (one file per area). The HelmRelease schema template `templates/helm-release.schema.json.tpl` has its own file, [`helm-release-schema.instructions.md`](instructions/helm-release-schema.instructions.md). Keep this file in sync with them.
 
 ## Repository
 

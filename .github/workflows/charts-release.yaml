@@ -205,8 +205,9 @@ jobs:
           rm -rf ./website/truecharts/src/content/docs-common
           mv ./website/truecharts/src/content/docs/charts/library/common ./website/truecharts/src/content/docs-common
 
-      # The combined (bundled) values schema of common, one file for each released version
-      - name: Copy common schema to website
+      # The combined (bundled) values schema of common, one file for each released version,
+      # and the HelmRelease schema that validates spec.values against it
+      - name: Copy common schemas to website
         if: github.event_name == 'push'
         shell: bash
         run: |
@@ -214,14 +215,20 @@ jobs:
           set -euo pipefail
 
           schema="charts/library/common/values.schema.json"
+          template="templates/helm-release.schema.json.tpl"
           version="$(awk '/^version:/ { print $2 }' charts/library/common/Chart.yaml)"
-          if [[ -z "$version" ]] || [[ ! -f "$schema" ]]; then
-            echo "No version or schema found for common, not copying the schema"
+          if [[ -z "$version" ]] || [[ ! -f "$schema" ]] || [[ ! -f "$template" ]]; then
+            echo "No version, schema or HelmRelease template found for common, not copying the schemas"
             exit 1
           fi
 
           mkdir -p ./website/truecharts/public/schemas/common
           cp "$schema" "./website/truecharts/public/schemas/common/${version}.schema.json"
+
+          # The $ref in the template must stay the same as in the values.schema.json of the charts
+          mkdir -p ./website/truecharts/public/schemas/helm-release
+          sed "s/__COMMON_VERSION__/${version}/g" "$template" \
+            > "./website/truecharts/public/schemas/helm-release/${version}.schema.json"
 
       - name: Prefetch contributor icons
         shell: bash
