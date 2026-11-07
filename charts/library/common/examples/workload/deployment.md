@@ -41,6 +41,26 @@ workload:
           imageSelector: image
 ```
 
+### Rolling update with a ReadWriteOnce volume
+
+By default `common` refuses a `RollingUpdate` when the workload mounts a `ReadWriteOnce` volume, as the new pod could not mount it. Set `allowRollingUpdateWithRWO` to allow it anyway.
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: Deployment
+    strategy: RollingUpdate
+    allowRollingUpdateWithRWO: true
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
+
 ### Multiple Deployments
 
 ```yaml

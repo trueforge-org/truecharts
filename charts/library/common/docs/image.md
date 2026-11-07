@@ -11,15 +11,15 @@ title: Image
 
 ## Appears in
 
-- `.Values.alpineImage`
+- `.Values.clickhouseImage`
 - `.Values.codeserverImage`
 - `.Values.gluetunImage`
 - `.Values.image`
 - `.Values.kubectlImage`
 - `.Values.mariadbClientImage`
-- `.Values.mongodbClientImage`
-- `.Values.netshootImage`
-- and 18 more places
+- `.Values.mariadbImage`
+- `.Values.memcachedImage`
+- and 25 more places
 
 ---
 
@@ -112,24 +112,31 @@ image:
 | `ubuntuImage` | `map` | Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers. |
 | `kubectlImage` | `map` | Image of kubectl, for containers that select it with `imageSelector: kubectlImage`. |
 | `postgresClientImage` | `map` | Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency. |
+| `postgresql18Image` | `map` | Image of the postgresql dependency (PostgreSQL 18), used when `dependencies.postgresql` runs in standalone mode. |
+| `clickhouseImage` | `map` | Image of the clickhouse dependency. |
+| `mariadbImage` | `map` | Image of the mariadb dependency. |
+| `memcachedImage` | `map` | Image of the memcached dependency. |
+| `mongodbImage` | `map` | Image of the mongodb dependency. |
+| `valkeyImage` | `map` | Image of the valkey dependency, used in `standalone` mode and, via `dependencies.valkey.operator.imageSelector`, for the nodes in `operator` mode. |
+| `valkeyExporterImage` | `map` | Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`. |
 | `mariadbClientImage` | `map` | Image of the MariaDB client, used by the init container that waits for the mariadb dependency. |
 | `valkeyClientImage` | `map` | Image of the Valkey client tools, used by the init container that waits for the valkey dependency. |
 | `mongodbClientImage` | `map` | Image of the MongoDB shell, used by the init container that waits for the mongodb dependency. |
 | `postgres15Image` | `map` | Image of PostgreSQL 15 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 15`. |
 | `postgres16Image` | `map` | Image of PostgreSQL 16 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 16`. |
+| `postgres17Image` | `map` | Image of PostgreSQL 17 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 17`. |
+| `postgres18Image` | `map` | Image of PostgreSQL 18 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 18`. |
 | `postgresPostgis15Image` | `map` | Image of PostgreSQL 15 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `postgis` type. |
 | `postgresPostgis16Image` | `map` | Image of PostgreSQL 16 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `postgis` type. |
+| `postgresPostgis17Image` | `map` | Image of PostgreSQL 17 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `postgis` type. |
+| `postgresPostgis18Image` | `map` | Image of PostgreSQL 18 with PostGIS (CloudNativePG), used by CNPG clusters with `pgVersion: 18` and the `postgis` type. |
 | `postgresVectors15Image` | `map` | Image of PostgreSQL 15 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectors` type. |
 | `postgresVectors16Image` | `map` | Image of PostgreSQL 16 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectors` type. |
+| `postgresVectors17Image` | `map` | Image of PostgreSQL 17 with pgvecto.rs (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `vectors` type. |
 | `postgresVectorchord15Image` | `map` | Image of PostgreSQL 15 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 15` and the `vectorchord` type. |
 | `postgresVectorchord16Image` | `map` | Image of PostgreSQL 16 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 16` and the `vectorchord` type. |
-| `alpineImage` | `map` | Alpine image, for helper containers. |
-| `scratchImage` | `map` | Empty scratch image, for helper containers. |
-| `wgetImage` | `map` | Image with `wget`, for helper containers. |
-| `yqImage` | `map` | Image with `yq`, for helper containers. |
-| `redisClientImage` | `map` | Image of the Redis client, used by the init container that waits for the redis dependency. |
-| `openvpnImage` | `map` | Image of the OpenVPN client, for the OpenVPN addon. |
-| `wireguardImage` | `map` | Image of WireGuard, for the WireGuard addon. |
+| `postgresVectorchord17Image` | `map` | Image of PostgreSQL 17 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 17` and the `vectorchord` type. |
+| `postgresVectorchord18Image` | `map` | Image of PostgreSQL 18 with VectorChord (CloudNativePG), used by CNPG clusters with `pgVersion: 18` and the `vectorchord` type. |
 
 ---
 

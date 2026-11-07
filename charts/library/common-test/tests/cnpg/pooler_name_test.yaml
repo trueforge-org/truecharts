@@ -7,22 +7,17 @@ release:
 tests:
   - it: should generate correct name
     set:
-      cnpg:
-        my-pg:
+      dependencies:
+        postgresql:
           enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pooler:
-            enabled: true
-        my-pg2:
-          enabled: true
-          user: test-user
-          database: test-db
-          password: test-password
-          pooler:
-            enabled: true
-            createRO: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            pooler:
+              enabled: true
+              createRO: true
     asserts:
       - documentIndex: &poolerDoc 0
         isKind:
@@ -33,8 +28,8 @@ tests:
       - documentIndex: *poolerDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg-pooler-rw
-      - documentIndex: &otherpoolerDoc 2
+          value: test-release-name-common-test-cnpg-main-pooler-rw
+      - documentIndex: &otherpoolerDoc 1
         isKind:
           of: Pooler
       - documentIndex: *otherpoolerDoc
@@ -43,14 +38,4 @@ tests:
       - documentIndex: *otherpoolerDoc
         equal:
           path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg2-pooler-rw
-      - documentIndex: &otherpoolerDoc 3
-        isKind:
-          of: Pooler
-      - documentIndex: *otherpoolerDoc
-        isAPIVersion:
-          of: postgresql.cnpg.io/v1
-      - documentIndex: *otherpoolerDoc
-        equal:
-          path: metadata.name
-          value: test-release-name-common-test-cnpg-my-pg2-pooler-ro
+          value: test-release-name-common-test-cnpg-main-pooler-ro

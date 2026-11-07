@@ -12,13 +12,13 @@ title: "Labels, Annotations and Namespace"
 
 - `.Values.global.labels`
 - `.Values.certificate.$name.labels`
-- `.Values.cnpg.$name.labels`
 - `.Values.configmap.$name.labels`
+- `.Values.externalSecret.$name.labels`
+- `.Values.gateway.$name.labels`
+- `.Values.gatewayClass.$name.labels`
 - `.Values.hpa.$name.labels`
 - `.Values.imagePullSecret.$name.labels`
-- `.Values.ingress.$name.labels`
-- `.Values.metrics.$name.labels`
-- and 152 more places
+- and 187 more places
 
 ---
 

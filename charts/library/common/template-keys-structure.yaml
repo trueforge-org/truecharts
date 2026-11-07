@@ -7,6 +7,11 @@ TZ: variableName
 addons:
   codeserver:
     enabled: variableName
+    service:
+      main:
+        ports:
+          codeserver:
+            port: variableName
   gluetun:
     enabled: variableName
   netshoot:
@@ -14,43 +19,59 @@ addons:
     enabled: variableName
   tailscale:
     enabled: variableName
+    settings:
+      dest_ip: variableName
+      routes: variableName
+      userspace: variableName
   vpn: variableName
 cert: variableName
 certificate:
   objectName:
     certificateSecretTemplate: variableName
 chartContext:
+  appUrl: variableName
   internalUrls: variableName
   podCIDR: variableName
   svcCIDR: variableName
-clickhouse:
-  clickhouseDatabase: variableName
-  clickhouseUsername: variableName
-  creds: variableName
-  enabled: variableName
-  password: variableName
-cnpg:
-  objectName:
-    enabled: variableName
-    pooler:
-      createRO: variableName
-      enabled: variableName
 common: variableName
+configMapsFromFolder: variableName
 configmap:
   objectName:
     annotations: variableName
+    binaryData: variableName
     data: variableName
     labels: variableName
 containerOptions:
   NVIDIA_CAPS: variableName
 createChartContextConfigmap: variableName
 credentials: variableName
-dependencies: {}
+dependencies:
+  objectName:
+    depconfig:
+      mongodbDatabase: variableName
+    securityContext: variableName
+externalSecret:
+  objectName:
+    annotations: variableName
+    data: variableName
+    dataFrom: variableName
+    labels: variableName
+    refreshInterval: variableName
+    refreshPolicy: variableName
+    secretStoreRef:
+      kind: variableName
+      name: variableName
+    target: variableName
 extraTpl: variableName
+gateway:
+  objectName:
+    listeners: variableName
+gatewayClass: variableName
 global:
   annotations: variableName
   fallbackDefaults:
     accessModes: variableName
+    allowRollingUpdateWithRWO: variableName
     cnpg:
       pgVersion: variableName
       skipEmptyWalArchiveCheck: variableName
@@ -59,6 +80,7 @@ global:
     probeType: variableName
     pvcRetain: variableName
     pvcSize: variableName
+    routeListenerPort: variableName
     serviceProtocol: variableName
     serviceType: variableName
     storageClass: variableName
@@ -68,9 +90,7 @@ global:
   labels: variableName
   minNodePort: variableName
   namespace: variableName
-  podCIDR: variableName
   stopAll: variableName
-  svcCIDR: variableName
   traefik:
     commonMiddlewares: variableName
 hpa:
@@ -109,27 +129,28 @@ ingress:
     tls: variableName
 ingressMiddlewares:
   traefik: variableName
-mariadb:
-  creds: variableName
-  enabled: variableName
-  mariadbDatabase: variableName
-  mariadbUsername: variableName
-  password: variableName
-  rootPassword: variableName
+listenerSet:
+  objectName:
+    annotations: variableName
+    labels: variableName
+    listeners: variableName
+    parentRef: variableName
+    targetSelector: variableName
 metrics:
   objectName:
     enabled: variableName
-mongodb:
-  creds: variableName
-  enabled: variableName
-  mongodbDatabase: variableName
-  mongodbUsername: variableName
-  password: variableName
-  rootPassword: variableName
 namespace: variableName
 networkPolicy:
   objectName:
+    annotations: variableName
+    egress: variableName
     enabled: variableName
+    ingress: variableName
+    labels: variableName
+    podSelector: variableName
+    policyTypes: variableName
+    primary: variableName
+    targetAllPods: variableName
 notes:
   custom: variableName
   footer: variableName
@@ -218,24 +239,34 @@ rbac:
     allServiceAccounts: variableName
     annotations: variableName
     clusterWide: variableName
+    dependency: variableName
     enabled: variableName
     labels: variableName
     primary: variableName
     rules: variableName
     serviceAccounts: variableName
     subjects: variableName
-redis:
-  creds: variableName
-  enabled: variableName
-  password: variableName
-  redisDatabase: variableName
-  redisUsername: variableName
 resources:
   limits:
     memory: variableName
 route:
   objectName:
-    enabled: variableName
+    gateway: variableName
+    gatewayNamespace: variableName
+    hostnames: variableName
+    integrations:
+      certManager:
+        certificateIssuer: variableName
+      envoy: variableName
+      traefik: variableName
+    kind: variableName
+    listenerSet: variableName
+    nameOverride: variableName
+    parentRefs: variableName
+    required: variableName
+    rules: variableName
+    targetSelector: variableName
+    tls: variableName
 secret:
   objectName:
     annotations: variableName
@@ -297,19 +328,13 @@ serviceAccount:
   objectName:
     annotations: variableName
     automountServiceAccountToken: variableName
+    dependency: variableName
     enabled: variableName
     labels: variableName
     primary: variableName
     targetSelectAll: variableName
     targetSelector: variableName
 servicemonitor: variableName
-solr:
-  creds: variableName
-  enabled: variableName
-  password: variableName
-  solrCores: variableName
-  solrEnableAuthentication: variableName
-  solrUsername: variableName
 storageClass:
   objectName:
     allowVolumeExpansion: variableName
@@ -323,7 +348,6 @@ storageClass:
     volumeBindingMode: variableName
 volumeSnapshotClass:
   objectName:
-    deletionPolicy: variableName
     driver: variableName
 volumeSnapshots:
   objectName:
@@ -350,10 +374,13 @@ webhook:
 workload:
   objectName:
     activeDeadlineSeconds: variableName
+    allowRollingUpdateWithRWO: variableName
     backoffLimit: variableName
     completionMode: variableName
     completions: variableName
     concurrencyPolicy: variableName
+    dbWait: variableName
+    dependency: variableName
     enabled: variableName
     failedJobsHistoryLimit: variableName
     parallelism: variableName
@@ -363,7 +390,6 @@ workload:
           command: variableName
           env: variableName
           envFrom: variableName
-          envList: variableName
           fixedEnv:
             NVIDIA_CAPS: variableName
             PUID: variableName
@@ -378,6 +404,7 @@ workload:
             limits: variableName
           securityContext: variableName
           termination: variableName
+      initContainers: variableName
     primary: variableName
     replicas: variableName
     revisionHistoryLimit: variableName

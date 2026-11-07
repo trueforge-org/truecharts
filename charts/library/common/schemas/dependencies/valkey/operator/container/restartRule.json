@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": [
+        "Restart",
+        "RestartAllContainers"
+      ],
+      "description": "Action taken when the exit codes match."
+    },
+    "exitCodes": {
+      "type": "object",
+      "properties": {
+        "operator": {
+          "type": "string",
+          "enum": [
+            "In",
+            "NotIn"
+          ],
+          "description": "Whether the `values` are matched (`In`) or not (`NotIn`)."
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "Exit codes to match."
+        }
+      },
+      "required": [
+        "operator"
+      ],
+      "additionalProperties": false,
+      "description": "Exit codes the rule applies to."
+    }
+  },
+  "required": [
+    "action"
+  ],
+  "additionalProperties": false,
+  "description": "Rule that decides whether the container is restarted on exit."
+}

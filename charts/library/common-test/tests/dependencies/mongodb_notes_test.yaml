@@ -1,0 +1,58 @@
+suite: dependencies mongodb notes test
+templates:
+  - common.yaml
+  - NOTES.txt
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should show the connection details of mongodb
+    template: NOTES.txt
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+          depconfig:
+            mongodbUsername: my-user
+            mongodbDatabase: my-database
+    asserts:
+      - matchRegexRaw:
+          pattern: "## MongoDB Database\n- Host: test-release-name-common-test-mongodb-main\n- Port: 27017\n"
+      - matchRegexRaw:
+          pattern: "- Database: my-database\n- Username: my-user\n"
+      - matchRegexRaw:
+          pattern: "- JDBC URL: .*jdbc:mongodb://test-release-name-common-test-mongodb-main:27017/my-database"
+
+  - it: should hide the mongodb connection url by default
+    template: NOTES.txt
+    set:
+      dependencies:
+        mongodb:
+          enabled: true
+          depconfig:
+            password: test-password
+    asserts:
+      - matchRegexRaw:
+          pattern: "- Connection URL: HIDDEN\n"
+      - notMatchRegexRaw:
+          pattern: "test-password"
+
+  - it: should show the mongodb connection url with notes.showCredentials
+    template: NOTES.txt
+    set:
+      notes:
+        showCredentials: true
+      dependencies:
+        mongodb:
+          enabled: true
+          depconfig:
+            password: test-password
+    asserts:
+      - matchRegexRaw:
+          pattern: "- Connection URL: .*test-password"
+
+  - it: should not show mongodb with the dependency disabled
+    template: NOTES.txt
+    asserts:
+      - notMatchRegexRaw:
+          pattern: "MongoDB Database"

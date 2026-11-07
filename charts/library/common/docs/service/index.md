@@ -211,16 +211,17 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 ## `$name.type`
 
-Type of the Service: `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName` or `ExternalIP`.
+Type of the Service: `ClusterIP`, `LoadBalancer`, `NodePort`, `ExternalName` or `ExternalIP`. Supports Helm `tpl`.
 
 | Field | Value |
 | --- | --- |
 | Key | `service.$name.type` |
 | Type | `string` |
 | Required | ❌ |
-| Helm `tpl` | ❌ |
+| Helm `tpl` | ✅ |
 | Default | unset |
 | Allowed values | `"ClusterIP"`, `"LoadBalancer"`, `"NodePort"`, `"ExternalName"`, `"ExternalIP"` |
+| Pattern | `^\{\{.*\}\}$` |
 
 ---
 

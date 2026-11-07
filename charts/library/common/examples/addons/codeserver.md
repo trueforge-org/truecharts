@@ -70,6 +70,24 @@ addons:
           secretName: code-example-tls
 ```
 
+### Route
+
+The route is the same as a `route.<name>` of the chart. It defaults to the `codeserver` service and port, and is the primary route when no other route is primary:
+
+```yaml
+addons:
+  codeserver:
+    enabled: true
+    service:
+      enabled: true
+    route:
+      enabled: true
+      gateway: external
+      gatewayNamespace: networking
+      hostnames:
+        - code.chart-example.local
+```
+
 ### Mount the volumes of the app
 
 Mount a volume into the `codeserver` container, so the files can be edited:

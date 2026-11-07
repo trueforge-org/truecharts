@@ -64,7 +64,7 @@ workload:
 
 Update strategy of the workload. Deployments accept `Recreate` and `RollingUpdate`, StatefulSets and DaemonSets accept `RollingUpdate` and `OnDelete`. Set `maxUnavailable`, `maxSurge` and `partition` under `rollingUpdate`.
 
-A Deployment with a single replica uses `Recreate` if it mounts a `ReadWriteOnce` volume.
+A single replica Deployment uses `Recreate` if it mounts a `ReadWriteOnce` or `ReadWriteOncePod` volume. Set `allowRollingUpdateWithRWO` to keep `RollingUpdate` with `ReadWriteOnce`.
 
 | Field | Value |
 | --- | --- |
@@ -157,6 +157,26 @@ workload:
     rollingUpdate:
       maxUnavailable: 1
       maxSurge: "25%"
+    podSpec:
+      containers:
+        container-name:
+          enabled: true
+          primary: true
+          imageSelector: image
+```
+
+### Rolling update with a ReadWriteOnce volume
+
+By default `common` refuses a `RollingUpdate` when the workload mounts a `ReadWriteOnce` volume, as the new pod could not mount it. Set `allowRollingUpdateWithRWO` to allow it anyway.
+
+```yaml
+workload:
+  workload-name:
+    enabled: true
+    primary: true
+    type: Deployment
+    strategy: RollingUpdate
+    allowRollingUpdateWithRWO: true
     podSpec:
       containers:
         container-name:

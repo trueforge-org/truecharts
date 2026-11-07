@@ -150,7 +150,7 @@ Whether the container runs in privileged mode, with almost all the capabilities 
 
 ## `runAsNonRoot`
 
-Whether the container must run as a non-root user (`runAsNonRoot`). Common always calculates it: `false` when `runAsUser` or `runAsGroup` is `0`, otherwise `true`.
+Whether the container must run as a non-root user (`runAsNonRoot`). Calculated from `runAsUser` and `runAsGroup` when not set.
 
 | Field | Value |
 | --- | --- |

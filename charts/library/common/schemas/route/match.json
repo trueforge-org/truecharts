@@ -16,7 +16,7 @@
         },
         "value": {
           "type": "string",
-          "description": "Path that is matched."
+          "description": "Path that is matched. Supports Helm `tpl`."
         }
       },
       "additionalProperties": false,
@@ -77,10 +77,13 @@
       "description": "Query parameters the request has to match."
     },
     "method": {
-      "type": "string",
-      "description": "HTTP method of the request."
+      "type": [
+        "object",
+        "string"
+      ],
+      "description": "HTTP method of the request, or the gRPC service and method."
     }
   },
   "additionalProperties": false,
-  "description": "A match condition for an HTTP route."
+  "description": "A match condition for an HTTP or gRPC route."
 }

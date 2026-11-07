@@ -21,6 +21,21 @@ title: forward-auth
 
 ---
 
+## `data.maxResponseBodySize`
+
+Maximum size of the response body of the authentication service, in bytes.
+
+| Field | Value |
+| --- | --- |
+| Key | `ingressMiddlewares.traefik.$name.data.maxResponseBodySize` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Applies to | `forward-auth` |
+
+---
+
 ## `data.address`
 
 URL of the authentication service the request is forwarded to.

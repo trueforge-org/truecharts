@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this GatewayClass. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
+      },
+      "primary": {
+        "type": "boolean",
+        "description": "Make this the primary GatewayClass of the chart. Only 1 can be primary."
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations of the GatewayClass."
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels of the GatewayClass."
+      },
+      "controllerName": {
+        "type": "string",
+        "description": "The name of the controller that will manage Gateways of this class.",
+        "examples": [
+          "traefik.io/gateway-controller"
+        ]
+      },
+      "description": {
+        "type": "string",
+        "description": "Human readable description of the GatewayClass.",
+        "examples": [
+          "Traefik-based gateway class"
+        ]
+      },
+      "parametersRef": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "description": "API group of the parameters resource.",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "description": "Kind of the parameters resource.",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the parameters resource.",
+            "minLength": 1
+          },
+          "namespace": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Namespace of the parameters resource."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Reference to a resource with implementation specific parameters of the GatewayClass."
+      }
+    },
+    "additionalProperties": false,
+    "description": "A GatewayClass, keyed by name.",
+    "default": {}
+  },
+  "description": "GatewayClasses, keyed by name. Every enabled entry renders a Gateway API `GatewayClass`, see [GatewayClass](/truecharts-common/gatewayClass)."
+}

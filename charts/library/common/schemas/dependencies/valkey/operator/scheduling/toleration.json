@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "A taint of a node that the valkey pods tolerate.",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Key of the taint the toleration matches. Matches all keys with `Exists` when unset."
+    },
+    "operator": {
+      "type": "string",
+      "enum": [
+        "Exists",
+        "Equal",
+        "Lt",
+        "Gt"
+      ],
+      "description": "How the value of the taint is compared. Defaults to `Equal` in Kubernetes."
+    },
+    "value": {
+      "type": "string",
+      "description": "Value of the taint the toleration matches, with `Equal`, `Lt` and `Gt`."
+    },
+    "effect": {
+      "type": "string",
+      "enum": [
+        "NoSchedule",
+        "PreferNoSchedule",
+        "NoExecute"
+      ],
+      "description": "Effect of the taint the toleration matches. Matches all effects when unset."
+    },
+    "tolerationSeconds": {
+      "type": "integer",
+      "description": "Seconds the pod stays on a node with a matching `NoExecute` taint."
+    }
+  },
+  "additionalProperties": false
+}

@@ -19,6 +19,7 @@ title: Persistence
 
 - [autoPermissions](/truecharts-common/persistence/autoPermissions)
 - [ConfigMap](/truecharts-common/persistence/configmap)
+- [crontab](/truecharts-common/persistence/crontab)
 - [Device](/truecharts-common/persistence/device)
 - [devshm](/truecharts-common/persistence/devshm)
 - [EmptyDir](/truecharts-common/persistence/emptyDir)
@@ -196,6 +197,22 @@ See [devshm](/truecharts-common/persistence/devshm) for all keys of this object.
 | Field | Value |
 | --- | --- |
 | Key | `persistence.devshm` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `crontab`
+
+Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Enabled by default.
+
+See [crontab](/truecharts-common/persistence/crontab) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `persistence.crontab` |
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |

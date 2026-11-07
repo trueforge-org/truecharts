@@ -32,7 +32,6 @@
 
       {{/* Perform validations */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Pod Disruption Budget") -}}
 
       {{/* Set the name of the poddisruptionbudget */}}
       {{- $_ := set $objectData "name" $objectName -}}

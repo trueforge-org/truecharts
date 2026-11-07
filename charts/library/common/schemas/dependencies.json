@@ -1,7 +1,299 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "valkey": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "operator": {
+              "$ref": "dependencies/valkey/operator/operator.json",
+              "description": "Settings of the `ValkeyCluster` of the [valkey-operator](https://github.com/valkey-io/valkey-operator), used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.",
+              "x-docs-page": {
+                "title": "Valkey Operator"
+              }
+            },
+            "image": false
+          }
+        }
+      ],
+      "description": "The valkey dependency. In `operator` mode a `ValkeyCluster` is spawned from `operator`.",
+      "x-docs-page": {
+        "title": "Valkey"
+      }
+    },
+    "postgresql": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "standalone",
+                "operator"
+              ],
+              "default": "operator",
+              "description": "How postgresql is provided. Unlike the other dependencies it defaults to `operator`, so CloudNativePG runs it and the settings are under `operator`. `standalone` merges a plain PostgreSQL deployment into the chart. Both modes share `depconfig`, the connection details in `depconfig.creds` and the `postgresql-wait` init container."
+            },
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user, for both modes."
+                },
+                "postgresqlUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "app",
+                  "description": "Name of the database user, for both modes."
+                },
+                "postgresqlDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "app",
+                  "description": "Name of the database, for both modes."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "default": {},
+                  "description": "Connection details populated by the library, the same keys in both modes (eg `plainhost`, `plainporthost`, `complete`, `urlnossl`, `jdbc`). The read-only endpoint of the operator pooler (`operator.pooler.createRO`) adds the same keys suffixed with `RO` (eg `completeRO`). Read-only."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Configuration of the dependency itself, for both modes. Never merged into the chart."
+            },
+            "operator": {
+              "$ref": "dependencies/postgresql/operator/operator.json",
+              "description": "Settings of the CloudNativePG `Cluster`, used when `mode` is `operator`. The credentials stay in `depconfig`. Never merged into the chart values.",
+              "x-docs-page": {
+                "title": "PostgreSQL Operator"
+              }
+            },
+            "image": false
+          }
+        }
+      ],
+      "description": "The postgresql dependency. In `operator` mode (default) a CloudNativePG `Cluster` is spawned from `operator`.",
+      "x-docs-page": {
+        "title": "PostgreSQL"
+      }
+    },
+    "mariadb": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
+                },
+                "rootPassword": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "PLACEHOLDERROOTPASSWORD",
+                  "description": "Password of the `root` user."
+                },
+                "mariadbUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database user."
+                },
+                "mariadbDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Settings of the dependency itself. Never merged into the chart."
+            },
+            "image": false
+          }
+        }
+      ],
+      "description": "The mariadb dependency.",
+      "x-docs-page": {
+        "title": "MariaDB"
+      }
+    },
+    "mongodb": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
+                },
+                "rootPassword": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "PLACEHOLDERROOTPASSWORD",
+                  "description": "Password of the `root` user."
+                },
+                "mongodbUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database user."
+                },
+                "mongodbDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Settings of the dependency itself. Never merged into the chart."
+            },
+            "image": false
+          }
+        }
+      ],
+      "description": "The mongodb dependency.",
+      "x-docs-page": {
+        "title": "MongoDB"
+      }
+    },
+    "clickhouse": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "depconfig": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
+                },
+                "clickhouseUsername": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database user."
+                },
+                "clickhouseDatabase": {
+                  "type": "string",
+                  "minLength": 1,
+                  "default": "test",
+                  "description": "Name of the database."
+                },
+                "clickhouseDefaultAccessManagement": {
+                  "type": "integer",
+                  "default": 0,
+                  "description": "Set to `1` to allow the user to manage users and grants with SQL."
+                },
+                "creds": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "description": "Connection details populated by the library (eg `plainhost`, `complete`). Read-only."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Settings of the dependency itself. Never merged into the chart."
+            },
+            "image": false
+          }
+        }
+      ],
+      "description": "The clickhouse dependency.",
+      "x-docs-page": {
+        "title": "ClickHouse"
+      }
+    },
+    "memcached": {
+      "allOf": [
+        {
+          "$ref": "../values.schema.source.json",
+          "x-docs-internal": true
+        },
+        {
+          "$ref": "#/additionalProperties/allOf/1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "image": false
+          }
+        }
+      ],
+      "description": "The memcached dependency. It has no credentials, the chart connects to its primary service.",
+      "x-docs-page": {
+        "title": "Memcached"
+      }
+    }
+  },
   "additionalProperties": {
     "allOf": [
       {
@@ -16,19 +308,83 @@
               "boolean",
               "string"
             ],
-            "description": "Whether the dependency is enabled. The values of disabled dependencies are not merged into the chart. Supports Helm `tpl`.",
+            "description": "Whether the dependency is enabled. Objects of disabled dependencies are not merged into the chart. Supports Helm `tpl`.",
             "x-helm-tpl": true
           },
-          "dependencies": false
+          "mode": {
+            "type": "string",
+            "enum": [
+              "standalone",
+              "operator"
+            ],
+            "default": "standalone",
+            "description": "How the dependency is provided. `standalone` merges and deploys it with the chart, `operator` leaves it to an operator, so its objects are not merged into the chart. The credentials, wait init container and notes still apply."
+          },
+          "depconfig": {
+            "type": "object",
+            "properties": {
+              "password": {
+                "type": "string",
+                "description": "Password used by the dependency. Defaults to `PLACEHOLDERPASSWORD`."
+              },
+              "creds": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Connection details populated by the dependency (eg `plainhost`, `url`). Read-only."
+              }
+            },
+            "description": "Configuration of the dependency itself. Never merged into the chart values."
+          },
+          "operator": {
+            "type": "object",
+            "description": "Settings specific to the operator providing the dependency (see `mode`). Never merged into the chart values."
+          },
+          "dependencies": false,
+          "configMapsFromFolder": false,
+          "extraTpl": false,
+          "ingressMiddlewares": false,
+          "volumeClaimTemplates": false,
+          "cnpg": false,
+          "solr": false,
+          "mariadb": false,
+          "mongodb": false,
+          "clickhouse": false
         }
       },
       {
         "required": [
           "enabled"
         ]
+      },
+      {
+        "properties": {
+          "depconfig": {
+            "properties": {
+              "password": {
+                "description": "Password of the dependency."
+              },
+              "creds": {
+                "description": "Connection details set by the dependency, eg `plainhost` and `url`. Read only."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Settings of the dependency itself. Never merged into the chart."
+          },
+          "operator": {
+            "additionalProperties": {
+              "description": "A setting for the operator. Never merged into the chart values."
+            },
+            "description": "Settings for the operator that provides the dependency. Never merged into the chart."
+          }
+        }
       }
     ],
-    "description": "A dependency, keyed by name: a set of chart values with an `enabled` key, merged into the values of the chart when enabled."
+    "x-docs-page": {
+      "title": "Custom Dependencies",
+      "file": "dependencies/custom.md"
+    }
   },
-  "description": "Dependencies of the chart: sets of chart values that are merged into the values of the chart when the dependency is enabled. Each dependency contains a complete chart values structure. See [dependencies](/truecharts-common/dependencies)."
+  "description": "Dependencies of the chart: databases and caches that common deploys with the chart. Each dependency contains a complete chart values structure, and its objects are merged into the chart under the name `<dependency>-<object>`. See [dependencies](/truecharts-common/dependencies)."
 }

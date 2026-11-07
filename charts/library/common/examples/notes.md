@@ -26,6 +26,15 @@ notes:
     - Back up your data before you upgrade.
 ```
 
+### Show credentials
+
+Connection URLs contain the password of the database, so they are replaced by `HIDDEN` unless `showCredentials` is `true`. The JDBC URLs, hosts and usernames do not contain credentials and are always shown:
+
+```yaml
+notes:
+  showCredentials: true
+```
+
 ### Example output with PostgreSQL and Valkey
 
 When a chart has the PostgreSQL (in the default `operator` mode, so provided by CNPG) and Valkey dependencies enabled, the notes output includes:

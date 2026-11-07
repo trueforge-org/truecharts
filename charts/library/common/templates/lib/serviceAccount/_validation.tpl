@@ -13,7 +13,10 @@
 
     {{/* If service account is enabled */}}
     {{- if $serviceAccount.enabled -}}
-      {{- $hasEnabled = true -}}
+      {{/* Service accounts of dependencies do not require a primary */}}
+      {{- if not $serviceAccount.dependency -}}
+        {{- $hasEnabled = true -}}
+      {{- end -}}
 
       {{/* And service account is primary */}}
       {{- if and (hasKey $serviceAccount "primary") ($serviceAccount.primary) -}}

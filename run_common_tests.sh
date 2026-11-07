@@ -17,6 +17,7 @@
 
 cd "$(dirname "$0")" || exit 1
 
+common_test_path="charts/library/common-test"
 common_schema_test_script="charts/library/common/test_schema.py"
 common_coverage_script="charts/library/common/check_complete_values_schema_coverage.py"
 common_unittest_coverage_script="charts/library/common/check_unittest_schema_coverage.py"

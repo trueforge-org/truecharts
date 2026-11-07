@@ -48,7 +48,7 @@ storageClass:
     parameters:
       server: nfs.example.com
       share: /exports
-      mountPermissions: "0"
+      mountPermissions: 0
       subDir: data
     mountOptions:
       - nfsvers=4.1
