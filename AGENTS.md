@@ -3,7 +3,7 @@
 These are the instructions for AI coding agents working in the TrueCharts repository, including GitHub Copilot, OpenAI Codex/ChatGPT, Claude Code and any other tool that reads `AGENTS.md`.
 
 - **`AGENTS.md`** (this file) is the canonical, tool-agnostic source.
-- **`CLAUDE.md`** imports this file for Claude Code. The scoped files below are symlinked into `.claude/rules/`, where Claude Code loads each one by its `paths:` frontmatter. Keep `paths:` in sync with `applyTo:`, and add a symlink with the same file name for every new scoped file (e.g. `ln -s ../../.github/instructions/<name>.instructions.md .claude/rules/`), so relative links resolve from both places.
+- **`CLAUDE.md`** imports this file for Claude Code. It is copied daily from `trueforge-org/.github`, so put Claude-only TrueCharts rules in `.claude/rules/truecharts.md`. The scoped files below are symlinked into `.claude/rules/`, where Claude Code loads each one by its `paths:` frontmatter. Keep `paths:` in sync with `applyTo:`, and add a symlink with the same file name for every new scoped file (e.g. `ln -s ../../.github/instructions/<name>.instructions.md .claude/rules/`), so relative links resolve from both places.
 - **`.github/copilot-instructions.md`** is a short, self-contained summary for Copilot surfaces that only read that file.
 - **`.github/instructions/*.instructions.md`** hold area-specific rules. Copilot applies them automatically through `applyTo`. Other agents **must read the matching file before editing**:
 
@@ -11,6 +11,7 @@ These are the instructions for AI coding agents working in the TrueCharts reposi
 | --- | --- |
 | `charts/stable/**`, `charts/incubator/**` (application charts) | [`.github/instructions/charts.instructions.md`](.github/instructions/charts.instructions.md), plus the area file for the path: [values and ci](.github/instructions/charts-values.instructions.md), [templates](.github/instructions/charts-templates.instructions.md) |
 | `charts/library/**` (`common` library and `common-test` harness) | [`.github/instructions/common-library.instructions.md`](.github/instructions/common-library.instructions.md), plus the area file for the path: [templates](.github/instructions/common-library-templates.instructions.md), [schema](.github/instructions/common-library-schema.instructions.md), [dependencies](.github/instructions/common-library-dependencies.instructions.md), [docs and generated files](.github/instructions/common-library-docs.instructions.md), [tests](.github/instructions/common-library-tests.instructions.md) |
+| `templates/helm-release.schema.json.tpl` (HelmRelease schema published to the website) | [`.github/instructions/helm-release-schema.instructions.md`](.github/instructions/helm-release-schema.instructions.md) |
 
 When you change a rule, update `AGENTS.md` and the scoped files first, then keep `.github/copilot-instructions.md` in sync.
 

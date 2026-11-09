@@ -393,6 +393,30 @@ tests:
           value: test-release-name-common-test-my-configmap
         isKind:
           of: ConfigMap
+  - it: should render the default-named persistence objects with size in persistence fixed-name volumes
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          data:
+            foo: bar
+      persistence:
+        shared:
+          size: 1Gi
+        varlogs:
+          size: 1Gi
+        varrun:
+          size: 1Gi
+        tmp:
+          size: 1Gi
+        devshm:
+          size: 1Gi
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-configmap
+        isKind:
+          of: ConfigMap
 
   - it: should fail on unknown keys in persistence fixed-name volumes
     set:

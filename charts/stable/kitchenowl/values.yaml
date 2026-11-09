@@ -2,11 +2,11 @@
 image:
   repository: docker.io/tombursch/kitchenowl-web
   pullPolicy: IfNotPresent
-  tag: latest@sha256:ed0e5903b6cb531d5e89c20910821d40a570d5f85d8169ffb567fc4e2ed064d6
+  tag: v0.8.1@sha256:a2093eb32dfe501d6d9ce068ee5645654b806772a76138ab51b20c213bddf63a
 backendImage:
   repository: docker.io/tombursch/kitchenowl
   pullPolicy: IfNotPresent
-  tag: latest@sha256:bd821a41b8cb27fd7fcf429acd1fc67e9f889485a2cd1193d68c2d804a8e1bef
+  tag: v0.8.1@sha256:6a048135399691da25aec04ea107666cb7ce8eb46f5fed9a46a5ac254fe23073
 
 service:
   main:
@@ -41,13 +41,14 @@ persistence:
       main:
         main:
           mountPath: /data
-
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsNonRoot: false
-    runAsUser: 0
-    runAsGroup: 0
+  # nginx renders its config from templates into conf.d on startup
+  nginx-conf:
+    enabled: true
+    type: emptyDir
+    targetSelector:
+      frontend:
+        frontend:
+          mountPath: /etc/nginx/conf.d
 
 workload:
   main:

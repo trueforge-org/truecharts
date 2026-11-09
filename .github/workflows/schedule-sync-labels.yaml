@@ -1,16 +1,22 @@
 ---
-name: "Schedule: Sync labels"
+# Canonical copy: global-ci/schedule-sync-labels.yaml in trueforge-org/.github.
+# CLAUDE.md, .claude/agents, .claude/skills and .devcontainer are managed in that
+# repository: change them there, because local edits here are overwritten daily.
+name: "Schedule: Sync labels and shared config"
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
     - cron: "0 * * * *"
+    - cron: "30 0 * * *"
+
+permissions:
+  contents: read
 
 jobs:
   labels:
     name: Sync Labels
-    runs-on:
-      group: default
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -21,6 +27,48 @@ jobs:
         uses: EndBug/label-sync@52074158190acb45f3077f9099fea818aa43f97a # v2
         with:
           config-file: |
-            https://raw.githubusercontent.com/truecharts/.github/main/.github/labels.yaml
+            https://raw.githubusercontent.com/trueforge-org/.github/main/.github/labels.yaml
           token: "${{ secrets.BOT_TOKEN }}"
           delete-other-labels: true
+
+  shared-config:
+    name: Sync Shared Config
+    # Daily or on demand. The .github repository is the source, so it has nothing to copy.
+    if: >-
+      github.repository != 'trueforge-org/.github' &&
+      (github.event_name == 'workflow_dispatch' || github.event.schedule == '30 0 * * *')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: sync-shared-config
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          token: ${{ secrets.OR_PAT }}
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Checkout shared config
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: trueforge-org/.github
+          ref: main
+          path: .shared-config
+          persist-credentials: false
+
+      - name: Copy shared config
+        run: |
+          mkdir -p .claude
+          for path in CLAUDE.md .claude/agents .claude/skills .devcontainer; do
+            cp -aT ".shared-config/${path}" "${path}"
+          done
+          rm -rf .shared-config
+
+      - name: Commit changes
+        run: |
+          git config user.name "TrueCharts-Bot"
+          git config user.email "bot@truecharts.org"
+          git add -- CLAUDE.md .claude/agents .claude/skills .devcontainer
+          git diff --cached --quiet && exit 0
+          git commit -sm "chore(ci): sync shared Claude and devcontainer config"
+          git pull --rebase
+          git push

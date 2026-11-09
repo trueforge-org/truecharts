@@ -77,9 +77,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -157,9 +154,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -228,9 +222,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -295,9 +286,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -362,9 +350,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -431,9 +416,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -520,9 +502,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationCaDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -609,9 +588,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationCaDestDoc
         matchRegex:
           path: spec.restic.unlock
@@ -705,9 +681,6 @@ tests:
               fsGroup: 568
               runAsUser: 568
               runAsGroup: 568
-              runAsNonRoot: true
-              seccompProfile:
-                type: RuntimeDefault
       - documentIndex: *replicationCaDestDoc
         matchRegex:
           path: spec.restic.unlock

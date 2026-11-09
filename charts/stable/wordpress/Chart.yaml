@@ -12,14 +12,14 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 30.4.1
+    version: 30.4.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mariadb
-    version: 19.0.8
+    version: 19.1.4
     repository: oci://oci.trueforge.org/truecharts
     condition: mariadb.enabled
     alias: ""
@@ -43,4 +43,5 @@ sources:
   - https://hub.docker.com/r/bitnamisecure/wordpress
   - https://www.wordpress.org
 type: application
-version: 15.1.0
+version: 15.2.3
+

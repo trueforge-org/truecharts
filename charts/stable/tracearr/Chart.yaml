@@ -9,17 +9,17 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 3.1.4
+appVersion: 3.1.7
 dependencies:
   - name: common
-    version: 30.4.1
+    version: 30.4.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: valkey
-    version: 3.0.8
+    version: 3.1.5
     repository: oci://oci.trueforge.org/truecharts
     condition: redis.enabled
     alias: redis
@@ -44,4 +44,5 @@ sources:
   - https://github.com/connorgallopo/Tracearr/blob/main/docker/docker-compose.yml
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/tracearr
 type: application
-version: 8.2.0
+version: 8.3.3
+

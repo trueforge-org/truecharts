@@ -9,17 +9,17 @@ annotations:
   trueforge.org/min_helm_version: "3.14"
   trueforge.org/train: stable
 apiVersion: v2
-appVersion: 12.94.0
+appVersion: 12.99.0
 dependencies:
   - name: common
-    version: 30.4.1
+    version: 30.4.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
   - name: mongodb
-    version: 18.0.12
+    version: 18.1.4
     repository: oci://oci.trueforge.org/truecharts
     condition: mongodb.enabled
     alias: ""
@@ -44,4 +44,5 @@ sources:
   - https://hub.docker.com/r/wekanteam/wekan
   - https://wekan.github.io/
 type: application
-version: 26.35.0
+version: 26.36.3
+
