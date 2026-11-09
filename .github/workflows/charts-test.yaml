@@ -180,6 +180,11 @@ jobs:
             discard_unpacked_layers = false
           EOL
 
+      - name: Prep runner host
+        shell: bash
+        run: |
+          ./.github/scripts/prep_host.sh
+
       - name: Create k3d cluster
         uses: nolar/setup-k3d-k3s@v1
         with:
@@ -258,6 +263,11 @@ jobs:
             disable_snapshot_annotations = true
             discard_unpacked_layers = false
           EOL
+
+      - name: Prep runner host
+        shell: bash
+        run: |
+          ./.github/scripts/prep_host.sh
 
       - name: Create k3d cluster
         uses: nolar/setup-k3d-k3s@v1
@@ -338,6 +348,11 @@ jobs:
             discard_unpacked_layers = false
           EOL
 
+      - name: Prep runner host
+        shell: bash
+        run: |
+          ./.github/scripts/prep_host.sh
+
       - name: Create k3d cluster
         uses: nolar/setup-k3d-k3s@v1
         with:
@@ -416,6 +431,11 @@ jobs:
             disable_snapshot_annotations = true
             discard_unpacked_layers = false
           EOL
+
+      - name: Prep runner host
+        shell: bash
+        run: |
+          ./.github/scripts/prep_host.sh
 
       - name: Create k3d cluster
         uses: nolar/setup-k3d-k3s@v1
@@ -497,6 +517,11 @@ jobs:
             discard_unpacked_layers = false
           EOL
 
+      - name: Prep runner host
+        shell: bash
+        run: |
+          ./.github/scripts/prep_host.sh
+
       - name: Create k3d cluster
         uses: nolar/setup-k3d-k3s@v1
         with:
@@ -575,6 +600,11 @@ jobs:
             disable_snapshot_annotations = true
             discard_unpacked_layers = false
           EOL
+
+      - name: Prep runner host
+        shell: bash
+        run: |
+          ./.github/scripts/prep_host.sh
 
       - name: Create k3d cluster
         uses: nolar/setup-k3d-k3s@v1
