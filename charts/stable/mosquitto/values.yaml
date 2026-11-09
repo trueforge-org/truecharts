@@ -21,6 +21,12 @@ workload:
     podSpec:
       containers:
         main:
+          # Use the config and data paths that the host AppArmor "mosquitto" profile
+          # (e.g. on Ubuntu 26.04) allows for /usr/sbin/mosquitto.
+          args:
+            - /usr/sbin/mosquitto
+            - -c
+            - /etc/mosquitto/mosquitto.conf
           probes:
             liveness:
               enabled: true
@@ -62,7 +68,7 @@ configmap:
         {{- end }}
         {{- if .Values.persistence.data.enabled }}
         persistence true
-        persistence_location {{ .Values.persistence.data.mountPath }}
+        persistence_location {{ trimSuffix "/" .Values.persistence.data.mountPath }}/
         autosave_interval 1800
         {{- end }}
         {{- if .Values.persistence.configinc.enabled }}
@@ -71,13 +77,13 @@ configmap:
 persistence:
   data:
     enabled: true
-    mountPath: "/mosquitto/data"
+    mountPath: "/var/lib/mosquitto"
   configinc:
     enabled: true
-    mountPath: "/mosquitto/configinc"
+    mountPath: "/etc/mosquitto/conf.d"
   mosquitto-config:
     enabled: true
-    mountPath: "/mosquitto/config/mosquitto.conf"
+    mountPath: "/etc/mosquitto/mosquitto.conf"
     subPath: "mosquitto.conf"
     type: configmap
     objectName: config

@@ -18,14 +18,14 @@ auth:
 Open the Mosquitto container shell and execute the following commands, _one by one_, in order:
 
 ```sh
-cd /mosquitto/configinc
+cd /etc/mosquitto/conf.d
 mosquitto_passwd -c passwordfile username
-echo "password_file /mosquitto/configinc/passwordfile" > passwordconfig.conf
+echo "password_file /etc/mosquitto/conf.d/passwordfile" > passwordconfig.conf
 ```
 
 :::tip[These commands explained]
 
-- Navigate to `/mosquitto/configinc`, the persistent storage location inside the container where the password files go
+- Navigate to `/etc/mosquitto/conf.d`, the persistent storage location inside the container where the password files go
 - Create a password file. This is interactive. Change `username` to your username. It will ask you to input the password twice
 - Create a config file that points to the password file
 
