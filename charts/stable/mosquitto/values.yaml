@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
-  repository: eclipse-mosquitto
-  tag: 2.0.22@sha256:81a6193ae693942a3231cd3ac52875b02b7e3a19da671b2fb4b55cc874c5b279
+  repository: oci.trueforge.org/containerforge/mosquitto
+  tag: 2.0.22@sha256:0f0c8ce0a70128b20924b6fc8ea226febeb96d6840d2a05d4590fc51fa6a650d
   pullPolicy: IfNotPresent
 service:
   main:
@@ -22,8 +22,9 @@ workload:
       containers:
         main:
           # Use the config and data paths that the host AppArmor "mosquitto" profile
-          # (e.g. on Ubuntu 26.04) allows for /usr/sbin/mosquitto.
-          args:
+          # (e.g. on Ubuntu 26.04) allows for /usr/sbin/mosquitto. The image's
+          # /start.sh always reads /mosquitto/config, so start mosquitto directly.
+          command:
             - /usr/sbin/mosquitto
             - -c
             - /etc/mosquitto/mosquitto.conf
