@@ -122,10 +122,11 @@ nextcloud:
   php:
     memory_limit: 1G
     upload_limit: 10G
-    pm_max_children: 180
-    pm_start_servers: 18
-    pm_min_spare_servers: 12
-    pm_max_spare_servers: 30
+    # Sized to fit the 3000Mi main container limit (~100Mi per worker)
+    pm_max_children: 24
+    pm_start_servers: 4
+    pm_min_spare_servers: 2
+    pm_max_spare_servers: 6
   opcache:
     interned_strings_buffer: 32
     max_accelerated_files: 10000
