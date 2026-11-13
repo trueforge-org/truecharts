@@ -76,8 +76,8 @@ nextcloud:
   # Logging settings
   logging:
     log_level: 2
-    log_file: /var/www/html/data/logs/nextcloud.log
-    log_audit_file: /var/www/html/data/logs/audit.log
+    log_file: /var/log/nextcloud/nextcloud.log
+    log_audit_file: /var/log/nextcloud/audit.log
     log_date_format: d/m/Y H:i:s
   # ClamAV settings
   clamav:
@@ -522,21 +522,21 @@ persistence:
         nginx:
           mountPath: /var/www/html/data
           readOnly: true
-  # Holds nextcloud.logging.log_file and log_audit_file; without it the logs/ dir is missing
-  # and Nextcloud silently falls back to an unrotated data/nextcloud.log
+  # Holds nextcloud.logging.log_file and log_audit_file. Kept outside data/: on root-squashed NFS
+  # data the runtime cannot create a nested mountpoint, and outside the webroot served by nginx
   logs:
     enabled: true
     size: 2Gi
     targetSelector:
       main:
         main:
-          mountPath: /var/www/html/data/logs
+          mountPath: /var/log/nextcloud
       nextcloud-cron:
         nextcloud-cron:
-          mountPath: /var/www/html/data/logs
+          mountPath: /var/log/nextcloud
       preview-cron:
         preview-cron:
-          mountPath: /var/www/html/data/logs
+          mountPath: /var/log/nextcloud
 cnpg:
   main:
     enabled: true
