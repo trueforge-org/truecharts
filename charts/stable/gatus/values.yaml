@@ -52,7 +52,7 @@ configmap:
           type: postgres
           path: {{ (printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"")) | quote }}
         {{- end }}
-
+        metrics: true
         endpoints:
           - name: example
             url: https://example.org
@@ -154,4 +154,5 @@ metrics:
   main:
     enabled: true
     endpoints:
-      - path: /metrics
+      - port: main
+        path: /metrics
