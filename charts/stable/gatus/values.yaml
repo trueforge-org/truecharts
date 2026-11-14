@@ -149,3 +149,9 @@ serviceAccount:
 # Need automountServiceAccountToken to allow sidecar to use the ServiceAccount
 podOptions:
   automountServiceAccountToken: true
+
+metrics:
+  main:
+    enabled: true
+    endpoints:
+      - path: /metrics
