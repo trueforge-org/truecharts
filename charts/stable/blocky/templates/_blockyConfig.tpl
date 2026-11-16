@@ -12,7 +12,7 @@ redis:
   address: {{ printf "%v-%v" .Release.Name "redis" }}:6379
   password: {{ .Values.redis.creds.redisPassword | trimAll "\"" }}
   database: 0
-  required: true
+  required: {{ .Values.redisRequired }}
   connectionAttempts: 10
   connectionCooldown: 3s
 

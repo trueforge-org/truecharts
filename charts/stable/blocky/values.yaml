@@ -427,6 +427,14 @@ metrics:
 redis:
   enabled: true
 
+# -- If true, blocky will refuse to start when the bundled Redis cache is
+# unreachable. Redis here only synchronises blocky's cache/blocking state
+# between replicas: blocky itself never depends on it to answer queries
+# (see https://0xerr0r.github.io/blocky/latest/configuration/#redis), so the
+# upstream default is false. Set to true only if you specifically need
+# blocky to fail fast when Redis is misconfigured.
+redisRequired: false
+
 queryLog:
   # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console
   type: "postgresql"
