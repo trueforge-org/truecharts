@@ -33,10 +33,6 @@ jobs:
 
   shared-config:
     name: Sync Shared Config
-    # Daily or on demand. The .github repository is the source, so it has nothing to copy.
-    if: >-
-      github.repository != 'trueforge-org/.github' &&
-      (github.event_name == 'workflow_dispatch' || github.event.schedule == '30 0 * * *')
     runs-on: ubuntu-latest
     concurrency:
       group: sync-shared-config
