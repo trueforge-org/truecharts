@@ -2,23 +2,19 @@
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "TrueForge",
   "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:a9a8091742d9b553daeff060917428d10f7f6e28122dd6c636560d6b0819d3c1",
-  "initializeCommand": "mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.claude",
+  "initializeCommand": "mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.claude && mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh && mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.ssh && touch ${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/known_hosts",
   "postCreateCommand": "if [ -f package.json ]; then npm install; fi",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/config/.claude,type=bind,consistency=cached"
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.claude,target=/config/.claude,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh,target=/home/vscode/.config/gh,type=bind,readonly",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/known_hosts,target=/home/vscode/.ssh/known_hosts,type=bind,readonly"
   ],
   "containerEnv": {
     "CLAUDE_CONFIG_DIR": "/config/.claude"
   },
-  "features": {
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-      "moby": false
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "24"
-    }
-  },
+  "features": {},
   "customizations": {
     "vscode": {
       "extensions": [
