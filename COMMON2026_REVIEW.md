@@ -11,10 +11,10 @@ Focus: **mistakes**, **performance**, **security**.
 | Severity | Count | Most important |
 | --- | --- | --- |
 | High | 6 | PostgreSQL 16 → 18 default, NetworkPolicy allow-all, route backend namespace, removed `alpineImage`, CI matrix > 256 jobs, new default `crontab` mount |
-| Medium | 13 | runAsNonRoot inheritance, VolSync mover limits, valkey operator PSS, placeholder passwords, `tpl`-documented keys never templated, removed runtime validation |
-| Low | ~20 | quoting, dead code, tooling hygiene, minor perf |
+| Medium | 12 | runAsNonRoot inheritance, VolSync mover limits, valkey operator PSS, placeholder passwords, `tpl`-documented keys never templated |
+| Low | ~25 | quoting, dead code, tooling hygiene, minor perf |
 
-Cross-cutting theme: many runtime `kindIs`/enum validations were removed **in favour of the JSON schema**, but the common schema is **not** shipped to stable/incubator app charts (by design). For the ~800 app charts, typos and wrong types that used to fail loudly now render silently broken manifests (see [M-10](#m-10-runtime-validation-removed-in-favour-of-a-schema-that-app-charts-do-not-get)).
+Note on validation: many runtime `kindIs` and enum checks were removed in favour of the JSON schema. This is mostly fine: every stable and incubator chart ships a `values.schema.json` that `$ref`s the published common schema, so Helm validates user values. The remaining gap is objects that common builds at render time, see [L-25](#mistakes).
 
 ---
 
@@ -133,35 +133,19 @@ Cross-cutting theme: many runtime `kindIs`/enum validations were removed **in fa
 - The coverage check cannot see top-level keys: `check_complete_values_schema_coverage.py:102-106` counts any key under the root `additionalProperties: true` as covered, which also hides `cert`, `podmonitor`, `servicemonitor` and `prometheusRule`.
 - **Suggested fix:** restore the keys, and make the coverage script require root keys to be listed in `properties`.
 
-### M-10. Runtime validation removed in favour of a schema that app charts do not get
-
-- **Where (examples):**
-  - CNPG: `lib/cnpg/cluster/_validation.tpl` (`mode`, `type`, `hibernate`, `logLevel`, `primaryUpdateStrategy/Method`, `walSegmentSize`) and `lib/cnpg/scheduledBackup/_validation.tpl`
-  - VolSync: `lib/volsync/_validation.tpl` (`type`, `copyMethod`)
-  - Autoscaling: HPA and VPA validation
-  - Containers: lifecycle type, seccomp type, `fsGroupChangePolicy`, `tolerationSeconds`, probe numbers
-  - Storage and workload types
-  - Ingress and Traefik middleware `kindIs` checks
-- **Problem:** stable and incubator charts deliberately do not get the common schema, and Helm does not validate a library subchart's values. Objects built at runtime by addons, injectors and `tpl` are also never validated against the schema.
-- **Failure scenarios:**
-  - `operator.mode: recovry` renders an empty `bootstrap:`. CNPG falls back to initdb with its own secret, and the app cannot authenticate.
-  - `lifecycle.type: foo` renders an empty `preStop:`.
-  - `trustForwardHeader: "yes"` is rendered raw.
-- **Suggested fix:** keep template checks at least for keys that select code paths (`mode`, `recovery.method`, volsync `type`, lifecycle `type`) and for keys rendered raw into manifests.
-
-### M-11. `diagnosticMode.enabled` accepts a string in the schema, but the template rejects it
+### M-10. `diagnosticMode.enabled` accepts a string in the schema, but the template rejects it
 
 - **Where:** `schemas/global/global.json:48-53`, `schemas/diagnosticMode.json` and `templates/lib/util/_diagnosticMode.tpl:11-13`
 - **Failure scenario:** `"true"` passes the schema, then fails at render with "Expected [diagnosticMode.enabled] to be a bool".
 - **Suggested fix:** go back to `boolean` in the schema, or accept and `tpl` strings in the template.
 
-### M-12. Unrelated Renovate preset deletion
+### M-11. Unrelated Renovate preset deletion
 
 - **Where:** `.github/renovate/**` (28 files deleted, about 1,000 lines)
 - **Problem:** a `common` rework deletes the whole local Renovate preset tree (golden rule 7). This repo's `.github/renovate.json5` only extends `github>trueforge-org/renovate-config`, so behaviour here does not change. But these files were referenced as `github>trueforge-org/truecharts//.github/renovate/...`, a public preset path that other org repos may still extend. Rules that only exist here are also lost (for example the minio `dependencyDashboardApproval` and `customVersioning`).
 - **Suggested fix:** take this out of the PR into a separate `chore(ci)` PR, after a grep across the org for `truecharts//.github/renovate`.
 
-### M-13. Build/debug artifact committed ✅
+### M-12. Build/debug artifact committed ✅
 
 - **Where:** `charts/library/common-test/.debug/common-test/templates/common.yaml`
 - **Problem:** this is helm-unittest `--debug` output (golden rule 5). It holds a stale render failure and is not git-ignored.
@@ -185,6 +169,7 @@ Cross-cutting theme: many runtime `kindIs`/enum validations were removed **in fa
 - **L-10.** `.github/instructions/charts-values.instructions.md:46` and `common-library-dependencies.instructions.md:17` say MongoDB, ClickHouse and Memcached are gone, or that only valkey, mariadb and postgresql are predefined. `values.yaml` in this PR predefines `dependencies.clickhouse`, `memcached` and `mongodb`, with injectors, tests and docs. `templates/lib/dependencies/_mariadbInjector.tpl` and the other files are fine; the instructions are out of date. Keep `.github/copilot-instructions.md` in sync.
 - **L-11.** `charts/library/common/.helmignore:48` is hand-edited (generated file, golden rule 3). It adds the nonexistent `/improve_schemas.py` (also in `templates/helmignore.tpl:48-51`), but misses `/legacy_keys.py` and `/stable-legacy-keys.yaml`, which would then be packaged into the library chart.
 - **L-12.** `install_dependencies.sh:86`: the valkey operator is only installed for `common-test`. The stable/incubator path does not detect `dependencies.valkey.mode: operator`, so a future app chart using it would fail its install test.
+- **L-25.** Runtime checks that were moved to the schema (CNPG `mode`/`type`/`logLevel`/`primaryUpdate*`, volsync `type`/`copyMethod`, HPA/VPA, lifecycle and seccomp types, ingress and Traefik `kindIs`) no longer cover objects that common builds itself at render time: addon containers, dependency injector output, and values that are `tpl` strings, which the schema accepts as strings before they render. User values in app charts are still validated through the `$ref`'d schema. Consider keeping template checks only for keys that select a code path (CNPG `mode`, `recovery.method`, volsync `type`, lifecycle `type`), where a bad value renders an empty or wrong block instead of failing.
 
 ### Security (low)
 
@@ -227,5 +212,5 @@ Cross-cutting theme: many runtime `kindIs`/enum validations were removed **in fa
 - **Schema:** only the root has `additionalProperties: true`. Size grew from 379 KB to 525 KB (380 KB minified), with `$ref`s kept rather than inlined, so there is no render-time concern.
 - **Python tooling:** YAML loading is safe (`safe_load` or a `SafeLoader` subclass), and the checkers exit non-zero on failure.
 - **`common-test`:** `Chart.yaml` stays at `1.0.0`. The tests and ci values have no real-looking secrets, and no privileged, hostNetwork or hostPath settings.
-- **Scope:** there are no changes under `charts/stable/**` or `charts/incubator/**`, and no `Chart.lock`, `*.tgz` or `__snapshot__/` files (apart from M-13).
+- **Scope:** there are no changes under `charts/stable/**` or `charts/incubator/**`, and no `Chart.lock`, `*.tgz` or `__snapshot__/` files (apart from M-12).
 - **Version bump:** the `common` version is not bumped. That is correct as long as this PR targets the `common2026` branch. A PR of this branch into `master` needs `32.0.0` (breaking).
