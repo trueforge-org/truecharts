@@ -19,7 +19,7 @@ This template generates the mongodb credentials and the secret holding them
         {{- $_ := set $dep.depconfig "creds" dict -}}
       {{- end -}}
 
-      {{/* The passwords have no default, they are required */}}
+      {{/* The passwords default to placeholders in values, they must not be empty */}}
       {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "mongodb" "key" "password") -}}
       {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "mongodb" "key" "rootPassword") -}}
       {{- $dbPass := $dep.depconfig.password -}}

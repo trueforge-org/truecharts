@@ -55,7 +55,7 @@ Settings of the dependency itself. Never merged into the chart.
 
 ## `depconfig.password`
 
-Password of the database user. Required when the dependency is enabled, there is no default and none is generated.
+Password of the database user.
 
 | Field | Value |
 | --- | --- |
@@ -63,13 +63,13 @@ Password of the database user. Required when the dependency is enabled, there is
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | unset |
+| Default | `"PLACEHOLDERPASSWORD"` |
 
 ---
 
 ## `depconfig.rootPassword`
 
-Password of the `root` user. Required when the dependency is enabled, there is no default and none is generated.
+Password of the `root` user.
 
 | Field | Value |
 | --- | --- |
@@ -77,7 +77,7 @@ Password of the `root` user. Required when the dependency is enabled, there is n
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | unset |
+| Default | `"PLACEHOLDERROOTPASSWORD"` |
 | Length | 1 to … |
 
 ---

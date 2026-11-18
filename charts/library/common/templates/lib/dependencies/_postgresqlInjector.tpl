@@ -17,7 +17,7 @@ The user and database are part of the connection urls (and of the CNPG bootstrap
     {{- $_ := set $dep.depconfig "creds" dict -}}
   {{- end -}}
 
-  {{/* The password has no default, it is required */}}
+  {{/* The password defaults to a placeholder in values, it must not be empty */}}
   {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" .rootCtx "dep" $dep "depName" "postgresql" "key" "password") -}}
 
   {{- range $key := (list "postgresqlUsername" "postgresqlDatabase") -}}

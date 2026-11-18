@@ -22,4 +22,4 @@ These rules apply to the `dependencies` section of `charts/library/common/values
 
 - Render credentials into Secrets only, never into ConfigMaps or plain `env` values. Containers get them with `secretKeyRef`, e.g. to the `<release>-postgresqlcreds` or `<release>-valkeycreds` Secret. `tests/dependencies/credentials_test.yaml` checks this. Extend it when you add credentials.
 - Only show credentials in the notes when the user enables `notes.showCredentials`, which defaults to `false`.
-- Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Require credentials explicitly and fail the render when they are unset.
+- Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Dependency passwords default to the visible placeholders `PLACEHOLDERPASSWORD` / `PLACEHOLDERROOTPASSWORD`, the render fails when a password is set empty, and charts or users must override the placeholder.

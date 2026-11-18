@@ -6161,10 +6161,10 @@ dependencies:
       pod:
         fsGroup: 0
     depconfig:
+      password: ''
       clickhouseUsername: ''
       clickhouseDatabase: ''
       clickhouseDefaultAccessManagement: 0
-      password: ''
       creds:
         plainhost: ''
     workload:
@@ -6228,10 +6228,10 @@ dependencies:
     mode: ''
     operator: {}
     depconfig:
-      mariadbUsername: ''
-      mariadbDatabase: ''
       password: ''
       rootPassword: ''
+      mariadbUsername: ''
+      mariadbDatabase: ''
       creds:
         plainhost: ''
     workload:
@@ -6482,11 +6482,11 @@ dependencies:
       namespace: ''
       instances: 2
     depconfig:
+      password: ''
       postgresqlUsername: ''
       postgresqlDatabase: ''
       creds:
         plainhost: ''
-      password: ''
     workload:
       objectname:
         dbWait: false
@@ -6581,10 +6581,10 @@ dependencies:
       pod:
         fsGroup: 0
     depconfig:
-      mongodbUsername: ''
-      mongodbDatabase: ''
       password: ''
       rootPassword: ''
+      mongodbUsername: ''
+      mongodbDatabase: ''
       creds:
         plainhost: ''
     workload:

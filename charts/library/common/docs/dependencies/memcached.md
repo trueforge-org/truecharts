@@ -84,7 +84,7 @@ Configuration of the dependency itself. Never merged into the chart values.
 
 ## `depconfig.password`
 
-Password used by the dependency. Required when the dependency is enabled, there is no default and none is generated.
+Password used by the dependency. Defaults to `PLACEHOLDERPASSWORD`.
 
 | Field | Value |
 | --- | --- |

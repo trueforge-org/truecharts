@@ -1687,8 +1687,9 @@ dependencies:
             - ALL
       pod:
         fsGroup: 568
-    # -- Settings of the dependency itself, never merged into the chart. [password] is required when the dependency is enabled, there is no default and none is generated
+    # -- Settings of the dependency itself, never merged into the chart. [password] is a placeholder that must be overridden
     depconfig:
+      password: "PLACEHOLDERPASSWORD"
       clickhouseUsername: "test"
       clickhouseDatabase: "test"
       clickhouseDefaultAccessManagement: 0
@@ -1754,6 +1755,8 @@ dependencies:
     operator: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
       mariadbUsername: "test"
       mariadbDatabase: "test"
     workload:
@@ -2031,6 +2034,7 @@ dependencies:
     # -- Settings of the dependency itself, never merged into the chart. The user, database and password are used by both modes
     # [creds] holds the connection details written by the library, in both modes (eg [creds.complete], [creds.plainhost], [creds.jdbc])
     depconfig:
+      password: "PLACEHOLDERPASSWORD"
       postgresqlUsername: "app"
       postgresqlDatabase: "app"
       creds: {}
@@ -2134,6 +2138,8 @@ dependencies:
         fsGroup: 568
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
+      password: "PLACEHOLDERPASSWORD"
+      rootPassword: "PLACEHOLDERROOTPASSWORD"
       mongodbUsername: "test"
       mongodbDatabase: "test"
     workload:
@@ -2271,7 +2277,8 @@ dependencies:
       # -- Annotations of the ValkeyCluster
       annotations: {}
     # -- Settings of the dependency itself, never merged into the chart
-    depconfig: {}
+    depconfig:
+      password: "PLACEHOLDERPASSWORD"
     workload:
       main:
         replicas: 1

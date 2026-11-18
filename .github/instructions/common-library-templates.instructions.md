@@ -62,4 +62,4 @@ Removed or moved keys must fail with a clear message instead of being silently i
 - The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail when enabled, pointing to `dependencies.<name>`. `cnpg.<name>.enabled` fails too, with the migration steps.
 - `solr` was removed without a replacement, and fails when enabled. `mongodb`, `clickhouse` and `memcached` are predefined `dependencies.<name>` entries, and their legacy top-level keys (like `redis`, `cnpg`, `valkey`, `mariadb`) fail rendering when enabled.
 - `volumeClaimTemplates` and `addons.vpn` fail too. Use `persistence`, and the `tailscale` or `gluetun` addons.
-- Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Require credentials explicitly and fail the render when they are unset.
+- Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Dependency passwords default to the visible placeholders `PLACEHOLDERPASSWORD` / `PLACEHOLDERROOTPASSWORD`, the render fails when a password is set empty, and charts or users must override the placeholder.

@@ -18,7 +18,7 @@ This template generates the valkey credentials and the secret holding them
         {{- $_ := set $dep.depconfig "creds" dict -}}
       {{- end -}}
 
-      {{/* The password has no default, it is required */}}
+      {{/* The password defaults to a placeholder in values, it must not be empty */}}
       {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "valkey" "key" "password") -}}
       {{- $dbPass := $dep.depconfig.password -}}
 

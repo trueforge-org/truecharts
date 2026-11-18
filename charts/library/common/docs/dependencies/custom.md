@@ -54,7 +54,7 @@ Settings of the dependency itself. Never merged into the chart.
 
 ## `depconfig.password`
 
-Password of the dependency. Required when the dependency is enabled.
+Password of the dependency.
 
 | Field | Value |
 | --- | --- |

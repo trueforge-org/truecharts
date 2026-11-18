@@ -56,7 +56,8 @@
               "properties": {
                 "password": {
                   "type": "string",
-                  "description": "Password of the database user, for both modes. Required when the dependency is enabled, there is no default and none is generated."
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user, for both modes."
                 },
                 "postgresqlUsername": {
                   "type": "string",
@@ -116,12 +117,14 @@
                 "password": {
                   "type": "string",
                   "minLength": 4,
-                  "description": "Password of the database user. Required when the dependency is enabled, there is no default and none is generated."
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
                 },
                 "rootPassword": {
                   "type": "string",
                   "minLength": 4,
-                  "description": "Password of the `root` user. Required when the dependency is enabled, there is no default and none is generated."
+                  "default": "PLACEHOLDERROOTPASSWORD",
+                  "description": "Password of the `root` user."
                 },
                 "mariadbUsername": {
                   "type": "string",
@@ -172,12 +175,14 @@
               "properties": {
                 "password": {
                   "type": "string",
-                  "description": "Password of the database user. Required when the dependency is enabled, there is no default and none is generated."
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
                 },
                 "rootPassword": {
                   "type": "string",
                   "minLength": 1,
-                  "description": "Password of the `root` user. Required when the dependency is enabled, there is no default and none is generated."
+                  "default": "PLACEHOLDERROOTPASSWORD",
+                  "description": "Password of the `root` user."
                 },
                 "mongodbUsername": {
                   "type": "string",
@@ -228,7 +233,8 @@
               "properties": {
                 "password": {
                   "type": "string",
-                  "description": "Password of the database user. Required when the dependency is enabled, there is no default and none is generated."
+                  "default": "PLACEHOLDERPASSWORD",
+                  "description": "Password of the database user."
                 },
                 "clickhouseUsername": {
                   "type": "string",
@@ -320,7 +326,7 @@
             "properties": {
               "password": {
                 "type": "string",
-                "description": "Password used by the dependency. Required when the dependency is enabled, there is no default and none is generated."
+                "description": "Password used by the dependency. Defaults to `PLACEHOLDERPASSWORD`."
               },
               "creds": {
                 "type": "object",
@@ -358,7 +364,7 @@
           "depconfig": {
             "properties": {
               "password": {
-                "description": "Password of the dependency. Required when the dependency is enabled."
+                "description": "Password of the dependency."
               },
               "creds": {
                 "description": "Connection details set by the dependency, eg `plainhost` and `url`. Read only."

@@ -23,7 +23,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - Pin images as `tag: <version>@sha256:<digest>`. Renovate handles image, digest and `common` dependency updates.
 - `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `dependencies.postgresql` (CloudNativePG by default), `dependencies.valkey`, `dependencies.mariadb`, `dependencies.mongodb`, `dependencies.clickhouse` or `dependencies.memcached` (all predefined in common's `values.yaml`; the legacy root keys like `redis` and `cnpg` fail rendering) in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
 - Chart values must be valid for the `common` values schema (`charts/library/common/values.schema.json`).
-- No default, hard-coded, generated or looked-up passwords: require them explicitly and fail the render when unset. Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Require credentials explicitly and fail the render when they are unset.
+- No real or reusable passwords are committed: dependency passwords default to the visible placeholders `PLACEHOLDERPASSWORD` / `PLACEHOLDERROOTPASSWORD`, the render fails when a password is set empty, and charts or users must override the placeholder. Never use Helm `lookup` or `randAlphaNum` in templates (common and charts), they are strictly prohibited, also as a fallback.
 - User data must be stored on persistent volumes.
 - Security:
   - Never commit secrets, tokens, private keys or real credentials.
