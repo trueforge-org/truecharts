@@ -6,13 +6,13 @@ It is a read-only review: nothing was fixed, and no tests, lint or helm runs wer
 
 Focus: **mistakes**, **performance**, **security**.
 
-Out of scope: the impact on `charts/stable/**` charts. They will be redone after this rework, so findings that only affect them were left out.
+Out of scope: the impact on `charts/stable/**` charts. They will be redone after this rework, so findings that only affect them were left out. Intended breaking changes, such as the default PostgreSQL version moving from 16 to 18, are not listed as findings.
 
 ## Summary
 
 | Severity | Count | Most important |
 | --- | --- | --- |
-| High | 5 | PostgreSQL 16 → 18 default, NetworkPolicy allow-all, route backend namespace, CI matrix > 256 jobs, new default `crontab` mount |
+| High | 4 | NetworkPolicy allow-all, route backend namespace, CI matrix > 256 jobs, new default `crontab` mount |
 | Medium | 12 | runAsNonRoot inheritance, VolSync mover limits, valkey operator PSS, placeholder passwords, `tpl`-documented keys never templated |
 | Low | ~23 | quoting, dead code, tooling hygiene, minor perf |
 
@@ -22,14 +22,7 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
 
 ## High
 
-### H-1. Default PostgreSQL major version changed 16 → 18 (silent major upgrade) ✅
-
-- **Where:** `charts/library/common/values.yaml:71` (`global.fallbackDefaults.cnpg.pgVersion: 18`; master: `16` at `values.yaml:65` and `cnpg.main.pgVersion: 16`), `schemas/global/fallbackDefaults.json:311`, `templates/spawner/_cnpg.tpl:36-59`, `templates/values/_deprecations.tpl:48`
-- **Problem:** `pgVersion` is commented out in `dependencies.postgresql.operator`, so a cluster that does not set it falls back to 18, and the image tags also move from bookworm (`16.x`) to `*-standard-trixie`. Nothing (`lookup` or validation) protects existing clusters. The `cnpg.<name>` deprecation message does not tell users to pin `pgVersion: 16`.
-- **Failure scenario:** an app migrated to the new keys upgrades. `Cluster.spec.imageName` changes to `18.x-standard-trixie`, and CNPG tries an in-place major upgrade across a distro change, which the schema description itself calls unsupported. The database fails to start or the upgrade fails, and older backups no longer work for PITR.
-- **Suggested fix:** keep the fallback at 16, or `lookup` the existing `Cluster` and keep its major version, or require an explicit `pgVersion` in operator mode. At minimum, put "set `pgVersion: 16`" in the deprecation message and the migration docs.
-
-### H-2. Kubernetes NetworkPolicy rules with only Cilium keys render as allow-all ✅
+### H-1. Kubernetes NetworkPolicy rules with only Cilium keys render as allow-all ✅
 
 - **Where:** `templates/class/_networkPolicy.tpl:64` (`-{{- if .to }} to:`) and `:126` (ingress `from`), `schemas/networkPolicy/ingressRule.json:29`, `schemas/networkPolicy/egressRule.json`
 - **Problem:** one rule schema is shared by `type: kubernetes` and `type: cilium`. With the default `kubernetes` type it still accepts `fromEntities`, `fromEndpoints`, `fromCIDR(Set)`, `toPorts`, `toFQDNs`, `toServices` and `icmps`, and documents them as "ignored". A rule without `from`/`to` renders as `- ` (null) or `- ports: [...]`, and in NetworkPolicy a rule without peers matches **all** peers.
@@ -40,21 +33,21 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
   - In reverse, with `type: cilium`, Kubernetes-style `from`/`to`/`ports` keys are pruned by the API server. This fails closed, but silently.
 - **Suggested fix:** in `lib/networkpolicy/_validation.tpl`, fail on Cilium-only keys for the `kubernetes` type and on `from`/`to`/`ports` for `cilium` (or split the schema with `if/then`). Render empty selectors as `{}`. Fail when `from`/`to` renders no peers.
 
-### H-3. Route `backendRefs` use the route's namespace, not the service's ✅
+### H-2. Route `backendRefs` use the route's namespace, not the service's ✅
 
 - **Where:** `templates/class/_route.tpl:189` (`"namespace" (.namespace | default $namespace)`, where `$namespace` is the route's namespace) and the homepage integration call at `class/_route.tpl:84`. `common-test/tests/route/spec_test.yaml:240-282` asserts the wrong behaviour.
 - **Problem:** services resolved through `targetSelector` or the primary service are created in their own namespace (`service.<n>.namespace` → `Values.namespace` → release namespace), but the backendRef points at the route's namespace.
 - **Failure scenario:** with `route.main.namespace: gateway-ns`, the backendRef points at `gateway-ns/<release>-main`, which does not exist. The result is `BackendNotFound` and 500s on every request, and the homepage widget URL is wrong as well. Master used `Release.Namespace`, which was correct in the default case.
 - **Suggested fix:** have `lib.route.backend` return the namespace of the resolved service. Keep the route-namespace default only for backends given by an explicit `name`. Fix the test.
 
-### H-4. Install matrix on push to master exceeds GitHub's 256-job limit ✅
+### H-3. Install matrix on push to master exceeds GitHub's 256-job limit ✅
 
 - **Where:** `.github/workflows/common-tests.yaml:302` (versions), `:303-343` (values)
 - **Problem:** `values` grew from 25 to 39 entries. On non-PR events, `versions` has 9 k3s × Helm combinations, so 9 × 39 = **351 jobs**. Master was at 225.
 - **Failure scenario:** the first push to master (or `workflow_dispatch`) after the merge fails at matrix expansion, so `install` never runs and "Common Tests Completed" is red. PRs (2 × 39 = 78) do not show it.
 - **Suggested fix:** keep the non-PR matrix at 256 jobs or fewer. Use the full version matrix only for a core subset, use a reduced version set for dependency and operator values, or split into two install jobs.
 
-### H-5. New default `crontab` emptyDir mounted into every container of every chart ✅
+### H-4. New default `crontab` emptyDir mounted into every container of every chart ✅
 
 - **Where:** `charts/library/common/values.yaml:394-399` (`persistence.crontab`, `enabled: true`, `targetSelectAll: true`, `medium: Memory`). It is not on master.
 - **Problem:** it mounts over `/var/spool/cron/crontabs/` in every container of every chart built on common, and hides any crontabs that images ship there.
