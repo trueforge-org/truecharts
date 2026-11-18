@@ -39,7 +39,7 @@
   {{- end -}}
 
   {{- $integrations := $objectData.integrations | default dict -}}
-  {{- if and $integrations.homepage $integrations.homepage.enabled -}}
+  {{- if eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $rootCtx "objectData" $integrations.homepage "name" "homepage")) "true" -}}
     {{/* Homepage only discovers HTTPRoutes */}}
     {{- if ne $routeKind "HTTPRoute" -}}
       {{- fail (printf "Route - [route.%s.integrations.homepage] is only supported by kind [HTTPRoute], but got [%s]" $name $routeKind) -}}
@@ -49,7 +49,7 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData) -}}
+  {{- if include "tc.v1.common.lib.route.hasCertManager" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
     {{- $issuer := $objectData.integrations.certManager.certificateIssuer -}}
     {{- if not $issuer -}}
       {{- fail "Route - Expected a non-empty [integrations.certManager.certificateIssuer]" -}}
@@ -164,10 +164,15 @@
     {{- if eq $from "None" -}}
       {{- fail (printf "Route - Expected [gateway.%s.allowedListeners.namespaces.from] to allow ListenerSets, as [route.%s] uses TLS" . $name) -}}
     {{- end -}}
+    {{/* The ListenerSet of the route is in the namespace of the route */}}
+    {{- $routeNamespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "Route") -}}
+    {{- if and (eq $from "Same") (ne $routeNamespace $gatewayRef.namespace) -}}
+      {{- fail (printf "Route - [gateway.%s.allowedListeners.namespaces.from] is [Same], but the ListenerSet of [route.%s] is in namespace [%s] and the gateway in [%s]" . $name $routeNamespace $gatewayRef.namespace) -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{/* Returns the name and port of a backendRef, resolving services of this chart */}}
+{{/* Returns the name, namespace (empty for an explicit name) and port of a backendRef, resolving services of this chart */}}
 {{- define "tc.v1.common.lib.route.backend" -}}
   {{- $rootCtx := .rootCtx -}}
   {{- $backend := .backend -}}
@@ -176,6 +181,7 @@
   {{- $kind := $backend.kind | default "Service" -}}
   {{- $name := $backend.name -}}
   {{- $port := $backend.port -}}
+  {{- $namespace := "" -}}
 
   {{/* A selector is a service name, or a map of service name to port name */}}
   {{- $selector := $backend.targetSelector -}}
@@ -192,7 +198,7 @@
   {{- end -}}
 
   {{/* Without a name, the backend is a service of this chart. Defaults to the primary service */}}
-  {{- $primarySvc := include "tc.v1.common.lib.util.service.primary" (dict "rootCtx" $rootCtx) -}}
+  {{- $primarySvc := include "tc.v1.common.lib.util.primaryCached" (dict "rootCtx" $rootCtx "kind" "service") -}}
   {{- if and (not $name) (not $svcName) -}}
     {{- $svcName = $primarySvc -}}
     {{- if not $svcName -}}
@@ -205,6 +211,9 @@
     {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $rootCtx "objectData" $service "name" $svcName "key" "service" "caller" "Route")) "true" -}}
       {{- fail (printf "Route - Expected [targetSelector] in a backendRef of route [%s] to reference an enabled service, got [%s]" $routeName $svcName) -}}
     {{- end -}}
+
+    {{/* The service lives in its own namespace, same as the service spawner */}}
+    {{- $namespace = include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $service "caller" "Service") -}}
 
     {{/* Same naming as the service spawner */}}
     {{- $name = $svcName -}}
@@ -251,7 +260,7 @@
     {{- fail (printf "Route - Expected [port] in backendRef [%s] of route [%s]" $name $routeName) -}}
   {{- end -}}
 
-  {{- dict "name" $name "port" (tpl (toString $port) $rootCtx | int) "protocol" $protocol | toYaml -}}
+  {{- dict "name" $name "namespace" $namespace "port" (tpl (toString $port) $rootCtx | int) "protocol" $protocol | toYaml -}}
 {{- end -}}
 
 {{/* A route selects a listener set of this chart, or gets one from its TLS settings, not both */}}
@@ -267,7 +276,7 @@
     {{- if or $objectData.gateway (and $objectData.targetSelector (kindIs "string" $objectData.targetSelector)) -}}
       {{- fail (printf "Route - Only one of [gateway, targetSelector, listenerSet] can be set on [route.%s]" $name) -}}
     {{- end -}}
-    {{- if or $objectData.tls (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData)) -}}
+    {{- if or $objectData.tls (include "tc.v1.common.lib.route.hasCertManager" (dict "rootCtx" $rootCtx "objectData" $objectData)) -}}
       {{- fail (printf "Route - [route.%s.listenerSet] cannot be used with [tls] or [integrations.certManager], those create their own ListenerSet. Set the certificate on the listeners of the ListenerSet instead" $name) -}}
     {{- end -}}
     {{- $target := get ($rootCtx.Values.listenerSet | default dict) . -}}

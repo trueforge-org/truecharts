@@ -30,6 +30,8 @@ METRICS_SERVER_CHART_VERSION="3.13.0"
 VOLSYNC_CHART_VERSION="3.15.16"
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 GATEWAY_API_VERSION="v1.7.0"
+# sha256 of standard-install.yaml for GATEWAY_API_VERSION, it MUST be updated together with the version above
+GATEWAY_API_SHA256="4e2602c4cbe1afbc394d86f4ac6522e1a5263b01133bba1e40a6d1a549e753a1"
 HELM_WAIT_TIMEOUT="15m"
 
 helm_install_with_retry() {
@@ -65,10 +67,20 @@ if [[ "$curr_chart" == "charts/library/common-test" ]] && [[ -n "$dependency_sel
 
     if [[ "$dependency_selector" =~ (route|gateway|gatewayclass).*-values.yaml ]]; then
         # k3s ships an older version of these CRDs, so take over their fields
-        if ! kubectl apply --server-side --force-conflicts -f "https://github.com/kubernetes-sigs/gateway-api/releases/download/$GATEWAY_API_VERSION/standard-install.yaml"; then
+        gateway_api_file="$(mktemp)"
+        if ! curl -fsSL -o "$gateway_api_file" "https://github.com/kubernetes-sigs/gateway-api/releases/download/$GATEWAY_API_VERSION/standard-install.yaml"; then
+            echo "Failed to download Gateway API CRDs"
+            exit 1
+        fi
+        if ! echo "$GATEWAY_API_SHA256  $gateway_api_file" | sha256sum -c -; then
+            echo "Gateway API CRDs checksum mismatch, update GATEWAY_API_SHA256 together with GATEWAY_API_VERSION"
+            exit 1
+        fi
+        if ! kubectl apply --server-side --force-conflicts -f "$gateway_api_file"; then
             echo "Failed to install Gateway API CRDs"
             exit 1
         fi
+        rm -f "$gateway_api_file"
         # Rendering checks if the API is available, so it must be served before the install
         if ! kubectl wait --for=condition=Established --timeout=120s crd/listenersets.gateway.networking.k8s.io; then
             echo "Gateway API CRDs did not become available"

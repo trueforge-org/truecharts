@@ -8,17 +8,26 @@
   {{- range $item := $itemsToCheck -}}
     {{- if hasKey $item "diagnosticMode" -}}
       {{- if hasKey $item.diagnosticMode "enabled" -}}
-        {{- if not (kindIs "bool" $item.diagnosticMode.enabled) -}}
-          {{- fail (printf "Diagnostic Mode - Expected [diagnosticMode.enabled] to be a bool, but got [%s]" (kindOf $item.diagnosticMode.enabled)) -}}
+        {{- $enabled := $item.diagnosticMode.enabled -}}
+        {{- if kindIs "string" $enabled -}}
+          {{- $enabled = tpl $enabled $rootCtx -}}
+          {{- if eq $enabled "true" -}}
+            {{- $enabled = true -}}
+          {{- else if eq $enabled "false" -}}
+            {{- $enabled = false -}}
+          {{- end -}}
+        {{- end -}}
+        {{- if not (kindIs "bool" $enabled) -}}
+          {{- fail (printf "Diagnostic Mode - Expected [diagnosticMode.enabled] to be a bool or a string resolving to [true] or [false], but got [%s]" (kindOf $enabled)) -}}
+        {{- end -}}
+        {{- if $enabled -}}
+          {{- $diagMode = true -}}
         {{- end -}}
       {{- end -}}
 
       {{/* Ignore if its not true as we want any item
           that is true to apply regardless of the order
       */}}
-      {{- if $item.diagnosticMode.enabled -}}
-        {{- $diagMode = true -}}
-      {{- end -}}
     {{- end -}}
   {{- end -}}
 

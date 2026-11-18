@@ -110,6 +110,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector:
@@ -117,7 +119,7 @@ tests:
           value: Secret
         equal:
           path: stringData.valkey-password
-          value: PLACEHOLDERPASSWORD
+          value: test-password
       - documentSelector:
           path: kind
           value: StatefulSet
@@ -129,6 +131,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -145,7 +149,7 @@ tests:
           value: Secret
         equal:
           path: stringData.valkey-password
-          value: PLACEHOLDERPASSWORD
+          value: test-password
 
   - it: should render nothing with the valkey dependency disabled
     set:
@@ -333,6 +337,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           service:
             main:
@@ -347,6 +353,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:

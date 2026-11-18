@@ -14,6 +14,10 @@ objectData:
     {{- fail (printf "Service - Expected [targetSelector] to be [string], but got [%s]" (kindOf $objectData.targetSelector)) -}}
   {{- end -}}
 
+  {{- if and $objectData.type (not (mustHas $objectData.type (list "ClusterIP" "LoadBalancer" "NodePort" "ExternalName" "ExternalIP"))) -}}
+    {{- fail (printf "Service - Expected [type] to be one of [ClusterIP, LoadBalancer, NodePort, ExternalName, ExternalIP], but got [%v]" $objectData.type) -}}
+  {{- end -}}
+
   {{- $hasEnabledPort := false -}}
   {{- if ne $objectData.type "ExternalName" -}}
     {{- range $name, $port := $objectData.ports -}}

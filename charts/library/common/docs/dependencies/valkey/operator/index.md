@@ -152,7 +152,7 @@ See [persistence](/truecharts-common/dependencies/valkey/operator/persistence) f
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `{"enabled": true, "size": "", "storageClass": "", "retain": false}` |
+| Default | `{"enabled": true, "size": "", "storageClass": ""}` |
 
 ---
 

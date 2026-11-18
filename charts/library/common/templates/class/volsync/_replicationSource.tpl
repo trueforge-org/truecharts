@@ -32,11 +32,21 @@ objectData:
     {{- end -}}
   {{- end -}}
 
-  {{- if not (hasKey $volsyncData "resources") -}}
-    {{- $_ := set $volsyncData "resources" dict -}}
-  {{- end -}}
-  {{/* Exclude extra resources */}}
-  {{- $_ := set $volsyncData.resources "excludeExtra" true }}
+  {{/* Only render moverResources when set explicitly on the volsync entry, never fall back to .Values.resources */}}
+  {{- $moverResources := dict -}}
+  {{- range $type := (list "requests" "limits") -}}
+    {{- $values := dict -}}
+    {{- range $res := (list "cpu" "memory") -}}
+      {{- with (get (default dict (get (default dict $volsyncData.resources) $type)) $res) -}}
+        {{- if ne (toString .) "0" -}}
+          {{- $_ := set $values $res . -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $values -}}
+      {{- $_ := set $moverResources $type $values -}}
+    {{- end -}}
+  {{- end }}
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -73,9 +83,9 @@ spec:
       weekly: {{ $retain.weekly }}
       monthly: {{ $retain.monthly }}
       yearly: {{ $retain.yearly }}
-    {{- with (include "tc.v1.common.lib.container.resources" (dict "rootCtx" $rootCtx "objectData" $volsyncData) | trim) }}
+    {{- with $moverResources }}
     moverResources:
-      {{- . | nindent 6 }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- include "tc.v1.common.lib.volsync.storage" (dict "rootCtx" $rootCtx "objectData" $objectData "volsyncData" $volsyncData "target" "src") | trim | nindent 4 }}
     {{- include "tc.v1.common.lib.volsync.cache" (dict "rootCtx" $rootCtx "objectData" $objectData "volsyncData" $volsyncData "target" "src") | trim | nindent 4 }}

@@ -36,6 +36,8 @@ tests:
         enabled: true
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - failedTemplate:
@@ -72,6 +74,8 @@ tests:
         enabled: true
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - failedTemplate:
@@ -141,6 +145,8 @@ tests:
           enabled: true
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - failedTemplate:
@@ -163,6 +169,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
           cnpg:
@@ -255,6 +263,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector:
@@ -268,6 +278,8 @@ tests:
     set:
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector:

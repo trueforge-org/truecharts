@@ -14,6 +14,6 @@
 enabled: true
 type: kubernetes.io/basic-auth
 data:
-  username: {{ $user }}
-  password: {{ $pass }}
+  username: {{ $user | quote }}
+  password: {{ $pass | quote }}
 {{- end -}}

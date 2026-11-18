@@ -14,13 +14,15 @@ tests:
     credentials:
       my-creds:
         type: s3
-        accessKey: PLACEHOLDERACCESS
-        secretKey: PLACEHOLDERSECRET
+        accessKey: test-access-key
+        secretKey: test-secret-key
         bucket: my-bucket
-        encrKey: PLACEHOLDERENCR
+        encrKey: test-encr-key
         url: http://example.invalid
     dependencies:
       postgresql:
+        depconfig:
+          password: test-password
         enabled: true
         mode: operator
         operator:
@@ -96,13 +98,15 @@ tests:
     credentials:
       my-creds:
         type: s3
-        accessKey: PLACEHOLDERACCESS
-        secretKey: PLACEHOLDERSECRET
+        accessKey: test-access-key
+        secretKey: test-secret-key
         bucket: my-bucket
-        encrKey: PLACEHOLDERENCR
+        encrKey: test-encr-key
         url: http://example.invalid
     dependencies:
       postgresql:
+        depconfig:
+          password: test-password
         enabled: true
         mode: operator
         operator:
@@ -124,13 +128,15 @@ tests:
     credentials:
       my-creds:
         type: s3
-        accessKey: PLACEHOLDERACCESS
-        secretKey: PLACEHOLDERSECRET
+        accessKey: test-access-key
+        secretKey: test-secret-key
         bucket: my-bucket
-        encrKey: PLACEHOLDERENCR
+        encrKey: test-encr-key
         url: http://example.invalid
     dependencies:
       postgresql:
+        depconfig:
+          password: test-password
         enabled: true
         mode: operator
         operator:
@@ -152,13 +158,15 @@ tests:
     credentials:
       my-creds:
         type: s3
-        accessKey: PLACEHOLDERACCESS
-        secretKey: PLACEHOLDERSECRET
+        accessKey: test-access-key
+        secretKey: test-secret-key
         bucket: my-bucket
-        encrKey: PLACEHOLDERENCR
+        encrKey: test-encr-key
         url: http://example.invalid
     dependencies:
       postgresql:
+        depconfig:
+          password: test-password
         enabled: true
         mode: operator
         operator:
@@ -180,13 +188,15 @@ tests:
     credentials:
       my-creds:
         type: s3
-        accessKey: PLACEHOLDERACCESS
-        secretKey: PLACEHOLDERSECRET
+        accessKey: test-access-key
+        secretKey: test-secret-key
         bucket: my-bucket
-        encrKey: PLACEHOLDERENCR
+        encrKey: test-encr-key
         url: http://example.invalid
     dependencies:
       postgresql:
+        depconfig:
+          password: test-password
         enabled: true
         mode: operator
         operator:

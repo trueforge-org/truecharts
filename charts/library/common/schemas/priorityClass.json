@@ -5,6 +5,15 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Prefix the name of the PriorityClass with the chart fullname.",
+        "default": true,
+        "x-helm-tpl": true
+      },
       "provisioner": {
         "type": "string",
         "description": "Not used by the priority class templates. Only set in the priority class fixture of common-test.",

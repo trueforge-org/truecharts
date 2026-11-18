@@ -14,7 +14,7 @@
     {{- $fullName = $name -}}
   {{- else if $objectData.nameOverride -}}
     {{- $fullName = printf "%v-%v" $fullName $objectData.nameOverride -}}
-  {{- else if ne $name (include "tc.v1.common.lib.util.route.primary" $rootCtx) -}}
+  {{- else if ne $name (include "tc.v1.common.lib.util.primaryCached" (dict "rootCtx" $rootCtx "kind" "route")) -}}
     {{- $fullName = printf "%v-%v" $fullName $name -}}
   {{- end -}}
   {{- $fullName -}}
@@ -28,7 +28,7 @@
 
   {{- $listeners := list -}}
   {{/* If a certificateIssuer is defined in the whole route, use that */}}
-  {{- if include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData) -}}
+  {{- if include "tc.v1.common.lib.route.hasCertManager" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
     {{- range $host := $objectData.hostnames -}}
       {{- $tplHost := tpl $host $rootCtx -}}
       {{- $listeners = mustAppend $listeners (dict
@@ -56,9 +56,19 @@
   {{- dict "listeners" $listeners | toYaml -}}
 {{- end -}}
 
+{{/* Returns [true] or [false] for the [enabled] of an integration, which is a boolean or a tpl string.
+A missing integration or a missing [enabled] counts as disabled.
+Usage: include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $ "objectData" $integration "name" "traefik")
+*/}}
+{{- define "tc.v1.common.lib.route.integrationEnabled" -}}
+  {{- include "tc.v1.common.lib.gateway.enabled" (dict
+        "rootCtx" .rootCtx "objectData" .objectData
+        "name" (.name | default "integration") "key" "integrations" "caller" "Route") -}}
+{{- end -}}
+
 {{- define "tc.v1.common.lib.route.hasCertManager" -}}
   {{- $integrations := .objectData.integrations | default dict -}}
-  {{- if and $integrations.certManager $integrations.certManager.enabled -}}
+  {{- if eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" .rootCtx "objectData" $integrations.certManager "name" "certManager")) "true" -}}
     {{- print "true" -}}
   {{- end -}}
 {{- end -}}
@@ -73,7 +83,7 @@ Without TLS the listener is not known, so this relies on the first parentRef, un
   {{- $protocol := "https" -}}
   {{- $port := "443" -}}
 
-  {{- if and (not $objectData.tls) (not (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $objectData))) (not $objectData.gateway) (not $objectData.listenerSet) (not (kindIs "string" $objectData.targetSelector)) -}}
+  {{- if and (not $objectData.tls) (not (include "tc.v1.common.lib.route.hasCertManager" (dict "rootCtx" $rootCtx "objectData" $objectData))) (not $objectData.gateway) (not $objectData.listenerSet) (not (kindIs "string" $objectData.targetSelector)) -}}
     {{- with $objectData.parentRefs -}}
       {{- $parentRef := first . -}}
       {{- if $parentRef.sectionName -}}

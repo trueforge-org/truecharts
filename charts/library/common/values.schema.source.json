@@ -48,6 +48,14 @@
         "title": "Chart Context"
       }
     },
+    "createChartContextConfigmap": {
+      "type": "boolean",
+      "description": "Only used in CI and unit tests. Renders the generated `chartContext` as a ConfigMap named `chart-context`, so the context can be inspected.",
+      "default": false,
+      "x-docs-page": {
+        "title": "Create Chart Context Configmap"
+      }
+    },
     "common": {
       "$ref": "schemas/common.json",
       "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself.",
@@ -392,7 +400,7 @@
       "description": "Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/ubuntu",
-        "tag": "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed",
+        "tag": "26.4@sha256:6694765a55a999799d0b37f806a0e0ba11ceb4dcb22392b63f1b74b4123ea175",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -404,7 +412,7 @@
       "description": "Image of kubectl, for containers that select it with `imageSelector: kubectlImage`.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/kubectl",
-        "tag": "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24",
+        "tag": "1.31.1@sha256:b9e298a180ef0022918994dc19949a609eb1c1fee2e9d6893e24ca29c8247186",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -416,7 +424,7 @@
       "description": "Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/postgresql-client",
-        "tag": "18.6.0@sha256:7c1565c07970e1cf3a5090b78204e282fa5a8857bec00d472c4b3ec72666d7b4",
+        "tag": "18.6.0@sha256:8a8dae7394298f8923fc3e493ee6251e8186a6bdf21b92cb9ef820bcdd6a2754",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -512,7 +520,7 @@
       "description": "Image of the MariaDB client, used by the init container that waits for the mariadb dependency.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/mariadb-client",
-        "tag": "13.0.2@sha256:acc2ae890ada19a833be764eb3960746d337ef8da4c6a72cf365dc1c1efaab69",
+        "tag": "13.0.2@sha256:4fb8874313506b7f343815e2af1501eb9d29114aed806ba841c7a9f9e417bea7",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -524,7 +532,7 @@
       "description": "Image of the Valkey client tools, used by the init container that waits for the valkey dependency.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/valkey-tools",
-        "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
+        "tag": "1.1.0@sha256:1dbc0f283db1ea8da9a348b7bf916607c54b18e3db964e62d897f7543545be37",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {
@@ -536,7 +544,7 @@
       "description": "Image of the MongoDB shell, used by the init container that waits for the mongodb dependency.",
       "default": {
         "repository": "oci.trueforge.org/containerforge/mongosh",
-        "tag": "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08",
+        "tag": "2.14.2@sha256:cfe55f326bd53a269f76872557e9a445bb679046e0d825bc81544164a90def1f",
         "pullPolicy": "IfNotPresent"
       },
       "x-docs-page": {

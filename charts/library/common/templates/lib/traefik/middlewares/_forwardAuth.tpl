@@ -5,9 +5,6 @@
   {{- $mw := $objectData.data -}}
 
 
-  {{- if hasKey $mw "maxResponseBodySize" -}}
-    {{- $sizeKind := kindOf $mw.maxResponseBodySize -}}
-  {{- end -}}
 
 
 

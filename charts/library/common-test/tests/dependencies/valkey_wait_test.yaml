@@ -40,6 +40,8 @@ tests:
               port: 8080
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:

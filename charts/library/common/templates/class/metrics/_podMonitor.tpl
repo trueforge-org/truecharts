@@ -1,13 +1,7 @@
 {{- define "tc.v1.common.class.podmonitor" -}}
   {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
   {{- $podmonitorName := $fullName -}}
-  {{- $values := .Values.podmonitor -}}
-
-  {{- if hasKey . "ObjectValues" -}}
-    {{- with .ObjectValues.metrics -}}
-      {{- $values = . -}}
-    {{- end -}}
-  {{- end -}}
+  {{- $values := .ObjectValues.metrics -}}
   {{- $podmonitorLabels := $values.labels -}}
   {{- $podmonitorAnnotations := $values.annotations -}}
 

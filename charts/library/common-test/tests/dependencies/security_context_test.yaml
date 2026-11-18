@@ -24,6 +24,8 @@ tests:
     set:
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector: &workloadDoc
@@ -65,6 +67,9 @@ tests:
     set:
       dependencies:
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
     asserts:
       - documentSelector: &workloadDoc
@@ -147,6 +152,9 @@ tests:
     set:
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
     asserts:
       - documentSelector: &workloadDoc
@@ -188,6 +196,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -230,6 +240,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector: &workloadDoc
@@ -271,6 +283,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           securityContext:
             container:
@@ -315,6 +329,8 @@ tests:
                     enabled: false
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector: &workloadDoc

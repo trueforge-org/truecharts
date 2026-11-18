@@ -21,6 +21,11 @@ objectData: The object data to be used to render the container.
 
       {{- /* Keeps the newline before the next line */}}
 {{ $hook }}:
+      {{- $validTypes := (list "exec" "http" "https") -}}
+      {{- if not (mustHas $hookValues.type $validTypes) -}}
+        {{- fail (printf "Container - Expected [lifecycle.%s.type] to be one of [%s], but got [%s]" $hook (join ", " $validTypes) $hookValues.type) -}}
+      {{- end -}}
+
       {{- if eq $hookValues.type "exec" -}}
         {{- include "tc.v1.common.lib.container.actions.exec" (dict "rootCtx" $rootCtx "objectData" $hookValues "caller" "lifecycle") | trim | nindent 2 -}}
       {{- else if mustHas $hookValues.type (list "http" "https") -}}

@@ -13,6 +13,7 @@ tests:
         clickhouse:
           enabled: true
           depconfig:
+            password: test-password
             clickhouseUsername: my-user
             clickhouseDatabase: my-database
     asserts:

@@ -82,8 +82,11 @@ def gather_branch_schemas(
     return branches
 
 
-def find_child_schema(schemas: list[Branch], key: str) -> tuple[list[Branch], bool]:
-    """Returns the schemas that describe the key, and whether a required schema rejects it."""
+def find_child_schema(schemas: list[Branch], key: str, at_root: bool = False) -> tuple[list[Branch], bool]:
+    """Returns the schemas that describe the key, and whether a required schema rejects it.
+
+    The values root allows additional properties, but a root key still has to be listed in properties.
+    """
     candidates: list[Branch] = []
     rejected = False
 
@@ -103,7 +106,8 @@ def find_child_schema(schemas: list[Branch], key: str) -> tuple[list[Branch], bo
             if isinstance(addl, dict):
                 candidates.append((addl, branch_file, branch_required))
             elif addl is True:
-                candidates.append(({"type": "object", "additionalProperties": True}, branch_file, branch_required))
+                if not at_root:
+                    candidates.append(({"type": "object", "additionalProperties": True}, branch_file, branch_required))
             elif addl is False and branch_required:
                 rejected = True
 
@@ -149,6 +153,7 @@ def validate_node(
     path: str,
     missing: list[str],
     dynamic_key: str | None = None,
+    strict_root: bool = False,
 ) -> None:
     # A schema without any structure (only a description) is a setting that is passed on as is, so anything below it is allowed
     if any(isinstance(schema, dict) and not any(k in schema for k in STRUCTURE_KEYWORDS) for schema, _, _ in schemas):
@@ -161,11 +166,11 @@ def validate_node(
             if key == dynamic_key:
                 candidates, rejected = find_dynamic_child_schemas(schemas), False
             else:
-                candidates, rejected = find_child_schema(schemas, key)
+                candidates, rejected = find_child_schema(schemas, key, strict_root and path == "$")
             if rejected or not candidates:
                 missing.append(f"{path}/{key}")
                 continue
-            validate_node(value, candidates, f"{path}/{key}", missing, dynamic_key)
+            validate_node(value, candidates, f"{path}/{key}", missing, dynamic_key, strict_root)
         return
 
     if isinstance(yaml_node, list):
@@ -179,7 +184,7 @@ def validate_node(
                     item_candidates.append((items, branch_file, branch_required))
 
         for index, item in enumerate(yaml_node):
-            validate_node(item, item_candidates or schemas, f"{path}[{index}]", missing, dynamic_key)
+            validate_node(item, item_candidates or schemas, f"{path}[{index}]", missing, dynamic_key, strict_root)
 
 
 def collect_yaml_key_paths(yaml_node: Any, path: str, paths: set[str]) -> None:
@@ -216,8 +221,9 @@ def main() -> int:
     validate_node(values_data, [(root_schema, ROOT_SCHEMA_FILE, True)], "$", missing)
 
     # Validate template-keys-structure against schema
+    # Root keys that templates read must be listed in the root properties, even though the root allows additional properties
     # In template-keys-structure.yaml, objectName stands for a key that a template computes (eg with get)
-    validate_node(template_keys_data, [(root_schema, ROOT_SCHEMA_FILE, True)], "$", template_missing, "objectName")
+    validate_node(template_keys_data, [(root_schema, ROOT_SCHEMA_FILE, True)], "$", template_missing, "objectName", strict_root=True)
     template_missing = [p for p in template_missing if p not in INTERNAL_TEMPLATE_PATHS]
 
     # Calculate coverage for complete-values-structure

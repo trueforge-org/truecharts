@@ -60,5 +60,6 @@ A new object kind needs these pieces:
 Removed or moved keys must fail with a clear message instead of being silently ignored. Add them to the lists in `values/_deprecations.tpl` (`tc.v1.common.values.deprecations`), which is the single place for these errors, and add a `failedTemplate` test for them.
 
 - The top-level `redis`, `valkey`, `mariadb` and `cnpg` keys fail when enabled, pointing to `dependencies.<name>`. `cnpg.<name>.enabled` fails too, with the migration steps.
-- `solr`, `mongodb`, `clickhouse` and `memcached` were removed without a replacement, and fail when enabled.
+- `solr` was removed without a replacement, and fails when enabled. `mongodb`, `clickhouse` and `memcached` are predefined `dependencies.<name>` entries, and their legacy top-level keys (like `redis`, `cnpg`, `valkey`, `mariadb`) fail rendering when enabled.
 - `volumeClaimTemplates` and `addons.vpn` fail too. Use `persistence`, and the `tailscale` or `gluetun` addons.
+- Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Require credentials explicitly and fail the render when they are unset.

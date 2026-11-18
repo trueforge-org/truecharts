@@ -13,6 +13,8 @@ tests:
         mongodb:
           enabled: true
           depconfig:
+            password: test-password
+            rootPassword: test-password
             mongodbUsername: my-user
             mongodbDatabase: my-database
     asserts:
@@ -30,6 +32,7 @@ tests:
         mongodb:
           enabled: true
           depconfig:
+            rootPassword: test-password
             password: test-password
     asserts:
       - matchRegexRaw:
@@ -46,6 +49,7 @@ tests:
         mongodb:
           enabled: true
           depconfig:
+            rootPassword: test-password
             password: test-password
     asserts:
       - matchRegexRaw:

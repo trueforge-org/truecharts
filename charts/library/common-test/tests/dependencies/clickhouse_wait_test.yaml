@@ -29,6 +29,8 @@ tests:
                     enabled: false
       dependencies:
         clickhouse: &clickhouse
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector: &appDoc
@@ -82,6 +84,8 @@ tests:
         my-app: *appWorkload
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
           service:
             main:
@@ -186,8 +190,13 @@ tests:
       dependencies:
         clickhouse: *clickhouse
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector:

@@ -21,6 +21,7 @@ workload:
       key: value
     annotations:
       key: value
+    # Ends up in the immutable spec.selector, so the values must not change between releases
     extraSelectorLabels:
       key: value
     serviceAccountName: some-service-account

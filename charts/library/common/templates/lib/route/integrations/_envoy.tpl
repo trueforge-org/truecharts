@@ -81,7 +81,7 @@ with the settings of the user and of the integration in it.
   {{- end -}}
 
   {{/* Envoy has no theme park filter, so the stylesheet is added to the response with Lua */}}
-  {{- if and $envoy.themePark $envoy.themePark.enabled -}}
+  {{- if eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $rootCtx "objectData" $envoy.themePark "name" "themePark")) "true" -}}
     {{- if ne $routeKind "HTTPRoute" -}}
       {{- fail (printf "Route - [route.%s.integrations.envoy.themePark] is only supported by kind [HTTPRoute]" $name) -}}
     {{- end -}}

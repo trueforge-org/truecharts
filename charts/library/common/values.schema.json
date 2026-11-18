@@ -31,6 +31,11 @@
     "svcCIDR": ""
    }
   },
+  "createChartContextConfigmap": {
+   "type": "boolean",
+   "description": "Only used in CI and unit tests. Renders the generated `chartContext` as a ConfigMap named `chart-context`, so the context can be inspected.",
+   "default": false
+  },
   "common": {
    "$ref": "#/definitions/common",
    "description": "Values merged into the common defaults before the values of the chart. Takes the same values as the chart itself."
@@ -226,7 +231,7 @@
    "description": "Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/ubuntu",
-    "tag": "26.4@sha256:205c6561352214872c61edea4909f29afe9be1eee6c61430ce627ca757c137ed",
+    "tag": "26.4@sha256:6694765a55a999799d0b37f806a0e0ba11ceb4dcb22392b63f1b74b4123ea175",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -235,7 +240,7 @@
    "description": "Image of kubectl, for containers that select it with `imageSelector: kubectlImage`.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/kubectl",
-    "tag": "1.31.1@sha256:4a51a8930e778b7f996ab476e5fcef4385453d1b78362c878bcc2b2501f99a24",
+    "tag": "1.31.1@sha256:b9e298a180ef0022918994dc19949a609eb1c1fee2e9d6893e24ca29c8247186",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -244,7 +249,7 @@
    "description": "Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/postgresql-client",
-    "tag": "18.6.0@sha256:7c1565c07970e1cf3a5090b78204e282fa5a8857bec00d472c4b3ec72666d7b4",
+    "tag": "18.6.0@sha256:8a8dae7394298f8923fc3e493ee6251e8186a6bdf21b92cb9ef820bcdd6a2754",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -316,7 +321,7 @@
    "description": "Image of the MariaDB client, used by the init container that waits for the mariadb dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/mariadb-client",
-    "tag": "13.0.2@sha256:acc2ae890ada19a833be764eb3960746d337ef8da4c6a72cf365dc1c1efaab69",
+    "tag": "13.0.2@sha256:4fb8874313506b7f343815e2af1501eb9d29114aed806ba841c7a9f9e417bea7",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -325,7 +330,7 @@
    "description": "Image of the Valkey client tools, used by the init container that waits for the valkey dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/valkey-tools",
-    "tag": "1.1.0@sha256:4b3672ee5f6896b5c2dcb3d0d23da2fe3cfe721bfdc40339e383ed7a4cc18fbe",
+    "tag": "1.1.0@sha256:1dbc0f283db1ea8da9a348b7bf916607c54b18e3db964e62d897f7543545be37",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -334,7 +339,7 @@
    "description": "Image of the MongoDB shell, used by the init container that waits for the mongodb dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/mongosh",
-    "tag": "2.14.1@sha256:3dca8f9bde2eec214ae0718ac2a9de2f27809761f150b634a1533d98b53a6d08",
+    "tag": "2.14.2@sha256:cfe55f326bd53a269f76872557e9a445bb679046e0d825bc81544164a90def1f",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -1499,8 +1504,11 @@
         "minLength": 1
        },
        "expandObjectName": {
-        "type": "boolean",
-        "description": "Prefix the Secret name with the chart fullname.",
+        "type": [
+         "boolean",
+         "string"
+        ],
+        "description": "Prefix the Secret name with the chart fullname. Supports Helm `tpl`.",
         "default": true
        }
       },
@@ -1589,8 +1597,7 @@
          "properties": {
           "password": {
            "type": "string",
-           "default": "PLACEHOLDERPASSWORD",
-           "description": "Password of the database user, for both modes."
+           "description": "Password of the database user, for both modes. Required when the dependency is enabled, there is no default and none is generated."
           },
           "postgresqlUsername": {
            "type": "string",
@@ -1642,14 +1649,13 @@
          "properties": {
           "password": {
            "type": "string",
-           "default": "PLACEHOLDERPASSWORD",
-           "description": "Password of the database user."
+           "minLength": 4,
+           "description": "Password of the database user. Required when the dependency is enabled, there is no default and none is generated."
           },
           "rootPassword": {
            "type": "string",
-           "minLength": 1,
-           "default": "PLACEHOLDERROOTPASSWORD",
-           "description": "Password of the `root` user."
+           "minLength": 4,
+           "description": "Password of the `root` user. Required when the dependency is enabled, there is no default and none is generated."
           },
           "mariadbUsername": {
            "type": "string",
@@ -1696,14 +1702,12 @@
          "properties": {
           "password": {
            "type": "string",
-           "default": "PLACEHOLDERPASSWORD",
-           "description": "Password of the database user."
+           "description": "Password of the database user. Required when the dependency is enabled, there is no default and none is generated."
           },
           "rootPassword": {
            "type": "string",
            "minLength": 1,
-           "default": "PLACEHOLDERROOTPASSWORD",
-           "description": "Password of the `root` user."
+           "description": "Password of the `root` user. Required when the dependency is enabled, there is no default and none is generated."
           },
           "mongodbUsername": {
            "type": "string",
@@ -1750,8 +1754,7 @@
          "properties": {
           "password": {
            "type": "string",
-           "default": "PLACEHOLDERPASSWORD",
-           "description": "Password of the database user."
+           "description": "Password of the database user. Required when the dependency is enabled, there is no default and none is generated."
           },
           "clickhouseUsername": {
            "type": "string",
@@ -1834,7 +1837,7 @@
         "properties": {
          "password": {
           "type": "string",
-          "description": "Password used by the dependency. Defaults to `PLACEHOLDERPASSWORD`."
+          "description": "Password used by the dependency. Required when the dependency is enabled, there is no default and none is generated."
          },
          "creds": {
           "type": "object",
@@ -1872,7 +1875,7 @@
        "depconfig": {
         "properties": {
          "password": {
-          "description": "Password of the dependency."
+          "description": "Password of the dependency. Required when the dependency is enabled."
          },
          "creds": {
           "description": "Connection details set by the dependency, eg `plainhost` and `url`. Read only."
@@ -3881,8 +3884,7 @@
      "default": {
       "enabled": true,
       "size": "",
-      "storageClass": "",
-      "retain": false
+      "storageClass": ""
      },
      "description": "Persistence of the nodes. Requires `workloadType: StatefulSet`, and can not be added or removed after creation."
     },
@@ -5672,21 +5674,23 @@
      },
      "tls": {
       "type": "object",
-      "description": "TLS settings that apply to the whole Gateway, passed on as is.",
+      "description": "TLS settings that apply to the whole Gateway.",
       "properties": {
        "frontend": {
-        "type": "object",
-        "description": "TLS settings for connections from clients, passed on as is.",
-        "additionalProperties": {
-         "description": "A setting passed on as is."
-        }
+        "allOf": [
+         {
+          "$ref": "#/definitions/gateway.frontendTLS"
+         }
+        ],
+        "description": "TLS settings for connections from clients."
        },
        "backend": {
-        "type": "object",
-        "description": "TLS settings for connections to backends, passed on as is.",
-        "additionalProperties": {
-         "description": "A setting passed on as is."
-        }
+        "allOf": [
+         {
+          "$ref": "#/definitions/gateway.backendTLS"
+         }
+        ],
+        "description": "TLS settings for connections to backends."
        }
       },
       "additionalProperties": false
@@ -5710,6 +5714,130 @@
    },
    "description": "Gateways, keyed by name. Every enabled entry renders a Gateway API `Gateway`, see [Gateway](/truecharts-common/gateway)."
   },
+  "gateway.backendTLS": {
+   "type": "object",
+   "properties": {
+    "clientCertificateRef": {
+     "type": "object",
+     "properties": {
+      "group": {
+       "type": "string",
+       "description": "API group of the object. An empty string is the core group."
+      },
+      "kind": {
+       "type": "string",
+       "description": "Kind of the object, eg `Secret` or `ConfigMap`."
+      },
+      "name": {
+       "type": "string",
+       "description": "Name of the object."
+      },
+      "namespace": {
+       "type": "string",
+       "description": "Namespace of the object. Defaults to the namespace of the Gateway."
+      }
+     },
+     "additionalProperties": false,
+     "description": "The Secret with the client certificate."
+    }
+   },
+   "additionalProperties": false,
+   "description": "TLS settings for connections to backends."
+  },
+  "gateway.frontendTLS": {
+   "type": "object",
+   "properties": {
+    "default": {
+     "type": "object",
+     "properties": {
+      "validation": {
+       "allOf": [
+        {
+         "$ref": "#/definitions/gateway.validation"
+        }
+       ],
+       "description": "Validation of the certificate of clients."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Default settings for all ports of the Gateway."
+    },
+    "perPort": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "port": {
+        "type": "integer",
+        "description": "Port of the Gateway the settings apply to."
+       },
+       "tls": {
+        "type": "object",
+        "properties": {
+         "validation": {
+          "allOf": [
+           {
+            "$ref": "#/definitions/gateway.validation"
+           }
+          ],
+          "description": "Validation of the certificate of clients."
+         }
+        },
+        "additionalProperties": false,
+        "description": "Settings for this port."
+       }
+      },
+      "additionalProperties": false,
+      "description": "Settings of one port."
+     },
+     "description": "Settings per port, which override `default`."
+    }
+   },
+   "additionalProperties": false,
+   "description": "TLS settings for connections from clients."
+  },
+  "gateway.validation": {
+   "type": "object",
+   "properties": {
+    "caCertificateRefs": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "group": {
+        "type": "string",
+        "description": "API group of the object. An empty string is the core group."
+       },
+       "kind": {
+        "type": "string",
+        "description": "Kind of the object, eg `Secret` or `ConfigMap`."
+       },
+       "name": {
+        "type": "string",
+        "description": "Name of the object."
+       },
+       "namespace": {
+        "type": "string",
+        "description": "Namespace of the object. Defaults to the namespace of the Gateway."
+       }
+      },
+      "additionalProperties": false,
+      "description": "A ConfigMap or Secret with CA certificates."
+     },
+     "description": "References to the CA certificates that client certificates are validated against."
+    },
+    "mode": {
+     "type": "string",
+     "enum": [
+      "AllowValidOnly",
+      "AllowInsecureFallback"
+     ],
+     "description": "Whether clients without a valid certificate are refused: `AllowValidOnly` or `AllowInsecureFallback`."
+    }
+   },
+   "additionalProperties": false,
+   "description": "Validation of the certificate of clients."
+  },
   "gatewayClass": {
    "type": "object",
    "properties": {},
@@ -5727,6 +5855,14 @@
      "primary": {
       "type": "boolean",
       "description": "Make this the primary GatewayClass of the chart. Only 1 can be primary."
+     },
+     "nameOverride": {
+      "type": "string",
+      "description": "Suffix of the GatewayClass name, instead of the key of the object."
+     },
+     "dependency": {
+      "type": "string",
+      "description": "Name of the dependency this GatewayClass belongs to. Set by common, a GatewayClass of a dependency is never the primary by fallback."
      },
      "annotations": {
       "allOf": [
@@ -9314,7 +9450,7 @@
       ],
       "description": "A peer that may receive traffic."
      },
-     "description": "Peers that may receive traffic."
+     "description": "Peers that may receive traffic. Kubernetes only, rejected when `type` is `cilium`."
     },
     "ports": {
      "type": "array",
@@ -9326,7 +9462,7 @@
       ],
       "description": "A port that traffic is allowed to."
      },
-     "description": "Ports allowed by this rule."
+     "description": "Ports allowed by this rule. Kubernetes only, rejected when `type` is `cilium`."
     },
     "toEntities": {
      "type": "array",
@@ -9334,14 +9470,14 @@
       "type": "string",
       "description": "An entity, eg `world`, `cluster`, `host` or `all`."
      },
-     "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to receive traffic. Ignored for Kubernetes NetworkPolicies."
+     "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to receive traffic. Rejected when `type` is `kubernetes`."
     },
     "toEndpoints": {
      "type": "array",
      "items": {
       "description": "An endpoint selector, passed on as is."
      },
-     "description": "Cilium only: endpoints, by labels, the rule allows."
+     "description": "Cilium only: endpoints, by labels, the rule allows. Rejected when `type` is `kubernetes`."
     },
     "toCIDR": {
      "type": "array",
@@ -9349,42 +9485,42 @@
       "type": "string",
       "description": "A CIDR, eg `10.0.0.0/8`."
      },
-     "description": "Cilium only: CIDRs the rule allows."
+     "description": "Cilium only: CIDRs the rule allows. Rejected when `type` is `kubernetes`."
     },
     "toCIDRSet": {
      "type": "array",
      "items": {
       "description": "A CIDR with exceptions, passed on as is."
      },
-     "description": "Cilium only: CIDRs with exceptions the rule allows."
+     "description": "Cilium only: CIDRs with exceptions the rule allows. Rejected when `type` is `kubernetes`."
     },
     "toPorts": {
      "type": "array",
      "items": {
       "description": "A port rule, passed on as is."
      },
-     "description": "Cilium only: ports, with optional L7 rules, the rule allows."
+     "description": "Cilium only: ports, with optional L7 rules, the rule allows. Rejected when `type` is `kubernetes`."
     },
     "icmps": {
      "type": "array",
      "items": {
       "description": "An ICMP rule, passed on as is."
      },
-     "description": "Cilium only: ICMP types the rule allows."
+     "description": "Cilium only: ICMP types the rule allows. Rejected when `type` is `kubernetes`."
     },
     "toFQDNs": {
      "type": "array",
      "items": {
       "description": "An entry, passed on as is."
      },
-     "description": "Cilium only: domain names the rule allows, eg `matchName` or `matchPattern`."
+     "description": "Cilium only: domain names the rule allows, eg `matchName` or `matchPattern`. Rejected when `type` is `kubernetes`."
     },
     "toServices": {
      "type": "array",
      "items": {
       "description": "An entry, passed on as is."
      },
-     "description": "Cilium only: kubernetes services the rule allows."
+     "description": "Cilium only: kubernetes services the rule allows. Rejected when `type` is `kubernetes`."
     }
    },
    "additionalProperties": false,
@@ -9403,7 +9539,7 @@
       ],
       "description": "A peer that may send traffic."
      },
-     "description": "Peers allowed to send traffic."
+     "description": "Peers allowed to send traffic. Kubernetes only, rejected when `type` is `cilium`."
     },
     "ports": {
      "type": "array",
@@ -9415,7 +9551,7 @@
       ],
       "description": "A port that traffic is allowed to."
      },
-     "description": "Ports allowed by this rule."
+     "description": "Ports allowed by this rule. Kubernetes only, rejected when `type` is `cilium`."
     },
     "fromEntities": {
      "type": "array",
@@ -9423,14 +9559,14 @@
       "type": "string",
       "description": "An entity, eg `world`, `cluster`, `host` or `all`."
      },
-     "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies."
+     "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Rejected when `type` is `kubernetes`."
     },
     "fromEndpoints": {
      "type": "array",
      "items": {
       "description": "An endpoint selector, passed on as is."
      },
-     "description": "Cilium only: endpoints, by labels, the rule allows."
+     "description": "Cilium only: endpoints, by labels, the rule allows. Rejected when `type` is `kubernetes`."
     },
     "fromCIDR": {
      "type": "array",
@@ -9438,28 +9574,28 @@
       "type": "string",
       "description": "A CIDR, eg `10.0.0.0/8`."
      },
-     "description": "Cilium only: CIDRs the rule allows."
+     "description": "Cilium only: CIDRs the rule allows. Rejected when `type` is `kubernetes`."
     },
     "fromCIDRSet": {
      "type": "array",
      "items": {
       "description": "A CIDR with exceptions, passed on as is."
      },
-     "description": "Cilium only: CIDRs with exceptions the rule allows."
+     "description": "Cilium only: CIDRs with exceptions the rule allows. Rejected when `type` is `kubernetes`."
     },
     "toPorts": {
      "type": "array",
      "items": {
       "description": "A port rule, passed on as is."
      },
-     "description": "Cilium only: ports, with optional L7 rules, the rule allows."
+     "description": "Cilium only: ports, with optional L7 rules, the rule allows. Rejected when `type` is `kubernetes`."
     },
     "icmps": {
      "type": "array",
      "items": {
       "description": "An ICMP rule, passed on as is."
      },
-     "description": "Cilium only: ICMP types the rule allows."
+     "description": "Cilium only: ICMP types the rule allows. Rejected when `type` is `kubernetes`."
     }
    },
    "additionalProperties": false,
@@ -10344,8 +10480,8 @@
         "boolean",
         "string"
        ],
-       "description": "Create the built-in `crontab` volume. Set to `false` to remove it.",
-       "default": true
+       "description": "Create the built-in `crontab` volume. Disabled by default, set to `true` to mount it.",
+       "default": false
       },
       "type": {
        "type": "string",
@@ -10388,7 +10524,7 @@
       }
      },
      "additionalProperties": false,
-     "description": "Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Enabled by default."
+     "description": "Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Disabled by default (opt-in)."
     }
    },
    "additionalProperties": {
@@ -11669,7 +11805,7 @@
     "description": "A volume, keyed by name. Its `type` decides which volume or claim is created and how it is mounted, see [Persistence](/truecharts-common/persistence).",
     "default": {}
    },
-   "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp`, `devshm` and `crontab`, which are enabled by default."
+   "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp`, `devshm` and `crontab`. All are enabled by default, except `crontab`."
   },
   "podDisruptionBudget": {
    "type": "object",
@@ -11677,6 +11813,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the PodDisruptionBudget with the chart fullname.",
+      "default": true
+     },
      "unhealthyPodEvictionPolicy": {
       "type": "string",
       "description": "Whether unhealthy pods may be evicted regardless of the budget. Leave empty to use the Kubernetes default.",
@@ -12170,6 +12314,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the PriorityClass with the chart fullname.",
+      "default": true
+     },
      "provisioner": {
       "type": "string",
       "description": "Not used by the priority class templates. Only set in the priority class fixture of common-test."
@@ -13030,21 +13182,21 @@
          },
          "securityPolicy": {
           "type": "object",
-          "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`.",
+          "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.",
           "additionalProperties": {
            "description": "A setting of the policy, passed on as is."
           }
          },
          "backendTrafficPolicy": {
           "type": "object",
-          "description": "`BackendTrafficPolicy` settings, without a target.",
+          "description": "`BackendTrafficPolicy` settings, without a target. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.",
           "additionalProperties": {
            "description": "A setting of the policy, passed on as is."
           }
          },
          "extensionPolicy": {
           "type": "object",
-          "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`.",
+          "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.",
           "additionalProperties": {
            "description": "A setting of the policy, passed on as is."
           }
@@ -13114,11 +13266,12 @@
            "filters": {
             "type": "array",
             "items": {
-             "type": "object",
-             "description": "A filter applied to this backend only.",
-             "additionalProperties": {
-              "description": "A setting of the filter, passed on as is."
-             }
+             "allOf": [
+              {
+               "$ref": "#/definitions/route.filter"
+              }
+             ],
+             "description": "A filter applied to this backend only."
             },
             "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
            }
@@ -13147,11 +13300,12 @@
         "filters": {
          "type": "array",
          "items": {
-          "type": "object",
-          "description": "A filter applied to requests matching this rule.",
-          "additionalProperties": {
-           "description": "A setting of the filter, passed on as is."
-          }
+          "allOf": [
+           {
+            "$ref": "#/definitions/route.filter"
+           }
+          ],
+          "description": "A filter applied to requests matching this rule."
          },
          "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
         },
@@ -13160,18 +13314,20 @@
          "description": "`request` and `backendRequest` timeouts. Only for `HTTPRoute`."
         },
         "retry": {
-         "type": "object",
-         "description": "Retry configuration. Only for `HTTPRoute`.",
-         "additionalProperties": {
-          "description": "A setting passed on as is."
-         }
+         "allOf": [
+          {
+           "$ref": "#/definitions/route.retry"
+          }
+         ],
+         "description": "Retry configuration. Only for `HTTPRoute`."
         },
         "sessionPersistence": {
-         "type": "object",
-         "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`.",
-         "additionalProperties": {
-          "description": "A setting passed on as is."
-         }
+         "allOf": [
+          {
+           "$ref": "#/definitions/route.sessionPersistence"
+          }
+         ],
+         "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
         }
        },
        "additionalProperties": false,
@@ -13190,6 +13346,256 @@
     "default": {}
    },
    "description": "Routes, keyed by name. Every enabled entry renders a Gateway API route of `kind`, see [Route](/truecharts-common/route)."
+  },
+  "route.filter": {
+   "type": "object",
+   "properties": {
+    "type": {
+     "type": "string",
+     "enum": [
+      "RequestHeaderModifier",
+      "ResponseHeaderModifier",
+      "RequestMirror",
+      "RequestRedirect",
+      "URLRewrite",
+      "ExtensionRef",
+      "CORS"
+     ],
+     "description": "Type of the filter. Sets which of the other keys is used. `RequestRedirect`, `URLRewrite` and `CORS` are only for `HTTPRoute`."
+    },
+    "requestHeaderModifier": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/route.headerModifier"
+      }
+     ],
+     "description": "Used with type `RequestHeaderModifier`."
+    },
+    "responseHeaderModifier": {
+     "allOf": [
+      {
+       "$ref": "#/definitions/route.headerModifier"
+      }
+     ],
+     "description": "Used with type `ResponseHeaderModifier`."
+    },
+    "requestMirror": {
+     "type": "object",
+     "properties": {
+      "backendRef": {
+       "allOf": [
+        {
+         "$ref": "#/definitions/route.objectReference"
+        }
+       ],
+       "description": "Backend that receives a copy of the requests. Needs a `port` for a Service."
+      },
+      "percent": {
+       "type": "integer",
+       "description": "Percentage of the requests that is mirrored."
+      },
+      "fraction": {
+       "type": "object",
+       "properties": {
+        "numerator": {
+         "type": "integer",
+         "description": "Numerator of the fraction."
+        },
+        "denominator": {
+         "type": "integer",
+         "description": "Denominator of the fraction. Defaults to 100."
+        }
+       },
+       "additionalProperties": false,
+       "description": "Fraction of the requests that is mirrored. Cannot be used with `percent`."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Used with type `RequestMirror`."
+    },
+    "requestRedirect": {
+     "type": "object",
+     "properties": {
+      "scheme": {
+       "type": "string",
+       "enum": [
+        "http",
+        "https"
+       ],
+       "description": "Scheme of the redirect."
+      },
+      "hostname": {
+       "type": "string",
+       "description": "Hostname of the redirect."
+      },
+      "path": {
+       "allOf": [
+        {
+         "$ref": "#/definitions/route.pathModifier"
+        }
+       ],
+       "description": "Modification of the path."
+      },
+      "port": {
+       "type": "integer",
+       "description": "Port of the redirect."
+      },
+      "statusCode": {
+       "type": "integer",
+       "enum": [
+        301,
+        302
+       ],
+       "description": "Status code of the redirect, `301` or `302`."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Used with type `RequestRedirect`."
+    },
+    "urlRewrite": {
+     "type": "object",
+     "properties": {
+      "hostname": {
+       "type": "string",
+       "description": "Hostname that replaces the one of the request."
+      },
+      "path": {
+       "allOf": [
+        {
+         "$ref": "#/definitions/route.pathModifier"
+        }
+       ],
+       "description": "Modification of the path."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Used with type `URLRewrite`."
+    },
+    "extensionRef": {
+     "type": "object",
+     "properties": {
+      "group": {
+       "type": "string",
+       "description": "API group of the object."
+      },
+      "kind": {
+       "type": "string",
+       "description": "Kind of the object."
+      },
+      "name": {
+       "type": "string",
+       "description": "Name of the object."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Used with type `ExtensionRef`, a reference to an object in the namespace of the route."
+    },
+    "cors": {
+     "type": "object",
+     "properties": {
+      "allowOrigins": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "description": "An origin, or `*`."
+       },
+       "description": "Origins that are allowed."
+      },
+      "allowCredentials": {
+       "type": "boolean",
+       "description": "Whether credentials are allowed."
+      },
+      "allowMethods": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "description": "An HTTP method, or `*`."
+       },
+       "description": "Methods that are allowed."
+      },
+      "allowHeaders": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "description": "A header name, or `*`."
+       },
+       "description": "Request headers that are allowed."
+      },
+      "exposeHeaders": {
+       "type": "array",
+       "items": {
+        "type": "string",
+        "description": "A header name."
+       },
+       "description": "Response headers that are exposed to the client."
+      },
+      "maxAge": {
+       "type": "integer",
+       "description": "Seconds a preflight response can be cached."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Used with type `CORS`."
+    }
+   },
+   "required": [
+    "type"
+   ],
+   "additionalProperties": false,
+   "description": "A Gateway API route filter."
+  },
+  "route.headerModifier": {
+   "type": "object",
+   "properties": {
+    "set": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "Name of the header."
+       },
+       "value": {
+        "type": "string",
+        "description": "Value of the header."
+       }
+      },
+      "additionalProperties": false,
+      "description": "A header to set."
+     },
+     "description": "Headers that overwrite the header of the same name."
+    },
+    "add": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "name": {
+        "type": "string",
+        "description": "Name of the header."
+       },
+       "value": {
+        "type": "string",
+        "description": "Value of the header."
+       }
+      },
+      "additionalProperties": false,
+      "description": "A header to add."
+     },
+     "description": "Headers that are added to the existing value of the header."
+    },
+    "remove": {
+     "type": "array",
+     "items": {
+      "type": "string",
+      "description": "Name of a header to remove."
+     },
+     "description": "Names of the headers to remove."
+    }
+   },
+   "additionalProperties": false,
+   "description": "Changes to the headers of a request or response."
   },
   "route.match": {
    "type": "object",
@@ -13269,15 +13675,166 @@
      "description": "Query parameters the request has to match."
     },
     "method": {
-     "type": [
-      "object",
-      "string"
+     "oneOf": [
+      {
+       "type": "string",
+       "enum": [
+        "GET",
+        "HEAD",
+        "POST",
+        "PUT",
+        "DELETE",
+        "CONNECT",
+        "OPTIONS",
+        "TRACE",
+        "PATCH"
+       ],
+       "description": "HTTP method of the request. For `HTTPRoute`."
+      },
+      {
+       "type": "object",
+       "properties": {
+        "type": {
+         "type": "string",
+         "enum": [
+          "Exact",
+          "RegularExpression"
+         ],
+         "description": "How the service and method are matched: `Exact` or `RegularExpression`."
+        },
+        "service": {
+         "type": "string",
+         "description": "Name of the gRPC service."
+        },
+        "method": {
+         "type": "string",
+         "description": "Name of the gRPC method."
+        }
+       },
+       "additionalProperties": false,
+       "description": "The gRPC service and method of the request. For `GRPCRoute`."
+      }
      ],
-     "description": "HTTP method of the request, or the gRPC service and method."
+     "description": "HTTP method of the request for an `HTTPRoute`, or the gRPC service and method for a `GRPCRoute`."
     }
    },
    "additionalProperties": false,
    "description": "A match condition for an HTTP or gRPC route."
+  },
+  "route.objectReference": {
+   "type": "object",
+   "properties": {
+    "group": {
+     "type": "string",
+     "description": "API group of the object. An empty string is the core group."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Kind of the object."
+    },
+    "name": {
+     "type": "string",
+     "description": "Name of the object."
+    },
+    "namespace": {
+     "type": "string",
+     "description": "Namespace of the object."
+    },
+    "port": {
+     "type": "integer",
+     "description": "Port of the backend. Needed for a Service."
+    }
+   },
+   "additionalProperties": false,
+   "description": "A reference to a backend object."
+  },
+  "route.pathModifier": {
+   "type": "object",
+   "properties": {
+    "type": {
+     "type": "string",
+     "enum": [
+      "ReplaceFullPath",
+      "ReplacePrefixMatch"
+     ],
+     "description": "How the path is modified: `ReplaceFullPath` or `ReplacePrefixMatch`."
+    },
+    "replaceFullPath": {
+     "type": "string",
+     "description": "Path that replaces the full path."
+    },
+    "replacePrefixMatch": {
+     "type": "string",
+     "description": "Path that replaces the matched prefix."
+    }
+   },
+   "additionalProperties": false,
+   "description": "Modification of the path."
+  },
+  "route.retry": {
+   "type": "object",
+   "properties": {
+    "codes": {
+     "type": "array",
+     "items": {
+      "type": "integer",
+      "description": "An HTTP status code."
+     },
+     "description": "Status codes that are retried."
+    },
+    "attempts": {
+     "type": "integer",
+     "description": "Number of retries."
+    },
+    "backoff": {
+     "type": "string",
+     "description": "Minimum wait between retries, a duration like `100ms` or `1s`."
+    }
+   },
+   "additionalProperties": false,
+   "description": "Retry configuration."
+  },
+  "route.sessionPersistence": {
+   "type": "object",
+   "properties": {
+    "sessionName": {
+     "type": "string",
+     "description": "Name of the cookie or header that holds the session."
+    },
+    "absoluteTimeout": {
+     "type": "string",
+     "description": "Maximum lifetime of a session, a duration like `1h`."
+    },
+    "idleTimeout": {
+     "type": "string",
+     "description": "Time without requests after which a session ends, a duration like `10m`."
+    },
+    "type": {
+     "type": "string",
+     "enum": [
+      "Cookie",
+      "Header"
+     ],
+     "description": "How the session is kept: `Cookie` or `Header`."
+    },
+    "cookieConfig": {
+     "type": "object",
+     "properties": {
+      "lifetimeType": {
+       "type": "string",
+       "enum": [
+        "Permanent",
+        "Session"
+       ],
+       "description": "Lifetime of the cookie: `Permanent` or `Session`."
+      }
+     },
+     "additionalProperties": false,
+     "description": "Settings of the cookie. Only with type `Cookie`."
+    }
+   },
+   "additionalProperties": false,
+   "description": "Session persistence."
   },
   "route.timeouts": {
    "type": "object",
@@ -13306,6 +13863,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the Secret with the chart fullname.",
+      "default": true
+     },
      "data": {
       "type": "object",
       "properties": {},
@@ -14255,6 +14820,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the StorageClass with the chart fullname.",
+      "default": true
+     },
      "mountOptions": {
       "type": "array",
       "items": {
@@ -14372,6 +14945,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the VolumeSnapshotClass with the chart fullname.",
+      "default": true
+     },
      "parameters": {
       "type": "object",
       "properties": {},
@@ -14463,6 +15044,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the VolumeSnapshot with the chart fullname.",
+      "default": true
+     },
      "source": {
       "type": "object",
       "properties": {
@@ -14928,6 +15517,14 @@
     "mutating": {
      "type": "object",
      "properties": {
+      "expandObjectName": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Prefix the name of the Webhook with the chart fullname.",
+       "default": true
+      },
       "enabled": {
        "type": [
         "boolean",
@@ -16064,7 +16661,7 @@
     },
     "runAsNonRoot": {
      "type": "boolean",
-     "description": "Whether the container must run as a non-root user (`runAsNonRoot`). Calculated from `runAsUser` and `runAsGroup` when not set."
+     "description": "Whether the container must run as a non-root user (`runAsNonRoot`). Only a value set on the container itself is used. Otherwise it is calculated from the final `runAsUser` (`false` for UID 0, `true` otherwise); the chart-wide value is not inherited."
     },
     "capabilities": {
      "type": "object",
@@ -16666,7 +17263,7 @@
       "additionalProperties": {
        "type": "string"
       },
-      "description": "Additional labels that are added to the selector of the workload and to the labels of its pods.",
+      "description": "Additional labels that are added to the selector of the workload and to the labels of its pods. The values go through `tpl` and end up in the immutable `spec.selector` of the workload, so they must not change between releases, or the upgrade fails with a \"field is immutable\" error.",
       "default": {},
       "examples": [
        {

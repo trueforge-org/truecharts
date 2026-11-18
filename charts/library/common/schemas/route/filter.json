@@ -1,0 +1,198 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "RequestHeaderModifier",
+        "ResponseHeaderModifier",
+        "RequestMirror",
+        "RequestRedirect",
+        "URLRewrite",
+        "ExtensionRef",
+        "CORS"
+      ],
+      "description": "Type of the filter. Sets which of the other keys is used. `RequestRedirect`, `URLRewrite` and `CORS` are only for `HTTPRoute`."
+    },
+    "requestHeaderModifier": {
+      "allOf": [
+        {
+          "$ref": "headerModifier.json"
+        }
+      ],
+      "description": "Used with type `RequestHeaderModifier`."
+    },
+    "responseHeaderModifier": {
+      "allOf": [
+        {
+          "$ref": "headerModifier.json"
+        }
+      ],
+      "description": "Used with type `ResponseHeaderModifier`."
+    },
+    "requestMirror": {
+      "type": "object",
+      "properties": {
+        "backendRef": {
+          "allOf": [
+            {
+              "$ref": "objectReference.json"
+            }
+          ],
+          "description": "Backend that receives a copy of the requests. Needs a `port` for a Service."
+        },
+        "percent": {
+          "type": "integer",
+          "description": "Percentage of the requests that is mirrored."
+        },
+        "fraction": {
+          "type": "object",
+          "properties": {
+            "numerator": {
+              "type": "integer",
+              "description": "Numerator of the fraction."
+            },
+            "denominator": {
+              "type": "integer",
+              "description": "Denominator of the fraction. Defaults to 100."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Fraction of the requests that is mirrored. Cannot be used with `percent`."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Used with type `RequestMirror`."
+    },
+    "requestRedirect": {
+      "type": "object",
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "enum": [
+            "http",
+            "https"
+          ],
+          "description": "Scheme of the redirect."
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname of the redirect."
+        },
+        "path": {
+          "allOf": [
+            {
+              "$ref": "pathModifier.json"
+            }
+          ],
+          "description": "Modification of the path."
+        },
+        "port": {
+          "type": "integer",
+          "description": "Port of the redirect."
+        },
+        "statusCode": {
+          "type": "integer",
+          "enum": [
+            301,
+            302
+          ],
+          "description": "Status code of the redirect, `301` or `302`."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Used with type `RequestRedirect`."
+    },
+    "urlRewrite": {
+      "type": "object",
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "description": "Hostname that replaces the one of the request."
+        },
+        "path": {
+          "allOf": [
+            {
+              "$ref": "pathModifier.json"
+            }
+          ],
+          "description": "Modification of the path."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Used with type `URLRewrite`."
+    },
+    "extensionRef": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "API group of the object."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Kind of the object."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the object."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Used with type `ExtensionRef`, a reference to an object in the namespace of the route."
+    },
+    "cors": {
+      "type": "object",
+      "properties": {
+        "allowOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "An origin, or `*`."
+          },
+          "description": "Origins that are allowed."
+        },
+        "allowCredentials": {
+          "type": "boolean",
+          "description": "Whether credentials are allowed."
+        },
+        "allowMethods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "An HTTP method, or `*`."
+          },
+          "description": "Methods that are allowed."
+        },
+        "allowHeaders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "A header name, or `*`."
+          },
+          "description": "Request headers that are allowed."
+        },
+        "exposeHeaders": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "A header name."
+          },
+          "description": "Response headers that are exposed to the client."
+        },
+        "maxAge": {
+          "type": "integer",
+          "description": "Seconds a preflight response can be cached."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Used with type `CORS`."
+    }
+  },
+  "required": [
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "A Gateway API route filter."
+}

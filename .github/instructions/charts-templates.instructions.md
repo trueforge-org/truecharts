@@ -25,4 +25,4 @@ Only add templates when values alone are not enough, and never hand-write Kubern
 ```
 
 - Define helpers in `templates/_<name>.tpl`, named `<chart>.<name>`.
-- Generated secrets must stay stable across upgrades. Look up the existing Secret with `lookup` and reuse its data, falling back to `randAlphaNum` only on first install.
+- Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Require credentials explicitly and fail the render when they are unset.

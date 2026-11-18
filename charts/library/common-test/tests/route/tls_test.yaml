@@ -196,6 +196,66 @@ tests:
           path: spec.issuerRef.name
           value: some-issuer
 
+  - it: should create the certificate in the namespace of the route
+    set:
+      service: *service
+      route:
+        main:
+          enabled: true
+          namespace: route-namespace
+          gateway: external
+          hostnames:
+            - b.example.com
+          tls:
+            - hosts:
+                - b.example.com
+              certificateIssuer: some-issuer
+    asserts:
+      - documentSelector: &cert2
+          path: kind
+          value: Certificate
+        equal:
+          path: metadata.namespace
+          value: route-namespace
+
+  - it: should create one certificate per namespace for the same hostname
+    set:
+      service: *service
+      route:
+        one:
+          enabled: true
+          namespace: ns-one
+          gateway: external
+          hostnames:
+            - b.example.com
+          tls:
+            - hosts:
+                - b.example.com
+              certificateIssuer: some-issuer
+        two:
+          enabled: true
+          namespace: ns-two
+          gateway: other
+          hostnames:
+            - b.example.com
+          tls:
+            - hosts:
+                - b.example.com
+              certificateIssuer: some-issuer
+    asserts:
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: test-release-name-common-test-tls-b-example-com
+          namespace: ns-one
+          any: true
+      - containsDocument:
+          kind: Certificate
+          apiVersion: cert-manager.io/v1
+          name: test-release-name-common-test-tls-b-example-com
+          namespace: ns-two
+          any: true
+
   - it: should attach a listenerset to a gateway in this chart
     set:
       service: *service

@@ -172,14 +172,14 @@ Key in the Secret that holds the CA certificate.
 
 ## `$name.customCASecretRef.expandObjectName`
 
-Prefix the Secret name with the chart fullname.
+Prefix the Secret name with the chart fullname. Supports Helm `tpl`.
 
 | Field | Value |
 | --- | --- |
 | Key | `credentials.$name.customCASecretRef.expandObjectName` |
 | Type | `bool` |
 | Required | ❌ |
-| Helm `tpl` | ❌ |
+| Helm `tpl` | ✅ |
 | Default | `true` |
 
 ---

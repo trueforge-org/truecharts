@@ -24,7 +24,7 @@ Persistence of the nodes. Requires `workloadType: StatefulSet`, and can not be a
 | Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `{"enabled": true, "size": "", "storageClass": "", "retain": false}` |
+| Default | `{"enabled": true, "size": "", "storageClass": ""}` |
 
 ---
 

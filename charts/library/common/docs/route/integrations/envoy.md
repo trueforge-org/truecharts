@@ -227,7 +227,7 @@ Use a permanent redirect (301) instead of a temporary one (302).
 
 ## `securityPolicy`
 
-Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`.
+Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.
 
 | Field | Value |
 | --- | --- |
@@ -255,7 +255,7 @@ A setting of the policy, passed on as is.
 
 ## `backendTrafficPolicy`
 
-`BackendTrafficPolicy` settings, without a target.
+`BackendTrafficPolicy` settings, without a target. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.
 
 | Field | Value |
 | --- | --- |
@@ -283,7 +283,7 @@ A setting of the policy, passed on as is.
 
 ## `extensionPolicy`
 
-`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`.
+`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.
 
 | Field | Value |
 | --- | --- |

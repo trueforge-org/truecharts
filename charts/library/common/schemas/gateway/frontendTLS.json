@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "default": {
+      "type": "object",
+      "properties": {
+        "validation": {
+          "allOf": [
+            {
+              "$ref": "validation.json"
+            }
+          ],
+          "description": "Validation of the certificate of clients."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Default settings for all ports of the Gateway."
+    },
+    "perPort": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "port": {
+            "type": "integer",
+            "description": "Port of the Gateway the settings apply to."
+          },
+          "tls": {
+            "type": "object",
+            "properties": {
+              "validation": {
+                "allOf": [
+                  {
+                    "$ref": "validation.json"
+                  }
+                ],
+                "description": "Validation of the certificate of clients."
+              }
+            },
+            "additionalProperties": false,
+            "description": "Settings for this port."
+          }
+        },
+        "additionalProperties": false,
+        "description": "Settings of one port."
+      },
+      "description": "Settings per port, which override `default`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "TLS settings for connections from clients."
+}

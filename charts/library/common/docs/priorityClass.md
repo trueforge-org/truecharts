@@ -42,6 +42,20 @@ A priority class.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the PriorityClass with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `priorityClass.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.preemptionPolicy`
 
 Whether pods of this class may preempt lower priority pods.

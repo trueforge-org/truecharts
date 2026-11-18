@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "caCertificateRefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "description": "API group of the object. An empty string is the core group."
+          },
+          "kind": {
+            "type": "string",
+            "description": "Kind of the object, eg `Secret` or `ConfigMap`."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the object."
+          },
+          "namespace": {
+            "type": "string",
+            "description": "Namespace of the object. Defaults to the namespace of the Gateway."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A ConfigMap or Secret with CA certificates."
+      },
+      "description": "References to the CA certificates that client certificates are validated against."
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "AllowValidOnly",
+        "AllowInsecureFallback"
+      ],
+      "description": "Whether clients without a valid certificate are refused: `AllowValidOnly` or `AllowInsecureFallback`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Validation of the certificate of clients."
+}

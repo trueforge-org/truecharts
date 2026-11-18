@@ -29,6 +29,9 @@ tests:
                     enabled: false
       dependencies:
         mariadb: &mariadb
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
     asserts:
       - documentSelector: &appDoc
@@ -61,7 +64,7 @@ tests:
         contains:
           path: spec.template.spec.initContainers[0].env
           content:
-            name: MARIADB_ROOT_PASSWORD
+            name: MYSQL_PWD
             valueFrom:
               secretKeyRef:
                 name: test-release-name-mariadbcreds
@@ -69,7 +72,11 @@ tests:
       - documentSelector: *appDoc
         matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
-          pattern: mysqladmin -uroot -h"\$\{MARIADB_HOST\}" -P"\$\{MARIADB_PORT\}"
+          pattern: mysqladmin -uroot -h"\$\{MARIADB_HOST\}" -P"\$\{MARIADB_PORT\}" ping
+      - documentSelector: *appDoc
+        notMatchRegex:
+          path: spec.template.spec.initContainers[0].command[2]
+          pattern: -p"
       - documentSelector:
           path: kind
           value: StatefulSet

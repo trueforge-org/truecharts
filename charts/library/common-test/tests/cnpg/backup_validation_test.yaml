@@ -20,6 +20,8 @@ tests:
           secretKey: some-secret-key
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           operator:
             backups:
@@ -43,6 +45,8 @@ tests:
           secretKey: some-secret-key
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           operator:
             backups:

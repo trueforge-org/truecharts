@@ -53,11 +53,11 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [CNPG RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+                echo "Testing database on host: [${PGWAIT_HOST_0}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_0"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-rw]"
+              echo "Database available on host: [${PGWAIT_HOST_0}]"
               echo "Done executing DB waits..."
               EOF
 
@@ -97,18 +97,18 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [CNPG RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+                echo "Testing database on host: [${PGWAIT_HOST_0}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_0"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-rw]"
+              echo "Database available on host: [${PGWAIT_HOST_0}]"
               echo "Testing Database availability on [CNPG Pooler RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-pooler-rw
+                echo "Testing database on host: [${PGWAIT_HOST_1}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_1"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
+              echo "Database available on host: [${PGWAIT_HOST_1}]"
               echo "Done executing DB waits..."
               EOF
 
@@ -148,24 +148,24 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [CNPG RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+                echo "Testing database on host: [${PGWAIT_HOST_0}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_0"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-rw]"
+              echo "Database available on host: [${PGWAIT_HOST_0}]"
               echo "Testing Database availability on [CNPG Pooler RW]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-pooler-rw
+                echo "Testing database on host: [${PGWAIT_HOST_1}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_1"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-pooler-rw]"
+              echo "Database available on host: [${PGWAIT_HOST_1}]"
               echo "Testing Database availability on [CNPG Pooler RO]"
               until
-                echo "Testing database on url: [test-release-name-common-test-cnpg-main-pooler-ro]"
-                pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-pooler-ro
+                echo "Testing database on host: [${PGWAIT_HOST_2}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_2"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-cnpg-main-pooler-ro]"
+              echo "Database available on host: [${PGWAIT_HOST_2}]"
               echo "Done executing DB waits..."
               EOF

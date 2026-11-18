@@ -96,7 +96,6 @@ securityContext:
     privileged: false
     seccompProfile:
       type: ''
-      profile: ''
     capabilities:
       add:
       - ''
@@ -364,11 +363,7 @@ workload:
             QUERY_PORT: ''
             USERNAME: ''
             VALIDATE: ''
-            MONGO_URL:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
+            MONGO_URL: ''
             WEB_PORT: ''
             THELOUNGE_HOME: ''
             CHECK_FOR_UPDATES: ''
@@ -626,7 +621,7 @@ workload:
             RAWG_API_CACHE_DAYS: ''
             RAWG_API_KEY: ''
             MAXMEM: 0
-            CLI_ARGS:
+            CLI_ARGS: null
             PASSWORD: ''
             GOKAPI_LENGTH_ID: ''
             GOKAPI_MAX_FILESIZE: ''
@@ -765,10 +760,7 @@ workload:
             SLEEP: ''
             CLIENT_ID: ''
             CLIENT_SECRET: ''
-            NEXTAUTH_SECRET:
-              secretKeyRef:
-                name: ''
-                key: ''
+            NEXTAUTH_SECRET: ''
             NEXTAUTH_URL: ''
             REDDIT_REDIRECT: ''
             CUSTOMER_KEY: ''
@@ -1739,8 +1731,8 @@ workload:
             PVE_USER: ''
             PVE_TOKEN_NAME: ''
             ENABLE_MJPG_STREAMER: ''
-            MJPG_STREAMER_INPUT:
-            CAMERA_DEV:
+            MJPG_STREAMER_INPUT: null
+            CAMERA_DEV: null
             API_TOKEN: ''
             RECORD_TYPE: ''
             ZONE_NAME: ''
@@ -2912,7 +2904,7 @@ workload:
               fieldRef:
                 fieldPath: ''
                 apiVersion: ''
-            EMPTY_ENV:
+            EMPTY_ENV: null
             VAR1: ''
             VAR2: ''
             VAR3:
@@ -2942,6 +2934,8 @@ workload:
             VAR11: 0
             VAR12: ''
             VAR13: ''
+          command:
+          - ''
           securityContext:
             capabilities:
               add:
@@ -2980,8 +2974,6 @@ workload:
             messagePath: ''
           tty: true
           stdin: true
-          command:
-          - ''
           lifecycle:
             postStart:
               type: ''
@@ -3375,6 +3367,7 @@ service:
     type: ''
     externalIP: ''
     useSlice: true
+    namespace: ''
     expandObjectName: false
     selectorLabels:
       app.kubernetes.io/name: ''
@@ -3411,7 +3404,6 @@ service:
         timeoutSeconds: ''
     externalTrafficPolicy: ''
     addressType: ''
-    namespace: ''
     externalName: ''
     loadBalancerSourceRanges:
     - ''
@@ -3457,24 +3449,24 @@ credentials:
       name: ''
       key: ''
   other:
-    bucket: ''
     type: ''
     accessKey: ''
     secretKey: ''
+    bucket: ''
     url: ''
     encrKey: ''
   from:
-    bucket: ''
     type: ''
     accessKey: ''
     secretKey: ''
+    bucket: ''
     encrKey: ''
     url: ''
   to:
-    bucket: ''
     type: ''
     accessKey: ''
     secretKey: ''
+    bucket: ''
     encrKey: ''
     url: ''
   my-creds:
@@ -3818,6 +3810,7 @@ persistence:
     type: ''
     mountPath: ''
     targetSelectAll: true
+    size: ''
     iscsi:
       fsType: ''
       targetPortal: ''
@@ -3923,6 +3916,9 @@ persistence:
       machinelearning:
         machinelearning:
           mountPath: ''
+      frontend:
+        frontend:
+          mountPath: ''
       geoip:
         geoip:
           mountPath: ''
@@ -3939,7 +3935,6 @@ persistence:
         container-name1: {}
       other-workload:
         other-container: {}
-    size: ''
     accessMode: ''
     subPath: ''
     objectName: ''
@@ -3961,8 +3956,6 @@ persistence:
       src:
         enabled: false
     copyMethod: ''
-    accessModes:
-    - ''
     autoPermissions:
       enabled: true
       chown: true
@@ -4032,6 +4025,7 @@ persistence:
       value: ''
     retain: true
     existingClaim: ''
+    accessModes: ''
     volumeName: ''
     namespace: ''
     expandObjectName: false
@@ -4069,7 +4063,7 @@ volumeSnapshotClass:
     enabled: true
     driver: ''
     parameters:
-      "{{ .Values.some_key }}": ''
+      '{{ .Values.some_key }}': ''
       parameter2: 5
   my-vsc1:
     enabled: ''
@@ -4357,7 +4351,7 @@ configMapsFromFolder:
     test-scripts:
       labels:
         test-label: ''
-      forceRename:
+      forceRename: null
     binary-test:
       fileAttributeOverrides:
         test.png:
@@ -4489,8 +4483,8 @@ externalSecret:
             some-annotation: ''
           labels:
             some-label: ''
-      name:
-      immutable:
+      name: null
+      immutable: null
 serviceAccount:
   main:
     enabled: true
@@ -4941,7 +4935,7 @@ ingress:
             some-string: ''
             some-number: 0
             some-bool: false
-            some-null:
+            some-null: null
             some-templated: ''
             some-key: ''
             some-other-key: ''
@@ -5063,7 +5057,7 @@ gateway:
     gatewayClassName: ''
     listeners:
     - name: ''
-      hostname:
+      hostname: null
       port: 80
       protocol: ''
       allowedRoutes:
@@ -5099,10 +5093,28 @@ gateway:
       backend:
         clientCertificateRef:
           name: ''
+          group: ''
+          kind: ''
+          namespace: ''
       frontend:
         default:
           validation:
             mode: ''
+            caCertificateRefs:
+            - group: ''
+              kind: ''
+              name: ''
+              namespace: ''
+        perPort:
+        - port: 0
+          tls:
+            validation:
+              caCertificateRefs:
+              - group: ''
+                kind: ''
+                name: ''
+                namespace: ''
+              mode: ''
     infrastructure:
       labels:
         my-label: ''
@@ -5199,7 +5211,7 @@ listenerSet:
       namespace: ''
     listeners:
     - name: ''
-      hostname:
+      hostname: null
       port: 0
       protocol: ''
       allowedRoutes:
@@ -5235,6 +5247,7 @@ listenerSet:
       port: 80
       protocol: ''
     targetSelector: ''
+    namespace: ''
 route:
   objectname:
     enabled: false
@@ -5251,9 +5264,9 @@ route:
     parentRefs:
     - group: ''
       kind: ''
-      name:
-      namespace:
-      sectionName:
+      name: null
+      namespace: null
+      sectionName: null
     hostnames:
     - ''
     tls:
@@ -5332,7 +5345,7 @@ route:
             some-string: ''
             some-number: 0
             some-bool: false
-            some-null:
+            some-null: null
           customkv:
           - key: ''
             value: ''
@@ -6148,10 +6161,10 @@ dependencies:
       pod:
         fsGroup: 0
     depconfig:
-      password: ''
       clickhouseUsername: ''
       clickhouseDatabase: ''
       clickhouseDefaultAccessManagement: 0
+      password: ''
       creds:
         plainhost: ''
     workload:
@@ -6215,10 +6228,10 @@ dependencies:
     mode: ''
     operator: {}
     depconfig:
-      password: ''
-      rootPassword: ''
       mariadbUsername: ''
       mariadbDatabase: ''
+      password: ''
+      rootPassword: ''
       creds:
         plainhost: ''
     workload:
@@ -6469,11 +6482,11 @@ dependencies:
       namespace: ''
       instances: 2
     depconfig:
-      password: ''
       postgresqlUsername: ''
       postgresqlDatabase: ''
       creds:
         plainhost: ''
+      password: ''
     workload:
       objectname:
         dbWait: false
@@ -6568,10 +6581,10 @@ dependencies:
       pod:
         fsGroup: 0
     depconfig:
-      password: ''
-      rootPassword: ''
       mongodbUsername: ''
       mongodbDatabase: ''
+      password: ''
+      rootPassword: ''
       creds:
         plainhost: ''
     workload:
@@ -7412,6 +7425,11 @@ some_kind: ''
 some_name: ''
 some_api_group: ''
 some_non_resource_url: ''
+useTraefik: true
+gw: ''
+gwNs: ''
+section: ''
+parentPort: 0
 some_family: ''
 some_ip: ''
 some_other_ip: ''
@@ -7425,6 +7443,7 @@ some_extra_ip: ''
 some_range: ''
 proto: ''
 some_nodePort: 0
+svcType: ''
 disabled: false
 test:
   key1: ''

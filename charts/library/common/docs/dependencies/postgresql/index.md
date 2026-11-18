@@ -76,7 +76,7 @@ Configuration of the dependency itself, for both modes. Never merged into the ch
 
 ## `depconfig.password`
 
-Password of the database user, for both modes.
+Password of the database user, for both modes. Required when the dependency is enabled, there is no default and none is generated.
 
 | Field | Value |
 | --- | --- |
@@ -84,7 +84,7 @@ Password of the database user, for both modes.
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `"PLACEHOLDERPASSWORD"` |
+| Default | unset |
 
 ---
 

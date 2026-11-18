@@ -50,7 +50,7 @@ An egress rule.
 
 ## `[].to`
 
-Peers that may receive traffic.
+Peers that may receive traffic. Kubernetes only, rejected when `type` is `cilium`.
 
 See [to](/truecharts-common/networkPolicy/egress/to) for all keys of this object.
 
@@ -66,7 +66,7 @@ See [to](/truecharts-common/networkPolicy/egress/to) for all keys of this object
 
 ## `[].ports`
 
-Ports allowed by this rule.
+Ports allowed by this rule. Kubernetes only, rejected when `type` is `cilium`.
 
 | Field | Value |
 | --- | --- |
@@ -138,7 +138,7 @@ End of an inclusive port range.
 
 ## `[].toEntities`
 
-Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to receive traffic. Ignored for Kubernetes NetworkPolicies.
+Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to receive traffic. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -152,7 +152,7 @@ Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed 
 
 ## `[].toEndpoints`
 
-Cilium only: endpoints, by labels, the rule allows.
+Cilium only: endpoints, by labels, the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -166,7 +166,7 @@ Cilium only: endpoints, by labels, the rule allows.
 
 ## `[].toCIDR`
 
-Cilium only: CIDRs the rule allows.
+Cilium only: CIDRs the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -180,7 +180,7 @@ Cilium only: CIDRs the rule allows.
 
 ## `[].toCIDRSet`
 
-Cilium only: CIDRs with exceptions the rule allows.
+Cilium only: CIDRs with exceptions the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -194,7 +194,7 @@ Cilium only: CIDRs with exceptions the rule allows.
 
 ## `[].toPorts`
 
-Cilium only: ports, with optional L7 rules, the rule allows.
+Cilium only: ports, with optional L7 rules, the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -208,7 +208,7 @@ Cilium only: ports, with optional L7 rules, the rule allows.
 
 ## `[].icmps`
 
-Cilium only: ICMP types the rule allows.
+Cilium only: ICMP types the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -222,7 +222,7 @@ Cilium only: ICMP types the rule allows.
 
 ## `[].toFQDNs`
 
-Cilium only: domain names the rule allows, eg `matchName` or `matchPattern`.
+Cilium only: domain names the rule allows, eg `matchName` or `matchPattern`. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -236,7 +236,7 @@ Cilium only: domain names the rule allows, eg `matchName` or `matchPattern`.
 
 ## `[].toServices`
 
-Cilium only: kubernetes services the rule allows.
+Cilium only: kubernetes services the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |

@@ -24,6 +24,7 @@ These rules apply to `charts/library/common/schemas/`, `values.schema.source.jso
 ## No open objects
 
 - `"additionalProperties": true` is ONLY allowed on the values root (`values.schema.source.json`). Nowhere else: not on fixed objects, not on arbitrary keys, not on templates or leaf values.
+- The one intended exception is the Envoy Gateway policy specs of a route: `route.<name>.integrations.envoy.securityPolicy`, `backendTrafficPolicy` and `extensionPolicy`. They are the spec of an Envoy Gateway CRD that `common` does not own, so they stay open pass-through objects and their schema descriptions say so. Do not add other exceptions. Type the Gateway API shapes (route filters, `retry`, `sessionPersistence`, `method`, gateway `tls`) instead.
 - Set `"additionalProperties": false` on every object with a fixed set of keys, so unknown keys are rejected. A closed object must list every key the chart and the templates use, or `test_schema.py` fails. The number of known keys does not decide this, the nature of the keys does.
 - Arbitrary keys are keys with any name that all share the same child structure. They are recognised by an `objectName` in the structure, or by a spawner attached to the key (the `spawner/` template iterates over it). Name-keyed collections (`configmap.<name>`, `workload.<name>`, `service.<name>`, `ingress.<name>`, ...) and the objects they spawn are arbitrary keys. Handle them like this:
 

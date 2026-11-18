@@ -640,3 +640,34 @@ tests:
         equal:
           path: metadata.annotations["cnpg.io/skipEmptyWalArchiveCheck"]
           value: enabled
+
+  - it: should fail with an invalid mode
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            mode: bogus
+    asserts:
+      - failedTemplate:
+          errorPattern: "operator/mode': value must be one of 'standalone', 'recovery'"
+
+  - it: should fail with an invalid primaryUpdateMethod
+    set:
+      dependencies:
+        postgresql:
+          enabled: true
+          depconfig:
+            postgresqlUsername: test-user
+            postgresqlDatabase: test-db
+            password: test-password
+          operator:
+            cluster:
+              primaryUpdateMethod: bogus
+    asserts:
+      - failedTemplate:
+          errorPattern: "primaryUpdateMethod': value must be one of 'switchover', 'restart'"

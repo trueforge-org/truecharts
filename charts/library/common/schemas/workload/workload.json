@@ -492,7 +492,7 @@
         "additionalProperties": {
           "type": "string"
         },
-        "description": "Additional labels that are added to the selector of the workload and to the labels of its pods.",
+        "description": "Additional labels that are added to the selector of the workload and to the labels of its pods. The values go through `tpl` and end up in the immutable `spec.selector` of the workload, so they must not change between releases, or the upgrade fails with a \"field is immutable\" error.",
         "default": {},
         "examples": [
           {

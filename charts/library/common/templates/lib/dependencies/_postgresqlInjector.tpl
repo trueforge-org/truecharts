@@ -17,8 +17,8 @@ The user and database are part of the connection urls (and of the CNPG bootstrap
     {{- $_ := set $dep.depconfig "creds" dict -}}
   {{- end -}}
 
-  {{/* Use the custom-set password, or the placeholder */}}
-  {{- $_ := set $dep.depconfig "password" ($dep.depconfig.password | default "PLACEHOLDERPASSWORD") -}}
+  {{/* The password has no default, it is required */}}
+  {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" .rootCtx "dep" $dep "depName" "postgresql" "key" "password") -}}
 
   {{- range $key := (list "postgresqlUsername" "postgresqlDatabase") -}}
     {{- if not (get $dep.depconfig $key) -}}
@@ -60,7 +60,10 @@ It is the same for both modes (standalone and operator), only the host differs
       {{- $dbPort := $service.port -}}
       {{- $dbHost := $service.name -}}
       {{- $portHost := printf "%v:%v" $dbHost $dbPort -}}
-      {{- $complete := printf "postgresql://%v:%v@%v/%v" $dbUser $dbPass $portHost $dbName -}}
+      {{/* Credentials in urls have to be encoded, a literal "+" is already "%2B", so every remaining "+" was a space */}}
+      {{- $urlUser := $dbUser | urlquery | replace "+" "%20" -}}
+      {{- $urlPass := $dbPass | urlquery | replace "+" "%20" -}}
+      {{- $complete := printf "postgresql://%v:%v@%v/%v" $urlUser $urlPass $portHost $dbName -}}
       {{/* Variant for clients that connect without TLS */}}
       {{- $urlnossl := printf "%v?sslmode=disable" $complete -}}
       {{- $jdbc := printf "jdbc:postgresql://%v/%v" $portHost $dbName -}}
@@ -78,7 +81,7 @@ It is the same for both modes (standalone and operator), only the host differs
       {{/* The read-only endpoint, only available in operator mode with a pooler that has [createRO] */}}
       {{- $dbHostRO := $service.nameRO | default "" -}}
       {{- $portHostRO := printf "%v:%v" $dbHostRO $dbPort -}}
-      {{- $completeRO := printf "postgresql://%v:%v@%v/%v" $dbUser $dbPass $portHostRO $dbName -}}
+      {{- $completeRO := printf "postgresql://%v:%v@%v/%v" $urlUser $urlPass $portHostRO $dbName -}}
       {{- $urlnosslRO := printf "%v?sslmode=disable" $completeRO -}}
       {{- $jdbcRO := printf "jdbc:postgresql://%v/%v" $portHostRO $dbName -}}
       {{- if $dbHostRO -}}

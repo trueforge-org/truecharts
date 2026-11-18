@@ -43,6 +43,20 @@ A StorageClass.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the StorageClass with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.mountOptions`
 
 Mount options of volumes of this class. Supports Helm `tpl` on each entry.

@@ -19,11 +19,11 @@ This template generates the mongodb credentials and the secret holding them
         {{- $_ := set $dep.depconfig "creds" dict -}}
       {{- end -}}
 
-      {{/* Use the custom-set passwords, or the placeholders */}}
-      {{- $dbPass := $dep.depconfig.password | default "PLACEHOLDERPASSWORD" -}}
-      {{- $_ := set $dep.depconfig "password" $dbPass -}}
-      {{- $rootPass := $dep.depconfig.rootPassword | default "PLACEHOLDERROOTPASSWORD" -}}
-      {{- $_ := set $dep.depconfig "rootPassword" $rootPass -}}
+      {{/* The passwords have no default, they are required */}}
+      {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "mongodb" "key" "password") -}}
+      {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "mongodb" "key" "rootPassword") -}}
+      {{- $dbPass := $dep.depconfig.password -}}
+      {{- $rootPass := $dep.depconfig.rootPassword -}}
 
       {{/* The host is the primary service of the dependency */}}
       {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "mongodb")) -}}
@@ -40,7 +40,10 @@ This template generates the mongodb credentials and the secret holding them
       {{- $dbUser := $dep.depconfig.mongodbUsername -}}
       {{- $dbName := $dep.depconfig.mongodbDatabase -}}
       {{- $portHost := printf "%v:%v" $dbHost $dbPort -}}
-      {{- $url := printf "mongodb://%v:%v@%v/%v" $dbUser $dbPass $portHost $dbName -}}
+      {{/* Credentials in urls have to be encoded, a literal "+" is already "%2B", so every remaining "+" was a space */}}
+      {{- $urlUser := $dbUser | urlquery | replace "+" "%20" -}}
+      {{- $urlPass := $dbPass | urlquery | replace "+" "%20" -}}
+      {{- $url := printf "mongodb://%v:%v@%v/%v" $urlUser $urlPass $portHost $dbName -}}
       {{- $urlssl := printf "%v?ssl=true" $url -}}
       {{- $urltls := printf "%v?tls=true" $url -}}
       {{- $jdbc := printf "jdbc:mongodb://%v/%v" $portHost $dbName -}}

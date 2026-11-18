@@ -34,11 +34,23 @@
     {{- fail "CNPG Cluster - type [vectors] is not available for pgVersion [18]; pgvecto.rs has been superseded by VectorChord, use type [vectorchord] instead" -}}
   {{- end -}}
 
+  {{/* [mode] selects the bootstrap code path */}}
+  {{- with $objectData.mode -}}
+    {{- $validModes := (list "standalone" "recovery") -}}
+    {{- $mode := tpl (toString .) $rootCtx -}}
+    {{- if not (mustHas $mode $validModes) -}}
+      {{- fail (printf "CNPG - Expected [mode] to be one of [%s], but got [%s]" (join ", " $validModes) $mode) -}}
+    {{- end -}}
+  {{- end -}}
+
   {{- if (hasKey $objectData "cluster") -}}
 
 
-    {{- if (hasKey $objectData.cluster "primaryUpdateMethod") -}}
+    {{- with $objectData.cluster.primaryUpdateMethod -}}
       {{- $validMethods := (list "switchover" "restart") -}}
+      {{- if not (mustHas . $validMethods) -}}
+        {{- fail (printf "CNPG Cluster - Expected [cluster.primaryUpdateMethod] to be one of [%s], but got [%s]" (join ", " $validMethods) .) -}}
+      {{- end -}}
     {{- end -}}
 
     {{- if (hasKey $objectData.cluster "initdb") -}}
@@ -56,8 +68,9 @@
     {{- end -}}
 
     {{- $validMethods := (list "object_store") -}}
-    {{- if not (mustHas $objectData.recovery.method $validMethods) -}}
-      {{- fail (printf "CNPG Recovery - Expected [recovery.method] to be one of [%s], but got [%s]" (join ", " $validMethods) $objectData.recovery.method) -}}
+    {{- $recoveryMethod := tpl (toString ($objectData.recovery.method | default "")) $rootCtx -}}
+    {{- if not (mustHas $recoveryMethod $validMethods) -}}
+      {{- fail (printf "CNPG Recovery - Expected [recovery.method] to be one of [%s], but got [%s]" (join ", " $validMethods) $recoveryMethod) -}}
     {{- end -}}
   {{- end -}}
 

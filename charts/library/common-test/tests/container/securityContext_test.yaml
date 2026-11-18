@@ -230,7 +230,7 @@ tests:
                 drop:
                   - ALL
 
-  - it: should honor explicit runAsNonRoot false from global securityContext.container
+  - it: should ignore inherited runAsNonRoot false and compute true for UID 568
     set:
       image: *image
       securityContext:
@@ -265,11 +265,60 @@ tests:
               readOnlyRootFilesystem: true
               allowPrivilegeEscalation: false
               privileged: false
-              runAsNonRoot: false
+              runAsNonRoot: true
               seccompProfile:
                 type: RuntimeDefault
               capabilities:
                 add: []
+                drop:
+                  - ALL
+
+  - it: should ignore inherited runAsNonRoot true and compute false for UID 0
+    set:
+      image: *image
+      securityContext:
+        container:
+          runAsNonRoot: true
+          runAsUser: 0
+      workload:
+        workload-name1:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        isAPIVersion:
+          of: apps/v1
+      - documentIndex: *deploymentDoc
+        isSubset:
+          path: spec.template.spec.containers[0]
+          content:
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 568
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              privileged: false
+              runAsNonRoot: false
+              seccompProfile:
+                type: RuntimeDefault
+              capabilities:
+                add:
+                  - CHOWN
+                  - SETUID
+                  - SETGID
+                  - FOWNER
+                  - DAC_OVERRIDE
                 drop:
                   - ALL
 
@@ -1251,3 +1300,44 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Container - Expected items of [securityContext.capabilities.drop] to be unique, but got [CHOWN, CHOWN]
+
+  - it: should not add NET_BIND_SERVICE twice when it is already set and a low port is used
+    set:
+      image: *image
+      securityContext:
+        container:
+          capabilities:
+            add:
+              - NET_BIND_SERVICE
+      workload:
+        workload-name1:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+      service:
+        my-service1:
+          enabled: true
+          primary: true
+          targetSelector: workload-name1
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              targetSelector: container-name1
+              port: 53
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].securityContext.capabilities.add
+          value:
+            - NET_BIND_SERVICE

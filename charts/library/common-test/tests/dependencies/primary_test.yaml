@@ -9,6 +9,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -45,6 +47,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -93,6 +97,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -118,6 +124,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -134,6 +142,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -169,6 +179,8 @@ tests:
                     enabled: false
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector:
@@ -193,6 +205,8 @@ tests:
         app: *rootWorkload
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:
@@ -215,6 +229,8 @@ tests:
               port: 8080
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           workload:
             main:

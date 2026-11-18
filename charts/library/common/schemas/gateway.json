@@ -155,21 +155,23 @@
       },
       "tls": {
         "type": "object",
-        "description": "TLS settings that apply to the whole Gateway, passed on as is.",
+        "description": "TLS settings that apply to the whole Gateway.",
         "properties": {
           "frontend": {
-            "type": "object",
-            "description": "TLS settings for connections from clients, passed on as is.",
-            "additionalProperties": {
-              "description": "A setting passed on as is."
-            }
+            "allOf": [
+              {
+                "$ref": "gateway/frontendTLS.json"
+              }
+            ],
+            "description": "TLS settings for connections from clients."
           },
           "backend": {
-            "type": "object",
-            "description": "TLS settings for connections to backends, passed on as is.",
-            "additionalProperties": {
-              "description": "A setting passed on as is."
-            }
+            "allOf": [
+              {
+                "$ref": "gateway/backendTLS.json"
+              }
+            ],
+            "description": "TLS settings for connections to backends."
           }
         },
         "additionalProperties": false

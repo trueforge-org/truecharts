@@ -392,7 +392,7 @@ persistence:
     medium: Memory
     targetSelectAll: true
   crontab:
-    enabled: true
+    enabled: false
     type: emptyDir
     mountPath: /var/spool/cron/crontabs/
     medium: Memory
@@ -1687,9 +1687,8 @@ dependencies:
             - ALL
       pod:
         fsGroup: 568
-    # -- Settings of the dependency itself, never merged into the chart
+    # -- Settings of the dependency itself, never merged into the chart. [password] is required when the dependency is enabled, there is no default and none is generated
     depconfig:
-      password: "PLACEHOLDERPASSWORD"
       clickhouseUsername: "test"
       clickhouseDatabase: "test"
       clickhouseDefaultAccessManagement: 0
@@ -1755,8 +1754,6 @@ dependencies:
     operator: {}
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
-      password: "PLACEHOLDERPASSWORD"
-      rootPassword: "PLACEHOLDERROOTPASSWORD"
       mariadbUsername: "test"
       mariadbDatabase: "test"
     workload:
@@ -2034,7 +2031,6 @@ dependencies:
     # -- Settings of the dependency itself, never merged into the chart. The user, database and password are used by both modes
     # [creds] holds the connection details written by the library, in both modes (eg [creds.complete], [creds.plainhost], [creds.jdbc])
     depconfig:
-      password: "PLACEHOLDERPASSWORD"
       postgresqlUsername: "app"
       postgresqlDatabase: "app"
       creds: {}
@@ -2138,8 +2134,6 @@ dependencies:
         fsGroup: 568
     # -- Settings of the dependency itself, never merged into the chart
     depconfig:
-      password: "PLACEHOLDERPASSWORD"
-      rootPassword: "PLACEHOLDERROOTPASSWORD"
       mongodbUsername: "test"
       mongodbDatabase: "test"
     workload:
@@ -2235,8 +2229,7 @@ dependencies:
         size: ""
         # -- Storage class of the volumes, defaults to [global.fallbackDefaults.storageClass]
         storageClass: ""
-        # -- Retain the volumes when a node is deleted, defaults to [global.fallbackDefaults.pvcRetain]
-        retain: false
+        # -- [retain] (bool) is not set by default, so the volumes follow [global.fallbackDefaults.pvcRetain]
       # -- Metrics exporter sidecar of every pod
       exporter:
         enabled: true
@@ -2278,8 +2271,7 @@ dependencies:
       # -- Annotations of the ValkeyCluster
       annotations: {}
     # -- Settings of the dependency itself, never merged into the chart
-    depconfig:
-      password: "PLACEHOLDERPASSWORD"
+    depconfig: {}
     workload:
       main:
         replicas: 1

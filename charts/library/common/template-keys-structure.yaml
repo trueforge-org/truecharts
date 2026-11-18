@@ -24,7 +24,6 @@ addons:
       routes: variableName
       userspace: variableName
   vpn: variableName
-cert: variableName
 certificate:
   objectName:
     certificateSecretTemplate: variableName
@@ -144,7 +143,6 @@ networkPolicy:
   objectName:
     annotations: variableName
     egress: variableName
-    enabled: variableName
     ingress: variableName
     labels: variableName
     podSelector: variableName
@@ -224,7 +222,6 @@ podOptions:
   terminationGracePeriodSeconds: variableName
   tolerations: variableName
   topologySpreadConstraints: variableName
-podmonitor: variableName
 priorityClass:
   objectName:
     annotations: variableName
@@ -233,7 +230,6 @@ priorityClass:
     labels: variableName
     preemptionPolicy: variableName
     value: variableName
-prometheusRule: variableName
 rbac:
   objectName:
     allServiceAccounts: variableName
@@ -332,7 +328,6 @@ serviceAccount:
     primary: variableName
     targetSelectAll: variableName
     targetSelector: variableName
-servicemonitor: variableName
 storageClass:
   objectName:
     allowVolumeExpansion: variableName

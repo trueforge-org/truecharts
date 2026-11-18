@@ -11,6 +11,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -33,6 +35,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -50,6 +54,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -117,6 +123,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           service:
@@ -157,9 +165,14 @@ tests:
                     enabled: false
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           mode: operator
     asserts:
@@ -193,12 +206,16 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
         mariadb:
           enabled: true
           mode: operator
           depconfig:
+            password: test-password
+            rootPassword: test-password
             mariadbUsername: my-user
             mariadbDatabase: my-database
     asserts:
@@ -214,6 +231,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -236,6 +255,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -259,8 +280,12 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -283,9 +308,14 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -415,6 +445,8 @@ tests:
                     enabled: false
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -436,6 +468,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: invalid
     asserts:
@@ -457,6 +491,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: 1
     asserts:
@@ -468,6 +504,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: invalid
     asserts:

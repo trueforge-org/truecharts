@@ -71,6 +71,34 @@ Make this the primary GatewayClass of the chart. Only 1 can be primary.
 
 ---
 
+## `$name.nameOverride`
+
+Suffix of the GatewayClass name, instead of the key of the object.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.nameOverride` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.dependency`
+
+Name of the dependency this GatewayClass belongs to. Set by common, a GatewayClass of a dependency is never the primary by fallback.
+
+| Field | Value |
+| --- | --- |
+| Key | `gatewayClass.$name.dependency` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
 ## `$name.annotations`
 
 Additional annotations of the GatewayClass.

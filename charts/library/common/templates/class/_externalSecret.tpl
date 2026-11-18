@@ -40,7 +40,7 @@ metadata:
   {{- end }}
 spec:
   {{- with $objectData.refreshInterval }}
-  refreshInterval: {{ tpl (toString .) $rootCtx }}
+  refreshInterval: {{ tpl (toString .) $rootCtx | quote }}
   {{- end }}
   {{- with $objectData.refreshPolicy }}
   refreshPolicy: {{ . }}

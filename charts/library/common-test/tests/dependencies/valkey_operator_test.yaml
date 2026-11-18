@@ -11,6 +11,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -21,6 +23,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
           operator:
@@ -50,6 +54,9 @@ tests:
     set:
       dependencies:
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           mode: operator
     asserts:
@@ -66,6 +73,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -127,6 +136,8 @@ tests:
             runAsGroup: 568
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
+            seccompProfile:
+              type: RuntimeDefault
       - documentSelector: *clusterDoc
         equal:
           path: spec.resources
@@ -146,6 +157,8 @@ tests:
         tag: 9.1.0
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -164,6 +177,8 @@ tests:
         tag: 9.0.1
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -214,6 +229,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -298,6 +315,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -309,6 +328,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           service:
@@ -336,6 +357,8 @@ tests:
           storageClass: default-class
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -486,6 +509,8 @@ tests:
           storageClass: default-class
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -501,6 +526,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -518,6 +545,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -537,6 +566,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -576,6 +607,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -603,6 +636,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -621,6 +656,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -634,6 +671,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -647,6 +686,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -660,6 +701,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -673,6 +716,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -687,6 +732,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -702,6 +749,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -720,6 +769,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -734,6 +785,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -748,6 +801,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -765,6 +820,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -778,6 +835,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -794,6 +853,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -815,6 +876,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -833,6 +896,8 @@ tests:
         tag: 1.94.0
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
     asserts:
@@ -851,6 +916,8 @@ tests:
         tag: 2.0.0
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -867,6 +934,8 @@ tests:
     set:
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           operator:
@@ -886,6 +955,8 @@ tests:
           fsGroup: 1000
       dependencies:
         valkey:
+          depconfig:
+            password: test-password
           enabled: true
           mode: operator
           securityContext:
@@ -907,3 +978,109 @@ tests:
         equal:
           path: spec.podSecurityContext.fsGroup
           value: 2002
+
+  - it: should use the global pvcRetain fallback when retain is not set
+    template: common.yaml
+    set:
+      global:
+        fallbackDefaults:
+          pvcRetain: true
+      dependencies:
+        valkey:
+          depconfig:
+            password: test-password
+          enabled: true
+          mode: operator
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.persistence.reclaimPolicy
+          value: Retain
+
+  - it: should give the valkey and exporter containers the restricted security defaults
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          depconfig:
+            password: test-password
+          enabled: true
+          mode: operator
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.podSecurityContext.seccompProfile
+          value:
+            type: RuntimeDefault
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.containers
+          value:
+            - name: server
+              securityContext: &secCtx
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                runAsNonRoot: true
+                runAsUser: 568
+                runAsGroup: 568
+                seccompProfile:
+                  type: RuntimeDefault
+                capabilities:
+                  drop:
+                    - ALL
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.exporter.securityContext
+          value: *secCtx
+
+  - it: should merge user patches over the default container security contexts
+    template: common.yaml
+    set:
+      dependencies:
+        valkey:
+          depconfig:
+            password: test-password
+          enabled: true
+          mode: operator
+          operator:
+            containers:
+              - name: server
+                securityContext:
+                  readOnlyRootFilesystem: false
+            exporter:
+              securityContext:
+                runAsUser: 1000
+    asserts:
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.exporter.securityContext.runAsUser
+          value: 1000
+      - documentSelector:
+          path: kind
+          value: ValkeyCluster
+        equal:
+          path: spec.exporter.securityContext.capabilities.drop
+          value:
+            - ALL

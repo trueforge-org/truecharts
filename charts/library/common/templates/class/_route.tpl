@@ -60,7 +60,7 @@ within the common library.
 {{/* Annotations are copied, so the integration only adds them to this object */}}
 {{- $routeAnnotations = mustDeepCopy ($routeAnnotations | default dict) -}}
 {{- $routeIntegrations := $values.integrations | default dict -}}
-{{- if and $routeIntegrations.homepage $routeIntegrations.homepage.enabled -}}
+{{- if eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $ "objectData" $routeIntegrations.homepage "name" "homepage")) "true" -}}
   {{/* First backend and path of the route, an ingress uses its first host and path */}}
   {{- $firstBackend := dict -}}
   {{- $firstPath := "/" -}}
@@ -88,7 +88,7 @@ within the common library.
     {{- $hosts = list (dict "host" (first .) "paths" (list (dict "path" $firstPath))) -}}
   {{- end -}}
   {{- include "tc.v1.common.lib.ingress.integration.homepage" (dict "rootCtx" $ "caller" "Route" "objectData" (dict
-        "namespace" $values.namespace "hosts" $hosts "selectedService" $selectedService
+        "namespace" ($selectedService.namespace | default $values.namespace) "hosts" $hosts "selectedService" $selectedService
         "annotations" $routeAnnotations "integrations" (mustDeepCopy $routeIntegrations))) -}}
 {{- end }}
 
@@ -113,8 +113,18 @@ metadata:
 spec:
   parentRefs:
   {{- range $parentRefs }}
-    {{- $parentName := .name -}}
-    {{- $parentNamespace := .namespace | default $namespace -}}
+    {{- $parentName := "" -}}
+    {{- with .name -}}
+      {{- $parentName = tpl (toString .) $ -}}
+    {{- end -}}
+    {{- $parentNamespace := $namespace -}}
+    {{- with .namespace -}}
+      {{- $parentNamespace = tpl (toString .) $ -}}
+    {{- end -}}
+    {{- $parentSection := "" -}}
+    {{- with .sectionName -}}
+      {{- $parentSection = tpl (toString .) $ -}}
+    {{- end -}}
     {{- if .targetSelector -}}
       {{- $target := get $.Values.gateway .targetSelector -}}
       {{- if ne (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $target "name" .targetSelector "key" "gateway" "caller" "Route")) "true" -}}
@@ -122,8 +132,8 @@ spec:
       {{- end -}}
       {{- $parentName = include "tc.v1.common.lib.util.gateway.getFullName" (dict "rootCtx" $ "name" .targetSelector) -}}
       {{- $parentNamespace = include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $ "objectData" $target "caller" "Route") -}}
-      {{- if .sectionName -}}
-        {{- $sectionName := .sectionName -}}
+      {{- if $parentSection -}}
+        {{- $sectionName := $parentSection -}}
         {{- $found := false -}}
         {{- range $target.listeners -}}
           {{- if eq .name $sectionName -}}
@@ -139,11 +149,11 @@ spec:
       kind: {{ default "Gateway" .kind }}
       name: {{ required (printf "parentRef name is required for %v %v" $routeKind $fullName) $parentName }}
       namespace: {{ $parentNamespace }}
-      {{- if .sectionName }}
-      sectionName: {{ .sectionName | quote }}
+      {{- if $parentSection }}
+      sectionName: {{ $parentSection | quote }}
       {{- end }}
       {{- if .port }}
-      port: {{ .port }}
+      port: {{ tpl (toString .port) $ | int }}
       {{- end }}
   {{- end }}
   {{- with $values.hostnames }}
@@ -186,7 +196,7 @@ spec:
             "group" (.group | default "")
             "kind" (.kind | default "Service")
             "name" $resolved.name
-            "namespace" (.namespace | default $namespace)
+            "namespace" (.namespace | default $resolved.namespace | default $namespace)
             "weight" $weight -}}
       {{- if $resolved.port -}}
         {{- $_ := set $backend "port" $resolved.port -}}

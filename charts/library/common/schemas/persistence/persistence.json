@@ -335,8 +335,8 @@
             "boolean",
             "string"
           ],
-          "description": "Create the built-in `crontab` volume. Set to `false` to remove it.",
-          "default": true,
+          "description": "Create the built-in `crontab` volume. Disabled by default, set to `true` to mount it.",
+          "default": false,
           "x-helm-tpl": true
         },
         "type": {
@@ -380,7 +380,7 @@
         }
       },
       "additionalProperties": false,
-      "description": "Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Enabled by default."
+      "description": "Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Disabled by default (opt-in)."
     }
   },
   "additionalProperties": {
@@ -1880,5 +1880,5 @@
     "default": {},
     "x-docs-required": true
   },
-  "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp`, `devshm` and `crontab`, which are enabled by default."
+  "description": "Volumes of the workloads, keyed by name. Includes the built-in volumes `shared`, `varlogs`, `varrun`, `tmp`, `devshm` and `crontab`. All are enabled by default, except `crontab`."
 }

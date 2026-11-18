@@ -206,7 +206,7 @@ See [devshm](/truecharts-common/persistence/devshm) for all keys of this object.
 
 ## `crontab`
 
-Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Enabled by default.
+Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Disabled by default (opt-in).
 
 See [crontab](/truecharts-common/persistence/crontab) for all keys of this object.
 
@@ -562,7 +562,7 @@ persistence:
 
 ### Built-in volumes
 
-`shared`, `varlogs`, `varrun`, `tmp`, `devshm` and `crontab` are enabled by default. Disable or override them like any other persistence.
+`shared`, `varlogs`, `varrun`, `tmp` and `devshm` are enabled by default. `crontab` is disabled by default, set `enabled: true` to mount it. Disable or override them like any other persistence.
 
 ```yaml
 persistence:
@@ -583,7 +583,7 @@ persistence:
   varrun:
     enabled: false
   crontab:
-    enabled: false
+    enabled: true
 ```
 
 ### Automatic permissions

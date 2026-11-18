@@ -238,7 +238,7 @@ tests:
           path: spec.rules[0].backendRefs[1].weight
           value: 100
 
-  - it: should default the backend namespace to the namespace of the route
+  - it: should use the namespace of the service for a backend resolved from a service of the chart
     set:
       service:
         main:
@@ -251,6 +251,7 @@ tests:
               port: 8080
         other:
           enabled: true
+          namespace: service-namespace
           ports:
             other:
               enabled: true
@@ -265,6 +266,9 @@ tests:
           rules:
             - backendRefs:
                 - targetSelector: main
+                - targetSelector: other
+                - name: external
+                  port: 80
     asserts:
       - documentSelector:
           path: kind
@@ -277,6 +281,18 @@ tests:
           value: HTTPRoute
         equal:
           path: spec.rules[0].backendRefs[0].namespace
+          value: test-release-namespace
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[1].namespace
+          value: service-namespace
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[2].namespace
           value: route-namespace
       - documentSelector:
           path: kind
@@ -284,6 +300,36 @@ tests:
         equal:
           path: spec.parentRefs[0].namespace
           value: route-namespace
+
+  - it: should prefer an explicit backend namespace over the namespace of the service
+    set:
+      service:
+        main:
+          enabled: true
+          primary: true
+          namespace: service-namespace
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          namespace: route-namespace
+          parentRefs:
+            - name: some-gateway
+          rules:
+            - backendRefs:
+                - targetSelector: main
+                  namespace: explicit-namespace
+    asserts:
+      - documentSelector:
+          path: kind
+          value: HTTPRoute
+        equal:
+          path: spec.rules[0].backendRefs[0].namespace
+          value: explicit-namespace
 
   - it: should render rule filters, timeouts, retry, name and matches on HTTPRoute
     set:

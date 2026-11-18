@@ -229,12 +229,56 @@ How the value is matched: `Exact` or `RegularExpression`.
 
 ## `[].method`
 
-HTTP method of the request, or the gRPC service and method.
+HTTP method of the request for an `HTTPRoute`, or the gRPC service and method for a `GRPCRoute`.
 
 | Field | Value |
 | --- | --- |
 | Key | `route.$name.rules[].matches[].method` |
-| Type | `map or string` |
+| Type | `string or map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"GET"`, `"HEAD"`, `"POST"`, `"PUT"`, `"DELETE"`, `"CONNECT"`, `"OPTIONS"`, `"TRACE"`, `"PATCH"` |
+
+---
+
+## `[].method.type`
+
+How the service and method are matched: `Exact` or `RegularExpression`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].matches[].method.type` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Exact"`, `"RegularExpression"` |
+
+---
+
+## `[].method.service`
+
+Name of the gRPC service.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].matches[].method.service` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].method.method`
+
+Name of the gRPC method.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].matches[].method.method` |
+| Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

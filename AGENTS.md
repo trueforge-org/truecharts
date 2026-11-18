@@ -43,8 +43,7 @@ Every directory under `charts/<train>/` is treated as a chart by CI and release 
 6. **Leave routine dependency updates to Renovate.** It handles image tag/digest updates and `common` version bumps across charts, with automatic version bumps. Do not mass-update the `common` version in app charts unless asked.
 7. **Do not change CI workflows, Renovate config or repository-wide tooling** unless the task is specifically about them.
 8. **Never commit secrets, real credentials or default passwords**, and follow the [security rules](#security) below.
-9. **Run the validation** described below and in the scoped instructions before finishing. If you cannot run something, say so explicitly in your summary or PR.
-10. **No placeholder open schemas in `common`.** `"additionalProperties": true` is ONLY allowed on the values root. Everywhere else, use `"additionalProperties": false` on fixed objects, list every key the chart and templates use, `$ref` shared parts, and type every key. Arbitrary keys (name-keyed collections and anything with a spawner) use the typed pattern, never `true`. Only keys that `common` reads or defines belong in the schema, never a key that only a stable or incubator chart sets: fix the chart instead. See [Values schema](.github/instructions/common-library-schema.instructions.md).
+9. **Run the validation** described below and in the scoped instructions before finishing. If you cannot run something, say so explicitly in your summary or PR.I. **Never use Helm `lookup` or `randAlphaNum` in templates (common and charts). They are strictly prohibited, also as a fallback. Require credentials explicitly and fail the render when they are unset.**
 
 ## Agent workflow
 
@@ -73,9 +72,9 @@ These rules follow the organization's [security policy](https://github.com/truef
 
 - **Secrets and credentials**
   - Never commit real secrets, tokens, private keys or credentials, not even in tests, `ci/` values or docs examples. Use obvious placeholders. The `detect-private-key` pre-commit hook and GitGuardian in CI look for leaks, but do not rely on them.
-  - No default or hard-coded passwords. Let `common` or the database dependency (`dependencies.postgresql`, ...) generate them, or generate them in a chart template.
+  - No default, hard-coded, generated or looked-up passwords. Require them explicitly (a value or a Secret reference) and fail the render with a clear message when they are unset.
   - Keep credentials in Secrets. Give them to containers with `secretKeyRef` (or `envFrom` a Secret), never as plain `env` values and never in ConfigMaps.
-  - Generated secrets must stay the same across upgrades: reuse the existing Secret with `lookup`, and only fall back to `randAlphaNum` on the first install.
+  - Never use `lookup` or `randAlphaNum` in templates.
   - Do not print credentials in `NOTES.txt`, logs or `fail` messages.
 - **Pod security**
   - `common` defaults meet the Kubernetes Pod Security Standard "restricted". Those defaults are:

@@ -133,7 +133,7 @@ Whether this is the primary workload of the chart. A chart needs one primary wor
 
 ## `extraSelectorLabels`
 
-Additional labels that are added to the selector of the workload and to the labels of its pods.
+Additional labels that are added to the selector of the workload and to the labels of its pods. The values go through `tpl` and end up in the immutable `spec.selector` of the workload, so they must not change between releases, or the upgrade fails with a "field is immutable" error.
 
 | Field | Value |
 | --- | --- |
@@ -348,6 +348,7 @@ workload:
       key: value
     annotations:
       key: value
+    # Ends up in the immutable spec.selector, so the values must not change between releases
     extraSelectorLabels:
       key: value
     serviceAccountName: some-service-account

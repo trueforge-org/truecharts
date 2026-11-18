@@ -667,10 +667,6 @@ tests:
         equal:
           path: spec.template.spec.volumes
           value:
-            - name: crontab
-              emptyDir:
-                medium: Memory
-                sizeLimit: 2400Mi
             - name: devshm
               emptyDir:
                 medium: Memory
@@ -695,9 +691,6 @@ tests:
           # some-vol should not be present
           path: spec.template.spec.containers[0].volumeMounts
           value:
-            - mountPath: /var/spool/cron/crontabs/
-              name: crontab
-              readOnly: false
             - mountPath: /dev/shm
               name: devshm
               readOnly: false
@@ -842,3 +835,39 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Persistence - Expected non-empty [targetSelector.workload-name]
+
+  - it: should mount the opt-in crontab volume only when enabled
+    set:
+      image: &crontabImage
+        repository: nginx
+        tag: 1.19.0
+        pullPolicy: IfNotPresent
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      persistence:
+        crontab:
+          enabled: true
+    asserts:
+      - documentIndex: 0
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /var/spool/cron/crontabs/
+            name: crontab
+            readOnly: false

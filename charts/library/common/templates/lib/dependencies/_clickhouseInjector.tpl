@@ -19,9 +19,9 @@ This template generates the clickhouse credentials and the secret holding them
         {{- $_ := set $dep.depconfig "creds" dict -}}
       {{- end -}}
 
-      {{/* Use the custom-set password, or the placeholder */}}
-      {{- $dbPass := $dep.depconfig.password | default "PLACEHOLDERPASSWORD" -}}
-      {{- $_ := set $dep.depconfig "password" $dbPass -}}
+      {{/* The password has no default, it is required */}}
+      {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "clickhouse" "key" "password") -}}
+      {{- $dbPass := $dep.depconfig.password -}}
 
       {{/* The host is the primary service of the dependency */}}
       {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "clickhouse")) -}}
@@ -40,7 +40,10 @@ This template generates the clickhouse credentials and the secret holding them
       {{- $portHost := printf "%v:%v" $dbHost $dbPort -}}
       {{/* The primary port is the HTTP interface of ClickHouse, so these are HTTP URLs */}}
       {{- $ping := printf "http://%v/ping" $portHost -}}
-      {{- $url := printf "http://%v:%v@%v/%v" $dbUser $dbPass $portHost $dbName -}}
+      {{/* Credentials in urls have to be encoded, a literal "+" is already "%2B", so every remaining "+" was a space */}}
+      {{- $urlUser := $dbUser | urlquery | replace "+" "%20" -}}
+      {{- $urlPass := $dbPass | urlquery | replace "+" "%20" -}}
+      {{- $url := printf "http://%v:%v@%v/%v" $urlUser $urlPass $portHost $dbName -}}
       {{- $jdbc := printf "jdbc:ch://%v/%v" $portHost $dbName -}}
 
       {{/* Append values to depconfig.creds, so apps using the dependency can use them */}}

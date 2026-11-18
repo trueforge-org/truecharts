@@ -23,6 +23,9 @@ name: The short name of the external secret.
   {{- end -}}
 
   {{- $storeKind := $objectData.secretStoreRef.kind | default "SecretStore" -}}
+  {{- if not (mustHas $storeKind (list "SecretStore" "ClusterSecretStore")) -}}
+    {{- fail (printf "ExternalSecret - Expected [externalSecret.%s.secretStoreRef.kind] to be one of [SecretStore, ClusterSecretStore], but got [%s]" $name $storeKind) -}}
+  {{- end -}}
 
   {{- if and (hasKey $objectData "target") (not (kindIs "map" $objectData.target)) -}}
     {{- fail (printf "ExternalSecret - Expected [externalSecret.%s.target] to be a dictionary, but got [%s]" $name (kindOf $objectData.target)) -}}
@@ -31,9 +34,19 @@ name: The short name of the external secret.
   {{- $target := $objectData.target | default dict -}}
   {{- $creationPolicy := $target.creationPolicy | default "Owner" -}}
 
+  {{- if not (mustHas $creationPolicy (list "Owner" "Orphan" "Merge" "None")) -}}
+    {{- fail (printf "ExternalSecret - Expected [externalSecret.%s.target.creationPolicy] to be one of [Owner, Orphan, Merge, None], but got [%s]" $name $creationPolicy) -}}
+  {{- end -}}
+
   {{- with $target.deletionPolicy -}}
     {{- if not (mustHas . (list "Delete" "Merge" "Retain")) -}}
       {{- fail (printf "ExternalSecret - Expected [externalSecret.%s.target.deletionPolicy] to be one of [Delete, Merge, Retain], but got [%s]" $name .) -}}
+    {{- end -}}
+    {{- if and (eq . "Delete") (ne $creationPolicy "Owner") -}}
+      {{- fail (printf "ExternalSecret - Expected [externalSecret.%s.target.creationPolicy] to be [Owner] when [deletionPolicy] is [Delete], but got [%s]" $name $creationPolicy) -}}
+    {{- end -}}
+    {{- if and (eq . "Merge") (eq $creationPolicy "None") -}}
+      {{- fail (printf "ExternalSecret - Expected [externalSecret.%s.target.creationPolicy] to not be [None] when [deletionPolicy] is [Merge]" $name) -}}
     {{- end -}}
   {{- end -}}
 

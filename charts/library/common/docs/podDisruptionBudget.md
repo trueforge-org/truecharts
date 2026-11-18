@@ -43,6 +43,20 @@ A Pod Disruption Budget.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the PodDisruptionBudget with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `podDisruptionBudget.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.unhealthyPodEvictionPolicy`
 
 Whether unhealthy pods may be evicted regardless of the budget. Leave empty to use the Kubernetes default.

@@ -12,6 +12,7 @@ tests:
       clickhouse:
         enabled: true
         depconfig:
+          password: test-password
           creds:
             plainhost: my-host
   asserts:
@@ -28,6 +29,8 @@ tests:
       mariadb:
         enabled: true
         depconfig:
+          password: test-password
+          rootPassword: test-password
           creds:
             plainhost: my-host
   asserts:
@@ -44,6 +47,8 @@ tests:
       mongodb:
         enabled: true
         depconfig:
+          password: test-password
+          rootPassword: test-password
           creds:
             plainhost: my-host
   asserts:
@@ -60,7 +65,7 @@ tests:
       mydep:
         enabled: true
         depconfig:
-          password: PLACEHOLDERPASSWORD
+          password: test-password
           creds:
             plainhost: my-host
         operator:

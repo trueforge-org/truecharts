@@ -153,3 +153,81 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: ExternalSecret - Expected non-empty [remoteRef.key] on entry [password] of [externalSecret.credentials.data]
+
+  - it: should fail with deletionPolicy Delete without creationPolicy Owner
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+            kind: SecretStore
+          target:
+            creationPolicy: Merge
+            deletionPolicy: Delete
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected [externalSecret.credentials.target.creationPolicy] to be [Owner] when [deletionPolicy] is [Delete], but got [Merge]
+
+  - it: should fail with deletionPolicy Merge and creationPolicy None
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+            kind: SecretStore
+          target:
+            creationPolicy: None
+            deletionPolicy: Merge
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - failedTemplate:
+          errorMessage: ExternalSecret - Expected [externalSecret.credentials.target.creationPolicy] to not be [None] when [deletionPolicy] is [Merge]
+
+  - it: should quote the refreshInterval
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+            kind: SecretStore
+          refreshInterval: "0"
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.refreshInterval
+          value: "0"
+
+  - it: should accept deletionPolicy Delete with creationPolicy Owner
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+            kind: SecretStore
+          target:
+            creationPolicy: Owner
+            deletionPolicy: Delete
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.target.deletionPolicy
+          value: Delete

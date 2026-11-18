@@ -13,6 +13,7 @@ tests:
         enabled: true
         mode: operator
         depconfig:
+          password: test-password
           bogus: 1
   asserts:
   - failedTemplate:
@@ -26,6 +27,7 @@ tests:
         enabled: true
         mode: operator
         depconfig:
+          password: test-password
           creds: x
   asserts:
   - failedTemplate:
@@ -39,6 +41,7 @@ tests:
         enabled: true
         mode: operator
         depconfig:
+          password: test-password
           creds:
             a: []
   asserts:

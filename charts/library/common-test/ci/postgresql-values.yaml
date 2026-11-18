@@ -38,5 +38,7 @@ workload:
 
 dependencies:
   postgresql:
+    depconfig:
+      password: test-password
     enabled: true
     mode: standalone

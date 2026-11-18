@@ -613,21 +613,21 @@
               },
               "securityPolicy": {
                 "type": "object",
-                "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`.",
+                "description": "Other `SecurityPolicy` settings, without a target. Merged with `ipWhitelist` and `auth`. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.",
                 "additionalProperties": {
                   "description": "A setting of the policy, passed on as is."
                 }
               },
               "backendTrafficPolicy": {
                 "type": "object",
-                "description": "`BackendTrafficPolicy` settings, without a target.",
+                "description": "`BackendTrafficPolicy` settings, without a target. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.",
                 "additionalProperties": {
                   "description": "A setting of the policy, passed on as is."
                 }
               },
               "extensionPolicy": {
                 "type": "object",
-                "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`.",
+                "description": "`EnvoyExtensionPolicy` settings, without a target. Merged with `themePark`. This is an intended pass-through exception to the closed schema, the settings are validated by Envoy Gateway and not by `common`.",
                 "additionalProperties": {
                   "description": "A setting of the policy, passed on as is."
                 }
@@ -697,11 +697,12 @@
                   "filters": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "description": "A filter applied to this backend only.",
-                      "additionalProperties": {
-                        "description": "A setting of the filter, passed on as is."
-                      }
+                      "allOf": [
+                        {
+                          "$ref": "route/filter.json"
+                        }
+                      ],
+                      "description": "A filter applied to this backend only."
                     },
                     "description": "Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`."
                   }
@@ -730,11 +731,12 @@
             "filters": {
               "type": "array",
               "items": {
-                "type": "object",
-                "description": "A filter applied to requests matching this rule.",
-                "additionalProperties": {
-                  "description": "A setting of the filter, passed on as is."
-                }
+                "allOf": [
+                  {
+                    "$ref": "route/filter.json"
+                  }
+                ],
+                "description": "A filter applied to requests matching this rule."
               },
               "description": "Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect."
             },
@@ -743,18 +745,20 @@
               "description": "`request` and `backendRequest` timeouts. Only for `HTTPRoute`."
             },
             "retry": {
-              "type": "object",
-              "description": "Retry configuration. Only for `HTTPRoute`.",
-              "additionalProperties": {
-                "description": "A setting passed on as is."
-              }
+              "allOf": [
+                {
+                  "$ref": "route/retry.json"
+                }
+              ],
+              "description": "Retry configuration. Only for `HTTPRoute`."
             },
             "sessionPersistence": {
-              "type": "object",
-              "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`.",
-              "additionalProperties": {
-                "description": "A setting passed on as is."
-              }
+              "allOf": [
+                {
+                  "$ref": "route/sessionPersistence.json"
+                }
+              ],
+              "description": "Session persistence, needs the experimental Gateway API channel. Only for `HTTPRoute` and `GRPCRoute`."
             }
           },
           "additionalProperties": false,

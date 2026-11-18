@@ -44,7 +44,7 @@ An ingress rule.
 
 ## `[].from`
 
-Peers allowed to send traffic.
+Peers allowed to send traffic. Kubernetes only, rejected when `type` is `cilium`.
 
 | Field | Value |
 | --- | --- |
@@ -340,7 +340,7 @@ CIDR ranges excluded from the block.
 
 ## `[].ports`
 
-Ports allowed by this rule.
+Ports allowed by this rule. Kubernetes only, rejected when `type` is `cilium`.
 
 | Field | Value |
 | --- | --- |
@@ -412,7 +412,7 @@ End of an inclusive port range.
 
 ## `[].fromEntities`
 
-Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies.
+Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -426,7 +426,7 @@ Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed 
 
 ## `[].fromEndpoints`
 
-Cilium only: endpoints, by labels, the rule allows.
+Cilium only: endpoints, by labels, the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -440,7 +440,7 @@ Cilium only: endpoints, by labels, the rule allows.
 
 ## `[].fromCIDR`
 
-Cilium only: CIDRs the rule allows.
+Cilium only: CIDRs the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -454,7 +454,7 @@ Cilium only: CIDRs the rule allows.
 
 ## `[].fromCIDRSet`
 
-Cilium only: CIDRs with exceptions the rule allows.
+Cilium only: CIDRs with exceptions the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -468,7 +468,7 @@ Cilium only: CIDRs with exceptions the rule allows.
 
 ## `[].toPorts`
 
-Cilium only: ports, with optional L7 rules, the rule allows.
+Cilium only: ports, with optional L7 rules, the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |
@@ -482,7 +482,7 @@ Cilium only: ports, with optional L7 rules, the rule allows.
 
 ## `[].icmps`
 
-Cilium only: ICMP types the rule allows.
+Cilium only: ICMP types the rule allows. Rejected when `type` is `kubernetes`.
 
 | Field | Value |
 | --- | --- |

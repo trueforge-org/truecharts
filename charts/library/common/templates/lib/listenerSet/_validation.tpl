@@ -44,6 +44,13 @@ name: The short name of the listener set.
     {{- if not (mustHas $allowedFrom (list "Same" "All" "Selector")) -}}
       {{- fail (printf "ListenerSet - Expected [gateway.%v.allowedListeners.namespaces.from] to be one of [Same, All, Selector], but got [%v]" $targetName $allowedFrom) -}}
     {{- end -}}
+    {{- if eq $allowedFrom "Same" -}}
+      {{- $setNamespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $objectData "caller" "ListenerSet") -}}
+      {{- $gatewayNamespace := include "tc.v1.common.lib.metadata.namespace" (dict "rootCtx" $rootCtx "objectData" $target "caller" "ListenerSet") -}}
+      {{- if ne $setNamespace $gatewayNamespace -}}
+        {{- fail (printf "ListenerSet - [gateway.%s.allowedListeners.namespaces.from] is [Same], but [listenerSet.%s] is in namespace [%s] and the gateway in [%s]" $targetName $name $setNamespace $gatewayNamespace) -}}
+      {{- end -}}
+    {{- end -}}
     {{- if and (eq $allowedFrom "Selector") (not (kindIs "map" $allowedNamespaces.selector)) -}}
       {{- fail (printf "ListenerSet - Expected [gateway.%v.allowedListeners.namespaces.selector] when from is [Selector]" $targetName) -}}
     {{- end -}}

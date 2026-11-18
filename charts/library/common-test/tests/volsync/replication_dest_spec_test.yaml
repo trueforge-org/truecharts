@@ -70,13 +70,6 @@ tests:
               capacity: 100Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -147,13 +140,6 @@ tests:
               capacity: 100Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -199,13 +185,6 @@ tests:
               capacity: 200Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -252,13 +231,6 @@ tests:
               accessModes:
                 - ReadWriteOnce
               storageClassName: somestorageclass
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -305,13 +277,6 @@ tests:
               accessModes:
                 - ReadWriteOnce
               volumeSnapshotClassName: somevsc
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -360,13 +325,6 @@ tests:
                 - ReadWriteOnce
               storageClassName: somestorageclass
               volumeSnapshotClassName: somevsc
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -412,13 +370,6 @@ tests:
               capacity: 100Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -465,13 +416,6 @@ tests:
               capacity: 200Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -547,13 +491,6 @@ tests:
               capacity: 100Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -629,13 +566,6 @@ tests:
               capacity: 100Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
@@ -718,14 +648,83 @@ tests:
               capacity: 100Gi
               accessModes:
                 - ReadWriteOnce
-              moverResources:
-                limits:
-                  cpu: 1500m
-                  memory: 2400Mi
-                requests:
-                  cpu: 75m
-                  memory: 200Mi
               moverSecurityContext:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+
+  - it: should not render moverResources on ReplicationDestination
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+              src:
+                enabled: false
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: 1
+        notExists:
+          path: spec.restic.moverResources
+
+  - it: should render explicit moverResources on ReplicationDestination
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+              src:
+                enabled: false
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 500m
+                  memory: 1Gi
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: 1
+        equal:
+          path: spec.restic.moverResources
+          value:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi

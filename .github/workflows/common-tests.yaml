@@ -324,18 +324,6 @@ jobs:
           - route-tls-values.yaml
           - gateway-values.yaml
           - gatewayclass-values.yaml
-          - cnpg-values.yaml
-          - cnpg-pg17-values.yaml
-          - cnpg-pg18-values.yaml
-          - cnpg-pg18-postgis-values.yaml
-          - valkey-values.yaml
-          - valkey-operator-values.yaml
-          - valkey-addons-values.yaml
-          - mariadb-values.yaml
-          - clickhouse-values.yaml
-          - memcached-values.yaml
-          - mongodb-values.yaml
-          - postgresql-values.yaml
           - autopermissions-values.yaml
           - credentials-values.yaml
           - credentialsList-values.yaml
@@ -442,9 +430,129 @@ jobs:
           cat  /tmp/output.log
           rm -f /tmp/output.log
 
+  install-deps:
+    # Install jobs are the slowest, do not start them if a fast check already failed
+    needs:
+      - lint
+      - unittest
+      - coverage-validation
+    name: Install Dependency Charts (${{ matrix.versions.k3s }}, ${{ matrix.versions.helm }}, ${{ matrix.values }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Dependency and operator charts use a reduced version set to stay below the 256 jobs per matrix limit
+        versions: ${{ fromJSON(github.event_name == 'pull_request' && '[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.35","helm":"v4.1.0"}]' || '[{"k3s":"v1.33","helm":"v3.14.0"},{"k3s":"v1.34","helm":"v3.20.0"},{"k3s":"v1.35","helm":"v4.1.0"}]') }}
+        values:
+          - cnpg-values.yaml
+          - cnpg-pg17-values.yaml
+          - cnpg-pg18-values.yaml
+          - cnpg-pg18-postgis-values.yaml
+          - valkey-values.yaml
+          - valkey-operator-values.yaml
+          - valkey-addons-values.yaml
+          - mariadb-values.yaml
+          - clickhouse-values.yaml
+          - memcached-values.yaml
+          - mongodb-values.yaml
+          - postgresql-values.yaml
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 1
+
+      - name: Install Helm
+        uses: azure/setup-helm@2f5e7bc67f1f9972ab16657bb795f36d8f04de0e # v5
+        with:
+          version: ${{ matrix.versions.helm }}
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.10"
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@720270857a28afd41e2426521a7801db09e9b510 # v2.9.0
+
+      - name: Create k3d cluster - Attempt 1/3
+        continue-on-error: true
+        id: createc1
+        uses: nolar/setup-k3d-k3s@62c9d1bd2bc843275c85d2e7dcd696edc1160eee # v1.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ matrix.versions.k3s }}
+          # Flags found here https://github.com/k3d-io/k3d
+          k3d-args: --k3s-arg --disable=metrics-server@server:*
+
+      - name: Wait 10 second to retry
+        if: steps.createc1.outcome=='failure'
+        run: |
+          sleep 10
+      - name: Create k3d cluster - Attempt 2/3
+        continue-on-error: true
+        if: steps.createc1.outcome=='failure'
+        id: createc2
+        uses: nolar/setup-k3d-k3s@62c9d1bd2bc843275c85d2e7dcd696edc1160eee # v1.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ matrix.versions.k3s }}
+          # Flags found here https://github.com/k3d-io/k3d
+          k3d-args: --k3s-arg --disable=metrics-server@server:*
+
+      - name: Wait 10 second to retry
+        if: steps.createc2.outcome=='failure'
+        run: |
+          sleep 10
+      - name: Create k3d cluster - Attempt 3/3
+        id: createc3
+        if: steps.createc2.outcome=='failure'
+        uses: nolar/setup-k3d-k3s@62c9d1bd2bc843275c85d2e7dcd696edc1160eee # v1.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ matrix.versions.k3s }}
+          # Flags found here https://github.com/k3d-io/k3d
+          k3d-args: --k3s-arg --disable=metrics-server@server:*
+
+        # Install Kail to grab logs from tests, as there are cases ct-install fail to output logs
+      - name: Install Kail
+        run: |
+          export KAIL_VERSION=v0.16.1
+          wget https://github.com/boz/kail/releases/download/${KAIL_VERSION}/kail_${KAIL_VERSION}_linux_amd64.tar.gz
+          tar -xvzf kail_${KAIL_VERSION}_linux_amd64.tar.gz
+          chmod +x kail
+
+      - name: Add Dependencies
+        shell: bash
+        run: |
+          ./.github/scripts/install_dependencies.sh charts/library/common-test "${{ matrix.values }}"
+
+      - name: Run chart-testing (install)
+        run: |
+          # Move all ci values on a temp location (or skip if already moved from another matrix job)
+          mv charts/library/common-test/ci charts/library/common-test/runtests || echo "Nothing to move"
+
+          # Move one values.yaml to the correct location to run the test
+          mv -f charts/library/common-test/runtests/${{ matrix.values }} charts/library/common-test/values.yaml
+
+          # Stat kail on the background to grab logs from tests
+          ./kail --ignore-ns kube-system --ignore-ns cert-manager --ignore-ns metallb-system --ignore-ns prometheus-operator >> /tmp/output.log &
+
+          # Actually run the test
+          ct install  --config .github/ct-install.yaml \
+                      --charts charts/library/common-test \
+                      --debug || (echo -e "\n\n--===PODLOGS===--\n\n" && \
+                                  cat /tmp/output.log && \
+                                  rm -f /tmp/output.log && exit 1)
+
+          kill $!
+          echo -e "\n\n--===PODLOGS===--\n\n"
+          cat  /tmp/output.log
+          rm -f /tmp/output.log
+
   # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   common-tests-complete:
-    needs: [check_changes, lint, unittest, coverage-validation, install]
+    needs: [check_changes, lint, unittest, coverage-validation, install, install-deps]
     if: ${{ always() }}
     name: Common Tests Completed
     runs-on:
@@ -455,7 +563,8 @@ jobs:
           if [[ "${{ needs.check_changes.outputs.changes_detected }}" == 'true' && ( "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.unittest.result }}" != "success" || \
                 "${{ needs.coverage-validation.result }}" != "success" || \
-                "${{ needs.install.result }}" != "success") ]]; then
+                "${{ needs.install.result }}" != "success" || \
+                "${{ needs.install-deps.result }}" != "success") ]]; then
             echo "One or more jobs failed!"
             exit 1
           else

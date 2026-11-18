@@ -61,7 +61,7 @@ that share a hostname, for example with different paths, must share one listener
     {{- $_ := set $routeParents $name $parents -}}
 
     {{/* Routes with the same certificate only create it once */}}
-    {{- if not (include "tc.v1.common.lib.route.hasCertManager" (dict "objectData" $route)) -}}
+    {{- if not (include "tc.v1.common.lib.route.hasCertManager" (dict "rootCtx" $rootCtx "objectData" $route)) -}}
       {{- range $t := $route.tls -}}
         {{- if $t.certificateIssuer -}}
           {{- $hosts := list -}}
@@ -69,11 +69,13 @@ that share a hostname, for example with different paths, must share one listener
             {{- $hosts = mustAppend $hosts (tpl $h $rootCtx) -}}
           {{- end -}}
           {{- $certName := include "tc.v1.common.lib.route.secretName" (dict "chartName" $chartName "host" (first $hosts)) -}}
-          {{- $existing := get $certificates $certName -}}
+          {{/* The certificate lives in the namespace of the route, so the same name in another namespace is another certificate */}}
+          {{- $certKey := printf "%s/%s" $namespace $certName -}}
+          {{- $existing := get $certificates $certKey -}}
           {{- if and $existing (or (ne $existing.certificateIssuer $t.certificateIssuer) (not (deepEqual $existing.hosts $hosts))) -}}
             {{- fail (printf "Route - Certificate [%s] is defined with different hosts or issuers. Routes that share a hostname must set the same [tls]" $certName) -}}
           {{- end -}}
-          {{- $_ := set $certificates $certName (dict "name" $certName "shortName" $name "hosts" $hosts "certificateIssuer" $t.certificateIssuer) -}}
+          {{- $_ := set $certificates $certKey (dict "name" $certName "namespace" $namespace "shortName" $name "hosts" $hosts "certificateIssuer" $t.certificateIssuer) -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}

@@ -50,6 +50,29 @@
     {{- end -}}
   {{- end -}}
 
+  {{/* Validate that rules only use the keys of their policy type */}}
+  {{- $ciliumIngress := (list "fromEntities" "fromEndpoints" "fromCIDR" "fromCIDRSet" "toPorts" "icmps") -}}
+  {{- $ciliumEgress := (list "toEntities" "toEndpoints" "toCIDR" "toCIDRSet" "toPorts" "icmps" "toFQDNs" "toServices") -}}
+  {{- range $dir := (list "ingress" "egress") -}}
+    {{- range $rule := ((get $objectData $dir) | default list) -}}
+      {{- if kindIs "map" $rule -}}
+        {{- if eq $type "kubernetes" -}}
+          {{- range $key := (ternary $ciliumIngress $ciliumEgress (eq $dir "ingress")) -}}
+            {{- if hasKey $rule $key -}}
+              {{- fail (printf "NetworkPolicy - Key [%s.%s] is only supported when [type] is [cilium]" $dir $key) -}}
+            {{- end -}}
+          {{- end -}}
+        {{- else -}}
+          {{- range $key := (list (ternary "from" "to" (eq $dir "ingress")) "ports") -}}
+            {{- if hasKey $rule $key -}}
+              {{- fail (printf "NetworkPolicy - Key [%s.%s] is not supported when [type] is [cilium], use the Cilium rule keys instead" $dir $key) -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
   {{/* Validate that only one pod selection method is used */}}
   {{- $selectionCount := 0 -}}
   {{- range $key := (list "podSelector" "endpointSelector" "nodeSelector") -}}

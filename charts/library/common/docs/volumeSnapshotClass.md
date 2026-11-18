@@ -43,6 +43,20 @@ A VolumeSnapshotClass.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the VolumeSnapshotClass with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshotClass.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.parameters`
 
 Parameters passed to the CSI driver. Supports Helm `tpl` on keys and values.

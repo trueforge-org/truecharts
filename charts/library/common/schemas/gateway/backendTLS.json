@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "clientCertificateRef": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "API group of the object. An empty string is the core group."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Kind of the object, eg `Secret` or `ConfigMap`."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the object."
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Namespace of the object. Defaults to the namespace of the Gateway."
+        }
+      },
+      "additionalProperties": false,
+      "description": "The Secret with the client certificate."
+    }
+  },
+  "additionalProperties": false,
+  "description": "TLS settings for connections to backends."
+}

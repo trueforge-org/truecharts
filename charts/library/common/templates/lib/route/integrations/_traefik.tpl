@@ -41,7 +41,7 @@
           "authResponseHeaders" $headers)) -}}
   {{- end -}}
 
-  {{- if and $traefik.themePark $traefik.themePark.enabled -}}
+  {{- if eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $rootCtx "objectData" $traefik.themePark "name" "themePark")) "true" -}}
     {{- if ne $routeKind "HTTPRoute" -}}
       {{- fail (printf "Route - [route.%s.integrations.traefik.themePark] is only supported by kind [HTTPRoute]" $name) -}}
     {{- end -}}
@@ -63,6 +63,21 @@
     {{- end -}}
     {{- $middlewares = mustAppend $middlewares (dict "name" $redirectName "type" "redirect-regex" "data" $data) -}}
     {{- $redirects = mustAppend $redirects (dict "name" $redirectName "path" (printf "^%s$" $path)) -}}
+  {{- end -}}
+
+  {{/* A Middleware generated for this route must not take the name of one defined under [ingressMiddlewares.traefik] */}}
+  {{- range $key, $chartMiddleware := (($rootCtx.Values.ingressMiddlewares | default dict).traefik | default dict) -}}
+    {{- if kindIs "map" $chartMiddleware -}}
+      {{- $chartMwName := $key -}}
+      {{- if eq (include "tc.v1.common.lib.util.expandName" (dict "rootCtx" $rootCtx "objectData" $chartMiddleware "name" $key "caller" "Traefik Integration" "key" "middlewares")) "true" -}}
+        {{- $chartMwName = printf "%s-%s" $chartName $key -}}
+      {{- end -}}
+      {{- range $middlewares -}}
+        {{- if eq .name $chartMwName -}}
+          {{- fail (printf "Route - Generated Traefik Middleware [%s] of [route.%s] has the same name as [ingressMiddlewares.traefik.%s]. Rename the middleware or the route" .name $name $key) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
   {{- end -}}
 
   {{- $names := list -}}

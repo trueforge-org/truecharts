@@ -18,9 +18,9 @@ This template generates the valkey credentials and the secret holding them
         {{- $_ := set $dep.depconfig "creds" dict -}}
       {{- end -}}
 
-      {{/* Use the custom-set password, or the placeholder */}}
-      {{- $dbPass := $dep.depconfig.password | default "PLACEHOLDERPASSWORD" -}}
-      {{- $_ := set $dep.depconfig "password" $dbPass -}}
+      {{/* The password has no default, it is required */}}
+      {{- include "tc.v1.common.lib.dependencies.requirePassword" (dict "rootCtx" $ "dep" $dep "depName" "valkey" "key" "password") -}}
+      {{- $dbPass := $dep.depconfig.password -}}
 
       {{/* The host is the primary service of the dependency */}}
       {{- $service := (include "tc.v1.common.lib.dependencies.primaryService" (dict "rootCtx" $ "depName" "valkey")) -}}
@@ -36,7 +36,9 @@ This template generates the valkey credentials and the secret holding them
       {{- $dbPort := $service.port -}}
       {{- $portHost := printf "%v:%v" $dbHost $dbPort -}}
       {{/* Valkey speaks the redis protocol, most clients only accept the redis:// scheme */}}
-      {{- $url := printf "redis://default:%v@%v/0" $dbPass $portHost -}}
+      {{/* The password in the url has to be encoded, a literal "+" is already "%2B", so every remaining "+" was a space */}}
+      {{- $urlPass := $dbPass | urlquery | replace "+" "%20" -}}
+      {{- $url := printf "redis://default:%v@%v/0" $urlPass $portHost -}}
       {{- $hostPass := printf "%v:%v" $dbHost $dbPass -}}
 
       {{/* Append values to depconfig.creds, so apps using the dependency can use them */}}

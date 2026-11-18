@@ -9,6 +9,8 @@ tests:
     set:
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -23,11 +25,11 @@ tests:
         equal:
           path: stringData
           value:
-            clickhouse-password: PLACEHOLDERPASSWORD
+            clickhouse-password: test-password
             plainhost: test-release-name-common-test-clickhouse-main
             plainporthost: test-release-name-common-test-clickhouse-main:8123
             ping: http://test-release-name-common-test-clickhouse-main:8123/ping
-            url: http://test:PLACEHOLDERPASSWORD@test-release-name-common-test-clickhouse-main:8123/test
+            url: http://test:test-password@test-release-name-common-test-clickhouse-main:8123/test
             jdbc: jdbc:ch://test-release-name-common-test-clickhouse-main:8123/test
       - documentSelector: &workloadDoc
           path: kind
@@ -207,6 +209,8 @@ tests:
         tag: 25.8.1.1
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
     asserts:
       - documentSelector:
@@ -298,6 +302,8 @@ tests:
     set:
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
           service:
             main:
@@ -326,6 +332,8 @@ tests:
     set:
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
           service:
             main:
@@ -363,6 +371,8 @@ tests:
     set:
       dependencies:
         clickhouse:
+          depconfig:
+            password: test-password
           enabled: true
           service:
             main:

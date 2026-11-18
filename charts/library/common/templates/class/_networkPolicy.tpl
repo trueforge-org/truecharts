@@ -60,125 +60,66 @@ spec:
 
   {{- if $objectData.egress }}
   egress:
-  {{- range $objectData.egress }}
-  -{{- if .to }} to:
-    {{- range .to -}}
-    {{- $nss := false -}}
-    {{- $ipb := false -}}
-      {{- if .ipBlock -}}
-      {{- if .ipBlock.cidr -}}
-      {{- $ipb = true }}
-    - ipBlock:
-        cidr: {{ .ipBlock.cidr }}
-      {{- if .ipBlock.except }}
-        except:
-        {{- range .ipBlock.except }}
-        - {{ . }}
-        {{- end -}}
-      {{- end -}}
-      {{- end -}}
-      {{- end -}}
-
-      {{- if and ( .namespaceSelector ) ( not $ipb ) -}}
-      {{- if or ( .namespaceSelector.matchLabels ) ( .namespaceSelector.matchExpressions ) -}}
-      {{- $nss = true }}
-    - namespaceSelector:
-        {{- if .namespaceSelector.matchLabels }}
-         matchLabels:
-          {{- .namespaceSelector.matchLabels | toYaml | nindent 12 }}
-        {{- end -}}
-        {{- if .namespaceSelector.matchExpressions }}
-         matchExpressions:
-          {{- .namespaceSelector.matchExpressions | toYaml | nindent 12 }}
-        {{- end -}}
-      {{- end -}}
-      {{- end -}}
-
-      {{- if and ( .podSelector ) ( not $ipb ) -}}
-      {{- if or ( .podSelector.matchLabels ) ( .podSelector.matchExpressions ) -}}
-      {{- if $nss }}
-      podSelector:
-      {{- else }}
-    - podSelector:
-      {{- end -}}
-        {{- if .podSelector.matchLabels }}
-         matchLabels:
-          {{- .podSelector.matchLabels | toYaml | nindent 12 }}
-        {{- end -}}
-        {{- if .podSelector.matchExpressions }}
-         matchExpressions:
-          {{- .podSelector.matchExpressions | toYaml | nindent 12 }}
-        {{- end -}}
-      {{- end -}}
-      {{- end -}}
+    {{- range $objectData.egress }}
+    {{- include "tc.v1.common.lib.networkpolicy.rule" (dict "rule" . "peerKey" "to" "dir" "egress") | nindent 2 }}
     {{- end }}
-    {{- end -}}
-  {{- with .ports }}
-    ports:
-    {{- . | toYaml | nindent 6 }}
-  {{- end -}}
-  {{- end -}}
-  {{- end -}}
+  {{- end }}
 
   {{- if $objectData.ingress }}
   ingress:
-  {{- range $objectData.ingress }}
-  -{{- if .from }} from:
-    {{- range .from -}}
-    {{- $nss := false -}}
-    {{- $ipb := false -}}
-      {{- if .ipBlock -}}
-      {{- if .ipBlock.cidr -}}
-      {{- $ipb = true }}
-    - ipBlock:
-        cidr: {{ .ipBlock.cidr }}
-      {{- if .ipBlock.except }}
-        except:
-        {{- range .ipBlock.except }}
-        - {{ . }}
-        {{- end -}}
-      {{- end -}}
-      {{- end -}}
-      {{- end -}}
-
-      {{- if and ( .namespaceSelector ) ( not $ipb ) -}}
-      {{- if or ( .namespaceSelector.matchLabels ) ( .namespaceSelector.matchExpressions ) -}}
-      {{- $nss = true }}
-    - namespaceSelector:
-        {{- if .namespaceSelector.matchLabels }}
-         matchLabels:
-          {{- .namespaceSelector.matchLabels | toYaml | nindent 12 }}
-        {{- end -}}
-        {{- if .namespaceSelector.matchExpressions }}
-         matchExpressions:
-          {{- .namespaceSelector.matchExpressions | toYaml | nindent 12 }}
-        {{- end -}}
-      {{- end -}}
-      {{- end -}}
-
-      {{- if and ( .podSelector ) ( not $ipb ) -}}
-      {{- if or ( .podSelector.matchLabels ) ( .podSelector.matchExpressions ) -}}
-      {{- if $nss }}
-      podSelector:
-      {{- else }}
-    - podSelector:
-      {{- end }}
-        {{- if .podSelector.matchLabels }}
-         matchLabels:
-          {{- .podSelector.matchLabels | toYaml | nindent 12 }}
-        {{- end -}}
-        {{- if .podSelector.matchExpressions }}
-         matchExpressions:
-          {{- .podSelector.matchExpressions | toYaml | nindent 12 }}
-        {{- end -}}
-      {{- end -}}
-      {{- end -}}
+    {{- range $objectData.ingress }}
+    {{- include "tc.v1.common.lib.networkpolicy.rule" (dict "rule" . "peerKey" "from" "dir" "ingress") | nindent 2 }}
     {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/* Renders one list item of a Kubernetes NetworkPolicy rule: its peers, and ports */}}
+{{- define "tc.v1.common.lib.networkpolicy.rule" -}}
+  {{- $rule := .rule -}}
+  {{- $peerKey := .peerKey -}}
+  {{- $dir := .dir -}}
+
+  {{- $out := dict -}}
+  {{- $peerList := (get $rule $peerKey) | default list -}}
+  {{- if $peerList -}}
+    {{- $peers := list -}}
+    {{- range $peer := $peerList -}}
+      {{- $result := dict -}}
+      {{- if and (kindIs "map" $peer.ipBlock) $peer.ipBlock.cidr -}}
+        {{- $ipBlock := dict "cidr" $peer.ipBlock.cidr -}}
+        {{- if $peer.ipBlock.except -}}
+          {{- $_ := set $ipBlock "except" $peer.ipBlock.except -}}
+        {{- end -}}
+        {{- $_ := set $result "ipBlock" $ipBlock -}}
+      {{- else -}}
+        {{- range $sel := (list "namespaceSelector" "podSelector") -}}
+          {{- $selData := get $peer $sel -}}
+          {{- if kindIs "map" $selData -}}
+            {{- $rendered := dict -}}
+            {{- range $k := (list "matchLabels" "matchExpressions") -}}
+              {{- if get $selData $k -}}
+                {{- $_ := set $rendered $k (get $selData $k) -}}
+              {{- end -}}
+            {{- end -}}
+            {{- $_ := set $result $sel $rendered -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $result -}}
+        {{- $peers = mustAppend $peers $result -}}
+      {{- end -}}
     {{- end -}}
-  {{- with .ports }}
-    ports:
-    {{- . | toYaml | nindent 6 }}
+    {{- if not $peers -}}
+      {{- fail (printf "NetworkPolicy - Expected [%s.%s] entries to define at least one of [ipBlock.cidr, namespaceSelector, podSelector]" $dir $peerKey) -}}
+    {{- end -}}
+    {{- $_ := set $out $peerKey $peers -}}
   {{- end -}}
+  {{- with $rule.ports -}}
+    {{- $_ := set $out "ports" . -}}
   {{- end -}}
+  {{- if $out -}}
+    {{- printf "- %s" (toYaml $out | indent 2 | trimPrefix "  ") -}}
+  {{- else -}}
+    {{- print "- {}" -}}
   {{- end -}}
 {{- end -}}

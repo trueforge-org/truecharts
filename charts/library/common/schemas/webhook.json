@@ -193,6 +193,15 @@
     "mutating": {
       "type": "object",
       "properties": {
+        "expandObjectName": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Prefix the name of the Webhook with the chart fullname.",
+          "default": true,
+          "x-helm-tpl": true
+        },
         "enabled": {
           "type": [
             "boolean",

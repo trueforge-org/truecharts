@@ -28,6 +28,8 @@ workload:
 
 dependencies:
   valkey:
+    depconfig:
+      password: test-password
     enabled: true
     addons:
       netshoot:

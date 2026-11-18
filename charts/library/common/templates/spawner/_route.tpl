@@ -40,10 +40,12 @@
     {{- $traefik := $integrations.traefik | default dict -}}
     {{- $envoy := $integrations.envoy | default dict -}}
 
-    {{- if and $traefik.enabled $envoy.enabled -}}
+    {{- $traefikEnabled := eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $ "objectData" $traefik "name" "traefik")) "true" -}}
+    {{- $envoyEnabled := eq (include "tc.v1.common.lib.route.integrationEnabled" (dict "rootCtx" $ "objectData" $envoy "name" "envoy")) "true" -}}
+    {{- if and $traefikEnabled $envoyEnabled -}}
       {{- fail (printf "Route - Expected only one of [integrations.traefik, integrations.envoy] on [route.%s], a route has one gateway provider" $name) -}}
     {{- end -}}
-    {{- if and (or $traefik.enabled $envoy.enabled) (not (mustHas $routeKind (list "HTTPRoute" "GRPCRoute"))) -}}
+    {{- if and (or $traefikEnabled $envoyEnabled) (not (mustHas $routeKind (list "HTTPRoute" "GRPCRoute"))) -}}
       {{- fail (printf "Route - [route.%s.integrations.traefik] and [route.%s.integrations.envoy] are only supported by kinds [HTTPRoute, GRPCRoute], but got [%s]" $name $name $routeKind) -}}
     {{- end -}}
 
@@ -51,12 +53,12 @@
     {{- $extraRules := list -}}
     {{- $middlewares := list -}}
     {{- $policies := dict -}}
-    {{- if $traefik.enabled -}}
+    {{- if $traefikEnabled -}}
       {{- $data := include "tc.v1.common.lib.route.integration.traefik" (dict "rootCtx" $ "objectData" $routeValues "fullName" $fullName "routeKind" $routeKind "name" $name) | fromYaml -}}
       {{- $routeFilters = $data.filters | default list -}}
       {{- $middlewares = $data.middlewares | default list -}}
       {{- $extraRules = $data.extraRules | default list -}}
-    {{- else if $envoy.enabled -}}
+    {{- else if $envoyEnabled -}}
       {{- $data := include "tc.v1.common.lib.route.integration.envoy" (dict "rootCtx" $ "objectData" $routeValues "routeKind" $routeKind "name" $name) | fromYaml -}}
       {{- $extraRules = $data.extraRules | default list -}}
       {{- $policies = dict "SecurityPolicy" $data.securityPolicy "EnvoyExtensionPolicy" $data.extensionPolicy "BackendTrafficPolicy" $data.backendTrafficPolicy -}}
@@ -107,8 +109,8 @@
     {{- end -}}
   {{- end -}}
 
-  {{- range $certName, $certObjData := $plan.certificates -}}
-    {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $certName) -}}
+  {{- range $certKey, $certObjData := $plan.certificates -}}
+    {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $certObjData.name) -}}
     {{- include "tc.v1.common.lib.certificate.validation" (dict "rootCtx" $ "objectData" $certObjData) -}}
 
     {{/* Create the certificate with the certData */}}

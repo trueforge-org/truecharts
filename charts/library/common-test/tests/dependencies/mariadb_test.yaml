@@ -9,6 +9,9 @@ tests:
     set:
       dependencies:
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -23,12 +26,12 @@ tests:
         equal:
           path: stringData
           value:
-            mariadb-password: PLACEHOLDERPASSWORD
-            mariadb-root-password: PLACEHOLDERROOTPASSWORD
+            mariadb-password: test-password
+            mariadb-root-password: test-password
             plainhost: test-release-name-common-test-mariadb-main
             plainporthost: test-release-name-common-test-mariadb-main:3306
-            url: mysql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mariadb-main:3306/test
-            urlnossl: mysql://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mariadb-main:3306/test?sslmode=disable
+            url: mysql://test:test-password@test-release-name-common-test-mariadb-main:3306/test
+            urlnossl: mysql://test:test-password@test-release-name-common-test-mariadb-main:3306/test?sslmode=disable
             jdbc: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test
             jdbc-mariadb: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test
             jdbc-mysql: jdbc:mysql://test-release-name-common-test-mariadb-main:3306/test
@@ -247,6 +250,7 @@ tests:
         mariadb:
           enabled: true
           depconfig:
+            rootPassword: test-password
             password: testpassword
     asserts:
       - documentSelector: &rootWorkloadDoc
@@ -278,6 +282,9 @@ tests:
     set:
       dependencies:
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           service:
             main:
@@ -321,6 +328,9 @@ tests:
     set:
       dependencies:
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           service:
             main:
@@ -337,10 +347,11 @@ tests:
         mariadb:
           enabled: true
           depconfig:
+            rootPassword: test-password
             password: abc
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.mariadb.depconfig.password] to have at least 4 characters
+          errorPattern: "/dependencies/mariadb/depconfig/password': minLength: got 3, want 4"
 
   - it: should fail with a too short root password for mariadb
     set:
@@ -348,7 +359,8 @@ tests:
         mariadb:
           enabled: true
           depconfig:
+            password: test-password
             rootPassword: abc
     asserts:
       - failedTemplate:
-          errorMessage: Dependencies - Expected [dependencies.mariadb.depconfig.rootPassword] to have at least 4 characters
+          errorPattern: "/dependencies/mariadb/depconfig/rootPassword': minLength: got 3, want 4"

@@ -205,7 +205,8 @@ resources:
 env:
   MARIADB_HOST: {{ $service.name | quote }}
   MARIADB_PORT: {{ $service.port | default 3306 | quote }}
-  MARIADB_ROOT_PASSWORD:
+  {{/* mysqladmin reads the password from the environment, it does not end up in the process list */}}
+  MYSQL_PWD:
     secretKeyRef:
       expandObjectName: false
       name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
@@ -217,8 +218,8 @@ command:
     /bin/bash <<'EOF'
     echo "Executing MariaDB wait..."
     until
-      mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" -p"${MARIADB_ROOT_PASSWORD}" ping \
-      && mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" -p"${MARIADB_ROOT_PASSWORD}" status;
+      mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" ping \
+      && mysqladmin -uroot -h"${MARIADB_HOST}" -P"${MARIADB_PORT}" status;
       do sleep 2;
     done
     EOF
@@ -320,6 +321,7 @@ command:
 {{/* Call this template:
 {{ include "tc.v1.common.lib.deps.wait.postgres" (dict "script" $script) }}
 script: The shell script that waits for the databases, see [cnpg.wait.script].
+env: The (string) environment variables used by the script.
 */}}
 {{- define "tc.v1.common.lib.deps.wait.postgres" -}}
 enabled: true
@@ -346,6 +348,12 @@ resources:
   limits:
     cpu: 500m
     memory: 512Mi
+{{- with .env }}
+env:
+  {{- range $k, $v := . }}
+  {{ $k }}: {{ $v | quote }}
+  {{- end }}
+{{- end }}
 command:
   - "/bin/sh"
   - "-c"
@@ -368,43 +376,47 @@ command:
   {{- $service = $service | fromJson -}}
   {{- $operator := eq (include "tc.v1.common.lib.dependencies.mode" (dict "objectData" $dep "depName" "postgresql")) "operator" -}}
 
+  {{/* The values are passed as environment variables and quoted in the script */}}
+  {{- $env := dict "PGUSER" $depconfig.postgresqlUsername "PGDATABASE" $depconfig.postgresqlDatabase -}}
   {{- $lines := list "echo \"Executing DB waits...\"" -}}
+  {{- $targets := list -}}
   {{- if $operator -}}
     {{/* Wait RW CNPG */}}
-    {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.nameCluster "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG RW")) -}}
+    {{- $targets = mustAppend $targets (dict "url" $service.nameCluster "on" "CNPG RW") -}}
 
     {{- if ne $service.name $service.nameCluster -}}
       {{/* Wait RW Pooler */}}
-      {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.name "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG Pooler RW")) -}}
+      {{- $targets = mustAppend $targets (dict "url" $service.name "on" "CNPG Pooler RW") -}}
 
       {{/* Wait RO Pooler */}}
       {{- if $service.nameRO -}}
-        {{- $lines = append $lines (include "cnpg.wait.script" (dict "url" $service.nameRO "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase "on" "CNPG Pooler RO")) -}}
+        {{- $targets = mustAppend $targets (dict "url" $service.nameRO "on" "CNPG Pooler RO") -}}
       {{- end -}}
     {{- end -}}
   {{- else -}}
-    {{- $lines = append $lines (include "cnpg.wait.script" (dict
-          "url" $service.name "port" $service.port
-          "user" $depconfig.postgresqlUsername "db" $depconfig.postgresqlDatabase
-          "on" "PostgreSQL")) -}}
+    {{- $targets = mustAppend $targets (dict "url" $service.name "port" $service.port "on" "PostgreSQL") -}}
+  {{- end -}}
+  {{- range $idx, $target := $targets -}}
+    {{- $_ := set $env (printf "PGWAIT_HOST_%d" $idx) $target.url -}}
+    {{- if $target.port -}}
+      {{- $_ := set $env (printf "PGWAIT_PORT_%d" $idx) (toString $target.port) -}}
+    {{- end -}}
+    {{- $lines = append $lines (include "cnpg.wait.script" (dict "idx" $idx "hasPort" (ternary true false (not (not $target.port))) "on" $target.on)) -}}
   {{- end -}}
   {{- $lines = append $lines "echo \"Done executing DB waits...\"" -}}
 
-  {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines)) -}}
+  {{- include "tc.v1.common.lib.deps.wait.postgres" (dict "script" (join "\n" $lines) "env" $env) -}}
 {{- end -}}
 
-{{/* The wait script of a single PostgreSQL service, [port] is optional */}}
+{{/* The wait script of a single PostgreSQL service, [hasPort] is optional. Host and port are read from the environment */}}
 {{- define "cnpg.wait.script" -}}
-  {{- $url := .url -}}
-  {{- $port := .port -}}
-  {{- $user := .user -}}
-  {{- $db := .db -}}
+  {{- $idx := .idx -}}
   {{- $on := .on -}}
 echo "Testing Database availability on [{{ $on }}]"
 until
-  echo "Testing database on url: [{{ $url }}]"
-  pg_isready -U {{ $user }} -d {{ $db }} -h {{ $url }}{{ with $port }} -p {{ . }}{{ end }}
+  echo "Testing database on host: [${PGWAIT_HOST_{{ $idx }}}]"
+  pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_{{ $idx }}"{{ if .hasPort }} -p "$PGWAIT_PORT_{{ $idx }}"{{ end }}
   do sleep 5
 done
-echo "Database available on url: [{{ $url }}]"
+echo "Database available on host: [${PGWAIT_HOST_{{ $idx }}}]"
 {{- end -}}

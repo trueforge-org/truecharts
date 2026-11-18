@@ -140,8 +140,51 @@ objectData:
         "runAsUser" $containerSecCtx.runAsUser
         "runAsGroup" $containerSecCtx.runAsGroup
         "fsGroup" $podSecCtx.fsGroup
-        "fsGroupChangePolicy" $podSecCtx.fsGroupChangePolicy -}}
+        "fsGroupChangePolicy" $podSecCtx.fsGroupChangePolicy
+        "seccompProfile" (dict "type" "RuntimeDefault") -}}
   {{- $_ := set $spec "podSecurityContext" (mustMergeOverwrite $podSecurityContext ($objectData.podSecurityContext | default dict)) -}}
+
+  {{/* Default container security contexts (restricted), user patches are merged over them */}}
+  {{- $defaultContainerSecCtx := dict "seccompProfile" (dict "type" "RuntimeDefault") -}}
+  {{- range $key := (list "allowPrivilegeEscalation" "readOnlyRootFilesystem" "runAsNonRoot" "runAsUser" "runAsGroup" "seccompProfile") -}}
+    {{- $value := get $containerSecCtx $key -}}
+    {{- if not (kindIs "invalid" $value) -}}
+      {{- $_ := set $defaultContainerSecCtx $key (mustDeepCopy $value) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $containerSecCtx.capabilities -}}
+    {{- $caps := dict -}}
+    {{- with .drop -}}
+      {{- $_ := set $caps "drop" . -}}
+    {{- end -}}
+    {{- with .add -}}
+      {{- $_ := set $caps "add" . -}}
+    {{- end -}}
+    {{- with $caps -}}
+      {{- $_ := set $defaultContainerSecCtx "capabilities" . -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{/* The valkey container is named [server] */}}
+  {{- $containers := list -}}
+  {{- $serverFound := false -}}
+  {{- range $container := ($spec.containers | default list) -}}
+    {{- if and (kindIs "map" $container) (eq $container.name "server") -}}
+      {{- $serverFound = true -}}
+      {{- $container = mustMergeOverwrite (dict "securityContext" (mustDeepCopy $defaultContainerSecCtx)) (mustDeepCopy $container) -}}
+    {{- end -}}
+    {{- $containers = mustAppend $containers $container -}}
+  {{- end -}}
+  {{- if not $serverFound -}}
+    {{- $containers = mustAppend $containers (dict "name" "server" "securityContext" (mustDeepCopy $defaultContainerSecCtx)) -}}
+  {{- end -}}
+  {{- $_ := set $spec "containers" $containers -}}
+
+  {{- if $spec.exporter -}}
+    {{- if ne (toString $spec.exporter.enabled) "false" -}}
+      {{- $_ := set $spec.exporter "securityContext" (mustMergeOverwrite (mustDeepCopy $defaultContainerSecCtx) (mustDeepCopy ($spec.exporter.securityContext | default dict))) -}}
+    {{- end -}}
+  {{- end -}}
 
   {{/* Users, the default user is the one of the credentials of the dependency and is always managed */}}
   {{- $defaultUser := dict

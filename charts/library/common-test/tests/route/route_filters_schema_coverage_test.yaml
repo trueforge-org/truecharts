@@ -1,0 +1,942 @@
+suite: route filters, retry, session persistence, method and gateway tls schema coverage test
+templates:
+- common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+- it: should render every filter type on a rule
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestHeaderModifier
+            requestHeaderModifier:
+              set:
+              - name: X-Set
+                value: '1'
+              add:
+              - name: X-Add
+                value: '2'
+              remove:
+              - X-Remove
+          - type: ResponseHeaderModifier
+            responseHeaderModifier:
+              remove:
+              - X-Secret
+          - type: RequestMirror
+            requestMirror:
+              backendRef:
+                group: ''
+                kind: Service
+                name: mirror
+                namespace: other
+                port: 80
+              percent: 50
+          - type: RequestMirror
+            requestMirror:
+              backendRef:
+                group: ''
+                kind: Service
+                name: mirror2
+                namespace: other
+                port: 80
+              fraction:
+                numerator: 1
+                denominator: 100
+          - type: RequestRedirect
+            requestRedirect:
+              scheme: https
+              hostname: new.example.com
+              port: 443
+              statusCode: 301
+              path:
+                type: ReplaceFullPath
+                replaceFullPath: /new
+          - type: RequestRedirect
+            requestRedirect:
+              scheme: http
+              statusCode: 302
+              path:
+                type: ReplacePrefixMatch
+                replacePrefixMatch: /new
+          - type: URLRewrite
+            urlRewrite:
+              hostname: rewrite.example.com
+              path:
+                type: ReplaceFullPath
+                replaceFullPath: /x
+          - type: ExtensionRef
+            extensionRef:
+              group: example.com
+              kind: Thing
+              name: my-thing
+          - type: CORS
+            cors:
+              allowOrigins:
+              - https://a.example.com
+              allowCredentials: true
+              allowMethods:
+              - GET
+              allowHeaders:
+              - X-A
+              exposeHeaders:
+              - X-B
+              maxAge: 3600
+          backendRefs:
+          - targetSelector: my-service
+            filters:
+            - type: RequestHeaderModifier
+              requestHeaderModifier:
+                set:
+                - name: X-Set
+                  value: '1'
+                add:
+                - name: X-Add
+                  value: '2'
+                remove:
+                - X-Remove
+            - type: ResponseHeaderModifier
+              responseHeaderModifier:
+                remove:
+                - X-Secret
+  asserts:
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[0].filters[8].cors.maxAge
+      value: 3600
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[0].filters[4].requestRedirect.statusCode
+      value: 301
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[0].backendRefs[0].filters[0].requestHeaderModifier.remove
+      value:
+      - X-Remove
+- it: should render retry and sessionPersistence
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - retry:
+            codes:
+            - 503
+            attempts: 3
+            backoff: 1s
+          sessionPersistence:
+            sessionName: s
+            absoluteTimeout: 1h
+            idleTimeout: 10m
+            type: Cookie
+            cookieConfig:
+              lifetimeType: Permanent
+        - sessionPersistence:
+            type: Cookie
+            cookieConfig:
+              lifetimeType: Session
+        - sessionPersistence:
+            type: Header
+            sessionName: X-Session
+  asserts:
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[0].retry
+      value:
+        codes:
+        - 503
+        attempts: 3
+        backoff: 1s
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[1].sessionPersistence.cookieConfig.lifetimeType
+      value: Session
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[2].sessionPersistence.type
+      value: Header
+- it: should render every HTTP method of a match
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - matches:
+          - method: GET
+          - method: HEAD
+          - method: POST
+          - method: PUT
+          - method: DELETE
+          - method: CONNECT
+          - method: OPTIONS
+          - method: TRACE
+          - method: PATCH
+  asserts:
+  - documentSelector:
+      path: kind
+      value: HTTPRoute
+    equal:
+      path: spec.rules[0].matches[8].method
+      value: PATCH
+- it: should render the method of a GRPCRoute match
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: GRPCRoute
+        gateway: some-gateway
+        rules:
+        - matches:
+          - method:
+              type: Exact
+              service: my.Service
+              method: Get
+          - method:
+              type: RegularExpression
+              service: my.*
+  asserts:
+  - documentSelector:
+      path: kind
+      value: GRPCRoute
+    equal:
+      path: spec.rules[0].matches[1].method.type
+      value: RegularExpression
+- it: should render the TLS settings of a gateway
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            default:
+              validation:
+                caCertificateRefs:
+                - group: ''
+                  kind: ConfigMap
+                  name: ca
+                  namespace: gw
+                mode: AllowValidOnly
+            perPort:
+            - port: 443
+              tls:
+                validation:
+                  caCertificateRefs:
+                  - group: ''
+                    kind: ConfigMap
+                    name: ca2
+                    namespace: gw
+                  mode: AllowInsecureFallback
+          backend:
+            clientCertificateRef:
+              group: ''
+              kind: Secret
+              name: client
+              namespace: gw
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Gateway
+    equal:
+      path: spec.tls.frontend.perPort[0].tls.validation.mode
+      value: AllowInsecureFallback
+  - documentSelector:
+      path: kind
+      value: Gateway
+    equal:
+      path: spec.tls.backend.clientCertificateRef.namespace
+      value: gw
+- it: should fail on a filter without type
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - requestHeaderModifier:
+              remove:
+              - x
+  asserts:
+  - failedTemplate:
+      errorPattern: missing property 'type'|type
+- it: should fail on an unknown key in a filter
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: CORS
+            bogusFilter: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusFilter
+- it: should fail on an unknown filter type
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: Bogus
+  asserts:
+  - failedTemplate:
+      errorPattern: Bogus|must be one of
+- it: should fail on an unknown key in a header modifier
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestHeaderModifier
+            requestHeaderModifier:
+              bogusMod: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusMod
+- it: should fail on an unknown key in a set header
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestHeaderModifier
+            requestHeaderModifier:
+              set:
+              - name: a
+                bogusSet: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusSet
+- it: should fail on an unknown key in an add header
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestHeaderModifier
+            requestHeaderModifier:
+              add:
+              - name: a
+                bogusAdd: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusAdd
+- it: should fail on an unknown key in requestMirror
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestMirror
+            requestMirror:
+              bogusMirror: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusMirror
+- it: should fail on an unknown key in the backendRef of requestMirror
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestMirror
+            requestMirror:
+              backendRef:
+                name: a
+                bogusRef: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusRef
+- it: should fail on an unknown key in a mirror fraction
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestMirror
+            requestMirror:
+              fraction:
+                numerator: 1
+                bogusFraction: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusFraction
+- it: should fail on an unknown key in requestRedirect
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestRedirect
+            requestRedirect:
+              bogusRedirect: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusRedirect
+- it: should fail on an unknown key in the path of requestRedirect
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: RequestRedirect
+            requestRedirect:
+              path:
+                bogusPath: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusPath
+- it: should fail on an unknown key in urlRewrite
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: URLRewrite
+            urlRewrite:
+              bogusRewrite: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusRewrite
+- it: should fail on an unknown key in extensionRef
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: ExtensionRef
+            extensionRef:
+              bogusExt: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusExt
+- it: should fail on an unknown key in cors
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - filters:
+          - type: CORS
+            cors:
+              bogusCors: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusCors
+- it: should fail on an unknown key in retry
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - retry:
+            bogusRetry: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusRetry
+- it: should fail on an unknown key in sessionPersistence
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - sessionPersistence:
+            bogusSession: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusSession
+- it: should fail on an unknown key in cookieConfig
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - sessionPersistence:
+            cookieConfig:
+              bogusCookie: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusCookie
+- it: should fail on an unknown HTTP method
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - matches:
+          - method: BOGUS
+  asserts:
+  - failedTemplate:
+      errorPattern: method
+- it: should fail on a method that is a number
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: HTTPRoute
+        gateway: some-gateway
+        rules:
+        - matches:
+          - method: 5
+  asserts:
+  - failedTemplate:
+      errorPattern: method
+- it: should fail on an unknown key in a GRPC method
+  set:
+    service:
+      my-service:
+        enabled: true
+        primary: true
+        ports:
+          main:
+            enabled: true
+            primary: true
+            port: 8080
+    route:
+      my-route:
+        enabled: true
+        kind: GRPCRoute
+        gateway: some-gateway
+        rules:
+        - matches:
+          - method:
+              bogusMethod: 1
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusMethod
+- it: should fail on an unknown key in the tls of a gateway
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          bogusTls: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusTls
+- it: should fail on an unknown key in the frontend tls
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            bogusFrontend: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusFrontend
+- it: should fail on an unknown key in the default frontend tls
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            default:
+              bogusDefault: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusDefault
+- it: should fail on an unknown key in the frontend validation
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            default:
+              validation:
+                bogusValidation: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusValidation
+- it: should fail on an unknown key in a CA certificate ref
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            default:
+              validation:
+                caCertificateRefs:
+                - name: a
+                  bogusCa: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusCa
+- it: should fail on an unknown key in perPort
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            perPort:
+            - port: 443
+              bogusPort: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusPort
+- it: should fail on an unknown key in the tls of a port
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          frontend:
+            perPort:
+            - port: 443
+              tls:
+                bogusPortTls: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusPortTls
+- it: should fail on an unknown key in the backend tls
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          backend:
+            bogusBackend: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusBackend
+- it: should fail on an unknown key in the client certificate ref
+  set:
+    gateway:
+      my-gateway:
+        enabled: true
+        gatewayClassName: some-class
+        tls:
+          backend:
+            clientCertificateRef:
+              name: a
+              bogusClient: 1
+        listeners:
+        - name: http
+          port: 80
+          protocol: HTTP
+  asserts:
+  - failedTemplate:
+      errorPattern: bogusClient

@@ -9,6 +9,9 @@ tests:
     set:
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
     asserts:
       - hasDocuments:
@@ -23,13 +26,13 @@ tests:
         equal:
           path: stringData
           value:
-            mongodb-password: PLACEHOLDERPASSWORD
-            mongodb-root-password: PLACEHOLDERROOTPASSWORD
+            mongodb-password: test-password
+            mongodb-root-password: test-password
             plainhost: test-release-name-common-test-mongodb-main
             plainporthost: test-release-name-common-test-mongodb-main:27017
-            url: mongodb://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mongodb-main:27017/test
-            urlssl: mongodb://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mongodb-main:27017/test?ssl=true
-            urltls: mongodb://test:PLACEHOLDERPASSWORD@test-release-name-common-test-mongodb-main:27017/test?tls=true
+            url: mongodb://test:test-password@test-release-name-common-test-mongodb-main:27017/test
+            urlssl: mongodb://test:test-password@test-release-name-common-test-mongodb-main:27017/test?ssl=true
+            urltls: mongodb://test:test-password@test-release-name-common-test-mongodb-main:27017/test?tls=true
             jdbc: jdbc:mongodb://test-release-name-common-test-mongodb-main:27017/test
       - documentSelector: &workloadDoc
           path: kind
@@ -257,6 +260,7 @@ tests:
         mongodb:
           enabled: true
           depconfig:
+            rootPassword: test-password
             password: testpassword
     asserts:
       - documentSelector: &rootWorkloadDoc
@@ -294,6 +298,9 @@ tests:
     set:
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           service:
             main:
@@ -322,6 +329,9 @@ tests:
     set:
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           service:
             main:
@@ -360,6 +370,9 @@ tests:
         enabled: true
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
     asserts:
       - failedTemplate:
@@ -386,6 +399,9 @@ tests:
     set:
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           service:
             main:

@@ -29,6 +29,8 @@ tests:
                     enabled: false
       dependencies:
         postgresql: &postgresql
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -53,11 +55,11 @@ tests:
               echo "Executing DB waits..."
               echo "Testing Database availability on [PostgreSQL]"
               until
-                echo "Testing database on url: [test-release-name-common-test-postgresql-main]"
-                pg_isready -U app -d app -h test-release-name-common-test-postgresql-main -p 5432
+                echo "Testing database on host: [${PGWAIT_HOST_0}]"
+                pg_isready -U "$PGUSER" -d "$PGDATABASE" -h "$PGWAIT_HOST_0" -p "$PGWAIT_PORT_0"
                 do sleep 5
               done
-              echo "Database available on url: [test-release-name-common-test-postgresql-main]"
+              echo "Database available on host: [${PGWAIT_HOST_0}]"
               echo "Done executing DB waits..."
               EOF
       - documentSelector:
@@ -83,6 +85,7 @@ tests:
         postgresql:
           enabled: true
           depconfig:
+            password: test-password
             postgresqlUsername: test-user
             postgresqlDatabase: test-db
     asserts:
@@ -107,7 +110,7 @@ tests:
       - documentSelector: *appDoc
         matchRegex:
           path: spec.template.spec.initContainers[0].command[2]
-          pattern: pg_isready -U test-user -d test-db -h test-release-name-common-test-cnpg-main-rw
+          pattern: pg_isready -U "\$PGUSER" -d "\$PGDATABASE" -h "\$PGWAIT_HOST_0"
 
   - it: should never add a wait to the postgresql dependency itself, also with other dependencies
     set:
@@ -119,6 +122,9 @@ tests:
       dependencies:
         postgresql: *postgresql
         mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
         valkey:
           enabled: true

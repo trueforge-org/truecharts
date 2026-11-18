@@ -18,6 +18,14 @@
         "type": "boolean",
         "description": "Make this the primary GatewayClass of the chart. Only 1 can be primary."
       },
+      "nameOverride": {
+        "type": "string",
+        "description": "Suffix of the GatewayClass name, instead of the key of the object."
+      },
+      "dependency": {
+        "type": "string",
+        "description": "Name of the dependency this GatewayClass belongs to. Set by common, a GatewayClass of a dependency is never the primary by fallback."
+      },
       "annotations": {
         "allOf": [
           {

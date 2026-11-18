@@ -44,6 +44,11 @@
 
     {{- include "tc.v1.common.lib.util.metaListToDict" (dict "objectData" $objectData) -}}
 
+    {{/* The type can be a tpl string, resolve it once for the validation and the class */}}
+    {{- if kindIs "string" $objectData.type -}}
+      {{- $_ := set $objectData "type" (tpl $objectData.type $) -}}
+    {{- end -}}
+
     {{/* Perform validations */}}
     {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
     {{- include "tc.v1.common.lib.service.validation" (dict "rootCtx" $ "objectData" $objectData) -}}

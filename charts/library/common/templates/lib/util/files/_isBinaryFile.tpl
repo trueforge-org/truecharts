@@ -4,6 +4,7 @@
 
 rootCtx: The root context of the chart.
 filePath: The path to the file.
+fileContent: (optional) The content of the file, so it does not have to be read again.
 
 Returns: "true" or "false"
 */}}
@@ -27,7 +28,12 @@ Returns: "true" or "false"
 
   {{/* If not obviously binary by extension, check content */}}
   {{- if not $looksBinary -}}
-    {{- $fileContent := ($rootCtx.Files.Get $filePath) -}}
+    {{- $fileContent := "" -}}
+    {{- if hasKey . "fileContent" -}}
+      {{- $fileContent = .fileContent -}}
+    {{- else -}}
+      {{- $fileContent = ($rootCtx.Files.Get $filePath) -}}
+    {{- end -}}
 
     {{/* Check for null bytes and control characters */}}
     {{- $nul := printf "%c" 0 -}}

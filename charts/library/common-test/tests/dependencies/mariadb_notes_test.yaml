@@ -13,6 +13,8 @@ tests:
         mariadb:
           enabled: true
           depconfig:
+            password: test-password
+            rootPassword: test-password
             mariadbUsername: my-user
             mariadbDatabase: my-database
     asserts:

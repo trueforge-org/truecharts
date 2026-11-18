@@ -9,6 +9,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -24,11 +26,11 @@ tests:
         equal:
           path: stringData
           value:
-            postgresql-password: PLACEHOLDERPASSWORD
+            postgresql-password: test-password
             plainhost: test-release-name-common-test-postgresql-main
             plainporthost: test-release-name-common-test-postgresql-main:5432
-            url: postgresql://app:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/app
-            urlnossl: postgresql://app:PLACEHOLDERPASSWORD@test-release-name-common-test-postgresql-main:5432/app?sslmode=disable
+            url: postgresql://app:test-password@test-release-name-common-test-postgresql-main:5432/app
+            urlnossl: postgresql://app:test-password@test-release-name-common-test-postgresql-main:5432/app?sslmode=disable
             jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/app
       - documentSelector: &workloadDoc
           path: kind
@@ -189,6 +191,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
           operator:
@@ -210,6 +214,8 @@ tests:
             pgVersion: 16
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -228,6 +234,8 @@ tests:
         pullPolicy: Always
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -251,6 +259,8 @@ tests:
         tag: v1.0.0
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
     asserts:
@@ -323,6 +333,8 @@ tests:
     set:
       dependencies:
         postgresql:
+          depconfig:
+            password: test-password
           enabled: true
           mode: standalone
           service:
@@ -341,6 +353,7 @@ tests:
           enabled: true
           mode: standalone
           depconfig:
+            password: test-password
             postgresqlUsername: null
     asserts:
       - failedTemplate:
@@ -353,6 +366,7 @@ tests:
           enabled: true
           mode: standalone
           depconfig:
+            password: test-password
             postgresqlDatabase: null
     asserts:
       - failedTemplate:

@@ -31,6 +31,8 @@ tests:
         mongodb: &mongodb
           enabled: true
           depconfig:
+            password: test-password
+            rootPassword: test-password
             mongodbDatabase: mydb
     asserts:
       - documentSelector: &appDoc
@@ -90,6 +92,9 @@ tests:
         my-app: *appWorkload
       dependencies:
         mongodb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
           enabled: true
           service:
             main:

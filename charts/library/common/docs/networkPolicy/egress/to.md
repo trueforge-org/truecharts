@@ -16,7 +16,7 @@ title: to
 
 ## `to`
 
-Peers that may receive traffic.
+Peers that may receive traffic. Kubernetes only, rejected when `type` is `cilium`.
 
 | Field | Value |
 | --- | --- |

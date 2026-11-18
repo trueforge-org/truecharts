@@ -1,13 +1,7 @@
 {{- define "tc.v1.common.class.servicemonitor" -}}
   {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
   {{- $servicemonitorName := $fullName -}}
-  {{- $values := .Values.servicemonitor -}}
-
-  {{- if hasKey . "ObjectValues" -}}
-    {{- with .ObjectValues.metrics -}}
-      {{- $values = . -}}
-    {{- end -}}
-  {{- end -}}
+  {{- $values := .ObjectValues.metrics -}}
   {{- $servicemonitorLabels := $values.labels -}}
   {{- $servicemonitorAnnotations := $values.annotations -}}
 

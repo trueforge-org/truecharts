@@ -12,6 +12,7 @@ tests:
       clickhouse:
         enabled: true
         depconfig:
+          password: test-password
           bogus: 1
           clickhouseDatabase: ''
           clickhouseUsername: ''
@@ -33,6 +34,7 @@ tests:
       clickhouse:
         enabled: true
         depconfig:
+          password: test-password
           creds:
             a: []
   asserts:
@@ -46,6 +48,7 @@ tests:
       mariadb:
         enabled: true
         depconfig:
+          password: test-password
           bogus: 1
           mariadbDatabase: ''
           mariadbUsername: ''
@@ -70,6 +73,8 @@ tests:
       mariadb:
         enabled: true
         depconfig:
+          password: test-password
+          rootPassword: test-password
           creds:
             a: []
   asserts:
@@ -83,6 +88,7 @@ tests:
       mongodb:
         enabled: true
         depconfig:
+          password: test-password
           bogus: 1
           mongodbDatabase: ''
           mongodbUsername: ''
@@ -107,6 +113,8 @@ tests:
       mongodb:
         enabled: true
         depconfig:
+          password: test-password
+          rootPassword: test-password
           creds:
             a: []
   asserts:

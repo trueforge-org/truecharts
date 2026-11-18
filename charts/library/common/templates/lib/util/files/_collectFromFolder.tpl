@@ -25,18 +25,18 @@ Returns: A dictionary where keys are folder names and values contain:
   
   {{- $result := dict -}}
 
-  {{/* Step 1: Discover all top-level folders */}}
-  {{- $folders := dict -}}
-  {{- $filteredPaths := $rootCtx.Files.Glob (printf "%s/**" $basePath) -}}
-  
-  {{- range $path, $_ := $filteredPaths -}}
-    {{- $_ := set $folders (dir $path) "" -}}
+  {{/* Step 1: Glob once and group the files by their folder */}}
+  {{- $filesByFolder := dict -}}
+  {{- range $path, $_ := ($rootCtx.Files.Glob (printf "%s/**" $basePath)) -}}
+    {{- $folderPath := dir $path -}}
+    {{- $paths := get $filesByFolder $folderPath | default list -}}
+    {{- $_ := set $filesByFolder $folderPath (append $paths $path) -}}
   {{- end -}}
-  {{- $folders = keys $folders | uniq | sortAlpha -}}
+  {{- $folders := keys $filesByFolder | sortAlpha -}}
 
   {{/* Step 2: Process each folder */}}
   {{- range $folder := $folders -}}
-    {{- $folderRelativeToBasePath := replace $basePath "" $folder | trimPrefix "/" -}}
+    {{- $folderRelativeToBasePath := trimPrefix $basePath $folder | trimPrefix "/" -}}
     {{- $sanitizedFolderRelativeToBasePath := regexReplaceAll "\\W+" (clean $folderRelativeToBasePath) "-" -}}
     {{- if eq $sanitizedFolderRelativeToBasePath "-" -}}
      {{- $sanitizedFolderRelativeToBasePath = regexReplaceAll "\\W+" (base $folder) "-" -}}
@@ -45,9 +45,13 @@ Returns: A dictionary where keys are folder names and values contain:
      {{- end -}}
     {{- end -}}
 
+    {{- if hasKey $result $sanitizedFolderRelativeToBasePath -}}
+      {{- fail (printf "ConfigMap From Folder - Folder [%s] results in the ConfigMap name [%s], which is already used by another folder. Rename one of the folders" $folder $sanitizedFolderRelativeToBasePath) -}}
+    {{- end -}}
+
     {{- $textData := dict -}}
     {{- $binaryData := dict -}}
-    {{- $allFilesContent := $rootCtx.Files.Glob (printf "%s/*" $folder) -}}
+    {{- $dataSize := 0 -}}
 
     {{/* Extract folder-level overrides */}}
     {{- $annotations := dig $sanitizedFolderRelativeToBasePath "annotations" dict $overrides -}}
@@ -55,9 +59,10 @@ Returns: A dictionary where keys are folder names and values contain:
     {{- $forceRename := dig $sanitizedFolderRelativeToBasePath "forceRename" nil $overrides -}}
 
     {{/* Step 3: Process each file in the folder */}}
-    {{- range $file_name, $content := $allFilesContent -}}
+    {{- range $file_name := (get $filesByFolder $folder) -}}
       {{- $file := base $file_name -}}
       {{- $fileOverride := dig $sanitizedFolderRelativeToBasePath "fileAttributeOverrides" $file nil $overrides -}}
+      {{/* Every file is read once, the content is passed on to the binary detection */}}
       {{- $fileContent := ($rootCtx.Files.Get $file_name) -}}
 
       {{/* Skip excluded files */}}
@@ -68,7 +73,7 @@ Returns: A dictionary where keys are folder names and values contain:
         {{- if $explicitBinarySet -}}
           {{- $isBinary = $fileOverride.binary -}}
         {{- else -}}
-          {{- $isBinary = eq (include "tc.v1.common.lib.util.files.isBinaryFile" (dict "rootCtx" $rootCtx "filePath" $file_name)) "true" -}}
+          {{- $isBinary = eq (include "tc.v1.common.lib.util.files.isBinaryFile" (dict "rootCtx" $rootCtx "filePath" $file_name "fileContent" $fileContent)) "true" -}}
         {{- end -}}
 
         {{/* Process file based on type */}}
@@ -76,17 +81,25 @@ Returns: A dictionary where keys are folder names and values contain:
           {{/* Binary file: base64 encode */}}
           {{- $fileContent = $fileContent | b64enc -}}
           {{- $binaryData = merge $binaryData (dict $file $fileContent) -}}
+          {{- $dataSize = add $dataSize (len $fileContent) -}}
 
         {{- else if and (ne $fileOverride nil) $fileOverride.escaped -}}
           {{/* Escaped file: escape template delimiters */}}
           {{- $fileContent = $fileContent | replace "{{" "{{ `{{` }}" -}}
           {{- $textData = merge $textData (dict $file $fileContent) -}}
+          {{- $dataSize = add $dataSize (len $fileContent) -}}
 
         {{- else -}}
           {{/* Regular text file */}}
           {{- $textData = merge $textData (dict $file $fileContent) -}}
+          {{- $dataSize = add $dataSize (len $fileContent) -}}
         {{- end -}}
       {{- end -}}
+    {{- end -}}
+
+    {{/* A ConfigMap can hold 1 MiB of data at most */}}
+    {{- if gt $dataSize 1048576 -}}
+      {{- fail (printf "ConfigMap From Folder - The data of the ConfigMap for folder [%s] is [%d] bytes, which exceeds the maximum of 1048576 bytes" $folder $dataSize) -}}
     {{- end -}}
 
     {{/* Step 4: Store folder result */}}

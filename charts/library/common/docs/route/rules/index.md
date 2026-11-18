@@ -17,6 +17,8 @@ title: rules
 
 ## Child Pages
 
+- [backendRefs](/truecharts-common/route/rules/backendRefs)
+- [filters](/truecharts-common/route/rules/filters)
 - [matches](/truecharts-common/route/rules/matches)
 
 ---
@@ -53,178 +55,12 @@ A routing rule.
 
 Where to send requests. Without this and without `filters`, the rule uses the primary service.
 
+See [backendRefs](/truecharts-common/route/rules/backendRefs) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `route.$name.rules[].backendRefs` |
 | Type | `list of map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[]`
-
-A backend the requests are sent to.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].group`
-
-API group of the parent or backend.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].group` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].kind`
-
-Kind of the parent or backend.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].kind` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].name`
-
-Name of the object, without any expanding. Cannot be used with `targetSelector`.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].name` |
-| Type | `null or string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].namespace`
-
-Namespace of the backend. Defaults to the namespace of the route.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].namespace` |
-| Type | `null or string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].port`
-
-Port of the backend. Defaults to the primary port of the selected service.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].port` |
-| Type | `null or int or string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].weight`
-
-Share of the requests for this backend. Set to `0` to stop sending traffic to it. Defaults to `1`.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].weight` |
-| Type | `int` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].targetSelector`
-
-Name of a service in this chart, or a map of `service: port` to select a port by name. Cannot be used with `name`.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].targetSelector` |
-| Type | `null or string or map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].targetSelector.$name`
-
-Name of the port of the Service.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].targetSelector.$name` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].filters`
-
-Filters applied only to this backend. Only for `HTTPRoute` and `GRPCRoute`.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].filters` |
-| Type | `list of map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].filters[]`
-
-A filter applied to this backend only.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].filters[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].backendRefs[].filters[].$name`
-
-A setting of the filter, passed on as is.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].backendRefs[].filters[].$name` |
-| Type | `any` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
@@ -265,38 +101,12 @@ Name of the rule.
 
 Filters applied to requests matching this rule. Only for `HTTPRoute` and `GRPCRoute`. A rule with only filters needs no `backendRefs`, eg a redirect.
 
+See [filters](/truecharts-common/route/rules/filters) for all keys of this object.
+
 | Field | Value |
 | --- | --- |
 | Key | `route.$name.rules[].filters` |
 | Type | `list of map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].filters[]`
-
-A filter applied to requests matching this rule.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].filters[]` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `[].filters[].$name`
-
-A setting of the filter, passed on as is.
-
-| Field | Value |
-| --- | --- |
-| Key | `route.$name.rules[].filters[].$name` |
-| Type | `any` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
@@ -379,14 +189,42 @@ Retry configuration. Only for `HTTPRoute`.
 
 ---
 
-## `[].retry.$name`
+## `[].retry.codes`
 
-A setting passed on as is.
+Status codes that are retried.
 
 | Field | Value |
 | --- | --- |
-| Key | `route.$name.rules[].retry.$name` |
-| Type | `any` |
+| Key | `route.$name.rules[].retry.codes` |
+| Type | `list of int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].retry.attempts`
+
+Number of retries.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].retry.attempts` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].retry.backoff`
+
+Minimum wait between retries, a duration like `100ms` or `1s`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].retry.backoff` |
+| Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
@@ -407,17 +245,89 @@ Session persistence, needs the experimental Gateway API channel. Only for `HTTPR
 
 ---
 
-## `[].sessionPersistence.$name`
+## `[].sessionPersistence.sessionName`
 
-A setting passed on as is.
+Name of the cookie or header that holds the session.
 
 | Field | Value |
 | --- | --- |
-| Key | `route.$name.rules[].sessionPersistence.$name` |
-| Type | `any` |
+| Key | `route.$name.rules[].sessionPersistence.sessionName` |
+| Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
+
+---
+
+## `[].sessionPersistence.absoluteTimeout`
+
+Maximum lifetime of a session, a duration like `1h`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].sessionPersistence.absoluteTimeout` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].sessionPersistence.idleTimeout`
+
+Time without requests after which a session ends, a duration like `10m`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].sessionPersistence.idleTimeout` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].sessionPersistence.type`
+
+How the session is kept: `Cookie` or `Header`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].sessionPersistence.type` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Cookie"`, `"Header"` |
+
+---
+
+## `[].sessionPersistence.cookieConfig`
+
+Settings of the cookie. Only with type `Cookie`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].sessionPersistence.cookieConfig` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `[].sessionPersistence.cookieConfig.lifetimeType`
+
+Lifetime of the cookie: `Permanent` or `Session`.
+
+| Field | Value |
+| --- | --- |
+| Key | `route.$name.rules[].sessionPersistence.cookieConfig.lifetimeType` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"Permanent"`, `"Session"` |
 
 ---
 

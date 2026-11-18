@@ -81,3 +81,31 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/configMapsFromFolder/configMapsOverrides/test-config/fileAttributeOverrides/settings.yaml': (additional properties|additionalProperties)"
+
+  - it: should fail when two folders result in the same ConfigMap name
+    set:
+      configMapsFromFolder:
+        enabled: true
+        basePath: files/configMapsCollision
+    asserts:
+      - failedTemplate:
+          errorPattern: 'which is already used by another folder'
+
+  - it: should only run tpl on text that contains template delimiters
+    set:
+      configMapsFromFolder:
+        enabled: true
+        basePath: files/configMaps
+        configMapsOverrides:
+          test-config:
+            fileAttributeOverrides:
+              template.tpl:
+                escaped: true
+              .gitkeep:
+                exclude: true
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-test-config

@@ -6,6 +6,8 @@
 {{- define "tc.v1.common.spawner.networkpolicy" -}}
   {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
 
+  {{- include "tc.v1.common.lib.gateway.primaryValidation" (dict "rootCtx" $ "key" "networkPolicy" "caller" "NetworkPolicy") -}}
+
   {{- range $name, $networkpolicy := .Values.networkPolicy -}}
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
                     "rootCtx" $ "objectData" $networkpolicy

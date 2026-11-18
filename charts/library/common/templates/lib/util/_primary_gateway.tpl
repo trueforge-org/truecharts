@@ -33,7 +33,7 @@ Usage: include "tc.v1.common.lib.util.gateway.getFullName" (dict "rootCtx" $ "na
   {{- $gateway := get .rootCtx.Values.gateway .name -}}
   {{- if $gateway.nameOverride -}}
     {{- $fullName = printf "%v-%v" $fullName $gateway.nameOverride -}}
-  {{- else if ne .name (include "tc.v1.common.lib.util.gateway.primary" (dict "rootCtx" .rootCtx)) -}}
+  {{- else if ne .name (include "tc.v1.common.lib.util.primaryCached" (dict "rootCtx" .rootCtx "kind" "gateway")) -}}
     {{- $fullName = printf "%v-%v" $fullName .name -}}
   {{- end -}}
   {{- $fullName -}}

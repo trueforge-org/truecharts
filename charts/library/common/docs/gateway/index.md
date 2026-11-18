@@ -19,6 +19,7 @@ title: Gateway
 
 - [allowedListeners](/truecharts-common/gateway/allowedListeners)
 - [listeners](/truecharts-common/gateway/listeners)
+- [tls](/truecharts-common/gateway/tls)
 
 ---
 
@@ -358,68 +359,14 @@ See [allowedListeners](/truecharts-common/gateway/allowedListeners) for all keys
 
 ## `$name.tls`
 
-TLS settings that apply to the whole Gateway, passed on as is.
+TLS settings that apply to the whole Gateway.
+
+See [tls](/truecharts-common/gateway/tls) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
 | Key | `gateway.$name.tls` |
 | Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.tls.frontend`
-
-TLS settings for connections from clients, passed on as is.
-
-| Field | Value |
-| --- | --- |
-| Key | `gateway.$name.tls.frontend` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.tls.frontend.$name`
-
-A setting passed on as is.
-
-| Field | Value |
-| --- | --- |
-| Key | `gateway.$name.tls.frontend.$name` |
-| Type | `any` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.tls.backend`
-
-TLS settings for connections to backends, passed on as is.
-
-| Field | Value |
-| --- | --- |
-| Key | `gateway.$name.tls.backend` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.tls.backend.$name`
-
-A setting passed on as is.
-
-| Field | Value |
-| --- | --- |
-| Key | `gateway.$name.tls.backend.$name` |
-| Type | `any` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |

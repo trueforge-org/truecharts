@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "group": {
+      "type": "string",
+      "description": "API group of the object. An empty string is the core group."
+    },
+    "kind": {
+      "type": "string",
+      "description": "Kind of the object."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the object."
+    },
+    "namespace": {
+      "type": "string",
+      "description": "Namespace of the object."
+    },
+    "port": {
+      "type": "integer",
+      "description": "Port of the backend. Needed for a Service."
+    }
+  },
+  "additionalProperties": false,
+  "description": "A reference to a backend object."
+}

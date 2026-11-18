@@ -16,7 +16,7 @@ title: crontab
 
 ## `crontab`
 
-Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Enabled by default.
+Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in all containers of all workloads, so cron can write its crontabs. Disabled by default (opt-in).
 
 | Field | Value |
 | --- | --- |
@@ -30,7 +30,7 @@ Built-in in-memory `emptyDir` volume mounted at `/var/spool/cron/crontabs/` in a
 
 ## `enabled`
 
-Create the built-in `crontab` volume. Set to `false` to remove it.
+Create the built-in `crontab` volume. Disabled by default, set to `true` to mount it.
 
 | Field | Value |
 | --- | --- |
@@ -38,7 +38,7 @@ Create the built-in `crontab` volume. Set to `false` to remove it.
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ✅ |
-| Default | `true` |
+| Default | `false` |
 
 ---
 
@@ -122,5 +122,5 @@ These examples are the part of the examples of other pages that is about this pa
 ```yaml
 persistence:
   crontab:
-    enabled: false
+    enabled: true
 ```

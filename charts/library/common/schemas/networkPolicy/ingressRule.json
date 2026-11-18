@@ -12,7 +12,7 @@
         ],
         "description": "A peer that may send traffic."
       },
-      "description": "Peers allowed to send traffic."
+      "description": "Peers allowed to send traffic. Kubernetes only, rejected when `type` is `cilium`."
     },
     "ports": {
       "type": "array",
@@ -24,7 +24,7 @@
         ],
         "description": "A port that traffic is allowed to."
       },
-      "description": "Ports allowed by this rule."
+      "description": "Ports allowed by this rule. Kubernetes only, rejected when `type` is `cilium`."
     },
     "fromEntities": {
       "type": "array",
@@ -32,14 +32,14 @@
         "type": "string",
         "description": "An entity, eg `world`, `cluster`, `host` or `all`."
       },
-      "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Ignored for Kubernetes NetworkPolicies."
+      "description": "Cilium only: entities (for example `world`, `cluster`, `host` or `all`) allowed to send traffic. Rejected when `type` is `kubernetes`."
     },
     "fromEndpoints": {
       "type": "array",
       "items": {
         "description": "An endpoint selector, passed on as is."
       },
-      "description": "Cilium only: endpoints, by labels, the rule allows."
+      "description": "Cilium only: endpoints, by labels, the rule allows. Rejected when `type` is `kubernetes`."
     },
     "fromCIDR": {
       "type": "array",
@@ -47,28 +47,28 @@
         "type": "string",
         "description": "A CIDR, eg `10.0.0.0/8`."
       },
-      "description": "Cilium only: CIDRs the rule allows."
+      "description": "Cilium only: CIDRs the rule allows. Rejected when `type` is `kubernetes`."
     },
     "fromCIDRSet": {
       "type": "array",
       "items": {
         "description": "A CIDR with exceptions, passed on as is."
       },
-      "description": "Cilium only: CIDRs with exceptions the rule allows."
+      "description": "Cilium only: CIDRs with exceptions the rule allows. Rejected when `type` is `kubernetes`."
     },
     "toPorts": {
       "type": "array",
       "items": {
         "description": "A port rule, passed on as is."
       },
-      "description": "Cilium only: ports, with optional L7 rules, the rule allows."
+      "description": "Cilium only: ports, with optional L7 rules, the rule allows. Rejected when `type` is `kubernetes`."
     },
     "icmps": {
       "type": "array",
       "items": {
         "description": "An ICMP rule, passed on as is."
       },
-      "description": "Cilium only: ICMP types the rule allows."
+      "description": "Cilium only: ICMP types the rule allows. Rejected when `type` is `kubernetes`."
     }
   },
   "additionalProperties": false,
