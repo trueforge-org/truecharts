@@ -6,15 +6,17 @@ It is a read-only review: nothing was fixed, and no tests, lint or helm runs wer
 
 Focus: **mistakes**, **performance**, **security**.
 
+Out of scope: the impact on `charts/stable/**` charts. They will be redone after this rework, so findings that only affect them were left out.
+
 ## Summary
 
 | Severity | Count | Most important |
 | --- | --- | --- |
-| High | 6 | PostgreSQL 16 → 18 default, NetworkPolicy allow-all, route backend namespace, removed `alpineImage`, CI matrix > 256 jobs, new default `crontab` mount |
+| High | 5 | PostgreSQL 16 → 18 default, NetworkPolicy allow-all, route backend namespace, CI matrix > 256 jobs, new default `crontab` mount |
 | Medium | 12 | runAsNonRoot inheritance, VolSync mover limits, valkey operator PSS, placeholder passwords, `tpl`-documented keys never templated |
-| Low | ~25 | quoting, dead code, tooling hygiene, minor perf |
+| Low | ~23 | quoting, dead code, tooling hygiene, minor perf |
 
-Note on validation: many runtime `kindIs` and enum checks were removed in favour of the JSON schema. This is mostly fine: every stable and incubator chart ships a `values.schema.json` that `$ref`s the published common schema, so Helm validates user values. The remaining gap is objects that common builds at render time, see [L-25](#mistakes).
+Note on validation: many runtime `kindIs` and enum checks were removed in favour of the JSON schema. This is mostly fine: app charts `$ref` the published common schema, so Helm validates user values. The remaining gap is objects that common builds at render time, see [L-12](#mistakes).
 
 ---
 
@@ -23,7 +25,7 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
 ### H-1. Default PostgreSQL major version changed 16 → 18 (silent major upgrade) ✅
 
 - **Where:** `charts/library/common/values.yaml:71` (`global.fallbackDefaults.cnpg.pgVersion: 18`; master: `16` at `values.yaml:65` and `cnpg.main.pgVersion: 16`), `schemas/global/fallbackDefaults.json:311`, `templates/spawner/_cnpg.tpl:36-59`, `templates/values/_deprecations.tpl:48`
-- **Problem:** no app chart sets `pgVersion` explicitly. After moving to `dependencies.postgresql.operator`, every cluster falls back to 18, and the image tags also move from bookworm (`16.x`) to `*-standard-trixie`. Nothing (`lookup` or validation) protects existing clusters. The `cnpg.<name>` deprecation message does not tell users to pin `pgVersion: 16`.
+- **Problem:** `pgVersion` is commented out in `dependencies.postgresql.operator`, so a cluster that does not set it falls back to 18, and the image tags also move from bookworm (`16.x`) to `*-standard-trixie`. Nothing (`lookup` or validation) protects existing clusters. The `cnpg.<name>` deprecation message does not tell users to pin `pgVersion: 16`.
 - **Failure scenario:** an app migrated to the new keys upgrades. `Cluster.spec.imageName` changes to `18.x-standard-trixie`, and CNPG tries an in-place major upgrade across a distro change, which the schema description itself calls unsupported. The database fails to start or the upgrade fails, and older backups no longer work for PITR.
 - **Suggested fix:** keep the fallback at 16, or `lookup` the existing `Cluster` and keep its major version, or require an explicit `pgVersion` in operator mode. At minimum, put "set `pgVersion: 16`" in the deprecation message and the migration docs.
 
@@ -45,24 +47,17 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
 - **Failure scenario:** with `route.main.namespace: gateway-ns`, the backendRef points at `gateway-ns/<release>-main`, which does not exist. The result is `BackendNotFound` and 500s on every request, and the homepage widget URL is wrong as well. Master used `Release.Namespace`, which was correct in the default case.
 - **Suggested fix:** have `lib.route.backend` return the namespace of the resolved service. Keep the route-namespace default only for backends given by an explicit `name`. Fix the test.
 
-### H-4. Removed helper images break stable charts that still select them ✅
-
-- **Where:** `charts/library/common/values.yaml`. `alpineImage`, `scratchImage`, `wgetImage`, `yqImage` and `redisClientImage` were removed; they were at master `values.yaml:589-629`. The check is in `templates/lib/container/_imageSelector.tpl:18-22`.
-- **Problem:** `charts/stable/nextcloud/templates/_initPerms.tpl`, `charts/stable/{poznote,dispatcharr,unifi,notifiarr}/values.yaml` use `imageSelector: alpineImage` and do not define it. `_deprecations.tpl` does not cover these keys, and `test_schema.py` does not render containers, so nothing catches this.
-- **Failure scenario:** after the Renovate `common` bump, these charts fail to render with `Expected [.Values.alpineImage] to exist`.
-- **Suggested fix:** keep `alpineImage` (and probably the others) in common, in line with "fix common, not stable charts". Otherwise add a deprecation error that names the replacement.
-
-### H-5. Install matrix on push to master exceeds GitHub's 256-job limit ✅
+### H-4. Install matrix on push to master exceeds GitHub's 256-job limit ✅
 
 - **Where:** `.github/workflows/common-tests.yaml:302` (versions), `:303-343` (values)
 - **Problem:** `values` grew from 25 to 39 entries. On non-PR events, `versions` has 9 k3s × Helm combinations, so 9 × 39 = **351 jobs**. Master was at 225.
 - **Failure scenario:** the first push to master (or `workflow_dispatch`) after the merge fails at matrix expansion, so `install` never runs and "Common Tests Completed" is red. PRs (2 × 39 = 78) do not show it.
 - **Suggested fix:** keep the non-PR matrix at 256 jobs or fewer. Use the full version matrix only for a core subset, use a reduced version set for dependency and operator values, or split into two install jobs.
 
-### H-6. New default `crontab` emptyDir mounted into every container of every chart ✅
+### H-5. New default `crontab` emptyDir mounted into every container of every chart ✅
 
 - **Where:** `charts/library/common/values.yaml:394-399` (`persistence.crontab`, `enabled: true`, `targetSelectAll: true`, `medium: Memory`). It is not on master.
-- **Problem:** it mounts over `/var/spool/cron/crontabs/` in every container of about 800 charts and hides any crontabs that images ship there. `charts/stable/arksurvivalevolved/values.yaml:128` already has its own `crontab` key, which now merges with this default and is mounted into all of its containers.
+- **Problem:** it mounts over `/var/spool/cron/crontabs/` in every container of every chart built on common, and hides any crontabs that images ship there.
 - **Failure scenario:** images that rely on crontabs baked into the image silently stop running their cron jobs, and every pod gets an extra memory-backed volume.
 - **Suggested fix:** do not enable it by default. Make it opt-in, per chart or per feature that needs it.
 
@@ -73,9 +68,9 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
 ### M-1. `runAsNonRoot` is now inherited instead of computed per container ✅
 
 - **Where:** `templates/lib/container/_securityContext.tpl:89-95`, schema text `schemas/.../securityContext.json:64`
-- **Problem:** master always derived `runAsNonRoot` from the container's final UID. Now any explicit value wins, including one inherited from the chart-wide `securityContext.container`. About 327 stable charts set `runAsNonRoot: false` with UID 0 globally.
+- **Problem:** master always derived `runAsNonRoot` from the container's final UID. Now any explicit value wins, including one inherited from the chart-wide `securityContext.container`.
 - **Failure scenarios:**
-  - In those charts, an extra container with `runAsUser: 568` renders `runAsNonRoot: false`, which weakens PSS "restricted". The library templates rules say: "Templates must not loosen the security context on their own."
+  - A chart with a global `runAsNonRoot: false` and UID 0 plus an extra container with `runAsUser: 568` renders `runAsNonRoot: false`, which weakens PSS "restricted". The library templates rules say: "Templates must not loosen the security context on their own."
   - In reverse, a global `runAsNonRoot: true` plus a container with UID 0 gives `CreateContainerConfigError`.
 - **Suggested fix:** respect only an explicit `runAsNonRoot` set on the container itself, or always force `false` when UID is 0 and `true` otherwise. Make the schema text match the template (it says `runAsGroup` is used, but it is not).
 
@@ -168,8 +163,7 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
 - **L-9.** In `values.schema.source.json`, the defaults of `ubuntuImage`, `postgresClientImage`, `kubectlImage`, `mariadbClientImage`, `mongodbClientImage` and `valkeyClientImage` do not match `values.yaml` (docs only).
 - **L-10.** `.github/instructions/charts-values.instructions.md:46` and `common-library-dependencies.instructions.md:17` say MongoDB, ClickHouse and Memcached are gone, or that only valkey, mariadb and postgresql are predefined. `values.yaml` in this PR predefines `dependencies.clickhouse`, `memcached` and `mongodb`, with injectors, tests and docs. `templates/lib/dependencies/_mariadbInjector.tpl` and the other files are fine; the instructions are out of date. Keep `.github/copilot-instructions.md` in sync.
 - **L-11.** `charts/library/common/.helmignore:48` is hand-edited (generated file, golden rule 3). It adds the nonexistent `/improve_schemas.py` (also in `templates/helmignore.tpl:48-51`), but misses `/legacy_keys.py` and `/stable-legacy-keys.yaml`, which would then be packaged into the library chart.
-- **L-12.** `install_dependencies.sh:86`: the valkey operator is only installed for `common-test`. The stable/incubator path does not detect `dependencies.valkey.mode: operator`, so a future app chart using it would fail its install test.
-- **L-25.** Runtime checks that were moved to the schema (CNPG `mode`/`type`/`logLevel`/`primaryUpdate*`, volsync `type`/`copyMethod`, HPA/VPA, lifecycle and seccomp types, ingress and Traefik `kindIs`) no longer cover objects that common builds itself at render time: addon containers, dependency injector output, and values that are `tpl` strings, which the schema accepts as strings before they render. User values in app charts are still validated through the `$ref`'d schema. Consider keeping template checks only for keys that select a code path (CNPG `mode`, `recovery.method`, volsync `type`, lifecycle `type`), where a bad value renders an empty or wrong block instead of failing.
+- **L-12.** Runtime checks that were moved to the schema (CNPG `mode`/`type`/`logLevel`/`primaryUpdate*`, volsync `type`/`copyMethod`, HPA/VPA, lifecycle and seccomp types, ingress and Traefik `kindIs`) no longer cover objects that common builds itself at render time: addon containers, dependency injector output, and values that are `tpl` strings, which the schema accepts as strings before they render. User values in app charts are still validated through the `$ref`'d schema. Consider keeping template checks only for keys that select a code path (CNPG `mode`, `recovery.method`, volsync `type`, lifecycle `type`), where a bad value renders an empty or wrong block instead of failing.
 
 ### Security (low)
 
@@ -193,8 +187,7 @@ Note on validation: many runtime `kindIs` and enum checks were removed in favour
 ### Hygiene
 
 - **L-22.** `generate_template_keys_structure.py` has 44 lines with trailing whitespace again (0 on master), so the `trailing-whitespace` hook fails.
-- **L-23.** `test_schema.py` only validates `charts/stable`, although the legacy-keys files say they cover incubator too.
-- **L-24.** Dead code:
+- **L-23.** Dead code:
   - `run_common_tests.sh:20` (`common_test_path`, always overwritten at line 94)
   - `lib/traefik/middlewares/_forwardAuth.tpl:9-11` (`$sizeKind`)
   - the unused `$validMethods` in the CNPG `primaryUpdateMethod` validation
