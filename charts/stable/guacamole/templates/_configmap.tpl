@@ -137,49 +137,6 @@ guacamole-config:
     {{ include "guac.env" (dict "ob" "json" "key" "JSON_SECRET_KEY" "rootCtx" $) }}
     {{ include "guac.env" (dict "ob" "json" "key" "JSON_TRUSTED_NETWORKS" "rootCtx" $) }}
   {{- end }}
-db-init:
-  enabled: true
-  data:
-    {{- $filename := "/tc-init/initdb.sql" }}
-    create-seed.sh: |
-      echo "Creating [{{ $filename }}] file..."
-      /opt/guacamole/bin/initdb.sh --postgresql > {{ $filename }}
-      if [ -f {{ $filename }} ]; then
-        echo "File [{{ $filename }}] created successfully!"
-        exit 0
-      fi
-      echo "File [{{ $filename }}] failed to create."
-      exit 1
-    apply-seed.sh: |
-      export PGPASSWORD="$POSTGRESQL_PASSWORD"
-      until
-        pg_isready --username="$POSTGRESQL_USER" --host="$POSTGRESQL_HOSTNAME" --port="$POSTGRESQL_PORT"
-      do
-        echo "Waiting for PostgreSQL to start..."
-        sleep 2
-      done
-      psql  --host="$POSTGRESQL_HOSTNAME" --port="$POSTGRESQL_PORT" \
-            --username="$POSTGRESQL_USER" --dbname="$POSTGRESQL_DATABASE" \
-            --no-password --command='SELECT * FROM public.guacamole_user' \
-            --output=/dev/null --quiet
-      if [ $? -eq 0 ]; then
-        echo "Database already initialized."
-        exit 0
-      fi
-      if [ ! -f {{ $filename }} ]; then
-        echo "File [{{ $filename }}] does not exist."
-        exit 1
-      fi
-      echo "Initializing database from [{{ $filename }}] file..."
-      psql  --host="$POSTGRESQL_HOSTNAME" --port="$POSTGRESQL_PORT" \
-            --username="$POSTGRESQL_USER" --dbname="$POSTGRESQL_DATABASE" \
-            --no-password --quiet --output=/dev/null --file={{ $filename }}
-      if [ $? -eq 0 ]; then
-        echo "Database initialized successfully!"
-        exit 0
-      fi
-      echo "Database failed to initialize."
-      exit 1
 {{- end -}}
 
 {{- define "guac.env" -}}

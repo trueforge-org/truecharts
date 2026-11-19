@@ -35,6 +35,13 @@ workload:
             startup:
               enabled: false
 
+secret:
+  kopia-secrets:
+    enabled: true
+    data:
+      USER: '{{ .Values.kopia.user | default "user" }}'
+      KOPIA_PASSWORD: '{{ .Values.kopia.password | default "secret" }}'
+
 persistence:
   config:
     enabled: true

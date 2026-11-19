@@ -210,6 +210,50 @@ service:
         enabled: true
         targetSelector: guacd
         port: 10124
+configmap:
+  db-init:
+    enabled: true
+    data:
+      create-seed.sh: |
+        echo "Creating [/tc-init/initdb.sql] file..."
+        /opt/guacamole/bin/initdb.sh --postgresql > /tc-init/initdb.sql
+        if [ -f /tc-init/initdb.sql ]; then
+          echo "File [/tc-init/initdb.sql] created successfully!"
+          exit 0
+        fi
+        echo "File [/tc-init/initdb.sql] failed to create."
+        exit 1
+      apply-seed.sh: |-
+        export PGPASSWORD="$POSTGRESQL_PASSWORD"
+        until
+          pg_isready --username="$POSTGRESQL_USER" --host="$POSTGRESQL_HOSTNAME" --port="$POSTGRESQL_PORT"
+        do
+          echo "Waiting for PostgreSQL to start..."
+          sleep 2
+        done
+        psql  --host="$POSTGRESQL_HOSTNAME" --port="$POSTGRESQL_PORT" \
+              --username="$POSTGRESQL_USER" --dbname="$POSTGRESQL_DATABASE" \
+              --no-password --command='SELECT * FROM public.guacamole_user' \
+              --output=/dev/null --quiet
+        if [ $? -eq 0 ]; then
+          echo "Database already initialized."
+          exit 0
+        fi
+        if [ ! -f /tc-init/initdb.sql ]; then
+          echo "File [/tc-init/initdb.sql] does not exist."
+          exit 1
+        fi
+        echo "Initializing database from [/tc-init/initdb.sql] file..."
+        psql  --host="$POSTGRESQL_HOSTNAME" --port="$POSTGRESQL_PORT" \
+              --username="$POSTGRESQL_USER" --dbname="$POSTGRESQL_DATABASE" \
+              --no-password --quiet --output=/dev/null --file=/tc-init/initdb.sql
+        if [ $? -eq 0 ]; then
+          echo "Database initialized successfully!"
+          exit 0
+        fi
+        echo "Database failed to initialize."
+        exit 1
+
 persistence:
   recordings:
     enabled: true

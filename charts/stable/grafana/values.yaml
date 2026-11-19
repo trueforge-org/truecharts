@@ -368,6 +368,12 @@ workload:
               memory: 1536Mi
 
 configmap:
+  download-dashboards:
+    enabled: true
+    data:
+      download-dashboards.sh: |-
+        {{- index (include "grafana.download_dashboards" (dict "dashboards" .Values.dashboards.grafana "outputDir" (index .Values.persistence "sc-dashboard-volume" "mountPath")) | fromYaml) "download-dashboards" "data" "download-dashboards.sh" | nindent 2 }}
+        {{- "" }}
   dashboard-provider:
     enabled: true
     data:
