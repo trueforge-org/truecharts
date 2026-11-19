@@ -15339,6 +15339,14 @@
     "validating": {
      "type": "object",
      "properties": {
+      "expandObjectName": {
+       "type": [
+        "boolean",
+        "string"
+       ],
+       "description": "Prefix the name of the Webhook with the chart fullname.",
+       "default": true
+      },
       "enabled": {
        "type": [
         "boolean",
@@ -15732,6 +15740,14 @@
    "additionalProperties": {
     "type": "object",
     "properties": {
+     "expandObjectName": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Prefix the name of the Webhook with the chart fullname.",
+      "default": true
+     },
      "webhooks": {
       "type": "array",
       "items": {

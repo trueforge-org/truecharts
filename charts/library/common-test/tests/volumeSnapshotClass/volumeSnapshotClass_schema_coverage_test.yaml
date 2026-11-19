@@ -46,3 +46,26 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/volumeSnapshotClass/my-vsc/driver': (minLength|length)"
+
+  - it: should not prefix the volume snapshot class name when expandObjectName is false or "false"
+    set:
+      volumeSnapshotClass:
+        my-a:
+          enabled: true
+          expandObjectName: false
+          driver: csi-hostpath-snapshots
+        my-b:
+          enabled: true
+          expandObjectName: "false"
+          driver: csi-hostpath-snapshots
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: my-a
+        isKind:
+          of: VolumeSnapshotClass
+      - documentSelector:
+          path: metadata.name
+          value: my-b
+        isKind:
+          of: VolumeSnapshotClass

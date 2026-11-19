@@ -4074,6 +4074,14 @@ volumeSnapshotClass:
   my-vsc2:
     enabled: true
     driver: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    driver: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    driver: ''
 volumeSnapshots:
   example1:
     enabled: true
@@ -4102,6 +4110,16 @@ volumeSnapshots:
     source:
       persistentVolumeClaimName: ''
     namespace: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    source:
+      persistentVolumeClaimName: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    source:
+      persistentVolumeClaimName: ''
 imagePullSecret:
   image-secret-name:
     enabled: true
@@ -4391,6 +4409,7 @@ secret:
     - name: ''
       value: ''
     namespace: ''
+    expandObjectName: false
 externalSecret:
   credentials:
     enabled: true
@@ -5049,6 +5068,11 @@ gatewayClass:
       my-annotation: ''
     labels:
       my-label: ''
+  my-dep-class:
+    enabled: true
+    controllerName: ''
+    dependency: ''
+    nameOverride: ''
 gateway:
   main:
     enabled: false
@@ -5400,6 +5424,18 @@ podDisruptionBudget:
     customLabels:
       label1: ''
     unhealthyPodEvictionPolicy: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    minAvailable: 1
+    customLabels:
+      label1: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    minAvailable: 1
+    customLabels:
+      label1: ''
 webhook:
   validating:
     enabled: false
@@ -5424,6 +5460,7 @@ webhook:
         - ''
         resources:
         - ''
+    expandObjectName: false
   mutating:
     enabled: false
     type: ''
@@ -5447,6 +5484,7 @@ webhook:
         - ''
         resources:
         - ''
+    expandObjectName: ''
   my-webhook:
     enabled: true
     type: ''
@@ -5461,6 +5499,28 @@ webhook:
           namespace: ''
           path: ''
           port: ''
+      rules:
+      - apiGroups:
+        - ''
+        apiVersions:
+        - ''
+        operations:
+        - ''
+        resources:
+        - ''
+    expandObjectName: false
+  my-webhook2:
+    enabled: true
+    type: ''
+    expandObjectName: ''
+    webhooks:
+    - name: ''
+      admissionReviewVersions:
+      - ''
+      clientConfig:
+        service:
+          name: ''
+          namespace: ''
       rules:
       - apiGroups:
         - ''
@@ -5511,30 +5571,6 @@ webhook:
     - name: ''
       value: ''
     namespace: ''
-  my-webhook2:
-    enabled: true
-    type: ''
-    webhooks:
-    - name: ''
-      failurePolicy: ''
-      matchPolicy: ''
-      sideEffects: ''
-      timeoutSeconds: 20
-      admissionReviewVersions:
-      - ''
-      clientConfig:
-        caBundle: ''
-        url: ''
-      rules:
-      - operations:
-        - ''
-        apiGroups:
-        - ''
-        apiVersions:
-        - ''
-        resources:
-        - ''
-        scope: ''
 priorityClass:
   example:
     provisioner: ''
@@ -5571,6 +5607,12 @@ priorityClass:
   my-priority2:
     enabled: true
     preemptionPolicy: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+  my-b:
+    enabled: true
+    expandObjectName: ''
 storageClass:
   example1:
     enabled: true
@@ -5636,6 +5678,14 @@ storageClass:
     provisioner: ''
     reclaimPolicy: ''
     volumeBindingMode: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    provisioner: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    provisioner: ''
 networkPolicy:
   objectname:
     enabled: false

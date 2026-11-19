@@ -85,3 +85,18 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/gatewayClass/my-class/parametersRef/group'"
+
+  - it: should render a gatewayClass with nameOverride, and not use a dependency gatewayClass as primary by fallback
+    set:
+      gatewayClass:
+        my-dep-class:
+          enabled: true
+          controllerName: example.com/controller
+          dependency: some-dep
+          nameOverride: my-suffix
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-common-test-my-suffix
+        isKind:
+          of: GatewayClass

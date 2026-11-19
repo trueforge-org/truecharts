@@ -39,3 +39,26 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/storageClass/my-sc': (additional properties|additionalProperties)"
+
+  - it: should not prefix the storage class name when expandObjectName is false or "false"
+    set:
+      storageClass:
+        my-a:
+          enabled: true
+          expandObjectName: false
+          provisioner: some.provisioner.io
+        my-b:
+          enabled: true
+          expandObjectName: "false"
+          provisioner: some.provisioner.io
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: my-a
+        isKind:
+          of: StorageClass
+      - documentSelector:
+          path: metadata.name
+          value: my-b
+        isKind:
+          of: StorageClass

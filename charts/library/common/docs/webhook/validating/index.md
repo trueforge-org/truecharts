@@ -34,6 +34,20 @@ A ValidatingWebhookConfiguration.
 
 ---
 
+## `expandObjectName`
+
+Prefix the name of the Webhook with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `webhook.validating.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `enabled`
 
 Enable the webhook configuration.

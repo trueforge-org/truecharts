@@ -45,3 +45,28 @@ tests:
           path: metadata.namespace
           value: snap-ns
         documentIndex: 0
+
+  - it: should not prefix the volume snapshot name when expandObjectName is false or "false"
+    set:
+      volumeSnapshots:
+        my-a:
+          enabled: true
+          expandObjectName: false
+          source:
+            persistentVolumeClaimName: some-pvc-name
+        my-b:
+          enabled: true
+          expandObjectName: "false"
+          source:
+            persistentVolumeClaimName: some-pvc-name
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: my-a
+        isKind:
+          of: VolumeSnapshot
+      - documentSelector:
+          path: metadata.name
+          value: my-b
+        isKind:
+          of: VolumeSnapshot

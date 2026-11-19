@@ -361,3 +361,139 @@ tests:
         equal:
           path: webhooks[0].clientConfig.service.port
           value: 8443
+
+  - it: should not prefix the webhook name when expandObjectName is false on validating, mutating and a custom key
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          expandObjectName: false
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        mutating:
+          enabled: true
+          type: mutating
+          expandObjectName: "false"
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        my-webhook:
+          enabled: true
+          type: mutating
+          expandObjectName: false
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        my-webhook2:
+          enabled: true
+          type: validating
+          expandObjectName: "false"
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: validating
+        isKind:
+          of: ValidatingWebhookConfiguration
+      - documentSelector:
+          path: metadata.name
+          value: mutating
+        isKind:
+          of: MutatingWebhookConfiguration
+      - documentSelector:
+          path: metadata.name
+          value: my-webhook
+        isKind:
+          of: MutatingWebhookConfiguration
+      - documentSelector:
+          path: metadata.name
+          value: my-webhook2
+        isKind:
+          of: ValidatingWebhookConfiguration
+
+  - it: should not prefix the webhook name when expandObjectName is the other type on validating and mutating
+    set:
+      webhook:
+        validating:
+          enabled: true
+          type: validating
+          expandObjectName: "false"
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+        mutating:
+          enabled: true
+          type: mutating
+          expandObjectName: false
+          webhooks:
+            - name: check.example.com
+              admissionReviewVersions: [v1]
+              clientConfig:
+                service:
+                  name: svc
+                  namespace: test-release-namespace
+              rules:
+                - apiGroups: [""]
+                  apiVersions: [v1]
+                  operations: [CREATE]
+                  resources: [pods]
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: validating
+        isKind:
+          of: ValidatingWebhookConfiguration
+      - documentSelector:
+          path: metadata.name
+          value: mutating
+        isKind:
+          of: MutatingWebhookConfiguration
