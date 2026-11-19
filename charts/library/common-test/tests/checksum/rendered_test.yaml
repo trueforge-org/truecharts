@@ -1,0 +1,238 @@
+suite: checksum rendered data test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: configmap checksum A
+    set:
+      someValue: a
+      other: x
+      configmap:
+        cm:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/configmaps
+          value: fa40f81e45849f2decd6976190fb2aa1dae0be2f29929050c25722880d0b834e
+
+  - it: configmap checksum B (referenced value changed)
+    set:
+      someValue: b
+      other: x
+      configmap:
+        cm:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/configmaps
+          value: c2e168b43f6a43f69b593de892865f0354ac455e624ad9cd4414285d16359ff3
+
+  - it: configmap checksum unrelated change keeps A
+    set:
+      someValue: a
+      other: y
+      configmap:
+        cm:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/configmaps
+          value: fa40f81e45849f2decd6976190fb2aa1dae0be2f29929050c25722880d0b834e
+
+  - it: secret checksum A
+    set:
+      someValue: a
+      other: x
+      secret:
+        sec:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/secrets
+          value: b6ba3fce54dad8a3eeb4ce54b829cd5a116ae1bb3473df5f808d7cf316e466de
+
+  - it: secret checksum B (referenced value changed)
+    set:
+      someValue: b
+      other: x
+      secret:
+        sec:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/secrets
+          value: 3ae7b962558701b7f9594abb6e78f13cee398a98f25f006c4c7fb1285649ea40
+
+  - it: secret checksum unrelated change keeps A
+    set:
+      someValue: a
+      other: y
+      secret:
+        sec:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/secrets
+          value: b6ba3fce54dad8a3eeb4ce54b829cd5a116ae1bb3473df5f808d7cf316e466de
+
+  - it: configmap checksum ignores an empty key with dropEmptyKeys
+    set:
+      someValue: a
+      configmap:
+        cm:
+          enabled: true
+          dropEmptyKeys: true
+          data:
+            foo: "{{ .Values.someValue }}"
+            empty: ""
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/configmaps
+          value: fa40f81e45849f2decd6976190fb2aa1dae0be2f29929050c25722880d0b834e
+
+  - it: configmap checksum includes an empty key without dropEmptyKeys
+    set:
+      someValue: a
+      configmap:
+        cm:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+            empty: ""
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notEqual:
+          path: spec.template.metadata.annotations.checksum/configmaps
+          value: fa40f81e45849f2decd6976190fb2aa1dae0be2f29929050c25722880d0b834e
+
+  - it: secret checksum ignores an empty key with dropEmptyKeys
+    set:
+      someValue: a
+      secret:
+        sec:
+          enabled: true
+          dropEmptyKeys: true
+          data:
+            foo: "{{ .Values.someValue }}"
+            empty: ""
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        equal:
+          path: spec.template.metadata.annotations.checksum/secrets
+          value: b6ba3fce54dad8a3eeb4ce54b829cd5a116ae1bb3473df5f808d7cf316e466de
+
+  - it: secret checksum includes an empty key without dropEmptyKeys
+    set:
+      someValue: a
+      secret:
+        sec:
+          enabled: true
+          data:
+            foo: "{{ .Values.someValue }}"
+            empty: ""
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notEqual:
+          path: spec.template.metadata.annotations.checksum/secrets
+          value: b6ba3fce54dad8a3eeb4ce54b829cd5a116ae1bb3473df5f808d7cf316e466de

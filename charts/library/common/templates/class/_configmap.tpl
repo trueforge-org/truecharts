@@ -32,25 +32,8 @@ metadata:
     {{- . | nindent 4 }}
   {{- end }}
 {{- if $objectData.data }}
-  {{- $data := $objectData.data -}}
-  {{- if include "tc.v1.common.lib.util.dropEmptyKeys" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
-    {{- $data = dict -}}
-    {{- range $k, $v := $objectData.data -}}
-      {{- if not (include "tc.v1.common.lib.util.isEmptyValue" (dict "rootCtx" $rootCtx "value" $v)) -}}
-        {{- $_ := set $data $k $v -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end }}
 data:
-  {{- if not $data }} {}
-  {{- else -}}
-  {{- $dataYaml := toYaml $data -}}
-  {{/* Only run tpl on data that has template delimiters */}}
-  {{- if contains "{{" $dataYaml -}}
-    {{- $dataYaml = tpl $dataYaml $rootCtx -}}
-  {{- end }}
-  {{- $dataYaml | nindent 2 }}
-  {{- end }}
+  {{- include "tc.v1.common.lib.configmap.renderData" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 }}
 {{- end }}
 {{- if $objectData.binaryData }}
 binaryData:
