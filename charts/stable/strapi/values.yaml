@@ -60,7 +60,10 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: ADMIN_JWT_SECRET
-            APP_KEYS: '["keya", "keyb"]'
+            APP_KEYS:
+              secretKeyRef:
+                name: env-secrets
+                key: APP_KEYS
 
 resources:
   requests:
@@ -74,3 +77,4 @@ secret:
     data:
       JWT_SECRET: "my_jwt_secret"
       ADMIN_JWT_SECRET: "my_admin_jwt_secret"
+      APP_KEYS: '["keya", "keyb"]'

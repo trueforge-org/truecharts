@@ -31,7 +31,10 @@ workload:
       containers:
         main:
           env:
-            DATABASE_CONNECTION: ""
+            DATABASE_CONNECTION:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_CONNECTION
             http_PASS:
               secretKeyRef:
                 name: env-secrets
@@ -46,3 +49,4 @@ secret:
     enabled: true
     data:
       http_PASS: ""
+      DATABASE_CONNECTION: ""

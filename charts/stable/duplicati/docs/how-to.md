@@ -13,13 +13,7 @@ secret:
   env-secrets:
     data:
       DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          env:
-            SETTINGS_ENCRYPTION_KEY: "<real encryption key>"
+      SETTINGS_ENCRYPTION_KEY: "<real encryption key>"
 ```
 ### Example Encryption Key Generation
 

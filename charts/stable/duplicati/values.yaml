@@ -29,7 +29,10 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: DUPLICATI__WEBSERVICE_PASSWORD
-            SETTINGS_ENCRYPTION_KEY: "real_encryption_key"
+            SETTINGS_ENCRYPTION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SETTINGS_ENCRYPTION_KEY
             DUPLICATI__ALLOW_INSECURE_DATAFOLDER: true
             # DOTNET_SYSTEM_IO_DISABLEFILELOCKING: true
 
@@ -42,3 +45,4 @@ secret:
     enabled: true
     data:
       DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
+      SETTINGS_ENCRYPTION_KEY: "real_encryption_key"

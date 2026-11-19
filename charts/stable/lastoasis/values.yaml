@@ -37,7 +37,10 @@ workload:
       containers:
         main:
           env:
-            CUSTOMER_KEY: pwHB3mLCOUWscFi7
+            CUSTOMER_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: CUSTOMER_KEY
             GAME_ID: "920720"
             GAME_PARAMS: -port=5555 -QueryPort=27015 -NoLiveServer -EnableCheats
             IDENTIFIER: dockeroasis
@@ -45,7 +48,10 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: PASSWRD
-            PROVIDER_KEY: " 8IhohaMRZIJJubv5 "
+            PROVIDER_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: PROVIDER_KEY
             SLOTS: "20"
             USERNAME: ""
             VALIDATE: "false"
@@ -61,3 +67,5 @@ secret:
     enabled: true
     data:
       PASSWRD: ""
+      CUSTOMER_KEY: "pwHB3mLCOUWscFi7"
+      PROVIDER_KEY: " 8IhohaMRZIJJubv5 "

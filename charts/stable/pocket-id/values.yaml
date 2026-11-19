@@ -41,7 +41,10 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: MAXMIND_LICENSE_KEY
-            ENCRYPTION_KEY: changeme_changeme!!
+            ENCRYPTION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ENCRYPTION_KEY
             DB_CONNECTION_STRING: file:data/pocket-id.db
 
 secret:
@@ -49,3 +52,4 @@ secret:
     enabled: true
     data:
       MAXMIND_LICENSE_KEY: ""
+      ENCRYPTION_KEY: "changeme_changeme!!"

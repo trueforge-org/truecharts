@@ -66,12 +66,18 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: LINODE_TOKEN
-            OVH_APPLICATION_KEY: ""
+            OVH_APPLICATION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: OVH_APPLICATION_KEY
             OVH_APPLICATION_SECRET:
               secretKeyRef:
                 name: env-secrets
                 key: OVH_APPLICATION_SECRET
-            OVH_CONSUMER_KEY: ""
+            OVH_CONSUMER_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: OVH_CONSUMER_KEY
             SCW_ACCESS_KEY:
               secretKeyRef:
                 name: env-secrets
@@ -180,3 +186,5 @@ secret:
       OVH_APPLICATION_SECRET: ""
       SCW_ACCESS_KEY: ""
       SCW_SECRET_KEY: ""
+      OVH_APPLICATION_KEY: ""
+      OVH_CONSUMER_KEY: ""

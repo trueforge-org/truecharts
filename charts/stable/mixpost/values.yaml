@@ -49,7 +49,10 @@ workload:
             # APP_URL: domain with https:// (needs to be set)
             APP_URL: https://subdomain.mydomain.com
             # Key Generator https://laravel-encryption-key-generator.vercel.app/
-            APP_KEY: MySecretKey
+            APP_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: APP_KEY
             DB_DATABASE: "{{ .Values.mariadb.mariadbDatabase }}"
             DB_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
             DB_HOST:
@@ -72,3 +75,8 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: redis-password
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      APP_KEY: "MySecretKey"

@@ -67,7 +67,10 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: GOOGLE_FONTS_API_KEY
-            YOUTUBE_KEY: ""
+            YOUTUBE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: YOUTUBE_KEY
             TELEGRAM_TOKEN:
               secretKeyRef:
                 name: env-secrets
@@ -88,3 +91,4 @@ secret:
       GOOGLE_FONTS_API_KEY: ''
       TELEGRAM_TOKEN: ''
       LASTFM_API_KEY: ''
+      YOUTUBE_KEY: ""
