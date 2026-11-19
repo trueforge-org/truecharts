@@ -70,3 +70,7 @@ persistence:
   complete:
     enabled: true
     mountPath: "/downloads/complete"
+
+slskd:
+  # -- Must be changed. JWT signing key, at least 16 characters (64 recommended).
+  jwtKey: "PLACEHOLDERJWTKEYCHANGEME000000000000000000000000000000000000000"

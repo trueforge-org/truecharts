@@ -11,6 +11,8 @@ securityContext:
     runAsGroup: 1000
 
 twofauth:
+  # -- Must be changed. Laravel application key, exactly 32 characters (or "base64:" followed by a base64 encoded 32 byte key).
+  appKey: "PLACEHOLDERAPPKEYCHANGEME0000000"
   app:
     name: 2FAuth
     site_owner: mail@example.com

@@ -20,6 +20,8 @@ service:
         port: 10684
 
 watcharr:
+  # -- Must be changed. JWT signing secret.
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEME000000000000000000000000000000000000"
   mode: prod
   jellyfin_host: ""
   signup_enabled: true

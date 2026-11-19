@@ -22,6 +22,8 @@ workload:
               port: 10220
               path: /health
 vikunja:
+  # -- Must be changed. JWT signing secret.
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEME0000"
   service:
     publicurl: http://localhost/
     jwtttl: 259200

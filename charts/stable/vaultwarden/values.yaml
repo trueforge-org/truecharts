@@ -83,8 +83,8 @@ vaultwarden:
     enabled: false
     # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token
     disableAdminToken: false
-    ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
-    # token:
+    ## Token for admin login. Must be changed when the admin portal is enabled. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
+    token: "PLACEHOLDERADMINTOKEN"
   # Enable SMTP. https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration
   smtp:
     enabled: false

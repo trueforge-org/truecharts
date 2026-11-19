@@ -79,3 +79,7 @@ cnpg:
       initdb:
         postInitApplicationSQL:
           - ALTER USER teslamate WITH SUPERUSER
+
+teslamate:
+  # -- Must be changed. Key used to encrypt the Tesla API tokens in the database. Changing it later invalidates stored tokens.
+  encryptionKey: "PLACEHOLDERENCRYPTIONKEYCHANGEME00000000000000000000000000000000"
