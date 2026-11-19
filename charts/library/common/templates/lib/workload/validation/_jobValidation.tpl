@@ -13,9 +13,6 @@ objectData:
   {{- if $objectData.completionMode -}}
     {{- $completionMode := $objectData.completionMode -}}
 
-    {{- if not (mustHas $completionMode (list "Indexed" "NonIndexed")) -}}
-      {{- fail (printf "Job - Expected [completionMode] to be one of [Indexed, NonIndexed], but got [%v]" $completionMode) -}}
-    {{- end -}}
 
     {{- if eq $completionMode "Indexed" -}}
       {{- if not $objectData.completions -}}

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "set": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the header."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the header."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A header to set."
+      },
+      "description": "Headers that overwrite the header of the same name."
+    },
+    "add": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the header."
+          },
+          "value": {
+            "type": "string",
+            "description": "Value of the header."
+          }
+        },
+        "additionalProperties": false,
+        "description": "A header to add."
+      },
+      "description": "Headers that are added to the existing value of the header."
+    },
+    "remove": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Name of a header to remove."
+      },
+      "description": "Names of the headers to remove."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Changes to the headers of a request or response."
+}

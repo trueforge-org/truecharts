@@ -1,0 +1,108 @@
+suite: gateway validation test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should fail without listeners
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners: []
+    asserts:
+      - failedTemplate:
+          errorMessage: Gateway - Expected non-empty [gateway.my-gateway.listeners]
+
+  - it: should fail with duplicate listener names
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+            - name: http
+              port: 81
+              protocol: HTTP
+    asserts:
+      - failedTemplate:
+          errorMessage: Gateway - Expected listener names in [gateway.my-gateway.listeners] to be unique, but [http] is defined more than once
+
+  - it: should fail without a gateway class
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - failedTemplate:
+          errorMessage: gatewayClassName is required for Gateway test-release-name-common-test
+
+  - it: should fail with targetSelector on an unknown gateway class
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          targetSelector: missing
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - failedTemplate:
+          errorMessage: Gateway - Expected [targetSelector] of gateway [test-release-name-common-test] to reference an enabled gatewayClass, got [missing]
+
+  - it: should fail with more than one primary gateway
+    set:
+      gateway:
+        a:
+          enabled: true
+          primary: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        b:
+          enabled: true
+          primary: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - failedTemplate:
+          errorMessage: Gateway - Only one [gateway] can be primary, got [a, b]
+
+  - it: should fail with more than one primary gateway class
+    set:
+      gatewayClass:
+        a:
+          enabled: true
+          primary: true
+          controllerName: example.com/controller
+        b:
+          enabled: true
+          primary: true
+          controllerName: example.com/controller
+    asserts:
+      - failedTemplate:
+          errorMessage: GatewayClass - Only one [gatewayClass] can be primary, got [a, b]
+
+  - it: should fail without a controllerName
+    set:
+      gatewayClass:
+        my-class:
+          enabled: true
+    asserts:
+      - failedTemplate:
+          errorMessage: controllerName is required for GatewayClass test-release-name-common-test

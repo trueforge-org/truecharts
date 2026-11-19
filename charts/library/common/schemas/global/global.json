@@ -46,13 +46,16 @@
       "type": "object",
       "properties": {
         "enabled": {
-          "type": "boolean",
-          "description": "Run the containers of the chart with a sleep command instead of the app, to debug them.",
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Run the containers of the chart and its dependencies with a sleep command instead of the app, to debug them.",
           "default": false
         }
       },
       "additionalProperties": false,
-      "description": "Diagnostic mode for the chart."
+      "description": "Diagnostic mode for the chart and its dependencies."
     },
     "fallbackDefaults": {
       "$ref": "fallbackDefaults.json",
@@ -128,6 +131,7 @@
       "accessModes": [
         "ReadWriteOnce"
       ],
+      "allowRollingUpdateWithRWO": false,
       "vctAccessModes": [
         "ReadWriteOnce"
       ],
@@ -155,8 +159,9 @@
         }
       },
       "topologyKey": "kubernetes.io/hostname",
+      "routeListenerPort": 443,
       "cnpg": {
-        "pgVersion": 16,
+        "pgVersion": 18,
         "skipEmptyWalArchiveCheck": true
       }
     },

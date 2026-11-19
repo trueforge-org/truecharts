@@ -17,7 +17,8 @@ title: namespaceSelector
 - `.Values.webhook.mutating.webhooks[].objectSelector`
 - `.Values.webhook.validating.webhooks[].namespaceSelector`
 - `.Values.webhook.validating.webhooks[].objectSelector`
-- `.Values.workload.$name.podSpec.topologySpreadConstraints[].labelSelector`
+- `.Values.gateway.$name.allowedListeners.namespaces.selector`
+- and 3 more places
 
 ---
 

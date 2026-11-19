@@ -5,6 +5,15 @@
     "validating": {
       "type": "object",
       "properties": {
+        "expandObjectName": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Prefix the name of the Webhook with the chart fullname.",
+          "default": true,
+          "x-helm-tpl": true
+        },
         "enabled": {
           "type": [
             "boolean",
@@ -193,6 +202,15 @@
     "mutating": {
       "type": "object",
       "properties": {
+        "expandObjectName": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "Prefix the name of the Webhook with the chart fullname.",
+          "default": true,
+          "x-helm-tpl": true
+        },
         "enabled": {
           "type": [
             "boolean",
@@ -399,6 +417,15 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Prefix the name of the Webhook with the chart fullname.",
+        "default": true,
+        "x-helm-tpl": true
+      },
       "webhooks": {
         "type": "array",
         "items": {
@@ -593,7 +620,10 @@
                       "x-helm-tpl": true
                     },
                     "port": {
-                      "type": "string",
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
                       "description": "Port of the Service. Defaults to `443`.",
                       "x-helm-tpl": true
                     }

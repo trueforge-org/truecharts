@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "codes": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "description": "An HTTP status code."
+      },
+      "description": "Status codes that are retried."
+    },
+    "attempts": {
+      "type": "integer",
+      "description": "Number of retries."
+    },
+    "backoff": {
+      "type": "string",
+      "description": "Minimum wait between retries, a duration like `100ms` or `1s`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Retry configuration."
+}

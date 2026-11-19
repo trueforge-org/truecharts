@@ -21,9 +21,9 @@ Endpoints that are scraped.
 | Field | Value |
 | --- | --- |
 | Key | `metrics.$name.endpoints` |
-| Type | `list of map` |
+| Type | `list of map or string` |
 | Required | ❌ |
-| Helm `tpl` | ✅ |
+| Helm `tpl` | ❌ |
 | Default | unset |
 
 ---
@@ -275,6 +275,13 @@ metrics:
   main:
     endpoints:
       - port: main
+```
+
+```yaml
+metrics:
+  main:
+    endpoints:
+      - port: main
         interval: 30s
         path: /metrics
 ```
@@ -286,16 +293,4 @@ metrics:
       - port: metrics
         interval: 15s
         path: /metrics
-```
-
-```yaml
-metrics:
-  main:
-    endpoints:
-      - port: main
-        interval: 30s
-        scrapeTimeout: 10s
-        path: /metrics
-        scheme: http
-        honorLabels: false
 ```

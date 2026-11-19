@@ -1,0 +1,258 @@
+suite: externalSecret basic test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should create an external secret with defaults
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+                property: password
+    asserts:
+      - hasDocuments:
+          count: 1
+      - documentIndex: 0
+        isKind:
+          of: ExternalSecret
+      - documentIndex: 0
+        isAPIVersion:
+          of: external-secrets.io/v1
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-credentials
+      - documentIndex: 0
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentIndex: 0
+        equal:
+          path: spec.secretStoreRef
+          value:
+            name: vault
+            kind: SecretStore
+      - documentIndex: 0
+        equal:
+          path: spec.target
+          value:
+            name: test-release-name-common-test-credentials
+            creationPolicy: Owner
+      - documentIndex: 0
+        equal:
+          path: spec.data
+          value:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+                property: password
+      - documentIndex: 0
+        notExists:
+          path: spec.refreshInterval
+      - documentIndex: 0
+        notExists:
+          path: spec.dataFrom
+
+  - it: should not create an external secret when disabled
+    set:
+      externalSecret:
+        credentials:
+          enabled: false
+          secretStoreRef:
+            name: vault
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render all spec fields
+    set:
+      externalSecret:
+        credentials:
+          enabled: true
+          expandObjectName: false
+          refreshInterval: 15m
+          refreshPolicy: Periodic
+          secretStoreRef:
+            name: vault
+            kind: ClusterSecretStore
+          target:
+            name: database-url
+            creationPolicy: Orphan
+            deletionPolicy: Retain
+            immutable: true
+            template:
+              type: Opaque
+              data:
+                url: "postgres://{{ .username }}:{{ .password }}@db:5432/app"
+          data:
+            - secretKey: username
+              remoteRef:
+                key: my-app
+                property: username
+          dataFrom:
+            - extract:
+                key: shared
+              rewrite:
+                - transform:
+                    template: "{{ .value | upper }}"
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: credentials
+      - documentIndex: 0
+        equal:
+          path: spec.refreshInterval
+          value: 15m
+      - documentIndex: 0
+        equal:
+          path: spec.refreshPolicy
+          value: Periodic
+      - documentIndex: 0
+        equal:
+          path: spec.secretStoreRef.kind
+          value: ClusterSecretStore
+      - documentIndex: 0
+        equal:
+          path: spec.target
+          value:
+            name: database-url
+            creationPolicy: Orphan
+            deletionPolicy: Retain
+            immutable: true
+            template:
+              type: Opaque
+              data:
+                url: "postgres://{{ .username }}:{{ .password }}@db:5432/app"
+      - documentIndex: 0
+        equal:
+          path: spec.dataFrom
+          value:
+            - extract:
+                key: shared
+              rewrite:
+                - transform:
+                    template: "{{ .value | upper }}"
+
+  - it: should pass data, refreshInterval, store name and target name through tpl
+    set:
+      some:
+        store: vault
+        interval: 1h
+      externalSecret:
+        credentials:
+          enabled: true
+          refreshInterval: "{{ .Values.some.interval }}"
+          secretStoreRef:
+            name: "{{ .Values.some.store }}"
+          target:
+            name: "{{ .Release.Name }}-database"
+          data:
+            - secretKey: password
+              remoteRef:
+                key: "{{ .Release.Name }}/db"
+                property: password
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.refreshInterval
+          value: 1h
+      - documentIndex: 0
+        equal:
+          path: spec.secretStoreRef.name
+          value: vault
+      - documentIndex: 0
+        equal:
+          path: spec.target.name
+          value: test-release-name-database
+      - documentIndex: 0
+        equal:
+          path: spec.data[0].remoteRef.key
+          value: test-release-name/db
+
+  - it: should render metadata with tpl and a custom namespace
+    set:
+      some:
+        value: rendered
+      externalSecret:
+        credentials:
+          enabled: true
+          namespace: other-namespace
+          labels:
+            key: value
+            keytpl: "{{ .Values.some.value }}"
+          annotations:
+            key: value
+            keytpl: "{{ .Values.some.value }}"
+          secretStoreRef:
+            name: vault
+          dataFrom:
+            - extract:
+                key: my-app
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: metadata.namespace
+          value: other-namespace
+      - documentIndex: 0
+        isSubset:
+          path: metadata.labels
+          content:
+            key: value
+            keytpl: rendered
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+      - documentIndex: 0
+        isSubset:
+          path: metadata.annotations
+          content:
+            key: value
+            keytpl: rendered
+      - documentIndex: 0
+        notExists:
+          path: spec.data
+
+  - it: should be rendered after secrets and before workloads
+    set:
+      secret:
+        config:
+          enabled: true
+          data:
+            key: value
+      externalSecret:
+        credentials:
+          enabled: true
+          secretStoreRef:
+            name: vault
+          data:
+            - secretKey: password
+              remoteRef:
+                key: my-app
+      workload:
+        main:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Secret
+      - documentIndex: 1
+        isKind:
+          of: ExternalSecret
+      - documentIndex: 2
+        isKind:
+          of: Deployment

@@ -199,6 +199,31 @@ tests:
         notExists:
           path: spec.template.spec.containers[0].startupProbe
 
+  - it: should not create any probes with diagnostic mode enabled as string
+    set:
+      image: *image
+      diagnosticMode:
+        enabled: "true"
+      workload:
+        workload-name1:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+    asserts:
+      - documentIndex: 0
+        notExists:
+          path: spec.template.spec.containers[0].livenessProbe
+      - documentIndex: 0
+        notExists:
+          path: spec.template.spec.containers[0].readinessProbe
+
   - it: should not create any probes with diagnostic mode from global
     set:
       image: *image
@@ -785,4 +810,4 @@ tests:
                 probes: *probes
     asserts:
       - failedTemplate:
-          errorMessage: Diagnostic Mode - Expected [diagnosticMode.enabled] to be a bool, but got [string]
+          errorMessage: Diagnostic Mode - Expected [diagnosticMode.enabled] to be a bool or a string resolving to [true] or [false], but got [string]

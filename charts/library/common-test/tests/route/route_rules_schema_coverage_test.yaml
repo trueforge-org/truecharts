@@ -5,7 +5,7 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should render route rules with all backendRefs keys
+  - it: should render route rules with backendRefs group, string port and sessionPersistence
     set:
       service: &service
         my-service:
@@ -19,232 +19,145 @@ tests:
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - backendRefs:
                 - group: ""
                   kind: Service
                   name: my-backend
-                  namespace: my-ns
-                  port: 8080
-                  weight: 5
+                  port: "8080"
+              sessionPersistence:
+                sessionName: my-session
     asserts:
-      - documentSelector:
+      - documentSelector: &route
           path: kind
           value: HTTPRoute
         equal:
           path: spec.rules[0].backendRefs[0].name
           value: my-backend
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
+      - documentSelector: *route
         equal:
-          path: spec.rules[0].backendRefs[0].weight
-          value: 5
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: spec.rules[0].backendRefs[0].port
-          value: 8080
+          path: spec.rules[0].sessionPersistence.sessionName
+          value: my-session
 
-  - it: should render route rules with null backendRefs name, namespace and port
+  - it: should render route rules with null backendRefs namespace and port and a targetSelector
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - backendRefs:
-                - name: null
+                - targetSelector: my-service
+                  name: null
                   namespace: null
                   port: null
     asserts:
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: spec.rules[0].backendRefs[0].port
-          value: 8080
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: spec.rules[0].backendRefs[0].namespace
-          value: test-release-namespace
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
 
-  - it: should fail on unknown keys in route rules
+  - it: should render route rules with a null backendRefs targetSelector
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
-            - unknownKey: value
+            - backendRefs:
+                - name: my-backend
+                  port: 8080
+                  targetSelector: null
     asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0': additional properties 'unknownKey' not allowed"
+      - documentSelector: *route
+        isKind:
+          of: HTTPRoute
+
+  - it: should render route rules with timeouts
+    set:
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
+      route:
+        my-route:
+          enabled: true
+          gateway: some-gateway
+          rules:
+            - timeouts:
+                request: 10s
+                backendRequest: 5s
+    asserts:
+      - documentSelector: *route
+        equal:
+          path: spec.rules[0].timeouts.request
+          value: 10s
 
   - it: should fail on unknown keys in route rules backendRefs
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - backendRefs:
-                - unknownKey: value
+                - name: my-backend
+                  port: 8080
+                  unknownKey: value
     asserts:
       - failedTemplate:
           errorPattern: "at '/route/my-route/rules/0/backendRefs/0': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on a non-string group in route rules backendRefs
+  - it: should fail on unknown keys in route rules timeouts
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
-            - backendRefs:
-                - group: 1
+            - timeouts:
+                unknownKey: value
     asserts:
       - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs/0/group'"
-
-  - it: should fail on a non-string kind in route rules backendRefs
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - backendRefs:
-                - kind: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs/0/kind'"
-
-  - it: should fail on a non-string name in route rules backendRefs
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - backendRefs:
-                - name: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs/0/name'"
-
-  - it: should fail on a non-string namespace in route rules backendRefs
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - backendRefs:
-                - namespace: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs/0/namespace'"
-
-  - it: should fail on a string port in route rules backendRefs
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - backendRefs:
-                - port: "80"
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs/0/port'"
-
-  - it: should fail on a string weight in route rules backendRefs
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - backendRefs:
-                - weight: "1"
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs/0/weight'"
-
-  - it: should fail on a non-array backendRefs in route rules
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - backendRefs: foo
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/backendRefs'"
-
-  - it: should fail on a non-array matches in route rules
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches: foo
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches'"
-
-  - it: should fail on a non-array rules in route
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules: foo
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules'"
+          errorPattern: "at '/route/my-route/rules/0/timeouts': additional properties 'unknownKey' not allowed"

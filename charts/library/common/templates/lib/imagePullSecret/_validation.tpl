@@ -14,9 +14,6 @@ objectData:
     {{- fail "Image Pull Secret - Expected non-empty [data]" -}}
   {{- end -}}
 
-  {{- if not (kindIs "map" $objectData.data) -}}
-    {{- fail (printf "Image Pull Secret - Expected [data] to be a dictionary, but got [%v]" (kindOf $objectData.data)) -}}
-  {{- end -}}
 
   {{- range $key := (list "username" "password" "registry" "email") -}}
     {{- if not (get $objectData.data $key) -}}

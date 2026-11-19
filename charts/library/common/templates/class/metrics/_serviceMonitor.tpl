@@ -1,13 +1,10 @@
 {{- define "tc.v1.common.class.servicemonitor" -}}
   {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
   {{- $servicemonitorName := $fullName -}}
-  {{- $values := .Values.servicemonitor -}}
-
-  {{- if hasKey . "ObjectValues" -}}
-    {{- with .ObjectValues.metrics -}}
-      {{- $values = . -}}
-    {{- end -}}
+  {{- if not (and (hasKey . "ObjectValues") .ObjectValues.metrics) -}}
+    {{- fail (printf "ServiceMonitor - Expected [ObjectValues.metrics] to be set, this class is only called by the metrics spawner") -}}
   {{- end -}}
+  {{- $values := .ObjectValues.metrics -}}
   {{- $servicemonitorLabels := $values.labels -}}
   {{- $servicemonitorAnnotations := $values.annotations -}}
 

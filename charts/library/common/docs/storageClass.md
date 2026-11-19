@@ -43,6 +43,20 @@ A StorageClass.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the StorageClass with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `storageClass.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.mountOptions`
 
 Mount options of volumes of this class. Supports Helm `tpl` on each entry.
@@ -196,7 +210,7 @@ Parameters passed to the provisioner. Supports Helm `tpl` on values.
 
 ## `$name.parameters.$name`
 
-Value of the parameter. Numbers and booleans are rendered as a string.
+Value of the parameter.
 
 | Field | Value |
 | --- | --- |
@@ -302,7 +316,7 @@ storageClass:
     parameters:
       server: nfs.example.com
       share: /exports
-      mountPermissions: "0"
+      mountPermissions: 0
       subDir: data
     mountOptions:
       - nfsvers=4.1

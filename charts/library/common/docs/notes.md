@@ -44,7 +44,7 @@ Header text for NOTES.txt. Rendered first in the output.
 
 ## `custom`
 
-Custom text for NOTES.txt. Rendered after header, before footer.
+Custom text for NOTES.txt. Rendered after header, before connection information.
 
 | Field | Value |
 | --- | --- |
@@ -57,24 +57,23 @@ Custom text for NOTES.txt. Rendered after header, before footer.
 Default value:
 
 ```yaml
-"{{- if .Values.chartContext.appUrl }}\n## Connecting externally\nYou can use this\
-  \ Chart by opening the following links in your browser:\n- {{ toYaml .Values.chartContext.appUrl\
-  \ }}\n{{- end }}\n\n{{ if .Chart.Dependencies }}\n## Dependencies for {{ .Chart.Name\
-  \ }}\n\n{{- range .Chart.Dependencies }}\n- Chart: {{ .Repository }}/{{ .Name }}\n\
-  \  Version: {{ .Version }}\n{{- end }}\n{{- end }}\n{{- if .Values.chartContext.internalUrls\
-  \ }}\n## Connecting Internally\n\nYou can reach this chart inside your cluster,\
-  \ using the following service URLS:\n{{- range $url := .Values.chartContext.internalUrls\
-  \ -}}\n- {{ $url }}\n{{- end }}\n{{- end }}\n\n## Sources for {{ .Chart.Name }}\n\
-  \n{{- range .Chart.Sources }}\n- {{ . }}\n{{- end -}}\n\n{{- $link := .Chart.Annotations.docs\
-  \ -}}\n{{- if not $link -}}\n  {{- $link = .Chart.Home -}}\n{{- end }}\n\nSee more\
-  \ for **{{ $.Chart.Name }}** at ({{ $link }})\n"
+"{{- include \"tc.v1.common.lib.chart.externalUrls\" $ }}\n\n{{ if .Chart.Dependencies\
+  \ }}\n## Dependencies for {{ .Chart.Name }}\n\n{{- range .Chart.Dependencies }}\n\
+  - Chart: {{ .Repository }}/{{ .Name }}\n  Version: {{ .Version }}\n{{- end }}\n\
+  {{- end }}\n{{- if .Values.chartContext.internalUrls }}\n## Connecting Internally\n\
+  \nYou can reach this chart inside your cluster, using the following service URLS:\n\
+  {{- range $url := .Values.chartContext.internalUrls }}\n- {{ $url }}\n{{- end }}\n\
+  {{- end }}\n\n## Sources for {{ .Chart.Name }}\n\n{{- range .Chart.Sources }}\n\
+  - {{ . }}\n{{- end -}}\n\n{{- $link := .Chart.Annotations.docs -}}\n{{- if not $link\
+  \ -}}\n  {{- $link = .Chart.Home -}}\n{{- end }}\n\nSee more for **{{ $.Chart.Name\
+  \ }}** at ({{ $link }})\n"
 ```
 
 ---
 
 ## `footer`
 
-Footer text for NOTES.txt. Rendered after custom, before warnings.
+Footer text for NOTES.txt. Rendered after connection information, before warnings.
 
 | Field | Value |
 | --- | --- |
@@ -116,6 +115,20 @@ Warning messages to show at the end of `NOTES.txt`.
 
 ---
 
+## `showCredentials`
+
+Show credentials (eg, passwords in connection URLs) in NOTES.txt. When disabled, they are replaced by `HIDDEN`.
+
+| Field | Value |
+| --- | --- |
+| Key | `notes.showCredentials` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
 ## Full Examples
 
 ### Basic custom message
@@ -142,6 +155,15 @@ notes:
   warnings:
     - This chart needs a ReadWriteMany storage class for the shared volume.
     - Back up your data before you upgrade.
+```
+
+### Show credentials
+
+Connection URLs contain the password of the database, so they are replaced by `HIDDEN` unless `showCredentials` is `true`. The JDBC URLs, hosts and usernames do not contain credentials and are always shown:
+
+```yaml
+notes:
+  showCredentials: true
 ```
 
 ### Example output with PostgreSQL and Valkey

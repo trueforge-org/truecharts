@@ -22,9 +22,6 @@ objectData:
   {{- if $objectData.rollingUpdate -}}
     {{- $rollUp := $objectData.rollingUpdate -}}
 
-    {{- if and $rollUp (not (kindIs "map" $rollUp)) -}}
-      {{- fail (printf "StatefulSet - Expected [rollingUpdate] to be a dictionary, but got [%v]" (kindOf $rollUp)) -}}
-    {{- end -}}
 
   {{- end -}}
 {{- end -}}

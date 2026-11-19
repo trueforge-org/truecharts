@@ -50,7 +50,7 @@ ingress:
           type: sonarr
           url: http://sonarr.media.svc.cluster.local:8989
           custom:
-            enableQueue: "true"
+            enableQueue: true
           customkv:
             - key: key
               value: <api key>

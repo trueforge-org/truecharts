@@ -150,7 +150,7 @@ Whether the container runs in privileged mode, with almost all the capabilities 
 
 ## `runAsNonRoot`
 
-Whether the container must run as a non-root user (`runAsNonRoot`). Common always calculates it: `false` when `runAsUser` or `runAsGroup` is `0`, otherwise `true`.
+Whether the container must run as a non-root user (`runAsNonRoot`). Only a value set on the container itself is used. Otherwise it is calculated from the final `runAsUser` (`false` for UID 0, `true` otherwise); the chart-wide value is not inherited.
 
 | Field | Value |
 | --- | --- |

@@ -752,7 +752,7 @@ tests:
                 readOnly: invalid
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/vol-name/targetSelector/workload-name/container-name1/readOnly': got string, want boolean"
+          errorPattern: 'at ''/persistence/vol-name/targetSelector/workload-name/container-name1/readOnly'': got string, want boolean'
 
   - it: should fail with empty readOnly
     set:
@@ -770,7 +770,7 @@ tests:
                 readOnly:
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/vol-name/targetSelector/workload-name/container-name1/readOnly': got null, want boolean"
+          errorPattern: 'at ''/persistence/vol-name/targetSelector/workload-name/container-name1/readOnly'': got null, want boolean'
 
   - it: should fail with empty mountPath
     set:
@@ -787,7 +787,7 @@ tests:
               container-name1: {}
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/vol-name/mountPath': minLength: got"
+          errorPattern: 'at ''/persistence/vol-name/mountPath'': minLength: got 0, want 1'
 
   - it: should fail with mountPath not starting with /
     set:
@@ -819,7 +819,7 @@ tests:
             workload-name: string
     asserts:
       - failedTemplate:
-          errorPattern: "at '/persistence/vol-name/targetSelector/workload-name': got string, want null or object"
+          errorPattern: 'at ''/persistence/vol-name/targetSelector/workload-name'': got string, want null or object'
 
   - it: should fail with empty targetSelect.workloadName
     set:
@@ -835,3 +835,39 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: Persistence - Expected non-empty [targetSelector.workload-name]
+
+  - it: should mount the opt-in crontab volume only when enabled
+    set:
+      image: &crontabImage
+        repository: nginx
+        tag: 1.19.0
+        pullPolicy: IfNotPresent
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+      persistence:
+        crontab:
+          enabled: true
+    asserts:
+      - documentIndex: 0
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /var/spool/cron/crontabs/
+            name: crontab
+            readOnly: false

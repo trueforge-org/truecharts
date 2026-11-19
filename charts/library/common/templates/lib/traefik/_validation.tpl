@@ -14,11 +14,6 @@ objectData:
     {{- fail "Middleware - Expected [type] to be set" -}}
   {{- end -}}
 
-  {{- if $objectData.data -}}
-    {{- if not (kindIs "map" $objectData.data) -}}
-      {{- fail (printf "Middleware - Expected [data] to be a dictionary, but got [%v]" (kindOf $objectData.data)) -}}
-    {{- end -}}
-  {{- end -}}
 
 {{- end -}}
 

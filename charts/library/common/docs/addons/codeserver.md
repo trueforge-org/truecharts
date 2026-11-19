@@ -162,6 +162,22 @@ See [Ingress](/truecharts-common/ingress) for all keys of this object.
 
 ---
 
+## `route`
+
+Gateway API route of the code-server addon, the same as a `route.<name>` of the chart. It defaults to the `codeserver` service and port, and is the primary route when no other route is primary. Select the gateway with `gateway`, `parentRefs` or `listenerSet`.
+
+See [Route](/truecharts-common/route) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.codeserver.route` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `{}` |
+
+---
+
 ## Full Examples
 
 Code server runs next to the app, so it can edit the files the app uses. It can only be attached to a single workload.
@@ -232,6 +248,24 @@ addons:
         - hosts:
             - code.chart-example.local
           secretName: code-example-tls
+```
+
+### Route
+
+The route is the same as a `route.<name>` of the chart. It defaults to the `codeserver` service and port, and is the primary route when no other route is primary:
+
+```yaml
+addons:
+  codeserver:
+    enabled: true
+    service:
+      enabled: true
+    route:
+      enabled: true
+      gateway: external
+      gatewayNamespace: networking
+      hostnames:
+        - code.chart-example.local
 ```
 
 ### Mount the volumes of the app

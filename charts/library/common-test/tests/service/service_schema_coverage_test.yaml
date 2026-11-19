@@ -45,9 +45,17 @@ tests:
               enabled: true
               primary: true
               port: 12345
+        third-service:
+          enabled: true
+          type: "{{ \"ClusterIP\" }}"
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
     asserts:
       - hasDocuments:
-          count: 3
+          count: 4
       - documentIndex: 1
         isKind:
           of: Service
@@ -148,7 +156,7 @@ tests:
           sessionAffinity: Unknown
     asserts:
       - failedTemplate:
-          errorPattern: "at '/service/my-service/type': value must be one of"
+          errorPattern: "at '/service/my-service/type': 'oneOf' failed, none matched"
       - failedTemplate:
           errorPattern: "at '/service/my-service/ipFamilyPolicy': 'oneOf' failed, none matched"
       - failedTemplate:

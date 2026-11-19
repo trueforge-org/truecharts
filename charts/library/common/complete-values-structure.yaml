@@ -19,9 +19,11 @@ global:
   labels:
     g_label1: ''
     g_label2: ''
+    global-label: ''
   annotations:
     g_annotation1: ''
     g_annotation2: ''
+    global-annotation: ''
   namespace: ''
   diagnosticMode:
     enabled: false
@@ -36,6 +38,7 @@ global:
     vctSize: ''
     accessModes:
     - ''
+    allowRollingUpdateWithRWO: false
     vctAccessModes:
     - ''
     probeTimeouts:
@@ -58,8 +61,9 @@ global:
         failureThreshold: 60
         successThreshold: 1
     topologyKey: ''
+    routeListenerPort: 0
     cnpg:
-      pgVersion: 16
+      pgVersion: 18
       skipEmptyWalArchiveCheck: true
   traefik:
     commonMiddlewares:
@@ -73,6 +77,10 @@ image:
   repository: ''
   pullPolicy: ''
   tag: ''
+ubuntuImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
 chartContext:
   appUrl: ''
   podCIDR: ''
@@ -178,6 +186,9 @@ workload:
     enabled: true
     primary: true
     type: ''
+    extraSelectorLabels:
+      app.example.com/component: ''
+      k8s:io.kubernetes.pod.namespace: ''
     dbWait: true
     podSpec:
       containers:
@@ -255,6 +266,7 @@ workload:
               secretKeyRef:
                 name: ''
                 key: ''
+                expandObjectName: false
             POSTGRES_IP:
               secretKeyRef:
                 name: ''
@@ -351,11 +363,7 @@ workload:
             QUERY_PORT: ''
             USERNAME: ''
             VALIDATE: ''
-            MONGO_URL:
-              secretKeyRef:
-                expandObjectName: false
-                name: ''
-                key: ''
+            MONGO_URL: ''
             WEB_PORT: ''
             THELOUNGE_HOME: ''
             CHECK_FOR_UPDATES: ''
@@ -613,7 +621,7 @@ workload:
             RAWG_API_CACHE_DAYS: ''
             RAWG_API_KEY: ''
             MAXMEM: 0
-            CLI_ARGS:
+            CLI_ARGS: null
             PASSWORD: ''
             GOKAPI_LENGTH_ID: ''
             GOKAPI_MAX_FILESIZE: ''
@@ -752,10 +760,7 @@ workload:
             SLEEP: ''
             CLIENT_ID: ''
             CLIENT_SECRET: ''
-            NEXTAUTH_SECRET:
-              secretKeyRef:
-                name: ''
-                key: ''
+            NEXTAUTH_SECRET: ''
             NEXTAUTH_URL: ''
             REDDIT_REDIRECT: ''
             CUSTOMER_KEY: ''
@@ -1726,8 +1731,8 @@ workload:
             PVE_USER: ''
             PVE_TOKEN_NAME: ''
             ENABLE_MJPG_STREAMER: ''
-            MJPG_STREAMER_INPUT:
-            CAMERA_DEV:
+            MJPG_STREAMER_INPUT: null
+            CAMERA_DEV: null
             API_TOKEN: ''
             RECORD_TYPE: ''
             ZONE_NAME: ''
@@ -2781,6 +2786,34 @@ workload:
             MINIO_CONSOLE_ADDRESS: ''
             MINIO_BROWSER_REDIRECT_URL: ''
             MINIO_LICENSE: ''
+            POSTGRES_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            CLICKHOUSE_HOST: ''
+            CLICKHOUSE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            MONGODB_HOST: ''
+            MONGODB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            MARIADB_HOST: ''
+            MARIADB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: ''
+                key: ''
+            CLICKHOUSE_PORT: ''
+            CLICKHOUSE_PING: ''
+            CLICKHOUSE_JDBC: ''
+            OPERATOR_VERSION: ''
+            MONGODB_PORT: ''
             INTERFACE: ''
             APIKEY: ''
             ENABLE_ADDITIONAL_METRICS: false
@@ -2871,7 +2904,7 @@ workload:
               fieldRef:
                 fieldPath: ''
                 apiVersion: ''
-            EMPTY_ENV:
+            EMPTY_ENV: null
             VAR1: ''
             VAR2: ''
             VAR3:
@@ -2901,6 +2934,8 @@ workload:
             VAR11: 0
             VAR12: ''
             VAR13: ''
+          command:
+          - ''
           securityContext:
             capabilities:
               add:
@@ -2939,8 +2974,6 @@ workload:
             messagePath: ''
           tty: true
           stdin: true
-          command:
-          - ''
           lifecycle:
             postStart:
               type: ''
@@ -2966,9 +2999,6 @@ workload:
                 X-Bool: true
           extraArgs:
           - ''
-          envList:
-          - name: ''
-            value: true
           fixedEnv:
             TZ: ''
             UMASK: ''
@@ -3136,6 +3166,7 @@ workload:
     ttlSecondsAfterFinished: 100
     suspend: true
     revisionHistoryLimit: 4
+    allowRollingUpdateWithRWO: true
 TZ: ''
 diagnosticMode:
   enabled: false
@@ -3336,6 +3367,7 @@ service:
     type: ''
     externalIP: ''
     useSlice: true
+    namespace: ''
     expandObjectName: false
     selectorLabels:
       app.kubernetes.io/name: ''
@@ -3372,7 +3404,6 @@ service:
         timeoutSeconds: ''
     externalTrafficPolicy: ''
     addressType: ''
-    namespace: ''
     externalName: ''
     loadBalancerSourceRanges:
     - ''
@@ -3413,10 +3444,31 @@ credentials:
     secretKey: ''
     region: ''
     customCA: ''
+    path: ''
     customCASecretRef:
       name: ''
       key: ''
-    path: ''
+  other:
+    type: ''
+    accessKey: ''
+    secretKey: ''
+    bucket: ''
+    url: ''
+    encrKey: ''
+  from:
+    type: ''
+    accessKey: ''
+    secretKey: ''
+    bucket: ''
+    encrKey: ''
+    url: ''
+  to:
+    type: ''
+    accessKey: ''
+    secretKey: ''
+    bucket: ''
+    encrKey: ''
+    url: ''
   my-creds:
     type: ''
     url: ''
@@ -3466,6 +3518,22 @@ ingressMiddlewares:
       type: ''
       data:
         enabled: true
+    my-mw:
+      enabled: true
+      type: ''
+      data:
+        prefix: ''
+    my-mw2:
+      enabled: true
+      type: ''
+      data:
+        prefix: ''
+    common-mw:
+      enabled: false
+      type: ''
+      data:
+        prefix:
+        - ''
     some-unused-middleware:
       enabled: false
       type: ''
@@ -3507,6 +3575,7 @@ ingressMiddlewares:
         address: ''
         authResponseHeadersRegex: ''
         trustForwardHeader: true
+        maxResponseBodySize: 0
         authResponseHeaders:
         - ''
         authRequestHeaders:
@@ -3741,6 +3810,7 @@ persistence:
     type: ''
     mountPath: ''
     targetSelectAll: true
+    size: ''
     iscsi:
       fsType: ''
       targetPortal: ''
@@ -3846,6 +3916,9 @@ persistence:
       machinelearning:
         machinelearning:
           mountPath: ''
+      frontend:
+        frontend:
+          mountPath: ''
       geoip:
         geoip:
           mountPath: ''
@@ -3861,9 +3934,7 @@ persistence:
       workload-name2:
         container-name1: {}
       other-workload:
-        other-workload:
-          mountPath: ''
-    size: ''
+        other-container: {}
     accessMode: ''
     subPath: ''
     objectName: ''
@@ -3992,7 +4063,7 @@ volumeSnapshotClass:
     enabled: true
     driver: ''
     parameters:
-      "{{ .Values.some_key }}": ''
+      '{{ .Values.some_key }}': ''
       parameter2: 5
   my-vsc1:
     enabled: ''
@@ -4002,6 +4073,14 @@ volumeSnapshotClass:
       flag: true
   my-vsc2:
     enabled: true
+    driver: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    driver: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
     driver: ''
 volumeSnapshots:
   example1:
@@ -4031,6 +4110,16 @@ volumeSnapshots:
     source:
       persistentVolumeClaimName: ''
     namespace: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    source:
+      persistentVolumeClaimName: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    source:
+      persistentVolumeClaimName: ''
 imagePullSecret:
   image-secret-name:
     enabled: true
@@ -4258,6 +4347,33 @@ configmap:
     - name: ''
       value: ''
     namespace: ''
+    binaryData:
+      file.bin: ''
+configMapsFromFolder:
+  enabled: false
+  basePath: ''
+  configMapsOverrides:
+    test-config:
+      labels:
+        test-label: ''
+        my-label: ''
+      annotations:
+        test-annotation: ''
+        my-annotation: ''
+      fileAttributeOverrides:
+        template.tpl:
+          escaped: true
+        .gitkeep:
+          exclude: true
+      forceRename: ''
+    test-scripts:
+      labels:
+        test-label: ''
+      forceRename: null
+    binary-test:
+      fileAttributeOverrides:
+        test.png:
+          binary: true
 secret:
   objectname:
     enabled: true
@@ -4274,13 +4390,12 @@ secret:
       key2: ''
       key3: ''
       nginx.conf2: ''
+      key4: ''
       my-key: ''
       foo: ''
-      key4: ''
       some-key: ''
       ca.crt: ''
     type: ''
-    expandObjectName: false
     labels:
       label1: ''
       label2: ''
@@ -4294,6 +4409,101 @@ secret:
     - name: ''
       value: ''
     namespace: ''
+    expandObjectName: false
+externalSecret:
+  credentials:
+    enabled: true
+    secretStoreRef:
+      name: ''
+      kind: ''
+    data:
+    - secretKey: ''
+      remoteRef:
+        key: ''
+        property: ''
+    expandObjectName: false
+    refreshInterval: ''
+    refreshPolicy: ''
+    target:
+      name: ''
+      creationPolicy: ''
+      deletionPolicy: ''
+      immutable: true
+      template:
+        type: ''
+        data:
+          url: ''
+    dataFrom:
+    - extract:
+        key: ''
+      rewrite:
+      - transform:
+          template: ''
+    namespace: ''
+    labels:
+      key: ''
+      keytpl: ''
+    annotations:
+      key: ''
+      keytpl: ''
+  my-secret:
+    enabled: true
+    secretStoreRef:
+      name: ''
+      kind: ''
+    dataFrom:
+    - extract:
+        key: ''
+        property: ''
+        version: ''
+        conversionStrategy: ''
+        decodingStrategy: ''
+        metadataPolicy: ''
+      sourceRef:
+        storeRef:
+          name: ''
+          kind: ''
+    data:
+    - secretKey: ''
+      remoteRef:
+        key: ''
+        property: ''
+        version: ''
+        conversionStrategy: ''
+        decodingStrategy: ''
+        metadataPolicy: ''
+      sourceRef:
+        storeRef:
+          name: ''
+          kind: ''
+    expandObjectName: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    labelsList:
+    - name: ''
+      value: ''
+    refreshInterval: ''
+    refreshPolicy: ''
+    target:
+      creationPolicy: ''
+      deletionPolicy: ''
+      template:
+        type: ''
+        engineVersion: ''
+        mergePolicy: ''
+        templateFrom:
+        - configMap:
+            name: ''
+            items:
+            - key: ''
+        metadata:
+          annotations:
+            some-annotation: ''
+          labels:
+            some-label: ''
+      name: null
+      immutable: null
 serviceAccount:
   main:
     enabled: true
@@ -4553,6 +4763,7 @@ notes:
   footer: ''
   warnings:
   - ''
+  showCredentials: false
 gluetunImage:
   repository: ''
   tag: ''
@@ -4569,39 +4780,43 @@ codeserverImage:
   repository: ''
   tag: ''
   pullPolicy: ''
-alpineImage:
-  repository: ''
-  tag: ''
-  pullPolicy: ''
-ubuntuImage:
-  repository: ''
-  tag: ''
-  pullPolicy: ''
-scratchImage:
-  repository: ''
-  tag: ''
-  pullPolicy: ''
 kubectlImage:
   repository: ''
   tag: ''
   pullPolicy: ''
-wgetImage:
-  repository: ''
-  tag: ''
-  pullPolicy: ''
-yqImage:
-  pullPolicy: ''
-  repository: ''
-  tag: ''
 postgresClientImage:
   repository: ''
   tag: ''
   pullPolicy: ''
-mariadbClientImage:
+postgresql18Image:
   repository: ''
   tag: ''
   pullPolicy: ''
-redisClientImage:
+clickhouseImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+mariadbImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+memcachedImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+mongodbImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+valkeyImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+valkeyExporterImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+mariadbClientImage:
   repository: ''
   tag: ''
   pullPolicy: ''
@@ -4621,11 +4836,27 @@ postgres16Image:
   repository: ''
   tag: ''
   pullPolicy: ''
+postgres17Image:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+postgres18Image:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
 postgresPostgis15Image:
   repository: ''
   tag: ''
   pullPolicy: ''
 postgresPostgis16Image:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+postgresPostgis17Image:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+postgresPostgis18Image:
   repository: ''
   tag: ''
   pullPolicy: ''
@@ -4637,6 +4868,10 @@ postgresVectors16Image:
   repository: ''
   tag: ''
   pullPolicy: ''
+postgresVectors17Image:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
 postgresVectorchord15Image:
   repository: ''
   tag: ''
@@ -4645,11 +4880,11 @@ postgresVectorchord16Image:
   repository: ''
   tag: ''
   pullPolicy: ''
-openvpnImage:
+postgresVectorchord17Image:
   repository: ''
   tag: ''
   pullPolicy: ''
-wireguardImage:
+postgresVectorchord18Image:
   repository: ''
   tag: ''
   pullPolicy: ''
@@ -4717,10 +4952,10 @@ ingress:
           url: ''
           custom:
             some-string: ''
-            some-null:
+            some-number: 0
+            some-bool: false
+            some-null: null
             some-templated: ''
-            some-bool: true
-            some-number: 3
             some-key: ''
             some-other-key: ''
             some-empty-key: ''
@@ -4812,36 +5047,346 @@ certificate:
         some-label: ''
       annotations:
         some-annotation: ''
+gatewayClass:
+  main:
+    enabled: false
+    annotations: {}
+    labels: {}
+    controllerName: ''
+    description: ''
+  my-class:
+    enabled: true
+    controllerName: ''
+    description: ''
+    parametersRef:
+      group: ''
+      kind: ''
+      name: ''
+      namespace: ''
+    primary: true
+    annotations:
+      my-annotation: ''
+    labels:
+      my-label: ''
+  my-dep-class:
+    enabled: true
+    controllerName: ''
+    dependency: ''
+    nameOverride: ''
+gateway:
+  main:
+    enabled: false
+    annotations: {}
+    labels: {}
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      hostname: null
+      port: 80
+      protocol: ''
+      allowedRoutes:
+        namespaces:
+          from: ''
+        kinds:
+        - group: ''
+          kind: ''
+    targetSelector: ''
+    allowedListeners:
+      namespaces:
+        from: ''
+    primary: true
+  my-gateway:
+    enabled: true
+    gatewayClassName: ''
+    allowedListeners:
+      namespaces:
+        from: ''
+        selector:
+          matchLabels:
+            my-label: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+    nameOverride: ''
+    annotations:
+      my-annotation: ''
+    labels:
+      my-label: ''
+    tls:
+      backend:
+        clientCertificateRef:
+          name: ''
+          group: ''
+          kind: ''
+          namespace: ''
+      frontend:
+        default:
+          validation:
+            mode: ''
+            caCertificateRefs:
+            - group: ''
+              kind: ''
+              name: ''
+              namespace: ''
+        perPort:
+        - port: 0
+          tls:
+            validation:
+              caCertificateRefs:
+              - group: ''
+                kind: ''
+                name: ''
+                namespace: ''
+              mode: ''
+    infrastructure:
+      labels:
+        my-label: ''
+      parametersRef:
+        group: ''
+        kind: ''
+        name: ''
+      annotations:
+        some-key: ''
+    addresses:
+    - type: ''
+      value: ''
+    targetSelector: ''
+    primary: true
+  b:
+    enabled: true
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+  a:
+    enabled: true
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+  c:
+    enabled: true
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+  other:
+    enabled: true
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+  shared:
+    enabled: true
+    namespace: ''
+    gatewayClassName: ''
+    allowedListeners:
+      namespaces:
+        from: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+  first:
+    enabled: true
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+  second:
+    enabled: true
+    namespace: ''
+    gatewayClassName: ''
+    listeners:
+    - name: ''
+      port: 0
+      protocol: ''
+  web:
+    enabled: true
+    gatewayClassName: ''
+    namespace: ''
+    allowedListeners:
+      namespaces:
+        from: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+listenerSet:
+  main:
+    enabled: false
+    expandObjectName: true
+    annotations:
+      key: ''
+      keytpl: ''
+    labels:
+      key: ''
+      keytpl: ''
+    parentRef:
+      group: ''
+      kind: ''
+      name: ''
+      namespace: ''
+    listeners:
+    - name: ''
+      hostname: null
+      port: 0
+      protocol: ''
+      allowedRoutes:
+        namespaces:
+          from: ''
+        kinds:
+        - group: ''
+          kind: ''
+    namespace: ''
+  https:
+    enabled: true
+    targetSelector: ''
+    listeners:
+    - name: ''
+      port: 0
+      protocol: ''
+  my-set:
+    enabled: ''
+    expandObjectName: ''
+    parentRef:
+      name: ''
+      group: ''
+      kind: ''
+      namespace: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    labelsList:
+    - name: ''
+      value: ''
+    listeners:
+    - name: ''
+      port: 80
+      protocol: ''
+    targetSelector: ''
+    namespace: ''
 route:
   objectname:
     enabled: false
+    primary: true
+    required: false
     kind: ''
     annotations:
-      my-ann: ''
+      some-key: ''
     labels:
       my-label: ''
+    gateway: ''
+    listenerSet: ''
+    gatewayNamespace: ''
     parentRefs:
     - group: ''
       kind: ''
-      name:
-      namespace:
-      sectionName:
+      name: null
+      namespace: null
+      sectionName: null
     hostnames:
     - ''
+    tls:
+    - hosts:
+      - ''
+      secretName: ''
+    integrations:
+      certManager:
+        enabled: false
+        certificateIssuer: ''
+      traefik:
+        enabled: false
+        ipWhitelist:
+        - ''
+        auth:
+          type: ''
+          internalHost: ''
+          responseHeaders:
+          - ''
+        themePark:
+          enabled: false
+          app: ''
+          theme: ''
+        redirectRegex:
+        - regex: ''
+          replacement: ''
+          permanent: true
+        middlewares:
+        - name: ''
+        ipStrategy:
+          depth: 1
+          excludedIPs:
+          - ''
+          ipv6Subnet: 64
+        chartMiddlewares: []
+      envoy:
+        enabled: false
+        ipWhitelist:
+        - ''
+        auth:
+          type: ''
+          internalHost: ''
+          responseHeaders:
+          - ''
+        themePark:
+          enabled: false
+          css: ''
+        redirectRegex:
+        - regex: ''
+          replacement: ''
+          permanent: true
+        securityPolicy:
+          cors:
+            allowOrigins:
+            - ''
+        backendTrafficPolicy:
+          timeout:
+            http:
+              requestTimeout: ''
+        extensionPolicy:
+          lua:
+          - type: ''
+            inline: ''
+      homepage:
+        enabled: false
+        name: ''
+        description: ''
+        group: ''
+        icon: ''
+        widget:
+          type: ''
+          url: ''
+          custom:
+            some-key: ''
+            some-empty-key: ''
+            some-string: ''
+            some-number: 0
+            some-bool: false
+            some-null: null
+          customkv:
+          - key: ''
+            value: ''
+          enabled: false
+          version: 2
+        weight: 1
+        href: ''
+        podSelector:
+        - ''
     rules:
     - backendRefs:
-      - group: ''
-        kind: ''
-        name:
-        namespace:
-        port:
-        weight: 1
-      matches:
-      - path:
-          type: ''
-          value: ''
-    primary: true
+      - targetSelector: ''
+    targetSelector: ''
     nameOverride: ''
+    expandObjectName: false
+    listenerPort: 0
+    namespace: ''
 podDisruptionBudget:
   main:
     enabled: false
@@ -4879,6 +5424,18 @@ podDisruptionBudget:
     customLabels:
       label1: ''
     unhealthyPodEvictionPolicy: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    minAvailable: 1
+    customLabels:
+      label1: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    minAvailable: 1
+    customLabels:
+      label1: ''
 webhook:
   validating:
     enabled: false
@@ -4903,6 +5460,7 @@ webhook:
         - ''
         resources:
         - ''
+    expandObjectName: false
   mutating:
     enabled: false
     type: ''
@@ -4926,6 +5484,7 @@ webhook:
         - ''
         resources:
         - ''
+    expandObjectName: ''
   my-webhook:
     enabled: true
     type: ''
@@ -4940,6 +5499,28 @@ webhook:
           namespace: ''
           path: ''
           port: ''
+      rules:
+      - apiGroups:
+        - ''
+        apiVersions:
+        - ''
+        operations:
+        - ''
+        resources:
+        - ''
+    expandObjectName: false
+  my-webhook2:
+    enabled: true
+    type: ''
+    expandObjectName: ''
+    webhooks:
+    - name: ''
+      admissionReviewVersions:
+      - ''
+      clientConfig:
+        service:
+          name: ''
+          namespace: ''
       rules:
       - apiGroups:
         - ''
@@ -4990,30 +5571,6 @@ webhook:
     - name: ''
       value: ''
     namespace: ''
-  my-webhook2:
-    enabled: true
-    type: ''
-    webhooks:
-    - name: ''
-      failurePolicy: ''
-      matchPolicy: ''
-      sideEffects: ''
-      timeoutSeconds: 20
-      admissionReviewVersions:
-      - ''
-      clientConfig:
-        caBundle: ''
-        url: ''
-      rules:
-      - operations:
-        - ''
-        apiGroups:
-        - ''
-        apiVersions:
-        - ''
-        resources:
-        - ''
-        scope: ''
 priorityClass:
   example:
     provisioner: ''
@@ -5050,6 +5607,12 @@ priorityClass:
   my-priority2:
     enabled: true
     preemptionPolicy: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+  my-b:
+    enabled: true
+    expandObjectName: ''
 storageClass:
   example1:
     enabled: true
@@ -5096,6 +5659,13 @@ storageClass:
     allowVolumeExpansion: true
     volumeBindingMode: ''
     mountOptions: []
+  my-sc:
+    enabled: true
+    provisioner: ''
+    parameters:
+      flag: true
+      count: 5
+      name: ''
   my-sc1:
     enabled: ''
     provisioner: ''
@@ -5108,6 +5678,90 @@ storageClass:
     provisioner: ''
     reclaimPolicy: ''
     volumeBindingMode: ''
+  my-a:
+    enabled: true
+    expandObjectName: false
+    provisioner: ''
+  my-b:
+    enabled: true
+    expandObjectName: ''
+    provisioner: ''
+networkPolicy:
+  objectname:
+    enabled: false
+    ingress:
+    - from:
+      - ipBlock:
+          cidr: ''
+          except:
+          - ''
+      ports:
+      - protocol: ''
+        port: 0
+    egress:
+    - to:
+      - ipBlock:
+          cidr: ''
+          except:
+          - ''
+      ports:
+      - protocol: ''
+        port: 0
+    type: ''
+    targetSelector: ''
+    description: ''
+    enableDefaultDeny:
+      ingress: false
+      egress: false
+    ingressDeny:
+    - fromEntities:
+      - ''
+    egressDeny:
+    - toCIDR:
+      - ''
+    targetSelectorRegex: ''
+    clusterwide: true
+    targetAllPods: true
+    endpointSelector:
+      matchLabels:
+        app: ''
+      matchExpressions:
+      - key: ''
+        operator: ''
+        values:
+        - ''
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ''
+        node: ''
+      matchExpressions:
+      - key: ''
+        operator: ''
+        values:
+        - ''
+    podSelector:
+      matchLabels:
+        app: ''
+      matchExpressions:
+      - key: ''
+        operator: ''
+        values:
+        - ''
+    primary: true
+    expandObjectName: false
+    namespace: ''
+    labels:
+      lbl: ''
+    annotations:
+      ann: ''
+    labelsList:
+    - name: ''
+      value: ''
+    annotationsList:
+    - name: ''
+      value: ''
+    policyTypes:
+    - ''
 metrics:
   main:
     enabled: false
@@ -5135,7 +5789,21 @@ metrics:
         rules:
         - alert: ''
           expr: ''
+      rules:
+      - alert: ''
+        expr: ''
+        for: ''
+      labels:
+        shared: ''
+        release: ''
+      annotations:
+        rule-annotation: ''
     targetSelector: ''
+    labels:
+      shared: ''
+      metrics-only: ''
+    annotations:
+      metrics-annotation: ''
   servermetrics:
     enabled: true
     type: ''
@@ -5206,6 +5874,11 @@ metrics:
       groups:
         somegroup:
           rules: []
+          additionalrules: []
+      additionalgroups:
+      - name: ''
+        rules: []
+        additionalrules: []
   my-metrics:
     enabled: true
     type: ''
@@ -5245,6 +5918,9 @@ metrics:
           - alert: ''
             expr: ''
           name: ''
+      rules:
+      - alert: ''
+        expr: ''
       additionalgroups:
       - name: ''
         rules:
@@ -5253,7 +5929,10 @@ metrics:
           for: ''
     primary: true
     nameOverride: ''
+    apiKey: ''
     targetSelector: ''
+    matchLabels:
+      app: ''
     selector:
       matchLabels:
         app: ''
@@ -5325,7 +6004,6 @@ addons:
     enabled: false
     targetSelector:
     - ''
-    config: ''
     container:
       enabled: true
       imageSelector: ''
@@ -5358,16 +6036,18 @@ addons:
         capabilities:
           add:
           - ''
-    authkey: ''
-    userspace: true
-    auth_once: true
-    accept_dns: false
-    routes: ''
-    dest_ip: ''
-    sock5_server: ''
-    extra_args: ''
-    daemon_extra_args: ''
-    outbound_http_proxy_listen: ''
+    settings:
+      config: ''
+      authkey: ''
+      userspace: true
+      auth_once: true
+      accept_dns: false
+      routes: ''
+      dest_ip: ''
+      sock5_server: ''
+      extra_args: ''
+      daemon_extra_args: ''
+      outbound_http_proxy_listen: ''
     annotations:
       annotation1: ''
   codeserver:
@@ -5428,9 +6108,6 @@ addons:
       termination:
         messagePath: ''
         messagePolicy: ''
-      envList:
-      - name: ''
-        value: ''
     service:
       enabled: true
       type: ''
@@ -5461,6 +6138,29 @@ addons:
         - host: ''
           paths:
           - path: ''
+    route:
+      enabled: false
+      kind: ''
+      annotations: {}
+      labels: {}
+      gateway: ''
+      hostnames:
+      - ''
+      gatewayNamespace: ''
+      integrations:
+        certManager:
+          enabled: true
+          certificateIssuer: ''
+      rules:
+      - matches:
+        - path:
+            type: ''
+            value: ''
+      tls:
+      - hosts:
+        - ''
+        certificateIssuer: ''
+      listenerSet: ''
     targetSelector:
     - ''
   netshoot:
@@ -5494,476 +6194,953 @@ addons:
     - ''
   vpn: {}
 dependencies:
-  my-dependency:
-    enabled: true
-    configmap:
-      objectname:
-        enabled: true
-        data:
-          foo: ''
-cnpg:
-  main:
+  clickhouse:
     enabled: false
-    primary: true
-    hibernate: false
-    labels: {}
-    annotations: {}
-    type: ''
-    pgVersion: 16
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
+    depconfig:
+      password: ''
+      clickhouseUsername: ''
+      clickhouseDatabase: ''
+      clickhouseDefaultAccessManagement: 0
+      creds:
+        plainhost: ''
+    workload:
+      objectname:
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+              env:
+                CLICKHOUSE_DB: ''
+                CLICKHOUSE_USER: ''
+                CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: ''
+                CLICKHOUSE_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+              probes:
+                liveness:
+                  type: ''
+                  path: ''
+                readiness:
+                  type: ''
+                  path: ''
+                startup:
+                  type: ''
+                  path: ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+            primary: false
+            enabled: true
+        primary: false
+        enabled: true
+    persistence:
+      objectname:
+        mountPath: ''
+  mariadb:
+    enabled: false
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
     mode: ''
-    database: ''
-    user: ''
-    password: ''
-    cluster:
-      labels: {}
-      annotations: {}
-      env: {}
-      envFrom: {}
-      instances: 2
-      singleNode: false
-      primaryUpdateMethod: ''
-      primaryUpdateStrategy: ''
-      logLevel: ''
-      certificates:
-      postgresql:
-      initdb:
-        postInitApplicationSQL:
-        - ''
-    monitoring:
-      enablePodMonitor: false
-      disableDefaultQueries: false
-      customQueries: []
-    recovery:
-      method: ''
-      servername: ''
-      pitrTarget:
-        time: ''
-      backupName: ''
-      clusterName: ''
-      destinationPath: ''
-    backups:
-      enabled: false
-      encryption:
-        enabled: false
-      servername: ''
-      destinationPath: ''
-      target: ''
-      credentials: ''
-      scheduledBackups:
-      - name: ''
-        schedule: ''
-        backupOwnerReference: ''
-        immediate: true
-        suspend: false
-      retentionPolicy: ''
-      manualBackups: []
-    pooler:
-      enabled: false
-      createRO: false
-      poolMode: ''
-      instances: 2
-      labels: {}
-      annotations: {}
-    creds: {}
-    instances: 2
-  ro:
-    enabled: true
-    instances: 2
-    database: ''
-    user: ''
-    password: ''
-    pooler:
-      createRO: true
-      instances: 2
-    monitoring:
-      enablePodMonitor: false
-    creds: {}
-  mon:
-    enabled: true
-    instances: 2
-    database: ''
-    user: ''
-    password: ''
-    pooler:
-      createRO: true
-      instances: 2
-    monitoring:
-      enablePodMonitor: true
-    creds: {}
-  my-15pg:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    pgVersion: 15
-  my-15postgis:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    type: ''
-    pgVersion: 15
-  my-15vector:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    type: ''
-    pgVersion: 15
-  my-16pg:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    pgVersion: 16
-  my-16postgis:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    type: ''
-    pgVersion: 16
-  my-16vector:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    pgVersion: 16
-    type: ''
-  my-pg:
-    enabled: true
-    user: ''
-    database: ''
-    password: ''
-    labels:
-      label1: ''
-      label2: ''
-    annotations:
-      annotation1: ''
-      annotation2: ''
-    annotationsList:
-    - name: ''
-      value: ''
-    labelsList:
-    - name: ''
-      value: ''
-    backups:
-      enabled: true
-      target: ''
-      retentionPolicy: ''
-      credentials: ''
-      destinationPath: ''
+    operator: {}
+    depconfig:
+      password: ''
+      rootPassword: ''
+      mariadbUsername: ''
+      mariadbDatabase: ''
+      creds:
+        plainhost: ''
+    workload:
+      objectname:
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+              env:
+                MARIADB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+                MARIADB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+                MARIADB_USER: ''
+                MARIADB_DATABASE: ''
+              probes:
+                liveness:
+                  type: ''
+                  command:
+                  - ''
+                readiness:
+                  type: ''
+                  command:
+                  - ''
+                startup:
+                  type: ''
+                  command:
+                  - ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+            primary: false
+            enabled: true
+        primary: false
+        enabled: true
+    persistence:
+      objectname:
+        mountPath: ''
+  postgresql:
+    enabled: false
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
+    mode: ''
+    operator:
+      hibernate: false
       labels:
-        label5: ''
+        label1: ''
+        label2: ''
+        cnpg-label: ''
       annotations:
-        annotation5: ''
-      manualBackups:
-      - name: ''
+        annotation1: ''
+        annotation2: ''
+        cnpg-annotation: ''
+      type: ''
+      mode: ''
+      cluster:
         labels:
           label3: ''
-          label4: ''
         annotations:
           annotation3: ''
-          annotation4: ''
-      revision: ''
-      serverName: ''
-      encryption:
-        enabled: true
-      compression:
+        env:
+          VAR1: ''
+          VAR2:
+            configMapKeyRef:
+              name: ''
+              key: ''
+          VAR3:
+            secretKeyRef:
+              name: ''
+              key: ''
+        envFrom:
+        - configMapRef:
+            name: ''
+        instances: 2
+        singleNode: false
+        primaryUpdateMethod: ''
+        primaryUpdateStrategy: ''
+        logLevel: ''
+        postgresql:
+          key1: ''
+          key2: ''
+          max_connections: ''
+        initdb:
+          dataChecksums: false
+          encoding: ''
+          localeCollate: ''
+          localeCtype: ''
+          walSegmentSize: 16
+          postInitApplicationSQL:
+          - ''
+          postInitSQL:
+          - ''
+          postInitTemplateSQL:
+          - ''
+        skipEmptyWalArchiveCheck: false
+        postgresUID: 0
+        postgresGID: 0
+        enableSuperuserAccess: false
+        imageName: ''
+        nodeMaintenanceWindow:
+          reusePVC: false
+          inProgress: true
+        resources:
+          limits:
+            cpu: ''
+            memory: ''
+          requests:
+            cpu: ''
+            memory: ''
+        storage:
+          size: ''
+          accessModes:
+          - ''
+          storageClass: ''
+          volumeName: ''
+          dataSource:
+            kind: ''
+            name: ''
+          dataSourceRef:
+            apiGroup: ''
+            kind: ''
+            name: ''
+        walStorage:
+          size: ''
+          accessModes:
+          - ''
+        preloadLibraries:
+        - ''
+      monitoring:
+        enablePodMonitor: false
+        disableDefaultQueries: false
+        customQueries:
+        - name: ''
+          query: ''
+          metrics:
+          - a-gauge:
+              usage: ''
+              description: ''
+      recovery:
+        method: ''
+        serverName: ''
+        pitrTarget:
+          time: ''
+        destinationPath: ''
+        credentials: ''
+        revision: ''
+        instanceSidecarConfiguration:
+          logLevel: ''
+          additionalContainerArgs:
+          - ''
+          retentionPolicyIntervalSeconds: 0
+          resources:
+            claims:
+            - name: ''
+              request: ''
+            limits:
+              cpu: 1
+              memory: ''
+            requests:
+              cpu: 1
+              memory: ''
+          env:
+          - name: ''
+            value: ''
+      backups:
         enabled: false
-      jobs: 2
-      servername: ''
-      scheduledBackups:
-      - name: ''
-        schedule: ''
-        backupOwnerReference: ''
-        immediate: true
-        suspend: false
+        encryption:
+          enabled: false
+        serverName: ''
+        destinationPath: ''
+        target: ''
+        credentials: ''
+        scheduledBackups:
+        - name: ''
+          schedule: ''
+          backupOwnerReference: ''
+          immediate: true
+          suspend: false
+        retentionPolicy: ''
+        manualBackups:
+        - name: ''
+          labels:
+            label3: ''
+            label4: ''
+          annotations:
+            annotation3: ''
+            annotation4: ''
         labels:
-          my-label: ''
+          label5: ''
+          backups-label: ''
         annotations:
-          my-ann: ''
-    namespace: ''
-    cluster:
-      labels:
-        label3: ''
-      annotations:
-        annotation3: ''
-      postgresUID: 0
-      postgresGID: 0
-      enableSuperuserAccess: false
-      imageName: ''
-      primaryUpdateStrategy: ''
-      primaryUpdateMethod: ''
-      logLevel: ''
-      instances: 3
-      initdb:
-        dataChecksums: false
-        encoding: ''
-        localeCollate: ''
-        localeCtype: ''
-        walSegmentSize: 16
-        postInitApplicationSQL:
-        - ''
-        postInitSQL:
-        - ''
-        postInitTemplateSQL:
-        - ''
-      nodeMaintenanceWindow:
-        reusePVC: false
-        inProgress: true
+          annotation5: ''
+          backups-annotation: ''
+        revision: ''
+        compression:
+          enabled: false
+        instanceSidecarConfiguration:
+          retentionPolicyIntervalSeconds: 0
+          resources:
+            requests:
+              cpu: ''
+              memory: ''
+        jobs: 2
+      pooler:
+        enabled: false
+        createRO: false
+        poolMode: ''
+        instances: 2
+        labels:
+          label3: ''
+        annotations:
+          annotation3: ''
+        parameters:
+          some: ''
+          someOther: ''
+      pgVersion: 16
+      annotationsList:
+      - name: ''
+        value: ''
+      labelsList:
+      - name: ''
+        value: ''
+      namespace: ''
+      instances: 2
+    depconfig:
+      password: ''
+      postgresqlUsername: ''
+      postgresqlDatabase: ''
+      creds:
+        plainhost: ''
+    workload:
+      objectname:
+        dbWait: false
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+              env:
+                POSTGRES_USER: ''
+                POSTGRES_DB: ''
+                POSTGRES_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+              probes:
+                liveness:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+                readiness:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+                startup:
+                  enabled: true
+                  type: ''
+                  command:
+                  - ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+        primary: true
+    persistence:
+      objectname:
+        mountPath: ''
+  memcached:
+    enabled: false
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
+    workload:
+      objectname:
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+  mongodb:
+    enabled: false
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
+    depconfig:
+      password: ''
+      rootPassword: ''
+      mongodbUsername: ''
+      mongodbDatabase: ''
+      creds:
+        plainhost: ''
+    workload:
+      objectname:
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+              env:
+                MONGODB_USERNAME: ''
+                MONGODB_DATABASE: ''
+                MONGODB_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+                MONGODB_ROOT_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+              probes:
+                liveness:
+                  type: ''
+                  command:
+                  - ''
+                readiness:
+                  type: ''
+                  command:
+                  - ''
+                startup:
+                  type: ''
+                  command:
+                  - ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            targetPort: 0
+            primary: false
+            enabled: true
+        primary: false
+        enabled: true
+    persistence:
+      objectname:
+        mountPath: ''
+  valkey:
+    enabled: false
+    securityContext:
+      container:
+        runAsNonRoot: true
+        runAsUser: 0
+        runAsGroup: 0
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        privileged: false
+        capabilities:
+          add: []
+          drop:
+          - ''
+      pod:
+        fsGroup: 0
+    mode: ''
+    operator:
+      shards: 1
+      replicas: 0
+      imageSelector: ''
+      workloadType: ''
+      config:
+        maxclients: 100
+        maxmemory-policy: ''
+        appendonly: true
+        maxmemory: ''
       resources:
-        limits:
-          cpu: ''
-          memory: ''
         requests:
           cpu: ''
           memory: ''
-      storage:
+        limits:
+          cpu: ''
+          memory: ''
+      persistence:
+        enabled: true
         size: ''
-        accessModes:
-        - ''
-        volumeName: ''
         storageClass: ''
-        dataSource:
-          kind: ''
-          name: ''
-        dataSourceRef:
-          kind: ''
-          name: ''
-          apiGroup: ''
-      walStorage:
-        size: ''
-        accessModes:
+        retain: false
+      exporter:
+        enabled: true
+        imageSelector: ''
+        args:
         - ''
-      postgresql:
-        key1: ''
-        key2: ''
-        shared_buffers: ''
-      preloadLibraries:
+        resources:
+          limits:
+            cpu: ''
+            memory: 1
+          requests:
+            cpu: 10
+          claims:
+          - name: ''
+            request: ''
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          procMount: ''
+          readOnlyRootFilesystem: true
+          runAsGroup: 0
+          runAsNonRoot: true
+          runAsUser: 0
+          capabilities:
+            add:
+            - ''
+            drop:
+            - ''
+          appArmorProfile:
+            type: ''
+            localhostProfile: ''
+          seccompProfile:
+            type: ''
+            localhostProfile: ''
+          seLinuxOptions:
+            level: ''
+            role: ''
+            type: ''
+            user: ''
+          windowsOptions:
+            gmsaCredentialSpec: ''
+            gmsaCredentialSpecName: ''
+            hostProcess: false
+            runAsUserName: ''
+      scheduling:
+        nodeSelector:
+          disk: ''
+        priorityClassName: ''
+        tolerations:
+        - key: ''
+          operator: ''
+          value: ''
+          effect: ''
+          tolerationSeconds: 10
+        topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: ''
+          whenUnsatisfiable: ''
+          labelSelector:
+            matchLabels:
+              a: ''
+            matchExpressions:
+            - key: ''
+              operator: ''
+              values:
+              - ''
+          minDomains: 2
+          nodeAffinityPolicy: ''
+          nodeTaintsPolicy: ''
+          matchLabelKeys:
+          - ''
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: ''
+                  operator: ''
+                  values:
+                  - ''
+                matchFields:
+                - key: ''
+                  operator: ''
+                  values:
+                  - ''
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                - key: ''
+                  operator: ''
+                  values:
+                  - ''
+                matchFields:
+                - key: ''
+                  operator: ''
+                  values:
+                  - ''
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  a: ''
+              namespaces:
+              - ''
+              namespaceSelector:
+                matchLabels:
+                  n: ''
+              topologyKey: ''
+              matchLabelKeys:
+              - ''
+              mismatchLabelKeys:
+              - ''
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 50
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    a: ''
+                namespaces:
+                - ''
+                namespaceSelector:
+                  matchLabels:
+                    n: ''
+                topologyKey: ''
+                matchLabelKeys:
+                - ''
+                mismatchLabelKeys:
+                - ''
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  a: ''
+              namespaces:
+              - ''
+              namespaceSelector:
+                matchLabels:
+                  n: ''
+              topologyKey: ''
+              matchLabelKeys:
+              - ''
+              mismatchLabelKeys:
+              - ''
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 50
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    a: ''
+                namespaces:
+                - ''
+                namespaceSelector:
+                  matchLabels:
+                    n: ''
+                topologyKey: ''
+                matchLabelKeys:
+                - ''
+                mismatchLabelKeys:
+                - ''
+        node:
+          spread:
+            shard:
+              mode: ''
+            primaries:
+              mode: ''
+            pods:
+              mode: ''
+        zone:
+          spread:
+            shard:
+              mode: ''
+            primaries:
+              mode: ''
+            pods:
+              mode: ''
+          pinning:
+            zones:
+            - ''
+      podDisruptionBudget:
+        mode: ''
+      podMetadata:
+        labels:
+          a: ''
+          foo: ''
+        annotations:
+          c: ''
+          bar: ''
+      imagePullSecrets:
       - ''
-      env:
-        VAR1: ''
-        VAR2:
-          configMapKeyRef:
-            name: ''
-            key: ''
-        VAR3:
-          secretKeyRef:
-            name: ''
-            key: ''
-      envFrom:
-      - configMapRef:
+      podSecurityContext:
+        fsGroup: 0
+        fsGroupChangePolicy: ''
+        runAsGroup: 0
+        runAsNonRoot: true
+        runAsUser: 0
+        seLinuxChangePolicy: ''
+        supplementalGroups:
+        - 1
+        supplementalGroupsPolicy: ''
+        sysctls:
+        - name: ''
+          value: ''
+        appArmorProfile:
+          type: ''
+          localhostProfile: ''
+        seccompProfile:
+          type: ''
+          localhostProfile: ''
+        seLinuxOptions:
+          level: ''
+          role: ''
+          type: ''
+          user: ''
+        windowsOptions:
+          gmsaCredentialSpec: ''
+          gmsaCredentialSpecName: ''
+          hostProcess: false
+          runAsUserName: ''
+      serviceAccountName: ''
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: ''
+        livenessProbe:
+          httpGet:
+            path: ''
+            port: 0
+            host: ''
+            scheme: ''
+            httpHeaders:
+            - name: ''
+              value: ''
+            protocol: ''
+          initialDelaySeconds: 1
+          timeoutSeconds: 2
+          periodSeconds: 3
+          successThreshold: 1
+          failureThreshold: 4
+          terminationGracePeriodSeconds: 5
+        readinessProbe:
+          tcpSocket:
+            port: ''
+            host: ''
+        startupProbe:
+          exec:
+            command:
+            - ''
+      networking:
+        clusterDomain: ''
+        discovery:
+          preferredEndpointType: ''
+      users:
+      - name: ''
+        enabled: true
+        passwordSecret:
           name: ''
-      certificates:
-        serverCASecret: ''
-        serverTLSSecret: ''
-        replicationTLSSecret: ''
-        clientCASecret: ''
-        serverAltDNSNames:
-        - ''
-      singleNode: true
-      skipEmptyWalArchiveCheck: true
-    mode: ''
-    recovery:
-      method: ''
-      backupName: ''
-      credentials: ''
-      destinationPath: ''
-      revision: ''
-      pitrTarget:
-        time: ''
-      serverName: ''
-      clusterName: ''
-      servername: ''
-    pgVersion: 15
-    type: ''
-    monitoring:
-      enablePodMonitor: true
-      disableDefaultQueries: true
-      customQueries:
-      - name: ''
-        query: ''
-        metrics:
-        - a-gauge:
-            usage: ''
-            description: ''
-    pooler:
-      enabled: true
-      poolMode: ''
-      createRO: false
+          keys:
+          - ''
+        nopass: false
+        resetpass: false
+        commands:
+          allow:
+          - ''
+          deny:
+          - ''
+        keys:
+          readWrite:
+          - ''
+          readOnly:
+          - ''
+          writeOnly:
+          - ''
+        channels:
+          patterns:
+          - ''
+        permissions: ''
       labels:
-        label3: ''
+        cluster-label: ''
       annotations:
-        annotation3: ''
-    primary: false
-    upgradeMajor: false
-    creds:
+        cluster-annotation: ''
+    depconfig:
       password: ''
-      std: ''
-      nossl: ''
-      porthost: ''
-      host: ''
-      jdbc: ''
-      stdRO: ''
-      nosslRO: ''
-      porthostRO: ''
-      hostRO: ''
-      jdbcRO: ''
-    hibernate: true
-  my-pg2:
+      creds:
+        plainhost: ''
+        url: ''
+    workload:
+      objectname:
+        replicas: 1
+        type: ''
+        strategy: ''
+        podSpec:
+          containers:
+            objectname:
+              imageSelector: ''
+              env:
+                VALKEY_PORT: ''
+                VALKEY_PASSWORD:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: ''
+                    key: ''
+              probes:
+                liveness:
+                  type: ''
+                  command:
+                  - ''
+                  enabled: false
+                readiness:
+                  type: ''
+                  command:
+                  - ''
+                  enabled: false
+                startup:
+                  type: ''
+                  command:
+                  - ''
+                  enabled: false
+              enabled: true
+              primary: true
+        primary: true
+        enabled: true
+    service:
+      objectname:
+        ports:
+          objectname:
+            protocol: ''
+            port: 0
+            enabled: true
+        primary: true
+        enabled: true
+    persistence:
+      objectname:
+        mountPath: ''
+        enabled: true
+        targetSelector:
+          main:
+            main: {}
+        type: ''
+        size: ''
+    addons:
+      netshoot:
+        enabled: true
+      codeserver:
+        enabled: true
+        route:
+          enabled: true
+          gateway: ''
+    serviceAccount:
+      main:
+        primary: true
+  my-dependency:
+    enabled: false
+  mydep:
     enabled: true
-    user: ''
-    database: ''
-    password: ''
-    backups:
-      enabled: true
-      target: ''
-      retentionPolicy: ''
-      credentials: ''
-      destinationPath: ''
-      manualBackups:
-      - name: ''
-      scheduledBackups:
-      - name: ''
-        schedule: ''
-        backupOwnerReference: ''
-    pooler:
-      enabled: true
-      createRO: true
-      poolMode: ''
-      instances: 1
-      parameters:
-        some: ''
-        someOther: ''
-  mypg:
+    depconfig:
+      password: ''
+      creds:
+        plainhost: ''
+    operator:
+      anything: 1
+  custom:
     enabled: true
-    user: ''
-    database: ''
-    password: ''
-    instances: 2
-    hibernate: true
-    pooler:
-      enabled: true
-redis:
-  enabled: false
-  includeCommon: false
-  password: ''
-  creds:
-    redisPassword: ''
-    plain: ''
-    plainhost: ''
-    plainport: ''
-    plainporthost: ''
-    plainhostpass: ''
-    url: ''
-  secret:
-    credentials:
-      enabled: false
-  username: ''
-  redisUsername: ''
-  global:
-    stopAll: false
-  workload:
-    objectname:
-      enabled: true
-  persistence:
-    objectname:
-      enabled: true
-      type: ''
-  redisDatabase: ''
-  service:
-    objectname:
-      enabled: true
-mariadb:
-  enabled: false
-  includeCommon: false
-  password: ''
-  rootPassword: ''
-  creds:
-    mariadbPassword: ''
-    mariadbRootPassword: ''
-    plain: ''
-    plainhost: ''
-    plainport: ''
-    plainporthost: ''
-    complete: ''
-    urlnossl: ''
-    jdbc: ''
-    jdbcmysql: ''
-    jdbcmariadb: ''
-  mariadbUsername: ''
-  mariadbDatabase: ''
-  workload:
-    objectname:
-      enabled: true
-  service:
-    objectname:
-      enabled: true
-mongodb:
-  enabled: false
-  includeCommon: false
-  password: ''
-  rootPassword: ''
-  creds:
-    mongodbPassword: ''
-    mongodbRootPassword: ''
-    plain: ''
-    plainhost: ''
-    plainport: ''
-    plainporthost: ''
-    complete: ''
-    urlssl: ''
-    urltls: ''
-    jdbc: ''
-  mongodbUsername: ''
-  mongodbDatabase: ''
-  workload:
-    objectname:
-      enabled: true
-  service:
-    objectname:
-      enabled: true
-clickhouse:
-  enabled: false
-  includeCommon: false
-  password: ''
-  creds:
-    clickhousePassword: ''
-    plain: ''
-    plainhost: ''
-    plainport: ''
-    plainporthost: ''
-    ping: ''
-    complete: ''
-    jdbc: ''
-  clickhouseUsername: ''
-  clickhouseDatabase: ''
-  workload:
-    objectname:
-      enabled: true
-  service:
-    objectname:
-      enabled: true
-solr:
-  enabled: false
-  includeCommon: false
-  password: ''
-  solrCores: 1
-  solrEnableAuthentication: ''
-  creds:
-    solrPassword: ''
-    plain: ''
-    plainhost: ''
-    portHost: ''
-    url: ''
-  solrUsername: ''
-  workload:
-    objectname:
-      enabled: true
-  service:
-    objectname:
-      enabled: true
+    mode: ''
+    image:
+      repository: ''
+      tag: ''
+    workload:
+      objectname:
+        type: ''
+        podSpec:
+          containers:
+            objectname:
+              env:
+                OPERATOR_VERSION: ''
+    service:
+      objectname:
+        ports:
+          objectname:
+            port: 0
+    operator:
+      version: ''
+  my-dep:
+    enabled: true
+    gatewayClass:
+      my-class:
+        enabled: true
+        controllerName: ''
+    gateway:
+      my-gateway:
+        enabled: true
+        targetSelector: ''
+        allowedListeners:
+          namespaces:
+            from: ''
+        listeners:
+        - name: ''
+          port: 80
+          protocol: ''
+    listenerSet:
+      my-set:
+        enabled: true
+        targetSelector: ''
+        listeners:
+        - name: ''
+          hostname: ''
+          port: 0
+          protocol: ''
+    route:
+      objectname:
+        enabled: true
+        listenerSet: ''
+        hostnames:
+        - ''
+        rules:
+        - backendRefs:
+          - name: ''
+            port: 80
 extraTpl:
 - apiVersion: ''
   kind: ''
@@ -5971,15 +7148,47 @@ extraTpl:
     name: ''
   data:
     foo: ''
-operator:
-  verify:
-    enabled: false
-  cert-manager:
-    namespace: ''
-  register: true
-  metallb:
-    namespace: ''
+mariadb:
+  enabled: true
+  mariadbUsername: ''
+  mariadbDatabase: ''
+cnpg:
+  main:
+    enabled: true
+    user: ''
+    database: ''
+    password: ''
+    type: ''
+    cluster:
+      initdb:
+        postInitApplicationSQL:
+        - ''
+  enabled: false
+  my-pg:
+    user: ''
+redis:
+  enabled: true
+  username: ''
+  redisUsername: ''
+  password: ''
+mongodb:
+  enabled: true
+  mongodbUsername: ''
+  mongodbDatabase: ''
+  password: ''
+clickhouse:
+  enabled: true
+  clickhouseUsername: ''
+  clickhouseDatabase: ''
+  password: ''
 password: ''
+alpineImage:
+  repository: ''
+  pullPolicy: ''
+  tag: ''
+memcached:
+  enabled: true
+  password: ''
 additionalContainers:
   browserless:
     name: ''
@@ -6007,6 +7216,10 @@ additionalContainers:
         port: 0
         type: ''
         path: ''
+yqImage:
+  pullPolicy: ''
+  repository: ''
+  tag: ''
 args:
 - ''
 registry: ''
@@ -6021,37 +7234,6 @@ credentialsList:
   accessKey: ''
   secretKey: ''
   encrKey: ''
-networkPolicy:
-  objectname:
-    enabled: true
-    ingress:
-    - from:
-      - ipBlock:
-          cidr: ''
-          except:
-          - ''
-      ports:
-      - protocol: ''
-        port: 0
-    egress:
-    - to:
-      - ipBlock:
-          cidr: ''
-          except:
-          - ''
-      ports:
-      - protocol: ''
-        port: 0
-    nameOverride: ''
-    labels:
-      my-label: ''
-    annotations:
-      my-ann: ''
-    policyType: ''
-    targetSelector: ''
-    podSelector:
-      matchLabels:
-        app: ''
 key1: ''
 key2: 80
 key3: ''
@@ -6113,9 +7295,6 @@ ip: ''
 path: ''
 ext1: ''
 ext2: ''
-postgresTimescaledb16Image:
-  repository: ''
-  tag: ''
 param: ''
 data: ''
 some_port: 80
@@ -6153,11 +7332,26 @@ termination:
   messagePolicy: ''
 common:
   TZ: ''
-mariadbImage:
+solr:
+  enabled: false
+  password: ''
+openvpnImage:
   repository: ''
   tag: ''
   pullPolicy: ''
-mongodbImage:
+scratchImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+wgetImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+wireguardImage:
+  repository: ''
+  tag: ''
+  pullPolicy: ''
+redisClientImage:
   repository: ''
   tag: ''
   pullPolicy: ''
@@ -6195,6 +7389,22 @@ topologySpreadConstraints:
 - maxSkew: 1
   topologyKey: ''
   whenUnsatisfiable: ''
+useMemcached: false
+otherValkeyImage:
+  repository: ''
+  tag: ''
+otherExporterImage:
+  repository: ''
+  tag: ''
+valkey:
+  enabled: false
+  password: ''
+useValkey: false
+volumeClaimTemplates: {}
+some:
+  store: ''
+  interval: ''
+  value: ''
 someKey: ''
 k1: ''
 k2: ''
@@ -6213,6 +7423,10 @@ initImage:
   repository: ''
   tag: ''
   pullPolicy: ''
+component: ''
+selector:
+  app: ''
+someIP: ''
 version: 0
 some_mode: ''
 some_size: ''
@@ -6261,6 +7475,11 @@ some_kind: ''
 some_name: ''
 some_api_group: ''
 some_non_resource_url: ''
+useTraefik: true
+gw: ''
+gwNs: ''
+section: ''
+parentPort: 0
 some_family: ''
 some_ip: ''
 some_other_ip: ''
@@ -6274,10 +7493,12 @@ some_extra_ip: ''
 some_range: ''
 proto: ''
 some_nodePort: 0
+svcType: ''
 disabled: false
 test:
   key1: ''
   key2: ''
+authHost: ''
 some_driver: ''
 k7: ''
 k8: ''

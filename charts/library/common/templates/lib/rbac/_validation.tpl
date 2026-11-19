@@ -13,7 +13,10 @@
 
     {{/* If rbac is enabled */}}
     {{- if $rbac.enabled -}}
-      {{- $hasEnabled = true -}}
+      {{/* RBAC objects of dependencies do not require a primary */}}
+      {{- if not $rbac.dependency -}}
+        {{- $hasEnabled = true -}}
+      {{- end -}}
 
       {{/* And rbac is primary */}}
       {{- if and (hasKey $rbac "primary") ($rbac.primary) -}}

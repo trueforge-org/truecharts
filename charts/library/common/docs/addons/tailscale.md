@@ -184,7 +184,7 @@ Accept the DNS settings of the tailnet.
 
 ## `container.env.TS_AUTH_KEY`
 
-The Tailscale auth key.
+The Tailscale auth key. Use `addons.tailscale.settings.authkey` instead, which stores the key in a secret instead of a plain environment variable.
 
 | Field | Value |
 | --- | --- |
@@ -294,27 +294,55 @@ Workloads to which this container is attached.
 
 ---
 
-## `config`
+## `settings`
 
-Tailscale config file, passed to the container.
+Tailscale settings. Each key sets the matching `TS_*` environment variable of the container.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.config` |
-| Type | `string` |
+| Key | `addons.tailscale.settings` |
+| Type | `map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | `""` |
+| Default | unset |
 
 ---
 
-## `userspace`
+## `settings.config`
+
+Path of a tailscaled config file.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.settings.config` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `settings.authkey`
+
+The Tailscale auth key. It is stored in a secret and loaded from there into the `TS_AUTH_KEY` environment variable of the container.
+
+| Field | Value |
+| --- | --- |
+| Key | `addons.tailscale.settings.authkey` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `settings.userspace`
 
 Run tailscale in userspace networking mode.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.userspace` |
+| Key | `addons.tailscale.settings.userspace` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -322,13 +350,13 @@ Run tailscale in userspace networking mode.
 
 ---
 
-## `auth_once`
+## `settings.auth_once`
 
 Only log in when the node is not logged in yet.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.auth_once` |
+| Key | `addons.tailscale.settings.auth_once` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -336,13 +364,13 @@ Only log in when the node is not logged in yet.
 
 ---
 
-## `accept_dns`
+## `settings.accept_dns`
 
 Accept the DNS settings of the tailnet.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.accept_dns` |
+| Key | `addons.tailscale.settings.accept_dns` |
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -350,13 +378,13 @@ Accept the DNS settings of the tailnet.
 
 ---
 
-## `routes`
+## `settings.routes`
 
 Subnet routes that are advertised, comma separated.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.routes` |
+| Key | `addons.tailscale.settings.routes` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -364,13 +392,13 @@ Subnet routes that are advertised, comma separated.
 
 ---
 
-## `dest_ip`
+## `settings.dest_ip`
 
 IP that the traffic is forwarded to.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.dest_ip` |
+| Key | `addons.tailscale.settings.dest_ip` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -378,13 +406,13 @@ IP that the traffic is forwarded to.
 
 ---
 
-## `sock5_server`
+## `settings.sock5_server`
 
 Address of a SOCKS5 proxy, eg `:1080`.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.sock5_server` |
+| Key | `addons.tailscale.settings.sock5_server` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -392,13 +420,13 @@ Address of a SOCKS5 proxy, eg `:1080`.
 
 ---
 
-## `extra_args`
+## `settings.extra_args`
 
 Extra arguments of `tailscale up`.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.extra_args` |
+| Key | `addons.tailscale.settings.extra_args` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -406,13 +434,13 @@ Extra arguments of `tailscale up`.
 
 ---
 
-## `daemon_extra_args`
+## `settings.daemon_extra_args`
 
 Extra arguments of `tailscaled`.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.daemon_extra_args` |
+| Key | `addons.tailscale.settings.daemon_extra_args` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -420,31 +448,17 @@ Extra arguments of `tailscaled`.
 
 ---
 
-## `outbound_http_proxy_listen`
+## `settings.outbound_http_proxy_listen`
 
 Address of an outbound HTTP proxy, eg `:1055`.
 
 | Field | Value |
 | --- | --- |
-| Key | `addons.tailscale.outbound_http_proxy_listen` |
+| Key | `addons.tailscale.settings.outbound_http_proxy_listen` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
-
----
-
-## `authkey`
-
-Auth key to connect to the VPN service.
-
-| Field | Value |
-| --- | --- |
-| Key | `addons.tailscale.authkey` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `""` |
 
 ---
 
@@ -466,21 +480,24 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 ## Full Examples
 
-Tailscale connects the pod to a tailnet. It adds a `tailscale` container to the workloads in `targetSelector`.
+Tailscale connects the pod to a tailnet. Its settings are mapped to the `TS_*` environment variables of the container.
 
 ### Userspace mode
 
-Run tailscale in userspace networking mode:
+Runs without extra privileges, so the container is run as a non-root user with a read only root filesystem:
 
 ```yaml
 addons:
   tailscale:
     enabled: true
-    authkey: tskey-auth-placeholder
-    userspace: true
-    auth_once: true
-    accept_dns: false
+    settings:
+      authkey: tskey-auth-placeholder
+      userspace: true
+      auth_once: true
+      accept_dns: false
 ```
+
+The auth key is stored in a Secret and loaded from there into `TS_AUTH_KEY`, instead of a plain environment variable.
 
 ### Advertise routes
 
@@ -490,10 +507,11 @@ Make networks reachable through the tailnet, and forward traffic to an IP:
 addons:
   tailscale:
     enabled: true
-    authkey: tskey-auth-placeholder
-    userspace: false
-    routes: 10.0.0.0/8,192.168.1.0/24
-    dest_ip: 10.0.0.10
+    settings:
+      authkey: tskey-auth-placeholder
+      userspace: false
+      routes: 10.0.0.0/8,192.168.1.0/24
+      dest_ip: 10.0.0.10
 ```
 
 ### Proxies and extra arguments
@@ -502,11 +520,12 @@ addons:
 addons:
   tailscale:
     enabled: true
-    authkey: tskey-auth-placeholder
-    sock5_server: ":1080"
-    outbound_http_proxy_listen: ":1055"
-    extra_args: --advertise-exit-node --hostname=my-app
-    daemon_extra_args: --verbose=1
+    settings:
+      authkey: tskey-auth-placeholder
+      sock5_server: ":1080"
+      outbound_http_proxy_listen: ":1055"
+      extra_args: --advertise-exit-node --hostname=my-app
+      daemon_extra_args: --verbose=1
 ```
 
 ### Configuration file
@@ -517,7 +536,8 @@ addons:
 addons:
   tailscale:
     enabled: true
-    config: /config/tailscaled.json
+    settings:
+      config: /config/tailscaled.json
 ```
 
 ### Container
@@ -532,7 +552,8 @@ addons:
       - main
     annotations:
       key: value
-    authkey: tskey-auth-placeholder
+    settings:
+      authkey: tskey-auth-placeholder
     container:
       env:
         TS_STATE_DIR: /var/lib/tailscale

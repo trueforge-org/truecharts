@@ -39,14 +39,14 @@ A probe of the container. See [probe](/truecharts-common/workload/podSpec/contai
 
 ## `enabled`
 
-Whether the probe is added to the container. Only a boolean is evaluated, any other value counts as `true`.
+Whether the probe is added to the container.
 
 | Field | Value |
 | --- | --- |
 | Key | `workload.$name.podSpec.containers.$name.probes.liveness.enabled` |
-| Type | `bool or string` |
+| Type | `bool` |
 | Required | ✅ |
-| Helm `tpl` | ❌ |
+| Helm `tpl` | ✅ |
 | Default | unset |
 
 ---

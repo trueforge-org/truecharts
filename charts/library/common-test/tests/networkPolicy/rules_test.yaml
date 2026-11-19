@@ -1,0 +1,160 @@
+suite: networkPolicy rule validation and rendering
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should reject cilium-only ingress keys on a kubernetes policy
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          ingress:
+            - fromEntities: [world]
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [ingress.fromEntities] is only supported when [type] is [cilium]
+
+  - it: should reject cilium-only egress keys on a kubernetes policy
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          egress:
+            - toFQDNs:
+                - matchName: example.com
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [egress.toFQDNs] is only supported when [type] is [cilium]
+
+  - it: should reject from on a cilium policy
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          type: cilium
+          ingress:
+            - from:
+                - podSelector: {}
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [ingress.from] is not supported when [type] is [cilium], use the Cilium rule keys instead
+
+  - it: should reject ports on a cilium egress rule
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          type: cilium
+          egress:
+            - ports:
+                - port: 53
+    asserts:
+      - failedTemplate:
+          errorMessage: NetworkPolicy - Key [egress.ports] is not supported when [type] is [cilium], use the Cilium rule keys instead
+
+  - it: should render empty selectors as empty objects
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          targetAllPods: true
+          ingress:
+            - from:
+                - namespaceSelector: {}
+                  podSelector: {}
+          egress:
+            - to:
+                - namespaceSelector: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress
+          value:
+            - from:
+                - namespaceSelector: {}
+                  podSelector: {}
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.egress
+          value:
+            - to:
+                - namespaceSelector: {}
+
+  - it: should fail when a peer list renders no peers
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          ingress:
+            - from:
+                - {}
+    asserts:
+      - failedTemplate:
+          errorMessage: "NetworkPolicy - Expected [ingress.from] entries to define at least one of [ipBlock.cidr, namespaceSelector, podSelector]"
+
+  - it: should render a rule with neither peers nor ports as an empty object
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          targetAllPods: true
+          ingress:
+            - {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.ingress
+          value:
+            - {}
+
+  - it: should render ipBlock and ports
+    set:
+      networkPolicy:
+        np:
+          enabled: true
+          targetAllPods: true
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except: [10.1.0.0/16]
+              ports:
+                - port: 443
+                  protocol: TCP
+    asserts:
+      - documentSelector:
+          path: kind
+          value: NetworkPolicy
+        equal:
+          path: spec.egress
+          value:
+            - to:
+                - ipBlock:
+                    cidr: 10.0.0.0/8
+                    except: [10.1.0.0/16]
+              ports:
+                - port: 443
+                  protocol: TCP
+
+  - it: should fail when more than one networkPolicy is primary
+    set:
+      networkPolicy:
+        one:
+          enabled: true
+          primary: true
+          targetAllPods: true
+        two:
+          enabled: true
+          primary: true
+          targetAllPods: true
+    asserts:
+      - failedTemplate:
+          errorPattern: "Only one \\[networkPolicy\\] can be primary"

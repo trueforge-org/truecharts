@@ -15,7 +15,7 @@ title: Env
 - `.Values.addons.gluetun.container.env`
 - `.Values.addons.netshoot.container.env`
 - `.Values.addons.tailscale.container.env`
-- `.Values.cnpg.$name.cluster.env`
+- `.Values.dependencies.postgresql.operator.cluster.env`
 - `.Values.workload.$name.podSpec.containers.$name.env`
 - `.Values.workload.$name.podSpec.initContainers.$name.env`
 

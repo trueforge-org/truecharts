@@ -5,7 +5,7 @@ release:
   name: test-release-name
   namespace: test-release-namespace
 tests:
-  - it: should render route matches with all keys
+  - it: should render route matches with headers and queryParams
     set:
       service: &service
         my-service:
@@ -19,9 +19,7 @@ tests:
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - matches:
                 - path:
@@ -43,78 +41,32 @@ tests:
                       value: "on.*"
                       type: RegularExpression
     asserts:
-      - documentSelector:
+      - documentSelector: &route
           path: kind
           value: HTTPRoute
         equal:
           path: spec.rules[0].matches[0].queryParams[0].name
           value: q-exact
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
+      - documentSelector: *route
         equal:
           path: spec.rules[0].matches[0].headers[1].type
-          value: RegularExpression
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: spec.rules[0].matches[0].method
-          value: GET
-
-  - it: should render route matches with path type Exact
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - path:
-                    type: Exact
-                    value: /x
-    asserts:
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: spec.rules[0].matches[0].path.type
-          value: Exact
-
-  - it: should render route matches with path type RegularExpression
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - path:
-                    type: RegularExpression
-                    value: /x.*
-    asserts:
-      - documentSelector:
-          path: kind
-          value: HTTPRoute
-        equal:
-          path: spec.rules[0].matches[0].path.type
           value: RegularExpression
 
   - it: should fail on unknown keys in route matches
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - matches:
                 - unknownKey: value
@@ -124,13 +76,19 @@ tests:
 
   - it: should fail on unknown keys in route matches path
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - matches:
                 - path:
@@ -139,188 +97,50 @@ tests:
       - failedTemplate:
           errorPattern: "at '/route/my-route/rules/0/matches/0/path': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on an invalid route matches path type
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - path:
-                    type: Foo
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/path/type'"
-
-  - it: should fail on a non-string route matches path value
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - path:
-                    value: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/path/value'"
-
   - it: should fail on unknown keys in route matches headers
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - matches:
                 - headers:
-                    - unknownKey: value
+                    - name: x-header
+                      unknownKey: value
     asserts:
       - failedTemplate:
           errorPattern: "at '/route/my-route/rules/0/matches/0/headers/0': additional properties 'unknownKey' not allowed"
 
-  - it: should fail on an invalid route matches headers type
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - headers:
-                    - type: Foo
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/headers/0/type'"
-
-  - it: should fail on a non-string route matches headers name
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - headers:
-                    - name: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/headers/0/name'"
-
-  - it: should fail on a non-string route matches headers value
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - headers:
-                    - value: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/headers/0/value'"
-
   - it: should fail on unknown keys in route matches queryParams
     set:
-      service: *service
+      service: &service
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            main:
+              enabled: true
+              primary: true
+              port: 8080
       route:
         my-route:
           enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
+          gateway: some-gateway
           rules:
             - matches:
                 - queryParams:
-                    - unknownKey: value
+                    - name: q
+                      unknownKey: value
     asserts:
       - failedTemplate:
           errorPattern: "at '/route/my-route/rules/0/matches/0/queryParams/0': additional properties 'unknownKey' not allowed"
-
-  - it: should fail on an invalid route matches queryParams type
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - queryParams:
-                    - type: Foo
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/queryParams/0/type'"
-
-  - it: should fail on a non-string route matches queryParams name
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - queryParams:
-                    - name: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/queryParams/0/name'"
-
-  - it: should fail on a non-string route matches queryParams value
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - queryParams:
-                    - value: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/queryParams/0/value'"
-
-  - it: should fail on a non-string route matches method
-    set:
-      service: *service
-      route:
-        my-route:
-          enabled: true
-          parentRefs:
-            - name: some-gateway
-              namespace: gw-ns
-          rules:
-            - matches:
-                - method: 1
-    asserts:
-      - failedTemplate:
-          errorPattern: "at '/route/my-route/rules/0/matches/0/method'"

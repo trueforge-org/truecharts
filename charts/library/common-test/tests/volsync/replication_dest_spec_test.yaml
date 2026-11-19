@@ -652,3 +652,79 @@ tests:
                 fsGroup: 568
                 runAsUser: 568
                 runAsGroup: 568
+
+  - it: should not render moverResources on ReplicationDestination
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+              src:
+                enabled: false
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: 1
+        notExists:
+          path: spec.restic.moverResources
+
+  - it: should render explicit moverResources on ReplicationDestination
+    set:
+      persistence:
+        srcbackup:
+          enabled: true
+          type: pvc
+          mountPath: /backedup
+          volsync:
+            - name: mybackup1
+              type: restic
+              credentials: mys3
+              dest:
+                enabled: true
+              src:
+                enabled: false
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  cpu: 500m
+                  memory: 1Gi
+      credentials:
+        mys3:
+          type: s3
+          url: http://some-url
+          bucket: some-bucket
+          encrKey: some-key
+          accessKey: some-access-key
+          secretKey: some-secret-key
+    asserts:
+      - documentIndex: 1
+        isKind:
+          of: ReplicationDestination
+      - documentIndex: 1
+        equal:
+          path: spec.restic.moverResources
+          value:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi

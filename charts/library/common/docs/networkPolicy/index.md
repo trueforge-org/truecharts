@@ -17,7 +17,12 @@ title: Network Policy
 ## Child Pages
 
 - [egress](/truecharts-common/networkPolicy/egress)
+- [egressDeny](/truecharts-common/networkPolicy/egressDeny)
+- [endpointSelector](/truecharts-common/networkPolicy/endpointSelector)
 - [ingress](/truecharts-common/networkPolicy/ingress)
+- [ingressDeny](/truecharts-common/networkPolicy/ingressDeny)
+- [nodeSelector](/truecharts-common/networkPolicy/nodeSelector)
+- [podSelector](/truecharts-common/networkPolicy/podSelector)
 
 ---
 
@@ -57,23 +62,53 @@ Create this NetworkPolicy.
 | --- | --- |
 | Key | `networkPolicy.$name.enabled` |
 | Type | `bool` |
-| Required | ✅ |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
+## `$name.primary`
+
+Mark this as the primary NetworkPolicy.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.primary` |
+| Type | `bool or string` |
+| Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `false` |
 
 ---
 
-## `$name.nameOverride`
+## `$name.expandObjectName`
 
-Name appended to the chart fullname. Defaults to the name of the policy.
+Prefix the name of the policy with the release fullname.
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.nameOverride` |
+| Key | `networkPolicy.$name.expandObjectName` |
+| Type | `bool or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.namespace`
+
+Namespace of the policy. Defaults to the release namespace.
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.namespace` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | unset |
+| Default | `""` |
 
 ---
 
@@ -109,55 +144,15 @@ See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all key
 
 ---
 
-## `$name.podSelector`
+## `$name.annotationsList`
 
-Custom Kubernetes label selector for the pods to which this policy applies.
+Additional annotations as a list of name and value pairs, merged into the annotations
 
-| Field | Value |
-| --- | --- |
-| Key | `networkPolicy.$name.podSelector` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.podSelector.matchLabels`
-
-Match pods with all of these labels.
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchLabels` |
-| Type | `map` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.podSelector.matchLabels.$name`
-
-Value of the label.
-
-| Field | Value |
-| --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchLabels.$name` |
-| Type | `string` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-
----
-
-## `$name.podSelector.matchExpressions`
-
-Match pods using label expressions.
-
-| Field | Value |
-| --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchExpressions` |
+| Key | `networkPolicy.$name.annotationsList` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -165,70 +160,59 @@ Match pods using label expressions.
 
 ---
 
-## `$name.podSelector.matchExpressions[]`
+## `$name.labelsList`
 
-A label expression.
+Additional labels as a list of name and value pairs, merged into the labels
+
+See [Labels, Annotations and Namespace](/truecharts-common/metadata) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchExpressions[]` |
-| Type | `map` |
+| Key | `networkPolicy.$name.labelsList` |
+| Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
 
 ---
 
-## `$name.podSelector.matchExpressions[].key`
+## `$name.type`
 
-Label key the expression applies to.
+Type of policy to create. `kubernetes` creates a NetworkPolicy, `cilium` creates a CiliumNetworkPolicy and requires the Cilium CRDs
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchExpressions[].key` |
+| Key | `networkPolicy.$name.type` |
 | Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `"kubernetes"` |
+| Allowed values | `"kubernetes"`, `"cilium"` |
+| Pattern | `^\{\{.*\}\}$` |
 
 ---
 
-## `$name.podSelector.matchExpressions[].operator`
+## `$name.clusterwide`
 
-Operator: `In`, `NotIn`, `Exists` or `DoesNotExist`.
-
-| Field | Value |
-| --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchExpressions[].operator` |
-| Type | `string` |
-| Required | ✅ |
-| Helm `tpl` | ❌ |
-| Default | unset |
-| Allowed values | `"In"`, `"NotIn"`, `"Exists"`, `"DoesNotExist"` |
-
----
-
-## `$name.podSelector.matchExpressions[].values`
-
-Values of the label.
+Cilium only. Create a CiliumClusterwideNetworkPolicy instead of a CiliumNetworkPolicy, chart based selectors are pinned to the namespace of the chart
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.podSelector.matchExpressions[].values` |
-| Type | `list of string` |
+| Key | `networkPolicy.$name.clusterwide` |
+| Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
-| Default | unset |
+| Default | `false` |
 
 ---
 
-## `$name.targetSelector`
+## `$name.description`
 
-Name of a workload of this chart the policy applies to. Defaults to the pods of the primary workload when `podSelector` is not set.
+Cilium only. Free form description of the policy, supports Helm `tpl`
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.targetSelector` |
+| Key | `networkPolicy.$name.description` |
 | Type | `string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -236,18 +220,151 @@ Name of a workload of this chart the policy applies to. Defaults to the pods of 
 
 ---
 
-## `$name.policyType`
+## `$name.podSelector`
 
-Type of the policy: `ingress`, `egress` or `ingress-egress`. When omitted, no `policyTypes` are set.
+Custom Kubernetes label selector for pods to which this policy applies.
+
+See [podSelector](/truecharts-common/networkPolicy/podSelector) for all keys of this object.
 
 | Field | Value |
 | --- | --- |
-| Key | `networkPolicy.$name.policyType` |
-| Type | `string` |
+| Key | `networkPolicy.$name.podSelector` |
+| Type | `map or string` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+| Pattern | `^\{\{.*\}\}$` |
+
+---
+
+## `$name.targetSelector`
+
+Target one or more workloads from this chart by name.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.targetSelector` |
+| Type | `string or list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `$name.targetSelectorRegex`
+
+Target workloads from this chart whose names match one or more regular expressions
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.targetSelectorRegex` |
+| Type | `string or list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `""` |
+
+---
+
+## `$name.targetAllPods`
+
+Target all pods in the namespace.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.targetAllPods` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `$name.endpointSelector`
+
+Cilium only. Select the endpoints to which this policy applies, supports Helm `tpl`
+
+See [endpointSelector](/truecharts-common/networkPolicy/endpointSelector) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.endpointSelector` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.nodeSelector`
+
+Cilium only. Host policy, select the nodes to which this policy applies instead of pods. Requires `clusterwide: true`, supports Helm `tpl`
+
+See [nodeSelector](/truecharts-common/networkPolicy/nodeSelector) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.nodeSelector` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | unset |
+
+---
+
+## `$name.policyTypes`
+
+Policy types. When omitted, types are inferred from the configured rules.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.policyTypes` |
+| Type | `list of string` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | unset |
-| Allowed values | `"ingress"`, `"egress"`, `"ingress-egress"` |
+| Allowed values | `"Ingress"`, `"Egress"` |
+
+---
+
+## `$name.enableDefaultDeny`
+
+Cilium only. Control whether the policy puts the selected endpoints in default deny mode
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.enableDefaultDeny` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enableDefaultDeny.ingress`
+
+Put the selected endpoints in ingress default deny mode
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.enableDefaultDeny.ingress` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `$name.enableDefaultDeny.egress`
+
+Put the selected endpoints in egress default deny mode
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.enableDefaultDeny.egress` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
 
 ---
 
@@ -260,6 +377,22 @@ See [ingress](/truecharts-common/networkPolicy/ingress) for all keys of this obj
 | Field | Value |
 | --- | --- |
 | Key | `networkPolicy.$name.ingress` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
+## `$name.ingressDeny`
+
+Cilium only. List of ingress deny rules, these take precedence over allow rules, supports Helm `tpl`
+
+See [ingressDeny](/truecharts-common/networkPolicy/ingressDeny) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.ingressDeny` |
 | Type | `list of map` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
@@ -283,11 +416,27 @@ See [egress](/truecharts-common/networkPolicy/egress) for all keys of this objec
 
 ---
 
+## `$name.egressDeny`
+
+Cilium only. List of egress deny rules, these take precedence over allow rules, supports Helm `tpl`
+
+See [egressDeny](/truecharts-common/networkPolicy/egressDeny) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `networkPolicy.$name.egressDeny` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | `[]` |
+
+---
+
 ## Full Examples
 
-### Allow ingress from pods with a label
+### Basic Ingress Policy
 
-Allow traffic from pods labelled `role: frontend` to the primary pods on port 8080:
+Allow traffic from pods with label `role: frontend` to port 8080:
 
 ```yaml
 networkPolicy:
@@ -303,15 +452,74 @@ networkPolicy:
             port: 8080
 ```
 
-### Allow egress to a database
+### Basic Egress Policy
 
-Allow the primary pods to reach pods labelled `role: database` on port 5432, and DNS lookups:
+Allow traffic to pods with label `role: database` on port 5432:
 
 ```yaml
 networkPolicy:
   allow-database:
     enabled: true
-    policyType: egress
+    egress:
+      - to:
+          - podSelector:
+              matchLabels:
+                role: database
+        ports:
+          - protocol: TCP
+            port: 5432
+```
+
+### Allow Traffic from Specific Namespace
+
+Allow ingress from all pods in the `production` namespace:
+
+```yaml
+networkPolicy:
+  allow-production-namespace:
+    enabled: true
+    ingress:
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                environment: production
+```
+
+### Allow Traffic to External IPs
+
+Allow egress to external IPs (except metadata service):
+
+```yaml
+networkPolicy:
+  allow-external:
+    enabled: true
+    egress:
+      - to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+              except:
+                - 169.254.169.254/32
+```
+
+### Combined Ingress and Egress
+
+Allow specific ingress and egress traffic:
+
+```yaml
+networkPolicy:
+  api-policy:
+    enabled: true
+    policyTypes:
+      - Ingress
+      - Egress
+    ingress:
+      - from:
+          - podSelector:
+              matchLabels:
+                role: frontend
+        ports:
+          - protocol: TCP
+            port: 8080
     egress:
       - to:
           - podSelector:
@@ -323,54 +531,75 @@ networkPolicy:
       - to:
           - namespaceSelector:
               matchLabels:
-                kubernetes.io/metadata.name: kube-system
+                name: kube-system
         ports:
           - protocol: UDP
             port: 53
 ```
 
-### Allow a namespace
+### Allow Traffic from Pods in Specific Namespace
 
-Allow ingress from all pods in namespaces labelled `environment: production`:
+Allow ingress from pods with label `app: client` in namespace with label `team: platform`:
 
 ```yaml
 networkPolicy:
-  allow-production:
+  allow-platform-clients:
     enabled: true
     ingress:
       - from:
+          - podSelector:
+              matchLabels:
+                app: client
+            namespaceSelector:
+              matchLabels:
+                team: platform
+        ports:
+          - protocol: TCP
+            port: 8080
+```
+
+### Multiple Rules (OR Logic)
+
+Allow ingress from frontend OR from monitoring:
+
+```yaml
+networkPolicy:
+  allow-multiple-sources:
+    enabled: true
+    ingress:
+      - from:
+          - podSelector:
+              matchLabels:
+                role: frontend
+        ports:
+          - protocol: TCP
+            port: 8080
+      - from:
           - namespaceSelector:
               matchLabels:
-                environment: production
+                name: monitoring
+        ports:
+          - protocol: TCP
+            port: 9090
 ```
 
-### Allow external IPs except the metadata service
+### Using matchExpressions
 
-Allow egress to any IPv4 address, except the cloud metadata address:
+Use advanced label matching:
 
 ```yaml
 networkPolicy:
-  allow-external:
+  advanced-matching:
     enabled: true
-    policyType: egress
-    egress:
-      - to:
-          - ipBlock:
-              cidr: 0.0.0.0/0
-              except:
-                - 169.254.169.254/32
-```
-
-### Target a workload and match expressions
-
-Apply the policy to the pods of the `worker` workload, and allow ingress from pods that are not `experimental`:
-
-```yaml
-networkPolicy:
-  worker-policy:
-    enabled: true
-    targetSelector: worker
-    policyType: ingress
+    podSelector:
+      matchExpressions:
+        - key: environment
+          operator: In
+          values:
+            - production
+            - staging
+        - key: app
+          operator: Exists
     ingress:
       - from:
           - podSelector:
@@ -381,18 +610,195 @@ networkPolicy:
                     - experimental
         ports:
           - protocol: TCP
-            port: 9000
-            endPort: 9010
+            port: 8080
 ```
 
-### Deny all traffic
+### Default Deny All
 
-A policy without rules selects the pods and allows nothing in the chosen direction:
+Deny all ingress and egress traffic (useful as a baseline):
 
 ```yaml
 networkPolicy:
-  default-deny:
+  default-deny-all:
     enabled: true
-    nameOverride: deny-all
-    policyType: ingress-egress
+    policyTypes:
+      - Ingress
+      - Egress
+    # No ingress or egress rules defined = deny all
+```
+
+### Allow All from Same Namespace
+
+Allow all traffic from pods in the same namespace:
+
+```yaml
+networkPolicy:
+  allow-same-namespace:
+    enabled: true
+    ingress:
+      - from:
+          - podSelector: {}
+```
+
+### Port Range Example (Kubernetes 1.25+)
+
+Allow traffic on a range of ports:
+
+```yaml
+networkPolicy:
+  port-range:
+    enabled: true
+    ingress:
+      - from:
+          - podSelector:
+              matchLabels:
+                role: client
+        ports:
+          - protocol: TCP
+            port: 8000
+            endPort: 9000
+```
+
+### Complete Example
+
+Comprehensive network policy with multiple features:
+
+```yaml
+networkPolicy:
+  comprehensive-policy:
+    enabled: true
+    primary: true
+    labels:
+      team: platform
+      environment: production
+    annotations:
+      description: "Comprehensive network policy example"
+    targetSelector: main-pod
+    policyTypes:
+      - Ingress
+      - Egress
+    ingress:
+      # Allow from frontend in production namespace
+      - from:
+          - podSelector:
+              matchLabels:
+                role: frontend
+            namespaceSelector:
+              matchLabels:
+                environment: production
+        ports:
+          - protocol: TCP
+            port: 8080
+          - protocol: TCP
+            port: 8443
+      # Allow from monitoring namespace
+      - from:
+          - namespaceSelector:
+              matchLabels:
+                name: monitoring
+        ports:
+          - protocol: TCP
+            port: 9090
+    egress:
+      # Allow to database
+      - to:
+          - podSelector:
+              matchLabels:
+                role: database
+        ports:
+          - protocol: TCP
+            port: 5432
+      # Allow DNS
+      - to:
+          - namespaceSelector:
+              matchLabels:
+                name: kube-system
+        ports:
+          - protocol: UDP
+            port: 53
+      # Allow external HTTPS
+      - to:
+          - ipBlock:
+              cidr: 0.0.0.0/0
+              except:
+                - 169.254.169.254/32
+                - 10.0.0.0/8
+                - 192.168.0.0/16
+        ports:
+          - protocol: TCP
+            port: 443
+```
+
+### Cilium Network Policy
+
+Set `type: cilium` to create a `CiliumNetworkPolicy` instead of a `NetworkPolicy`. Requires the Cilium CRDs to be installed in the cluster.
+Controller targeting with `targetSelector`, `targetSelectorRegex` and `targetAllPods` works the same as for Kubernetes policies.
+Rules use the Cilium rule format:
+
+```yaml
+networkPolicy:
+  allow-dns:
+    enabled: true
+    type: cilium
+    description: Allow DNS lookups from the worker
+    targetSelector: worker
+    enableDefaultDeny:
+      egress: false
+    egress:
+      - toEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: kube-system
+              k8s-app: kube-dns
+        toPorts:
+          - ports:
+              - port: "53"
+                protocol: UDP
+            rules:
+              dns:
+                - matchPattern: "*"
+```
+
+### Cilium Deny Rules
+
+`ingressDeny` and `egressDeny` take precedence over allow rules:
+
+```yaml
+networkPolicy:
+  deny-metadata:
+    enabled: true
+    type: cilium
+    targetSelectorRegex: "^worker"
+    egressDeny:
+      - toCIDR:
+          - 169.254.169.254/32
+    egress:
+      - toEntities:
+          - world
+```
+
+### Cilium Clusterwide Network Policy
+
+Set `clusterwide: true` to create a `CiliumClusterwideNetworkPolicy`. Selectors that are derived from this chart are pinned to the namespace of the chart.
+Use `nodeSelector` for host policies:
+
+```yaml
+networkPolicy:
+  allow-ingress-from-gateway:
+    enabled: true
+    type: cilium
+    clusterwide: true
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              k8s:io.kubernetes.pod.namespace: gateway-system
+  host-policy:
+    enabled: true
+    type: cilium
+    clusterwide: true
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: ""
+    ingress:
+      - fromEntities:
+          - cluster
 ```

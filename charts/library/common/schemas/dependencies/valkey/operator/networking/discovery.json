@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "How the valkey nodes announce themselves to each other.",
+  "properties": {
+    "preferredEndpointType": {
+      "type": "string",
+      "enum": [
+        "",
+        "IP",
+        "Hostname"
+      ],
+      "default": "",
+      "description": "How the nodes announce themselves. The operator uses `IP` when unset, `Hostname` requires `workloadType: StatefulSet`."
+    }
+  },
+  "additionalProperties": false
+}

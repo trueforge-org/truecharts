@@ -86,10 +86,17 @@ objectData: The object data to be used to render the container.
     {{- end -}}
   {{- end -}}
 
-  {{- if or (eq (int $secContext.runAsUser) 0) (eq (int $secContext.runAsGroup) 0) -}}
-    {{- $_ := set $secContext "runAsNonRoot" false -}}
-  {{- else -}}
-    {{- $_ := set $secContext "runAsNonRoot" true -}}
+  {{/* Only an explicit runAsNonRoot on the container itself wins, the chart-wide value is never inherited */}}
+  {{- $ownRunAsNonRoot := dict -}}
+  {{- with $objectData.securityContext -}}
+    {{- $ownRunAsNonRoot = . -}}
+  {{- end -}}
+  {{- if or (not (hasKey $ownRunAsNonRoot "runAsNonRoot")) (kindIs "invalid" (get $ownRunAsNonRoot "runAsNonRoot")) -}}
+    {{- if eq (int $secContext.runAsUser) 0 -}}
+      {{- $_ := set $secContext "runAsNonRoot" false -}}
+    {{- else -}}
+      {{- $_ := set $secContext "runAsNonRoot" true -}}
+    {{- end -}}
   {{- end -}}
 
   {{- if $secContext.privileged -}} {{/* When privileged is true, allowPrivilegeEscalation is required */}}
@@ -115,11 +122,6 @@ objectData: The object data to be used to render the container.
     {{- fail "Container - Expected [securityContext.seccompProfile] to be defined" -}}
   {{- end -}}
 
-  {{- $profiles := (list "RuntimeDefault" "Localhost" "Unconfined") -}}
-  {{- if not (mustHas $secContext.seccompProfile.type $profiles) -}}
-    {{- fail (printf "Container - Expected [securityContext.seccompProfile] to be one of [%s], but got [%s]" (join ", " $profiles) $secContext.seccompProfile.type) -}}
-  {{- end -}}
-
   {{- if eq $secContext.seccompProfile.type "Localhost" -}}
     {{- if not $secContext.seccompProfile.profile -}}
       {{- fail "Container - Expected [securityContext.seccompProfile.profile] to be defined on type [Localhost]" -}}
@@ -134,7 +136,7 @@ objectData: The object data to be used to render the container.
   {{- $portRange := fromJson (include "tc.v1.common.lib.helpers.securityContext.getPortRange" (dict "rootCtx" $rootCtx "objectData" $tempObjectData)) -}}
   {{- if and $portRange.low (le (int $portRange.low) 1024) -}} {{/* If a container wants to bind a port <= 1024 add NET_BIND_SERVICE */}}
     {{- $addCap := $secContext.capabilities.add -}}
-    {{- if not (mustHas "NET_BIND_SERIVCE" $addCap) -}}
+    {{- if not (mustHas "NET_BIND_SERVICE" $addCap) -}}
       {{- $addCap = mustAppend $addCap "NET_BIND_SERVICE" -}}
     {{- end -}}
     {{- $_ := set $secContext.capabilities "add" $addCap -}}

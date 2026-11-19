@@ -42,6 +42,20 @@ A VolumeSnapshot.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the VolumeSnapshot with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `volumeSnapshots.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.source`
 
 Source of the snapshot. Set one of `persistentVolumeClaimName` or `volumeSnapshotContentName`.

@@ -12,7 +12,6 @@ title: Chart Context
 ## Appears in
 
 - `.Values.chartContext`
-- `.Values.createChartContextConfigmap`
 
 ---
 
@@ -30,9 +29,9 @@ Details about the release that common works out on every render, such as the URL
 
 ---
 
-## `chartContext.appUrl`
+## `appUrl`
 
-URL of the app, taken from the primary ingress, eg `https://app.example.com/`. Points to `127.0.0.1` when there is no ingress.
+URL of the app, taken from the primary ingress or route, eg `https://app.example.com/`. Points to `127.0.0.1` when there is neither.
 
 | Field | Value |
 | --- | --- |
@@ -51,7 +50,7 @@ chartContext:
 
 ---
 
-## `chartContext.podCIDR`
+## `podCIDR`
 
 CIDR of the pods, taken from `global.podCIDR`. Falls back to `172.16.0.0/16`.
 
@@ -72,7 +71,7 @@ chartContext:
 
 ---
 
-## `chartContext.svcCIDR`
+## `svcCIDR`
 
 CIDR of the services, taken from `global.svcCIDR`. Falls back to `172.17.0.0/16`.
 
@@ -93,7 +92,7 @@ chartContext:
 
 ---
 
-## `chartContext.internalUrls`
+## `internalUrls`
 
 Internal URLs of the services of the chart, filled in by common and shown in the notes.
 
@@ -104,20 +103,6 @@ Internal URLs of the services of the chart, filled in by common and shown in the
 | Required | ❌ |
 | Helm `tpl` | ❌ |
 | Default | `[]` |
-
----
-
-## `createChartContextConfigmap`
-
-Creates a ConfigMap `chart-context` with the generated `chartContext`. Only used in CI and unittests, to check the generated chart context.
-
-| Field | Value |
-| --- | --- |
-| Key | `createChartContextConfigmap` |
-| Type | `bool` |
-| Required | ❌ |
-| Helm `tpl` | ❌ |
-| Default | `false` |
 
 ---
 

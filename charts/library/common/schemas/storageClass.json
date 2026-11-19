@@ -5,6 +5,15 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Prefix the name of the StorageClass with the chart fullname.",
+        "default": true,
+        "x-helm-tpl": true
+      },
       "mountOptions": {
         "type": "array",
         "items": {
@@ -87,7 +96,7 @@
             "number",
             "boolean"
           ],
-          "description": "Value of the parameter. Numbers and booleans are rendered as a string."
+          "description": "Value of the parameter."
         },
         "description": "Parameters passed to the provisioner. Supports Helm `tpl` on values.",
         "default": {},

@@ -1,0 +1,279 @@
+suite: listenerSet basic test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should attach to a gateway of this chart with targetSelector
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: Same
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        https:
+          enabled: true
+          targetSelector: main
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+    asserts:
+      - hasDocuments:
+          count: 2
+      - documentIndex: 0
+        isKind:
+          of: Gateway
+      - documentIndex: 1
+        isKind:
+          of: ListenerSet
+      - documentIndex: 1
+        isAPIVersion:
+          of: gateway.networking.k8s.io/v1
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test-https
+      - documentIndex: 1
+        equal:
+          path: metadata.namespace
+          value: test-release-namespace
+      - documentIndex: 1
+        equal:
+          path: spec.parentRef
+          value:
+            group: gateway.networking.k8s.io
+            kind: Gateway
+            name: test-release-name-common-test
+            namespace: test-release-namespace
+      - documentIndex: 1
+        equal:
+          path: spec.listeners
+          value:
+            - name: https
+              port: 443
+              protocol: HTTPS
+
+  - it: should use the full name and namespace of a non primary gateway
+    set:
+      gateway:
+        main:
+          enabled: true
+          primary: true
+          gatewayClassName: test-gateway-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+        shared:
+          enabled: true
+          namespace: gateway-namespace
+          gatewayClassName: test-gateway-class
+          allowedListeners:
+            namespaces:
+              from: All
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      listenerSet:
+        https:
+          enabled: true
+          targetSelector: shared
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+    asserts:
+      - documentIndex: 2
+        isKind:
+          of: ListenerSet
+      - documentIndex: 2
+        equal:
+          path: spec.parentRef.name
+          value: test-release-name-common-test-shared
+      - documentIndex: 2
+        equal:
+          path: spec.parentRef.namespace
+          value: gateway-namespace
+
+  - it: should attach to an external gateway with parentRef
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          expandObjectName: false
+          parentRef:
+            name: shared-gateway
+            namespace: infrastructure
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - hasDocuments:
+          count: 1
+      - documentIndex: 0
+        isKind:
+          of: ListenerSet
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: main
+      - documentIndex: 0
+        equal:
+          path: spec.parentRef
+          value:
+            group: gateway.networking.k8s.io
+            kind: Gateway
+            name: shared-gateway
+            namespace: infrastructure
+
+  - it: should default the parentRef namespace to the namespace of the listener set and pass the name through tpl
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          namespace: other-namespace
+          parentRef:
+            name: "{{ .Release.Name }}-gateway"
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: metadata.namespace
+          value: other-namespace
+      - documentIndex: 0
+        equal:
+          path: spec.parentRef.name
+          value: test-release-name-gateway
+      - documentIndex: 0
+        equal:
+          path: spec.parentRef.namespace
+          value: other-namespace
+
+  - it: should render listener tls and allowedRoutes like a gateway
+    set:
+      listenerSet:
+        main:
+          enabled: true
+          parentRef:
+            name: shared-gateway
+          listeners:
+            - name: https
+              hostname: "{{ .Release.Name }}.example.com"
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - name: example-cert
+                  - kind: Secret
+                    group: ""
+                    name: other-cert
+                    namespace: cert-namespace
+                options:
+                  example.com/option: value
+              allowedRoutes:
+                namespaces:
+                  from: Selector
+                  selector:
+                    matchLabels:
+                      shared-gateway-access: "true"
+                kinds:
+                  - kind: HTTPRoute
+                  - group: gateway.networking.k8s.io
+                    kind: GRPCRoute
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: spec.listeners[0]
+          value:
+            name: https
+            hostname: test-release-name.example.com
+            port: 443
+            protocol: HTTPS
+            tls:
+              mode: Terminate
+              certificateRefs:
+                - group: ""
+                  kind: Secret
+                  name: example-cert
+                - group: ""
+                  kind: Secret
+                  name: other-cert
+                  namespace: cert-namespace
+              options:
+                example.com/option: value
+            allowedRoutes:
+              namespaces:
+                from: Selector
+                selector:
+                  matchLabels:
+                    shared-gateway-access: "true"
+              kinds:
+                - group: gateway.networking.k8s.io
+                  kind: HTTPRoute
+                - group: gateway.networking.k8s.io
+                  kind: GRPCRoute
+
+  - it: should render metadata with tpl
+    set:
+      some:
+        value: rendered
+      listenerSet:
+        main:
+          enabled: true
+          labels:
+            key: value
+            keytpl: "{{ .Values.some.value }}"
+          annotations:
+            key: value
+            keytpl: "{{ .Values.some.value }}"
+          parentRef:
+            name: shared-gateway
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - documentIndex: 0
+        isSubset:
+          path: metadata.labels
+          content:
+            key: value
+            keytpl: rendered
+            app.kubernetes.io/instance: test-release-name
+            app.kubernetes.io/name: common-test
+      - documentIndex: 0
+        isSubset:
+          path: metadata.annotations
+          content:
+            key: value
+            keytpl: rendered
+
+  - it: should not create a listener set when disabled
+    set:
+      listenerSet:
+        main:
+          enabled: false
+          parentRef:
+            name: shared-gateway
+          listeners:
+            - name: tcp
+              port: 9000
+              protocol: TCP
+    asserts:
+      - hasDocuments:
+          count: 0

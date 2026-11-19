@@ -21,9 +21,10 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
 - Don't manually alter chart READMEs, changelogs, `.helmignore` or icons; they are generated.
 - Don't hand-edit the `Chart.yaml` fields managed by `forgetool`: helm/kube version annotations, `kubeVersion`, `maintainers`, `home`, `icon`, `sources` and `appVersion`.
 - Pin images as `tag: <version>@sha256:<digest>`. Renovate handles image, digest and `common` dependency updates.
-- `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `dependencies.postgresql` (CloudNativePG by default), `dependencies.valkey` or `dependencies.mariadb` in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
+- `common` (`oci://oci.trueforge.org/truecharts`) is the only chart dependency. Databases and caches use `dependencies.postgresql` (CloudNativePG by default), `dependencies.valkey`, `dependencies.mariadb`, `dependencies.mongodb`, `dependencies.clickhouse` or `dependencies.memcached` (all predefined in common's `values.yaml`; the legacy root keys like `redis` and `cnpg` fail rendering) in `values.yaml`, not Helm subcharts. Don't commit `charts/` dependency folders, `Chart.lock` or `__snapshot__/`.
 - Chart values must be valid for the `common` values schema (`charts/library/common/values.schema.json`).
-- No default passwords; user data must be stored on persistent volumes.
+- No real or reusable passwords are committed: dependency passwords default to the visible placeholders `PLACEHOLDERPASSWORD` / `PLACEHOLDERROOTPASSWORD`, the render fails when a password is set empty, and charts or users must override the placeholder. Never use Helm `lookup` or `randAlphaNum` in templates (common and charts), they are strictly prohibited, also as a fallback.
+- User data must be stored on persistent volumes.
 - Security:
   - Never commit secrets, tokens, private keys or real credentials.
   - Give credentials to containers with `secretKeyRef` to a Secret, never as plain `env` values or in ConfigMaps, and don't print them in notes or logs.
@@ -36,6 +37,7 @@ This is a condensed summary. The full, canonical instructions are in [`AGENTS.md
   - arbitrary keys (services, workloads, ingresses, envs, anything with an `objectName` or a spawner) use `"properties": {}` with the typed object schema in `additionalProperties`, see the library schema instructions
   - only put a key in the schema when `common` reads or defines it, never because a stable or incubator chart sets it; fix such a chart in a separate PR to `master` instead
   - never use a placeholder `"additionalProperties": true` to skip listing the keys of a fixed object; type every key, and type the values of name-keyed maps
+  - the only intended open pass-through objects are the three Envoy Gateway policy specs of `route.<name>.integrations.envoy` (`securityPolicy`, `backendTrafficPolicy`, `extensionPolicy`); document any such exception in the schema description
   - don't edit the generated `docs/` pages; change the schema or `examples/` and run `generate_docs.py`, and regenerate `complete-values-structure.yaml` and `template-keys-structure.yaml`
   - change the schema in `values.schema.source.json` and `schemas/`, and regenerate `values.schema.json` with `generate_bundled_schema.py`
   - bump `common`'s version, but never `common-test`'s

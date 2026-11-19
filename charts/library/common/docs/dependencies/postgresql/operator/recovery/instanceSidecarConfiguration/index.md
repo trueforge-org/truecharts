@@ -1,0 +1,262 @@
+---
+title: instanceSidecarConfiguration
+---
+
+:::note
+
+- See the [Full Examples](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration#full-examples) section for complete examples.
+
+:::
+
+## Appears in
+
+- `.Values.dependencies.postgresql.operator.backups.instanceSidecarConfiguration`
+- `.Values.dependencies.postgresql.operator.recovery.instanceSidecarConfiguration`
+
+---
+
+## Child Pages
+
+- [env](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration/env)
+
+---
+
+## `instanceSidecarConfiguration`
+
+Settings of the Barman Cloud plugin sidecar.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `additionalContainerArgs`
+
+Extra command-line arguments appended to the sidecar container. Do not set `--log-level` here, use `logLevel`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.additionalContainerArgs` |
+| Type | `list of string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `env`
+
+Environment variables passed to the sidecar container.
+
+See [env](/truecharts-common/dependencies/postgresql/operator/recovery/instanceSidecarConfiguration/env) for all keys of this object.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.env` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `logLevel`
+
+Log level of the PostgreSQL instance sidecar.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.logLevel` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+| Allowed values | `"error"`, `"warning"`, `"info"`, `"debug"`, `"trace"` |
+
+---
+
+## `resources`
+
+Compute resources of the sidecar container that runs in the instance pods.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.claims`
+
+Resource claims used by the sidecar container.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims` |
+| Type | `list of map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.claims[]`
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims[]` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.claims[].name`
+
+Name of a resource from `spec.resourceClaims` used by the sidecar container.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims[].name` |
+| Type | `string` |
+| Required | ✅ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.claims[].request`
+
+Name of the request in the referenced claim.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.claims[].request` |
+| Type | `string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.limits`
+
+Maximum compute resources allowed for the sidecar container, such as `cpu` or `memory`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.limits` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.limits.$name`
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.limits.$name` |
+| Type | `int or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.requests`
+
+Minimum compute resources required by the sidecar container, such as `cpu` or `memory`.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.requests` |
+| Type | `map` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `resources.requests.$name`
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.resources.requests.$name` |
+| Type | `int or string` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## `retentionPolicyIntervalSeconds`
+
+Interval in seconds at which the sidecar checks and enforces retention policies.
+
+| Field | Value |
+| --- | --- |
+| Key | `dependencies.postgresql.operator.recovery.instanceSidecarConfiguration.retentionPolicyIntervalSeconds` |
+| Type | `int` |
+| Required | ❌ |
+| Helm `tpl` | ❌ |
+| Default | unset |
+
+---
+
+## Full Examples
+
+### Log level and resources
+
+Configure the sidecar of the instances of the cluster that is restored from a backup:
+
+```yaml
+dependencies:
+  postgresql:
+    enabled: true
+    operator:
+      mode: recovery
+      recovery:
+        method: object_store
+        credentials: my-s3
+        serverName: previous-cluster
+        instanceSidecarConfiguration:
+          logLevel: debug
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+```
+
+### Arguments and environment
+
+```yaml
+dependencies:
+  postgresql:
+    enabled: true
+    operator:
+      mode: recovery
+      recovery:
+        method: object_store
+        credentials: my-s3
+        serverName: previous-cluster
+        instanceSidecarConfiguration:
+          retentionPolicyIntervalSeconds: 600
+          additionalContainerArgs:
+            - --log-level=debug
+          env:
+            - name: AWS_REQUEST_CHECKSUM_CALCULATION
+              value: when_required
+```

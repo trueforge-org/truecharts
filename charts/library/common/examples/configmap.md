@@ -47,6 +47,20 @@ configmap:
       key: value
 ```
 
+### Binary data
+
+`binaryData` takes base64 encoded values:
+
+```yaml
+configmap:
+  binary-configmap:
+    enabled: true
+    data:
+      text: some text
+    binaryData:
+      logo.png: aGVsbG8gd29ybGQ=
+```
+
 ### Use it in a volume
 
 ```yaml

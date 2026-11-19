@@ -1,0 +1,63 @@
+suite: service type tpl test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should resolve a tpl string in type
+    set:
+      svcType: NodePort
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: "{{ .Values.svcType }}"
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+              nodePort: 30000
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: spec.type
+          value: NodePort
+      - documentSelector:
+          path: kind
+          value: Service
+        equal:
+          path: spec.ports[0].nodePort
+          value: 30000
+
+  - it: should fail when the resolved type is not valid
+    set:
+      svcType: Bogus
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          type: "{{ .Values.svcType }}"
+          ports:
+            port-name:
+              enabled: true
+              primary: true
+              port: 12345
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec: {}
+    asserts:
+      - failedTemplate:
+          errorPattern: "Service - Expected \\[type\\] to be one of .*but got \\[Bogus\\]"

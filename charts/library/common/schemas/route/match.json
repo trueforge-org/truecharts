@@ -16,7 +16,7 @@
         },
         "value": {
           "type": "string",
-          "description": "Path that is matched."
+          "description": "Path that is matched. Supports Helm `tpl`."
         }
       },
       "additionalProperties": false,
@@ -77,10 +77,49 @@
       "description": "Query parameters the request has to match."
     },
     "method": {
-      "type": "string",
-      "description": "HTTP method of the request."
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "GET",
+            "HEAD",
+            "POST",
+            "PUT",
+            "DELETE",
+            "CONNECT",
+            "OPTIONS",
+            "TRACE",
+            "PATCH"
+          ],
+          "description": "HTTP method of the request. For `HTTPRoute`."
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Exact",
+                "RegularExpression"
+              ],
+              "description": "How the service and method are matched: `Exact` or `RegularExpression`."
+            },
+            "service": {
+              "type": "string",
+              "description": "Name of the gRPC service."
+            },
+            "method": {
+              "type": "string",
+              "description": "Name of the gRPC method."
+            }
+          },
+          "additionalProperties": false,
+          "description": "The gRPC service and method of the request. For `GRPCRoute`."
+        }
+      ],
+      "description": "HTTP method of the request for an `HTTPRoute`, or the gRPC service and method for a `GRPCRoute`."
     }
   },
   "additionalProperties": false,
-  "description": "A match condition for an HTTP route."
+  "description": "A match condition for an HTTP or gRPC route."
 }

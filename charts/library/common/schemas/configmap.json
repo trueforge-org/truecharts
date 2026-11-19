@@ -80,6 +80,15 @@
         "description": "Additional annotations for configmap",
         "default": {},
         "x-helm-tpl": "On value only"
+      },
+      "binaryData": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": {
+          "type": "string",
+          "description": "Base64 encoded content of the ConfigMap entry"
+        },
+        "description": "Binary entries of the ConfigMap, keyed by file name. Values must be base64 encoded."
       }
     },
     "additionalProperties": false,

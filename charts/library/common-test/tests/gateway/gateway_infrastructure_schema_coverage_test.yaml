@@ -1,0 +1,62 @@
+suite: gateway infrastructure schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render gateway infrastructure labels and parametersRef
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          infrastructure:
+            labels:
+              my-label: my-value
+            parametersRef:
+              group: some.group
+              kind: SomeKind
+              name: some-name
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.infrastructure.labels.my-label
+          value: my-value
+      - documentSelector:
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.infrastructure.parametersRef.kind
+          value: SomeKind
+
+  - it: should fail on unknown keys in gateway infrastructure
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          infrastructure:
+            unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/infrastructure': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in gateway infrastructure parametersRef
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          infrastructure:
+            parametersRef:
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/infrastructure/parametersRef': additional properties 'unknownKey' not allowed"

@@ -16,15 +16,5 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if (hasKey $objectData.schedData "immediate") -}}
-    {{- if not (kindIs "bool" $objectData.schedData.immediate) -}}
-      {{- fail (printf "CNPG Scheduled Backup - Expected [immediate] in [backups.scheduledBackups] entry to be a boolean, but got [%s]" (kindOf $objectData.schedData.immediate)) -}}
-    {{- end -}}
-  {{- end -}}
 
-  {{- if (hasKey $objectData.schedData "suspend") -}}
-    {{- if not (kindIs "bool" $objectData.schedData.suspend) -}}
-      {{- fail (printf "CNPG Scheduled Backup - Expected [suspend] in [backups.scheduledBackups] entry to be a boolean, but got [%s]" (kindOf $objectData.schedData.suspend)) -}}
-    {{- end -}}
-  {{- end -}}
 {{- end -}}

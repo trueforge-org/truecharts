@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "postStart": {
+      "allOf": [
+        {
+          "$ref": "lifecycleHandler.json"
+        }
+      ],
+      "description": "Handler run right after the container started."
+    },
+    "preStop": {
+      "allOf": [
+        {
+          "$ref": "lifecycleHandler.json"
+        }
+      ],
+      "description": "Handler run before the container is stopped."
+    },
+    "stopSignal": {
+      "type": "string",
+      "enum": [
+        "SIGABRT",
+        "SIGALRM",
+        "SIGBUS",
+        "SIGCHLD",
+        "SIGCLD",
+        "SIGCONT",
+        "SIGFPE",
+        "SIGHUP",
+        "SIGILL",
+        "SIGINT",
+        "SIGIO",
+        "SIGIOT",
+        "SIGKILL",
+        "SIGPIPE",
+        "SIGPOLL",
+        "SIGPROF",
+        "SIGPWR",
+        "SIGQUIT",
+        "SIGSEGV",
+        "SIGSTKFLT",
+        "SIGSTOP",
+        "SIGSYS",
+        "SIGTERM",
+        "SIGTRAP",
+        "SIGTSTP",
+        "SIGTTIN",
+        "SIGTTOU",
+        "SIGURG",
+        "SIGVTALRM",
+        "SIGWINCH",
+        "SIGXCPU",
+        "SIGXFSZ",
+        "SIGRTMIN",
+        "SIGRTMAX"
+      ],
+      "description": "Signal sent to the container to stop it, instead of the default."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Lifecycle hooks of the container."
+}

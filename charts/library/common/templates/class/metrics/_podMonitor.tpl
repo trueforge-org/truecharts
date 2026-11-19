@@ -1,13 +1,10 @@
 {{- define "tc.v1.common.class.podmonitor" -}}
   {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
   {{- $podmonitorName := $fullName -}}
-  {{- $values := .Values.podmonitor -}}
-
-  {{- if hasKey . "ObjectValues" -}}
-    {{- with .ObjectValues.metrics -}}
-      {{- $values = . -}}
-    {{- end -}}
+  {{- if not (and (hasKey . "ObjectValues") .ObjectValues.metrics) -}}
+    {{- fail (printf "PodMonitor - Expected [ObjectValues.metrics] to be set, this class is only called by the metrics spawner") -}}
   {{- end -}}
+  {{- $values := .ObjectValues.metrics -}}
   {{- $podmonitorLabels := $values.labels -}}
   {{- $podmonitorAnnotations := $values.annotations -}}
 

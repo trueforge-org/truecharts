@@ -5,6 +5,15 @@
   "additionalProperties": {
     "type": "object",
     "properties": {
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Prefix the name of the PodDisruptionBudget with the chart fullname.",
+        "default": true,
+        "x-helm-tpl": true
+      },
       "unhealthyPodEvictionPolicy": {
         "type": "string",
         "description": "Whether unhealthy pods may be evicted regardless of the budget. Leave empty to use the Kubernetes default.",

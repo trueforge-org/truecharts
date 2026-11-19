@@ -1,13 +1,10 @@
 {{- define "tc.v1.common.class.prometheusrule" -}}
   {{- $fullName := include "tc.v1.common.lib.chart.names.fullname" . -}}
   {{- $prometheusruleName := $fullName -}}
-  {{- $values := .Values.prometheusRule -}}
-
-  {{- if hasKey . "ObjectValues" -}}
-    {{- with .ObjectValues.metrics -}}
-      {{- $values = . -}}
-    {{- end -}}
+  {{- if not (and (hasKey . "ObjectValues") .ObjectValues.metrics) -}}
+    {{- fail (printf "PrometheusRule - Expected [ObjectValues.metrics] to be set, this class is only called by the metrics spawner") -}}
   {{- end -}}
+  {{- $values := .ObjectValues.metrics -}}
 
   {{/* Rules directly under [prometheusRule.rules] form a group of their own */}}
   {{- $totalRulesCount := len ($values.prometheusRule.rules | default list) -}}

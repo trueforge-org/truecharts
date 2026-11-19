@@ -1,0 +1,81 @@
+suite: postgresql operator backups schema coverage
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+capabilities:
+  apiVersions:
+  - barmancloud.cnpg.io/v1/ObjectStore
+tests:
+- it: should render postgresql operator backups
+  template: common.yaml
+  set:
+    credentials:
+      my-creds:
+        type: s3
+        accessKey: test-access-key
+        secretKey: test-secret-key
+        bucket: my-bucket
+        encrKey: test-encr-key
+        url: http://example.invalid
+    dependencies:
+      postgresql:
+        depconfig:
+          password: test-password
+        enabled: true
+        mode: operator
+        operator:
+          backups:
+            enabled: true
+            destinationPath: s3://my-bucket/path
+            credentials: my-creds
+            encryption:
+              enabled: true
+            compression:
+              enabled: true
+            scheduledBackups:
+            - name: daily
+              schedule: "0 0 0 * * *"
+              backupOwnerReference: self
+              immediate: true
+              suspend: false
+            manualBackups:
+            - name: manual
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster
+
+- it: should render postgresql operator backups with string toggles
+  template: common.yaml
+  set:
+    credentials:
+      my-creds:
+        type: s3
+        accessKey: test-access-key
+        secretKey: test-secret-key
+        bucket: my-bucket
+        encrKey: test-encr-key
+        url: http://example.invalid
+    dependencies:
+      postgresql:
+        depconfig:
+          password: test-password
+        enabled: true
+        mode: operator
+        operator:
+          backups:
+            enabled: "true"
+            destinationPath: s3://my-bucket/path
+            credentials: my-creds
+            encryption:
+              enabled: "true"
+  asserts:
+  - documentSelector:
+      path: kind
+      value: Cluster
+    isKind:
+      of: Cluster

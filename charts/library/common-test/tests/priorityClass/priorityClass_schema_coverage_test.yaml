@@ -34,3 +34,24 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/priorityClass/my-priority': (additional properties|additionalProperties)"
+
+  - it: should not prefix the priority class name when expandObjectName is false or "false"
+    set:
+      priorityClass:
+        my-a:
+          enabled: true
+          expandObjectName: false
+        my-b:
+          enabled: true
+          expandObjectName: "false"
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: my-a
+        isKind:
+          of: PriorityClass
+      - documentSelector:
+          path: metadata.name
+          value: my-b
+        isKind:
+          of: PriorityClass

@@ -12,6 +12,7 @@
   {{- $allUrls := $.Values.chartContext.internalUrls | default list -}}
 
   {{- range $name, $service := .Values.service -}}
+    {{- if not (kindIs "map" $service) -}}{{- continue -}}{{- end -}}
     {{- $enabled := (include "tc.v1.common.lib.util.enabled" (dict
                     "rootCtx" $ "objectData" $service
                     "name" $name "caller" "Service"
@@ -43,9 +44,13 @@
 
     {{- include "tc.v1.common.lib.util.metaListToDict" (dict "objectData" $objectData) -}}
 
+    {{/* The type can be a tpl string, resolve it once for the validation and the class */}}
+    {{- if kindIs "string" $objectData.type -}}
+      {{- $_ := set $objectData "type" (tpl $objectData.type $) -}}
+    {{- end -}}
+
     {{/* Perform validations */}}
     {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
-    {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Service") -}}
     {{- include "tc.v1.common.lib.service.validation" (dict "rootCtx" $ "objectData" $objectData) -}}
 
     {{/* Set the name of the service */}}
@@ -59,7 +64,7 @@
                     "name" $name "caller" "service"
                     "key" "port")) -}}
       {{- if ne $enabledP "true" -}}{{- continue -}}{{- end -}}
-      {{- $internalUrl := (printf "%s.%s.svc.cluster.local:%s" $objectName $namespace $port.port) -}}
+      {{- $internalUrl := (printf "%s.%s.svc.cluster.local:%s" $objectName $namespace (tpl ($port.port | toString) $)) -}}
       {{/* Append URLS */}}
       {{- $allUrls = mustAppend $allUrls $internalUrl -}}
     {{- end -}}

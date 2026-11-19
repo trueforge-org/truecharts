@@ -82,6 +82,20 @@ A webhook configuration, keyed by name.
 
 ---
 
+## `$name.expandObjectName`
+
+Prefix the name of the Webhook with the chart fullname.
+
+| Field | Value |
+| --- | --- |
+| Key | `webhook.$name.expandObjectName` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `true` |
+
+---
+
 ## `$name.webhooks`
 
 Webhooks of the configuration.
@@ -273,7 +287,7 @@ webhook:
             name: my-webhook-service
             namespace: my-namespace
             path: /validate
-            port: "443"
+            port: 443
         rules:
           - scope: Namespaced
             apiGroups:
@@ -306,7 +320,7 @@ webhook:
             name: my-webhook-service
             namespace: my-namespace
             path: /validate
-            port: "443"
+            port: 443
         namespaceSelector:
           matchLabels:
             admission: enabled

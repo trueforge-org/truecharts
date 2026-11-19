@@ -4,7 +4,7 @@
   "properties": {
     "appUrl": {
       "type": "string",
-      "description": "URL of the app, taken from the primary ingress, eg `https://app.example.com/`. Points to `127.0.0.1` when there is no ingress.",
+      "description": "URL of the app, taken from the primary ingress or route, eg `https://app.example.com/`. Points to `127.0.0.1` when there is neither.",
       "default": "",
       "examples": [
         "https://app.example.com/"

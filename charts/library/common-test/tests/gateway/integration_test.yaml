@@ -1,0 +1,99 @@
+suite: gateway and route integration test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should link route to gateway via targetSelector
+    set:
+      gateway:
+        main:
+          enabled: true
+          gatewayClassName: test-gateway-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+      service:
+        main:
+          enabled: true
+          ports:
+            main:
+              enabled: true
+              port: 8080
+      route:
+        main:
+          enabled: true
+          targetSelector: main
+          hostnames:
+            - chart-example.local
+          rules:
+            - backendRefs:
+                - kind: Service
+                  name: main
+                  port: 8080
+    asserts:
+      - documentIndex: &gatewayDoc 1
+        isKind:
+          of: Gateway
+      - documentIndex: *gatewayDoc
+        equal:
+          path: metadata.name
+          value: test-release-name-common-test
+      - documentIndex: &routeDoc 2
+        isKind:
+          of: HTTPRoute
+      - documentIndex: *routeDoc
+        equal:
+          path: spec.parentRefs[0].kind
+          value: Gateway
+      - documentIndex: *routeDoc
+        equal:
+          path: spec.parentRefs[0].name
+          value: test-release-name-common-test
+      - documentIndex: *routeDoc
+        equal:
+          path: spec.parentRefs[0].namespace
+          value: test-release-namespace
+
+  - it: should use manual parentRefs when targetSelector is not set
+    set:
+      service:
+        main:
+          enabled: true
+          ports:
+            main:
+              enabled: true
+              port: 8080
+      route:
+        main:
+          enabled: true
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: external-gateway
+              namespace: external-namespace
+          hostnames:
+            - chart-example.local
+          rules:
+            - backendRefs:
+                - kind: Service
+                  name: main
+                  port: 8080
+    asserts:
+      - documentIndex: &routeDoc 1
+        isKind:
+          of: HTTPRoute
+      - documentIndex: *routeDoc
+        equal:
+          path: spec.parentRefs[0].kind
+          value: Gateway
+      - documentIndex: *routeDoc
+        equal:
+          path: spec.parentRefs[0].name
+          value: external-gateway
+      - documentIndex: *routeDoc
+        equal:
+          path: spec.parentRefs[0].namespace
+          value: external-namespace

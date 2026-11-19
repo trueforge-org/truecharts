@@ -5,7 +5,6 @@
   {{/* Naming */}}
   {{- $poolerName := printf "%s-pooler-%s" $objectData.name $objectData.pooler.type -}}
   {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $poolerName "length" 253) -}}
-  {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "CNPG Pooler") -}}
 
   {{/* Metadata */}}
   {{- $objLabels := $objectData.labels | default dict -}}

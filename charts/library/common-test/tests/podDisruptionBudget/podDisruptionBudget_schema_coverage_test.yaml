@@ -46,3 +46,30 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/podDisruptionBudget/my-pdb': (additional properties|additionalProperties)"
+
+  - it: should not prefix the pod disruption budget name when expandObjectName is false or "false"
+    set:
+      podDisruptionBudget:
+        my-a:
+          enabled: true
+          expandObjectName: false
+          minAvailable: 1
+          customLabels:
+            label1: value1
+        my-b:
+          enabled: true
+          expandObjectName: "false"
+          minAvailable: 1
+          customLabels:
+            label1: value1
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: my-a
+        isKind:
+          of: PodDisruptionBudget
+      - documentSelector:
+          path: metadata.name
+          value: my-b
+        isKind:
+          of: PodDisruptionBudget

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "sessionName": {
+      "type": "string",
+      "description": "Name of the cookie or header that holds the session."
+    },
+    "absoluteTimeout": {
+      "type": "string",
+      "description": "Maximum lifetime of a session, a duration like `1h`."
+    },
+    "idleTimeout": {
+      "type": "string",
+      "description": "Time without requests after which a session ends, a duration like `10m`."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Cookie",
+        "Header"
+      ],
+      "description": "How the session is kept: `Cookie` or `Header`."
+    },
+    "cookieConfig": {
+      "type": "object",
+      "properties": {
+        "lifetimeType": {
+          "type": "string",
+          "enum": [
+            "Permanent",
+            "Session"
+          ],
+          "description": "Lifetime of the cookie: `Permanent` or `Session`."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Settings of the cookie. Only with type `Cookie`."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Session persistence."
+}

@@ -1,20 +1,23 @@
 ## Full Examples
 
-Tailscale connects the pod to a tailnet. It adds a `tailscale` container to the workloads in `targetSelector`.
+Tailscale connects the pod to a tailnet. Its settings are mapped to the `TS_*` environment variables of the container.
 
 ### Userspace mode
 
-Run tailscale in userspace networking mode:
+Runs without extra privileges, so the container is run as a non-root user with a read only root filesystem:
 
 ```yaml
 addons:
   tailscale:
     enabled: true
-    authkey: tskey-auth-placeholder
-    userspace: true
-    auth_once: true
-    accept_dns: false
+    settings:
+      authkey: tskey-auth-placeholder
+      userspace: true
+      auth_once: true
+      accept_dns: false
 ```
+
+The auth key is stored in a Secret and loaded from there into `TS_AUTH_KEY`, instead of a plain environment variable.
 
 ### Advertise routes
 
@@ -24,10 +27,11 @@ Make networks reachable through the tailnet, and forward traffic to an IP:
 addons:
   tailscale:
     enabled: true
-    authkey: tskey-auth-placeholder
-    userspace: false
-    routes: 10.0.0.0/8,192.168.1.0/24
-    dest_ip: 10.0.0.10
+    settings:
+      authkey: tskey-auth-placeholder
+      userspace: false
+      routes: 10.0.0.0/8,192.168.1.0/24
+      dest_ip: 10.0.0.10
 ```
 
 ### Proxies and extra arguments
@@ -36,11 +40,12 @@ addons:
 addons:
   tailscale:
     enabled: true
-    authkey: tskey-auth-placeholder
-    sock5_server: ":1080"
-    outbound_http_proxy_listen: ":1055"
-    extra_args: --advertise-exit-node --hostname=my-app
-    daemon_extra_args: --verbose=1
+    settings:
+      authkey: tskey-auth-placeholder
+      sock5_server: ":1080"
+      outbound_http_proxy_listen: ":1055"
+      extra_args: --advertise-exit-node --hostname=my-app
+      daemon_extra_args: --verbose=1
 ```
 
 ### Configuration file
@@ -51,7 +56,8 @@ addons:
 addons:
   tailscale:
     enabled: true
-    config: /config/tailscaled.json
+    settings:
+      config: /config/tailscaled.json
 ```
 
 ### Container
@@ -66,7 +72,8 @@ addons:
       - main
     annotations:
       key: value
-    authkey: tskey-auth-placeholder
+    settings:
+      authkey: tskey-auth-placeholder
     container:
       env:
         TS_STATE_DIR: /var/lib/tailscale

@@ -48,7 +48,6 @@
 
       {{/* Perform validations */}}
       {{- include "tc.v1.common.lib.chart.names.validation" (dict "name" $objectName) -}}
-      {{- include "tc.v1.common.lib.metadata.validation" (dict "objectData" $objectData "caller" "Horizontal Pod Autoscaler") -}}
 
       {{/* Set the name of the workload */}}
       {{- $_ := set $objectData "name" $objectName -}}

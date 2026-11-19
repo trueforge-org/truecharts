@@ -24,10 +24,13 @@ It will include / inject the required templates based on the given values.
     {{/* Add the code-server service */}}
     {{- if $codeSrv.service.enabled -}}
       {{/* Add the code-server service */}}
-      {{- $hasPrimaryService := false -}}
-      {{- $result := (include "tc.v1.common.lib.service.hasPrimary" $) | fromJson -}}
-      {{- if and $result.hasEnabled $result.hasPrimary -}}
-        {{- $hasPrimaryService = true -}}
+      {{/* Addons of a dependency never set primaries, the objects of a dependency are only primary when explicitly set ([$.dependency] is only set for dependencies) */}}
+      {{- $hasPrimaryService := kindIs "string" $.dependency -}}
+      {{- if not $hasPrimaryService -}}
+        {{- $result := (include "tc.v1.common.lib.service.hasPrimary" $) | fromJson -}}
+        {{- if and $result.hasEnabled $result.hasPrimary -}}
+          {{- $hasPrimaryService = true -}}
+        {{- end -}}
       {{- end -}}
 
       {{- $svcValues := $codeSrv.service -}}
@@ -51,10 +54,12 @@ It will include / inject the required templates based on the given values.
         {{- $_ := set $ingressValues "targetSelector" (dict "codeserver" "codeserver") -}}
       {{- end -}}
 
-      {{- $hasPrimaryIngress := false -}}
-      {{- $result := (include "tc.v1.common.lib.ingress.hasPrimary" $) | fromJson -}}
-      {{- if and $result.hasEnabled $result.hasPrimary -}}
-        {{- $hasPrimaryIngress = true -}}
+      {{- $hasPrimaryIngress := kindIs "string" $.dependency -}}
+      {{- if not $hasPrimaryIngress -}}
+        {{- $result := (include "tc.v1.common.lib.ingress.hasPrimary" $) | fromJson -}}
+        {{- if and $result.hasEnabled $result.hasPrimary -}}
+          {{- $hasPrimaryIngress = true -}}
+        {{- end -}}
       {{- end -}}
 
       {{- if not $hasPrimaryIngress -}}
@@ -67,6 +72,33 @@ It will include / inject the required templates based on the given values.
 
       {{/* Let spawner handle the rest */}}
       {{- $_ := set $.Values.ingress "codeserver" $ingressValues -}}
+    {{- end -}}
+
+    {{/* Add the code-server route */}}
+    {{- if $codeSrv.route.enabled -}}
+      {{- $routeValues := $codeSrv.route -}}
+      {{- if not $routeValues.targetSelector -}}
+        {{/* Assumes that both service and port are named codeserver */}}
+        {{- $_ := set $routeValues "targetSelector" (dict "codeserver" "codeserver") -}}
+      {{- end -}}
+
+      {{- $hasPrimaryRoute := kindIs "string" $.dependency -}}
+      {{- range $name, $route := ($.Values.route | default dict) -}}
+        {{- if and (kindIs "map" $route) $route.primary (eq (include "tc.v1.common.lib.gateway.enabled" (dict "rootCtx" $ "objectData" $route "name" $name "key" "route" "caller" "Route")) "true") -}}
+          {{- $hasPrimaryRoute = true -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- if not $hasPrimaryRoute -}}
+        {{- $_ := set $routeValues "primary" true -}}
+      {{- end -}}
+
+      {{- if not $.Values.route -}}
+        {{- $_ := set $.Values "route" dict -}}
+      {{- end -}}
+
+      {{/* Let spawner handle the rest */}}
+      {{- $_ := set $.Values.route "codeserver" $routeValues -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}

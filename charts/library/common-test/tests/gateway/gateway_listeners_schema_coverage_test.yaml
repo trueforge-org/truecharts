@@ -1,0 +1,200 @@
+suite: gateway listeners schema coverage test
+templates:
+  - common.yaml
+release:
+  name: test-release-name
+  namespace: test-release-namespace
+tests:
+  - it: should render gateway listeners with TLS and UDP protocols, passthrough and a null hostname
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: tls
+              hostname: null
+              port: 8443
+              protocol: TLS
+              tls:
+                mode: Passthrough
+            - name: udp
+              port: 5353
+              protocol: UDP
+    asserts:
+      - documentSelector: &gw
+          path: kind
+          value: Gateway
+        equal:
+          path: spec.listeners[0].tls.mode
+          value: Passthrough
+      - documentSelector: *gw
+        equal:
+          path: spec.listeners[1].protocol
+          value: UDP
+
+  - it: should render gateway listeners with a null certificateRefs namespace
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: https
+              port: 443
+              protocol: HTTPS
+              tls:
+                mode: Terminate
+                certificateRefs:
+                  - name: some-cert
+                    namespace: null
+    asserts:
+      - documentSelector: *gw
+        equal:
+          path: spec.listeners[0].tls.certificateRefs[0].name
+          value: some-cert
+
+  - it: should render gateway listeners allowedRoutes namespaces from All and Same
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: all
+              port: 80
+              protocol: HTTP
+              allowedRoutes:
+                namespaces:
+                  from: All
+                kinds:
+                  - kind: HTTPRoute
+            - name: same
+              port: 81
+              protocol: HTTP
+              allowedRoutes:
+                namespaces:
+                  from: Same
+    asserts:
+      - documentSelector: *gw
+        equal:
+          path: spec.listeners[0].allowedRoutes.namespaces.from
+          value: All
+      - documentSelector: *gw
+        equal:
+          path: spec.listeners[1].allowedRoutes.namespaces.from
+          value: Same
+
+  - it: should fail on unknown keys in gateway listeners
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+              unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on empty name and port below the minimum in gateway listeners
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: ""
+              port: 0
+              protocol: HTTP
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0/name'"
+
+  - it: should fail on unknown keys in gateway listeners tls
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+              tls:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0/tls': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and empty name in gateway listeners tls certificateRefs
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+              tls:
+                certificateRefs:
+                  - name: ""
+                    unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0/tls/certificateRefs/0': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in gateway listeners allowedRoutes
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+              allowedRoutes:
+                unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0/allowedRoutes': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys in gateway listeners allowedRoutes namespaces
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+              allowedRoutes:
+                namespaces:
+                  unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0/allowedRoutes/namespaces': additional properties 'unknownKey' not allowed"
+
+  - it: should fail on unknown keys and empty kind in gateway listeners allowedRoutes kinds
+    set:
+      gateway:
+        my-gateway:
+          enabled: true
+          gatewayClassName: some-class
+          listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+              allowedRoutes:
+                kinds:
+                  - kind: ""
+                    unknownKey: value
+    asserts:
+      - failedTemplate:
+          errorPattern: "at '/gateway/my-gateway/listeners/0/allowedRoutes/kinds/0': additional properties 'unknownKey' not allowed"

@@ -91,7 +91,7 @@ credentials:
 
 ### Use them for backups
 
-A CNPG cluster refers to the credentials by name, see [CNPG](/truecharts-common/cnpg):
+The PostgreSQL dependency refers to the credentials by name, see [PostgreSQL](/truecharts-common/dependencies/postgresql):
 
 ```yaml
 credentials:

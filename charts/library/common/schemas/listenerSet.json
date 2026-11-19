@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Create this ListenerSet. Supports Helm `tpl`.",
+        "default": false,
+        "x-helm-tpl": true
+      },
+      "expandObjectName": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Prefix the name of the ListenerSet with the release fullname.",
+        "default": true
+      },
+      "namespace": {
+        "allOf": [
+          {
+            "$ref": "special/namespaces.json"
+          }
+        ],
+        "description": "Namespace of the ListenerSet. Defaults to the release namespace.",
+        "default": ""
+      },
+      "labels": {
+        "allOf": [
+          {
+            "$ref": "special/labels.json"
+          }
+        ],
+        "description": "Additional labels of the ListenerSet.",
+        "default": {}
+      },
+      "annotationsList": {
+        "allOf": [
+          {
+            "$ref": "special/annotationsList.json"
+          }
+        ],
+        "description": "Additional annotations as a list of name and value pairs, merged into the annotations"
+      },
+      "labelsList": {
+        "allOf": [
+          {
+            "$ref": "special/labelsList.json"
+          }
+        ],
+        "description": "Additional labels as a list of name and value pairs, merged into the labels"
+      },
+      "annotations": {
+        "allOf": [
+          {
+            "$ref": "special/annotations.json"
+          }
+        ],
+        "description": "Additional annotations of the ListenerSet.",
+        "default": {}
+      },
+      "targetSelector": {
+        "type": [
+          "null",
+          "string"
+        ],
+        "description": "Name of a gateway in this chart to attach to. Takes the place of `parentRef`, the gateway must set `allowedListeners.namespaces.from`."
+      },
+      "parentRef": {
+        "type": "object",
+        "properties": {
+          "group": {
+            "type": "string",
+            "description": "API group of the parent Gateway.",
+            "default": "gateway.networking.k8s.io"
+          },
+          "kind": {
+            "type": "string",
+            "description": "Kind of the parent.",
+            "default": "Gateway"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Name of the parent Gateway, supports Helm `tpl`. Required unless `targetSelector` is set."
+          },
+          "namespace": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "description": "Namespace of the parent Gateway, supports Helm `tpl`. Defaults to the namespace of the listener set."
+          }
+        },
+        "additionalProperties": false,
+        "description": "The Gateway to attach to, when `targetSelector` is not used."
+      },
+      "listeners": {
+        "type": "array",
+        "items": {
+          "allOf": [
+            {
+              "$ref": "listener.json"
+            }
+          ],
+          "description": "A listener added to the Gateway, same format as a listener of a Gateway."
+        },
+        "description": "Listeners that are added to the Gateway, same format as `gateway.$name.listeners`.",
+        "minItems": 1
+      }
+    },
+    "additionalProperties": false,
+    "description": "A ListenerSet, keyed by name.",
+    "default": {}
+  },
+  "description": "ListenerSets, keyed by name. Every enabled entry renders a Gateway API `ListenerSet`, see [ListenerSet](/truecharts-common/listenerSet)."
+}

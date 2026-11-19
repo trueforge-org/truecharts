@@ -31,7 +31,18 @@ metadata:
   annotations:
     {{- . | nindent 4 }}
   {{- end }}
+{{- if $objectData.data }}
 data:
-  {{- tpl (toYaml $objectData.data) $rootCtx | nindent 2 }}
+  {{- $dataYaml := toYaml $objectData.data -}}
+  {{/* Only run tpl on data that has template delimiters */}}
+  {{- if contains "{{" $dataYaml -}}
+    {{- $dataYaml = tpl $dataYaml $rootCtx -}}
+  {{- end }}
+  {{- $dataYaml | nindent 2 }}
+{{- end }}
+{{- if $objectData.binaryData }}
+binaryData:
+  {{- toYaml $objectData.binaryData | nindent 2 }}
+{{- end }}
   {{/* This comment is here to add a new line */}}
 {{- end -}}

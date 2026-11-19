@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "exec": {
+      "allOf": [
+        {
+          "$ref": "exec.json"
+        }
+      ],
+      "description": "Run a command in the container."
+    },
+    "httpGet": {
+      "allOf": [
+        {
+          "$ref": "httpGet.json"
+        }
+      ],
+      "description": "Request to an HTTP endpoint of the container."
+    },
+    "tcpSocket": {
+      "allOf": [
+        {
+          "$ref": "tcpSocket.json"
+        }
+      ],
+      "description": "Connection to a TCP port of the container."
+    },
+    "grpc": {
+      "allOf": [
+        {
+          "$ref": "grpc.json"
+        }
+      ],
+      "description": "gRPC health check of the container."
+    },
+    "initialDelaySeconds": {
+      "type": "integer",
+      "description": "Seconds to wait after the container started before the first probe."
+    },
+    "timeoutSeconds": {
+      "type": "integer",
+      "description": "Seconds after which the probe times out."
+    },
+    "periodSeconds": {
+      "type": "integer",
+      "description": "How often (in seconds) the probe runs."
+    },
+    "successThreshold": {
+      "type": "integer",
+      "description": "Consecutive successes needed to be considered successful after a failure."
+    },
+    "failureThreshold": {
+      "type": "integer",
+      "description": "Consecutive failures needed to be considered failed."
+    },
+    "terminationGracePeriodSeconds": {
+      "type": "integer",
+      "description": "Grace period before the container is stopped when this probe fails."
+    }
+  },
+  "additionalProperties": false,
+  "description": "Probe of the container. Set one of `exec`, `httpGet`, `tcpSocket` or `grpc`."
+}
