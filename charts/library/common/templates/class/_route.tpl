@@ -105,7 +105,7 @@ metadata:
   {{- end -}}
   {{- $annotations := (mustMerge ($routeAnnotations | default dict) (include "tc.v1.common.lib.metadata.allAnnotations" $ | fromYaml)) }}
   annotations:
-    checksum/secrets: {{ toJson $.Values.secret | sha256sum }}
+    checksum/secrets: {{ include "tc.v1.common.lib.checksum.secrets" $ }}
     checksum/services: {{ toJson $.Values.service | sha256sum }}
   {{- with (include "tc.v1.common.lib.metadata.render" (dict "rootCtx" $ "annotations" $annotations) | trim) }}
     {{- . | nindent 4 }}

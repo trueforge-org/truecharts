@@ -52,20 +52,7 @@ data:
     {{- end -}}
   {{- else }}
 stringData:
-    {{- if include "tc.v1.common.lib.util.dropEmptyKeys" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
-      {{- $data := dict -}}
-      {{- range $k, $v := $objectData.data -}}
-        {{- if not (include "tc.v1.common.lib.util.isEmptyValue" (dict "rootCtx" $rootCtx "value" $v)) -}}
-          {{- $_ := set $data $k $v -}}
-        {{- end -}}
-      {{- end -}}
-      {{- if $data }}
-        {{- tpl (toYaml $data) $rootCtx | nindent 2 }}
-      {{- else }} {}
-      {{- end -}}
-    {{- else }}
-      {{- tpl (toYaml $objectData.data) $rootCtx | nindent 2 }}
-    {{- end }}
+    {{- include "tc.v1.common.lib.secret.renderData" (dict "rootCtx" $rootCtx "objectData" $objectData) | nindent 2 }}
     {{/* This comment is here to add a new line */}}
   {{- end -}}
 {{- end -}}

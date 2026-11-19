@@ -174,7 +174,7 @@ metadata:
   {{- end }}
   annotations:
     cnpg.io/hibernation: {{ $hibernation | quote }}
-    checksum/secrets: {{ toJson $rootCtx.Values.secret | sha256sum }}
+    checksum/secrets: {{ include "tc.v1.common.lib.checksum.secrets" $rootCtx }}
     {{- if $skipEmptyWalArchiveCheck }}
     cnpg.io/skipEmptyWalArchiveCheck: "enabled"
     {{- end }}
