@@ -1,0 +1,40 @@
+image:
+  repository: oci.trueforge.org/containerforge/whoami
+  pullPolicy: IfNotPresent
+  tag: 1.12.0@sha256:5f4d80d415fa686033bc6dda06eb92fbb9cc48a75112f7c2f8e87738e36f8625
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          args:
+            - --port
+            - "8080"
+
+service:
+  main:
+    enabled: true
+    ports:
+      main:
+        port: 8080
+        targetPort: 8080
+      extraport:
+        enabled: true
+        port: 9118
+        targetPort: 9118
+  extraservice:
+    enabled: true
+    ports:
+      extrasvcport:
+        enabled: true
+        port: 9119
+        targetPort: 9119
+
+persistence:
+  config:
+    enabled: true
+    mountPath: "/config"
+    type: pvc
+    accessMode: ReadWriteOnce
+    size: "100Gi"

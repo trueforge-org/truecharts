@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=./values.schema.json
+image:
+  repository: ghcr.io/miguelndecarvalho/speedtest-exporter
+  tag: v3.5.4@sha256:f1064d49124c7fc45faabb87c6c876a2fd04e92b3dc14d4b871301217ba30fed
+  pullPolicy: IfNotPresent
+
+workload:
+  main:
+    podSpec:
+      containers:
+        main:
+          probes:
+            liveness:
+              type: tcp
+            readiness:
+              type: tcp
+            startup:
+              type: tcp
+
+redis:
+  enabled: false
+mariadb:
+  enabled: false
+mongodb:
+  enabled: false
