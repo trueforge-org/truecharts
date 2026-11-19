@@ -39,3 +39,8 @@ cnpg:
     enabled: true
     user: photoview
     database: photoview
+secret:
+  secrets:
+    enabled: true
+    data:
+      PHOTOVIEW_POSTGRES_URL: '{{ printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"") }}'

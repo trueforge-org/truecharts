@@ -88,3 +88,36 @@ cnpg:
     enabled: true
     user: odoo
     database: odoo
+configmap:
+  odoo-config:
+    enabled: true
+    data:
+      odoo.conf: |-
+        [options]
+        ; Paths
+        data_dir = {{ .Values.persistence.odoo.targetSelector.main.main.mountPath }}
+        addons_path = {{ .Values.persistence.addons.targetSelector.main.main.mountPath }}
+        ; Network Details
+        http_enable = True
+        http_interface = 0.0.0.0
+        http_port = {{ .Values.service.main.ports.main.port }}
+        ; Database Details
+        db_port = 5432
+        db_host = {{ .Values.cnpg.main.creds.host | trimAll "\"" }}
+        db_name = {{ .Values.cnpg.main.database }}
+        db_user = {{ .Values.cnpg.main.user }}
+        db_sslmode = disable
+        db_password = {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
+        {{- /* xmlrpc* keys are deprecated and http* keys are used in their place */ -}}
+        {{- $reservedKeys := (list "data_dir" "addons_path" "http_enable" "http_interface" "http_port" "xmlrpc" "xmlrpc_port" "xmlrpc_interface" "db_port" "db_host" "db_name" "db_user" "db_sslmode" "db_password") -}}
+        {{- $userKeys := list -}}
+        {{- range $opt := .Values.odoo.additionalConf -}}
+          {{- if (mustHas $opt.key $reservedKeys) -}}
+            {{- fail (printf "Odoo - Key [%v] is not allowed to be modified") -}}
+          {{- end -}}
+          {{- $userKeys = mustAppend $userKeys $opt.key -}}
+          {{- printf "%s = %s" $opt.key $opt.value | nindent 5 -}}
+        {{- end -}}
+        {{- if not (deepEqual $userKeys (uniq $userKeys)) -}}
+          {{- fail (printf "Odoo - Additional configuration keys must be unique, but got [%v]" (join ", " $userKeys)) -}}
+        {{- end }}
