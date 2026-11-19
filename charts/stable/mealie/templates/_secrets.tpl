@@ -1,27 +1,6 @@
 {{/* Define the secrets */}}
 {{- define "mealie.secrets" -}}
-{{- $fullname := (include "tc.v1.common.lib.chart.names.fullname" $) -}}
 {{- $api := .Values.mealie.api -}}
-{{- $frontend := .Values.mealie.frontend }}
-
-frontend:
-  enabled: true
-  data:
-    {{/* Frontend */}}
-    THEME_LIGHT_PRIMARY: {{ $frontend.theme.light_primary | default "#E58325" | quote }}
-    THEME_LIGHT_ACCENT: {{ $frontend.theme.light_accent | default "#007A99" | quote }}
-    THEME_LIGHT_SECONDARY: {{ $frontend.theme.light_secondary | default "#973542" | quote }}
-    THEME_LIGHT_SUCCESS: {{ $frontend.theme.light_success | default "#43A047" | quote }}
-    THEME_LIGHT_INFO: {{ $frontend.theme.light_info | default "#1976D2" | quote }}
-    THEME_LIGHT_WARNING: {{ $frontend.theme.light_warning | default "#FF6D00" | quote }}
-    THEME_LIGHT_ERROR: {{ $frontend.theme.light_error | default "#EF5350" | quote }}
-    THEME_DARK_PRIMARY: {{ $frontend.theme.dark_primary | default "#E58325" | quote }}
-    THEME_DARK_ACCENT: {{ $frontend.theme.dark_accent | default "#007A99" | quote }}
-    THEME_DARK_SECONDARY: {{ $frontend.theme.dark_secondary | default "#973542" | quote }}
-    THEME_DARK_SUCCESS: {{ $frontend.theme.dark_success | default "#43A047" | quote }}
-    THEME_DARK_INFO: {{ $frontend.theme.dark_info | default "#1976D2" | quote }}
-    THEME_DARK_WARNING: {{ $frontend.theme.dark_warning | default "#FF6D00" | quote }}
-    THEME_DARK_ERROR: {{ $frontend.theme.dark_error | default "#EF5350" | quote }}
 
 api:
   enabled: true

@@ -1,12 +1,6 @@
 {{/* Make sure all variables are set properly */}}
 {{- include "tc.v1.common.loader.init" . }}
 
-{{/* Render secret */}}
-{{- $secret := include "tfa.secrets" . | fromYaml -}}
-{{- if $secret -}}
-  {{- $_ := set .Values.secret "tfa-secrets" $secret -}}
-{{- end -}}
-
 {{/* Render arguments */}}
 {{- $tplArgs := (include "tfa.args" . | fromYaml) }}
 {{- $_ := set .Values "tplArgs" $tplArgs -}}

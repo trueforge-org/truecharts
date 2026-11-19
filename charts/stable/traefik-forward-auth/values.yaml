@@ -63,3 +63,22 @@ tfaOauthOptions:
   scopes: "changeme"
   tokenStyle: header
   resource: "changeme"
+secret:
+  tfa-secrets:
+    enabled: true
+    data:
+      PROVIDERS_GOOGLE_CLIENT_ID: '{{ .Values.tfaGoogleOptions.clientId | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GOOGLE_CLIENT_SECRET: '{{ .Values.tfaGoogleOptions.clientSecret | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GOOGLE_PROMPT: '{{ .Values.tfaGoogleOptions.prompt | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_OIDC_ISSUER_URL: '{{ .Values.tfaOidcOptions.issuerUrl | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_OIDC_CLIENT_ID: '{{ .Values.tfaOidcOptions.clientId | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_OIDC_CLIENT_SECRET: '{{ .Values.tfaOidcOptions.clientSecret | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_OIDC_RESOURCE: '{{ .Values.tfaOidcOptions.resource | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_AUTH_URL: '{{ .Values.tfaOauthOptions.authUrl | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_TOKEN_URL: '{{ .Values.tfaOauthOptions.tokenUrl | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_USER_URL: '{{ .Values.tfaOauthOptions.userUrl | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_CLIENT_ID: '{{ .Values.tfaOauthOptions.clientId | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_CLIENT_SECRET: '{{ .Values.tfaOauthOptions.clientSecret | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_TOKEN_STYLE: '{{ .Values.tfaOauthOptions.tokenStyle | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_RESOURCE: '{{ .Values.tfaOauthOptions.resource | trimAll "\"" | replace "\x27" "\x27\x27" }}'
+      PROVIDERS_GENERIC_OAUTH_SCOPE: '{{ .Values.tfaOauthOptions.scopes | trimAll "\"" | replace "\x27" "\x27\x27" }}'

@@ -14,6 +14,17 @@ service:
       main:
         protocol: http
         port: 12117
+secret:
+  secret:
+    enabled: true
+    data:
+      TRAGGO_DATABASE_DIALECT: sqlite3
+      TRAGGO_DATABASE_CONNECTION: /opt/traggo/data/traggo.db
+      TRAGGO_PORT: '{{ .Values.service.main.ports.main.port }}'
+      TRAGGO_PASS_STRENGTH: '{{ .Values.traggo.pass_strength }}'
+      TRAGGO_DEFAULT_USER_NAME: '{{ .Values.traggo.username | replace "\x27" "\x27\x27" }}'
+      TRAGGO_DEFAULT_USER_PASS: '{{ .Values.traggo.password | replace "\x27" "\x27\x27" }}'
+      TRAGGO_LOG_LEVEL: '{{ .Values.traggo.log_level }}'
 persistence:
   config:
     enabled: true

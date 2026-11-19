@@ -62,3 +62,9 @@ persistence:
           mountPath: /data/config.json
           subPath: config.json
           readOnly: true
+configmap:
+  ring-config:
+    enabled: true
+    data:
+      config.json: |-
+        {{ tpl (.Values.ring | toJson) . }}

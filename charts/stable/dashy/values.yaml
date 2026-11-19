@@ -59,7 +59,23 @@ workload:
               command:
                 - node
                 - /app/services/healthcheck
+configmap:
+  dashy-config:
+    enabled: '{{ if .Values.dashyConfig }}true{{ else }}false{{ end }}'
+    data:
+      conf.yml: |
+        {{- .Values.dashyConfig | toYaml | nindent 2 }}
 persistence:
+  dashy-config:
+    enabled: '{{ if .Values.dashyConfig }}true{{ else }}false{{ end }}'
+    type: configmap
+    objectName: dashy-config
+    readOnly: true
+    defaultMode: "0755"
+    mountPath: /app/public
+    items:
+      - key: conf.yml
+        path: conf.yml
   icons:
     enabled: true
     mountPath: /app/public/item-icons

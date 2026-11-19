@@ -26,6 +26,48 @@ collabora:
   no_gen_ssl: true
   extra_params:
     - --o:welcome.enable=false
+configmap:
+  collabora-config:
+    enabled: true
+    data:
+      aliasgroup1: '{{ join "," .Values.collabora.aliasgroup1 | replace "\x27" "\x27\x27" }}'
+      server_name: '{{ .Values.collabora.server_name | replace "\x27" "\x27\x27" }}'
+      dictionaries: '{{ join " " .Values.collabora.dictionaries | replace "\x27" "\x27\x27" }}'
+      username: '{{ .Values.collabora.username | replace "\x27" "\x27\x27" }}'
+      password: '{{ .Values.collabora.password | replace "\x27" "\x27\x27" }}'
+      DONT_GEN_SSL_CERT: '{{ .Values.collabora.no_gen_ssl }}'
+      # Also validates the collabora values, fails the render when invalid.
+      extra_params: |-
+        {{ if lt (len .Values.collabora.password) 8 -}}
+          {{- fail "Collabora - [Password] must be at least 8 characters" -}}
+        {{- end -}}
+        {{- if contains "$" .Values.collabora.password -}}
+          {{- fail "Collabora - [Password] cannot contain [$]" -}}
+        {{- end -}}
+        {{- $collaboraUIModes := (list "default" "compact" "tabbed") -}}
+        {{- if not (mustHas .Values.collabora.interface $collaboraUIModes) -}}
+          {{- fail (printf "Colabora - Expected [Interface Mode] to be one of [%v], but got [%v]" (join "," $collaboraUIModes) .Values.collabora.interface) -}}
+        {{- end -}}
+        {{- if not .Values.collabora.dictionaries -}}
+          {{- fail "Collabora -  Expected non-empty [Dictionaries]" -}}
+        {{- end -}}
+        {{- $fixedParams := (list "--o:mount_jail_tree=false"
+                                  "--o:security.seccomp=true"
+                                  "--o:home_mode.enable=true"
+                                  "--o:logging.level=warning"
+                                  "--o:logging.level_startup=warning"
+                          (printf "--o:user_interface.mode=%v" .Values.collabora.interface)
+                          (printf "--o:ssl.enable=%v" .Values.collabora.ssl_enable)
+                          (printf "--o:ssl.termination=%v" .Values.collabora.ssl_termination) ) -}}
+        {{- $params := concat $fixedParams .Values.collabora.extra_params -}}
+        {{- $checkParams := list -}}
+        {{- range $item := $params -}}
+          {{- $checkParams = mustAppend $checkParams (regexReplaceAll "--o:(.*)=.*" $item "${1}") -}}
+        {{- end -}}
+        {{- if not (deepEqual $checkParams (uniq $checkParams)) -}}
+          {{- fail (printf "Collabora - [Dictionaries] must be unique, but got [%v]" ((join ", " $params) | replace "--o:" "")) -}}
+        {{- end -}}
+        {{- join " " $params }}
 workload:
   main:
     podSpec:

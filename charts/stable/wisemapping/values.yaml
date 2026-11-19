@@ -53,7 +53,45 @@ workload:
           env:
             ADMIN_EMAIL: "change@me.com"
 
+configmap:
+  wisemapping-config:
+    enabled: true
+    data:
+      '{{ if .Values.wisemappingConfig }}app.properties{{ else }}app.properties.dummy{{ end }}': |-
+        {{- if .Values.wisemappingConfig }}
+        {{- .Values.wisemappingConfig | toYaml | nindent 8 }}
+        {{- else }}
+        ; Database Details
+        database.url=jdbc:{{ .Values.cnpg.main.creds.host | trimAll "\"" }}/wisemapping
+        database.driver=org.postgresql.Driver
+        database.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+        database.username= {{ .Values.cnpg.main.user }}
+        database.password= {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
+        database.validation.enabled=true
+        database.validation.query=
+        database.validation.enabled=false
+        ; Paths
+        admin.user = {{ .Values.workload.main.podSpec.containers.main.env.ADMIN_EMAIL }}
+        #site.baseurl = http://localhost:8080
+        # Site Homepage URL. This will be used as URL for homepage location.
+        site.homepage = c/login
+        # Font end static content can be deployed externally to the web app. Uncomment here and specify the url base location.
+        site.static.js.url = /static
+        {{- end }}
+
 persistence:
+  wisemapping-config:
+    enabled: true
+    type: configmap
+    objectName: wisemapping-config
+    targetSelector:
+      main:
+        main: {}
+        init-config: {}
+    mountPath: '{{ if .Values.wisemappingConfig }}/usr/local/tomcat/webapps/ROOT/WEB-INF/{{ else }}/usr/local/tomcat/webapps/ROOT/WEB-INF/dummy{{ end }}'
+    items:
+      - key: '{{ if .Values.wisemappingConfig }}app.properties{{ else }}app.properties.dummy{{ end }}'
+        path: '{{ if .Values.wisemappingConfig }}app.properties{{ else }}app.properties.dummy{{ end }}'
   config:
     # Only enable when not using wisemappingConfig
     enabled: false

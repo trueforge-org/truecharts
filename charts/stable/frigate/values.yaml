@@ -85,7 +85,43 @@ service:
         protocol: udp
         targetPort: 8555
 
+configmap:
+  frigate-config:
+    enabled: true
+    data:
+      config.yml: |
+        {{- if .Values.frigateConfig }}
+        {{- .Values.frigateConfig | toYaml | nindent 2 }}
+        {{- else }}
+        mqtt:
+          enabled: false
+        cameras:
+          dummy:
+            enabled: false
+            ffmpeg:
+              inputs:
+                - path: rtsp://127.0.0.1:554/rtsp
+                  roles:
+                    - detect
+        {{- end }}
 persistence:
+  frigate-config:
+    enabled: true
+    type: configmap
+    objectName: frigate-config
+    items:
+      - key: config.yml
+        path: config.yml
+    targetSelector:
+      main:
+        main:
+          subPath: config.yml
+          mountPath: '{{ ternary "/config/config.yml" "/dummy-config/config.yml" (not (empty .Values.frigateConfig)) }}'
+          readOnly: true
+        init-config:
+          subPath: config.yml
+          mountPath: '{{ ternary "/config/config.yml" "/dummy-config/config.yml" (not (empty .Values.frigateConfig)) }}'
+          readOnly: true
   media:
     enabled: true
     mountPath: /media

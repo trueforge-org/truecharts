@@ -75,3 +75,81 @@ persistence:
     objectName: secret
     mountPath: /plexanisync/settings.ini
     subPath: settings.ini
+  custommappings:
+    enabled: '{{ ternary "true" "false" (not (empty .Values.custom_mappings)) }}'
+    type: secret
+    readOnly: true
+    defaultMode: "0600"
+    objectName: secret
+    mountPath: /plexanisync/custom_mappings.yaml
+    subPath: custom_mappings.yaml
+configmap:
+  config:
+    enabled: true
+    data:
+      SETTINGS_FILE: '{{ .Values.persistence.settings.mountPath }}'
+      INTERVAL: '{{ .Values.plexanisync.interval }}'
+secret:
+  secret:
+    enabled: true
+    data:
+      settings.ini: |
+        [PLEX]
+        anime_section = {{ join "|" .Values.plexanisync.plex.anime_section }}
+
+        authentication_method = {{ .Values.plexanisync.plex.plex_auth_method }}
+
+        {{- if eq .Values.plexanisync.plex.plex_auth_method "direct" }}
+        base_url = {{ .Values.plexanisync.plex.plex_url }}
+        token = {{ .Values.plexanisync.plex.plex_token }}
+        {{- end }}
+
+        {{- if eq .Values.plexanisync.plex.plex_auth_method "myplex" }}
+        server = {{ .Values.plexanisync.plex.myplex_server_name }}
+        myplex_user = {{ .Values.plexanisync.plex.myplex_user }}
+        myplex_token = {{ .Values.plexanisync.plex.myplex_token }}
+        {{- end }}
+
+        home_user_sync = {{ ternary "True" "False" .Values.plexanisync.plex.home_user_sync }}
+        {{- if .Values.plexanisync.plex.home_user_sync }}
+        home_username = {{ .Values.plexanisync.plex.home_username }}
+        home_server_base_url = {{ .Values.plexanisync.plex.home_server_url }}
+        {{- end }}
+
+        [ANILIST]
+        access_token = {{ .Values.plexanisync.anilist.ani_token }}
+        plex_episode_count_priority = {{ ternary "True" "False" .Values.plexanisync.anilist.plex_ep_count_priority }}
+        skip_list_update = {{ ternary "True" "False" .Values.plexanisync.anilist.skip_list_update }}
+        username = {{ .Values.plexanisync.anilist.ani_username }}
+        log_failed_matches = {{ ternary "True" "False" .Values.plexanisync.anilist.log_failed_matches }}
+
+      custom_mappings.yaml: |-
+        # https://github.com/RickDB/PlexAniSync/blob/master/custom_mappings.yaml.example
+        {{- with .Values.custom_mappings }}
+        {{- with .remote_urls }}
+        remote-urls:
+          {{- range $url := . }}
+          - {{ . | quote }}
+          {{- end }}
+        {{- end -}}
+
+        {{- with .entries }}
+        entries:
+          {{- range $entry := . }}
+          - title: {{ $entry.title | quote }}
+            {{- with $entry.seasons }}
+            seasons:
+              {{- range $season_entry := . }}
+              - season: {{ $season_entry.season }}
+                anilist-id: {{ $season_entry.anilist_id }}
+              {{- end }}
+            {{- end -}}
+            {{- with $entry.synonyms }}
+            synonyms:
+              {{- range $synonym := . }}
+              - {{ . | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+        {{- end -}}
+        {{- end }}

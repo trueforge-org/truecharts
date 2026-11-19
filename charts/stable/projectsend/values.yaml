@@ -51,3 +51,22 @@ mariadb:
   enabled: true
   mariadbUsername: projectsend
   mariadbDatabase: projectsend
+configmap:
+  projectsend-config:
+    enabled: true
+    data:
+      sys.config.php: |-
+        <?php
+         define('DB_DRIVER', 'mysql');
+
+         define('DB_NAME', "{{ .Values.mariadb.mariadbDatabase }}");
+         define('DB_HOST', "{{ .Values.mariadb.creds.plainhost | trimAll "\"" }}");
+         define('DB_USER', "{{ .Values.mariadb.mariadbUsername }}");
+
+         define('DB_PASSWORD', "{{ .Values.mariadb.creds.mariadbPassword | trimAll "\"" }}");
+         define('TABLES_PREFIX', 'tbl_');
+
+         define('SITE_LANG','en');
+         define('MAX_FILESIZE',2048);
+         define('EMAIL_ENCODING', 'utf-8');
+         define('DEBUG', false);

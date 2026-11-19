@@ -22,6 +22,12 @@ wg:
       PublicKey = PUBLIC_KEY
       AllowedIPs = 0.0.0.0/0
       Endpoint = wg.example:51820
+secret:
+  wg-config-secret:
+    enabled: true
+    data:
+      wg0.conf: |
+        {{- .Values.wg.config.data | nindent 8 }}
 service:
   main:
     ports:

@@ -46,3 +46,8 @@ workload:
           envFrom:
             - secretRef:
                 name: terraria-secret
+secret:
+  terraria-secret:
+    enabled: true
+    data:
+      GAME_PARAMS: '{{ $params := list (printf "-port %v" .Values.service.main.ports.main.port) (printf "-password %v" .Values.terraria.pass) (printf "-autocreate %v" .Values.terraria.autocreate) (printf "-seed %v" .Values.terraria.seed) (printf "-worldname %v" .Values.terraria.worldname) (printf "-motd %v" .Values.terraria.motd) (printf "-maxplayers %v" .Values.terraria.maxplayers) (printf "-lang %v" .Values.terraria.lang) }}{{ range $key, $value := .Values.terraria.easy_game_params }}{{ if $value }}{{ $params = mustAppend $params (printf "-%s" $key) }}{{ end }}{{ end }}{{ $params = mustAppend $params .Values.terraria.game_params }}{{ tpl (join " " $params) . | replace (printf "%c" 39) (printf "%c%c" 39 39) }}'
