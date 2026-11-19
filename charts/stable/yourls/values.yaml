@@ -38,9 +38,18 @@ workload:
             YOURLS_PRIVATE: false
             YOURLS_SITE: "{{ .Values.chartContext.appUrl }}"
             YOURLS_USER: ""
-            YOURLS_PASS: ""
+            YOURLS_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: YOURLS_PASS
 
 mariadb:
   enabled: true
   mariadbUsername: yourls
   mariadbDatabase: yourls
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      YOURLS_PASS: ""

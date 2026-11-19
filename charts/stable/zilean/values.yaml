@@ -24,7 +24,10 @@ workload:
             startup:
               path: "/healthchecks/ping"
           env:
-            Zilean__Database__ConnectionString: '{{ printf "Host=%s;Port=5432;Database=%s;Username=%s;Password=%s" (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database .Values.cnpg.main.user .Values.cnpg.main.creds.password }}'
+            Zilean__Database__ConnectionString:
+              secretKeyRef:
+                name: env-secrets
+                key: Zilean__Database__ConnectionString
 
 persistence:
   data:
@@ -36,3 +39,9 @@ cnpg:
     enabled: true
     user: postgres
     database: zilean
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      Zilean__Database__ConnectionString: '{{ printf "Host=%s;Port=5432;Database=%s;Username=%s;Password=%s" (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database .Values.cnpg.main.user .Values.cnpg.main.creds.password }}'

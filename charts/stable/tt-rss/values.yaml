@@ -80,7 +80,10 @@ workload:
           env:
             TTRSS_SELF_URL_PATH: ""
             # tt-rss tests with "-z" so an empty string should still allow the randomly generated password to be made.
-            ADMIN_USER_PASS: ""
+            ADMIN_USER_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_USER_PASS
             TTRSS_DB_NAME: "{{ .Values.cnpg.main.database }}"
             TTRSS_DB_USER: "{{ .Values.cnpg.main.user }}"
             TTRSS_DB_PORT: "5432"
@@ -234,3 +237,9 @@ configmap:
 
           }
         }
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ADMIN_USER_PASS: ""

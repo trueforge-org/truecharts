@@ -42,7 +42,10 @@ workload:
             HTTP_ALL_INTERFACES: "yes"
             NODE_ENV: "production"
             MYDOMAIN: "test.truecharts.org"
-            ZTNCUI_PASSWD: "CHANGEME"
+            ZTNCUI_PASSWD:
+              secretKeyRef:
+                name: env-secrets
+                key: ZTNCUI_PASSWD
 
 persistence:
   config:
@@ -54,3 +57,9 @@ persistence:
   mkworld:
     enabled: true
     mountPath: /etc/zt-mkworld
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ZTNCUI_PASSWD: "CHANGEME"

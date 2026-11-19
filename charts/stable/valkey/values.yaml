@@ -17,7 +17,10 @@ workload:
             # VALKEY_REPLICATION_MODE: master
             ALLOW_EMPTY_PASSWORD: '{{ ternary "yes" "no" (empty .Values.password) }}'
             VALKEY_PORT: "{{ .Values.service.main.ports.main.targetPort }}"
-            VALKEY_PASSWORD: "{{ .Values.password }}"
+            VALKEY_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: VALKEY_PASSWORD
           probes:
             liveness:
               enabled: true
@@ -151,3 +154,9 @@ persistence:
         path: ping_liveness_local_and_master.sh
       - key: ping_readiness_local_and_master.sh
         path: ping_readiness_local_and_master.sh
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VALKEY_PASSWORD: "{{ .Values.password }}"

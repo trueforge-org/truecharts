@@ -71,7 +71,10 @@ workload:
             MAIL_PORT: "{{ .Values.twofauth.mail.port }}"
             MAIL_FROM: "{{ .Values.twofauth.mail.from }}"
             MAIL_USERNAME: "{{ .Values.twofauth.mail.user }}"
-            MAIL_PASSWORD: "{{ .Values.twofauth.mail.pass }}"
+            MAIL_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MAIL_PASSWORD
             MAIL_ENCRYPTION: "{{ .Values.twofauth.mail.encryption }}"
             MAIL_FROM_NAME: "{{ .Values.twofauth.mail.from_name }}"
             MAIL_FROM_ADDRESS: "{{ .Values.twofauth.mail.from_address }}"
@@ -120,3 +123,9 @@ cnpg:
     enabled: true
     user: twofauth
     database: twofauth
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MAIL_PASSWORD: "{{ .Values.twofauth.mail.pass }}"
