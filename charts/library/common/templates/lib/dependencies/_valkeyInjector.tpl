@@ -39,6 +39,8 @@ This template generates the valkey credentials and the secret holding them
       {{/* The password in the url has to be encoded, a literal "+" is already "%2B", so every remaining "+" was a space */}}
       {{- $urlPass := $dbPass | urlquery | replace "+" "%20" -}}
       {{- $url := printf "redis://default:%v@%v/0" $urlPass $portHost -}}
+      {{/* For clients that do not accept a username in the url */}}
+      {{- $urlnouser := printf "redis://:%v@%v/0" $urlPass $portHost -}}
       {{- $hostPass := printf "%v:%v" $dbHost $dbPass -}}
 
       {{/* Append values to depconfig.creds, so apps using the dependency can use them */}}
@@ -48,6 +50,7 @@ This template generates the valkey credentials and the secret holding them
       {{- $_ := set $dep.depconfig.creds "plainport" ($dbPort | quote) -}}
       {{- $_ := set $dep.depconfig.creds "plainporthost" ($portHost | quote) -}}
       {{- $_ := set $dep.depconfig.creds "url" ($url | quote) -}}
+      {{- $_ := set $dep.depconfig.creds "urlnouser" ($urlnouser | quote) -}}
       {{- $_ := set $dep.depconfig.creds "plainhostpass" ($hostPass | quote) -}}
 
 {{/* Create the secret (Comment also plays a role on correct formatting) */}}
@@ -60,6 +63,7 @@ data:
   plainport: {{ $dbPort | quote }}
   plainporthost: {{ $portHost | quote }}
   url: {{ $url | quote }}
+  urlnouser: {{ $urlnouser | quote }}
   plainhostpass: {{ $hostPass | quote }}
     {{- end -}}
   {{- end -}}

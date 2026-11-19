@@ -1,4 +1,25 @@
 {{/*
+Extra connection strings of the mariadb dependency, for apps that need another scheme or format than [url].
+Returns a json map of key -> value. The same keys are added to [depconfig.creds] and to the secret.
+Keep the keys in sync with docs/dependencies/index.md.
+user, pass: raw values (encoded here where the format needs it), host, port, db
+*/}}
+{{- define "tc.v1.common.lib.dependencies.mariadb.variants" -}}
+  {{- $urlUser := .user | urlquery | replace "+" "%20" -}}
+  {{- $urlPass := .pass | urlquery | replace "+" "%20" -}}
+  {{- $portHost := printf "%v:%v" .host .port -}}
+  {{- $path := printf "%v@%v/%v" (printf "%v:%v" $urlUser $urlPass) $portHost .db -}}
+  {{- $variants := dict
+        "urlmariadb" (printf "mariadb://%v" $path)
+        "urlmysql2" (printf "mysql2://%v" $path)
+        "urlpymysql" (printf "mysql+pymysql://%v" $path)
+        "authporthost" (printf "%v:%v@%v" $urlUser $urlPass $portHost)
+        "jdbcauth" (printf "jdbc:mariadb://%v/%v?user=%v&password=%v" $portHost .db $urlUser $urlPass)
+        "dotnet" (printf "Server=%v;Port=%v;Database=%v;User ID=%v;Password=%v" .host .port .db .user .pass) -}}
+  {{- $variants | toJson -}}
+{{- end -}}
+
+{{/*
 This template generates the mariadb credentials and the secret holding them
 */}}
 {{- define "tc.v1.common.dependencies.mariadb.secret" -}}
@@ -67,6 +88,11 @@ This template generates the mariadb credentials and the secret holding them
       {{- $_ := set $dep.depconfig.creds "jdbc" ($jdbc | quote) -}}
       {{- $_ := set $dep.depconfig.creds "jdbcmysql" ($jdbcMySQL | quote) -}}
       {{- $_ := set $dep.depconfig.creds "jdbcmariadb" ($jdbc | quote) -}}
+      {{/* More formats of the connection, for apps that need another scheme than [url] */}}
+      {{- $variants := include "tc.v1.common.lib.dependencies.mariadb.variants" (dict "user" $dbUser "pass" $dbPass "host" $dbHost "port" $dbPort "db" $dbName) | fromJson -}}
+      {{- range $key, $value := $variants -}}
+        {{- $_ := set $dep.depconfig.creds $key ($value | quote) -}}
+      {{- end -}}
 
 {{/* Create the secret (Comment also plays a role on correct formatting) */}}
 enabled: true
@@ -81,6 +107,9 @@ data:
   jdbc: {{ $jdbc | quote }}
   jdbc-mysql: {{ $jdbcMySQL | quote }}
   jdbc-mariadb: {{ $jdbc | quote }}
+      {{- range $key, $value := $variants }}
+  {{ $key }}: {{ $value | quote }}
+      {{- end }}
     {{- end -}}
   {{- end -}}
 {{- end -}}

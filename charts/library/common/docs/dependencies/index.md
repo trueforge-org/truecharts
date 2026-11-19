@@ -468,6 +468,12 @@ The `mariadb` dependency has additional handling:
   | `urlnossl` | `urlnossl` | `mysql://test:my-password@myapp-mariadb-main:3306/test?sslmode=disable` |
   | `jdbc` | `jdbc` | `jdbc:mariadb://myapp-mariadb-main:3306/test` |
   | `jdbc-mysql` | `jdbcmysql` | `jdbc:mysql://myapp-mariadb-main:3306/test` |
+  | `urlmariadb` | `urlmariadb` | `mariadb://test:my-password@myapp-mariadb-main:3306/test` |
+  | `urlmysql2` | `urlmysql2` | `mysql2://test:my-password@myapp-mariadb-main:3306/test` |
+  | `urlpymysql` | `urlpymysql` | `mysql+pymysql://test:my-password@myapp-mariadb-main:3306/test` |
+  | `authporthost` | `authporthost` | `test:my-password@myapp-mariadb-main:3306` |
+  | `jdbcauth` | `jdbcauth` | `jdbc:mariadb://myapp-mariadb-main:3306/test?user=test&password=my-password` |
+  | `dotnet` | `dotnet` | `Server=myapp-mariadb-main;Port=3306;Database=test;User ID=test;Password=my-password` |
   | `jdbc-mariadb` | `jdbcmariadb` | `jdbc:mariadb://myapp-mariadb-main:3306/test` |
 
   The host and port are the ones of the primary service and port of the dependency.
@@ -485,7 +491,8 @@ The `depconfig` of the dependency accepts:
 | `mariadbDatabase` | `test` | Name of the database |
 
 Both passwords need at least 4 characters, and are applied again on every start, so they can be changed later.
-The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
+The user and the password are url-encoded in every url format and in `jdbcauth` and `authporthost`, the `dotnet` connection string uses them as they are, so avoid `;` and `"` in the password when an app uses that one.
+Use these keys instead of composing a connection string in the chart, they are all credentials, so load them with `secretKeyRef` (with `expandObjectName: false`).
 
 The dependency runs `oci.trueforge.org/containerforge/mariadb` as a `StatefulSet` with one replica, as UID and GID `568` with a read-only root filesystem.
 Its data is stored in the `data` volume, mounted at `/config` (databases in `/config/databases`, settings in `/config/custom.cnf`).
@@ -569,6 +576,14 @@ Both modes share the same handling:
   | `url` | `complete` | `postgresql://app:my-password@myapp-postgresql-main:5432/app` |
   | `urlnossl` | `urlnossl` | `postgresql://app:my-password@myapp-postgresql-main:5432/app?sslmode=disable` |
   | `jdbc` | `jdbc` | `jdbc:postgresql://myapp-postgresql-main:5432/app` |
+  | `urlpostgres` | `urlpostgres` | `postgres://app:my-password@myapp-postgresql-main:5432/app` |
+  | `urlecto` | `urlecto` | `ecto://app:my-password@myapp-postgresql-main:5432/app` |
+  | `urlpsycopg2` | `urlpsycopg2` | `postgresql+psycopg2://app:my-password@myapp-postgresql-main:5432/app` |
+  | `urlasyncpg` | `urlasyncpg` | `postgresql+asyncpg://app:my-password@myapp-postgresql-main:5432/app` |
+  | `urlutf8` | `urlutf8` | `postgresql://app:my-password@myapp-postgresql-main:5432/app?client_encoding=utf8` |
+  | `authporthost` | `authporthost` | `app:my-password@myapp-postgresql-main:5432` |
+  | `jdbcauth` | `jdbcauth` | `jdbc:postgresql://myapp-postgresql-main:5432/app?user=app&password=my-password` |
+  | `npgsql` | `npgsql` | `Host=myapp-postgresql-main;Port=5432;Database=app;Username=app;Password=my-password` |
 
   The host and port are the ones of the primary service and port of the dependency in `standalone` mode, and the ones of the CNPG service in `operator` mode (see [PostgreSQL Operator](#postgresql-operator)). The keys are the same in both modes.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
@@ -584,7 +599,8 @@ The `depconfig` of the dependency accepts:
 | `postgresqlUsername` | `app` | Name of the database user. The superuser of the server in `standalone` mode, the owner of the database in `operator` mode |
 | `postgresqlDatabase` | `app` | Name of the database, created on the first start |
 
-The `url` and `urlnossl` values do not escape the password, so avoid characters like `@`, `:` and `/` when an app uses those.
+The user and the password are url-encoded in every url format and in `jdbcauth` and `authporthost`, the `npgsql` connection string uses them as they are, so avoid `;` and `"` in the password when an app uses that one.
+Use these keys instead of composing a connection string in the chart, they are all credentials, so load them with `secretKeyRef` (with `expandObjectName: false`).
 
 The rest of this section describes the `standalone` mode. The image does not offer TLS, which is why `urlnossl` is the same connection with `sslmode=disable`.
 
@@ -668,7 +684,7 @@ All settings of the cluster go under `dependencies.postgresql.operator`. Only th
   | `operator.pooler.enabled` | `$fullname-cnpg-main-pooler-rw` | - |
   | `operator.pooler.enabled` and `createRO` | `$fullname-cnpg-main-pooler-rw` | `$fullname-cnpg-main-pooler-ro` |
 
-  With `createRO`, the `plainRO`, `plainhostRO`, `plainportRO`, `plainporthostRO`, `completeRO`, `urlnosslRO` and `jdbcRO` keys are added to `depconfig.creds`, and `urlRO`, `urlnosslRO`, `plainhostRO`, `plainporthostRO` and `jdbcRO` to the secret.
+  With `createRO`, the `plainRO`, `plainhostRO`, `plainportRO`, `plainporthostRO`, `completeRO`, `urlnosslRO` and `jdbcRO` keys are added to `depconfig.creds`, and `urlRO`, `urlnosslRO`, `plainhostRO`, `plainporthostRO` and `jdbcRO` to the secret. Every extra format of the table above (`urlpostgres`, `urlecto`, ..., `npgsql`) gets an `RO` variant as well, in both.
 - The `postgresql-wait` init container is the same as in `standalone` mode. It waits for the cluster, then for the pooler and the read-only pooler when those are enabled.
 - The `Cluster`, `Pooler`, `ObjectStore`, `ScheduledBackup` and `Backup` resources follow the CNPG and barman-cloud CRDs, their structure did not change from the former top-level `cnpg` key.
 - `backups.credentials` and `recovery.credentials` reference the top-level `credentials` of the chart.
@@ -894,10 +910,11 @@ The `valkey` dependency has additional handling:
   | `plainporthost` | `myapp-valkey-main:6379` |
   | `plainhostpass` | `myapp-valkey-main:my-password` |
   | `url` | `redis://default:my-password@myapp-valkey-main:6379/0` |
+  | `urlnouser` | `redis://:my-password@myapp-valkey-main:6379/0` |
 
   The host and port are the ones of the primary service and port of the dependency.
   Like the `creds` of the other dependencies, the values are quoted strings, use `| trimAll "\""` when templating them.
-- `valkey-password`, `url` and `plainhostpass` are credentials (or contain them), so they must be loaded into the environment from this secret with `secretKeyRef` (with `expandObjectName: false`), and never be set as a plain value in `env`.
+- `valkey-password`, `url`, `urlnouser` and `plainhostpass` are credentials (or contain them), so they must be loaded into the environment from this secret with `secretKeyRef` (with `expandObjectName: false`), and never be set as a plain value in `env`.
   Only the host and port from `creds` are safe to use in a plain `env` value.
 - An init container `valkey-wait` is added to the workloads of the chart (the ones with `dbWait` not set to `false`), waiting for Valkey to respond.
 - The connection details are included in the notes.
