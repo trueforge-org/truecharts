@@ -147,4 +147,12 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: plainhost
-            QUEUE_BULL_REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            QUEUE_BULL_REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: QUEUE_BULL_REDIS_PASSWORD
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      QUEUE_BULL_REDIS_PASSWORD: '{{ .Values.redis.password }}'

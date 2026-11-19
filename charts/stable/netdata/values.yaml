@@ -190,5 +190,13 @@ workload:
               fieldRef:
                 fieldPath: metadata.name
             NETDATA_CLAIM_URL: ""
-            NETDATA_CLAIM_TOKEN: ""
+            NETDATA_CLAIM_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: NETDATA_CLAIM_TOKEN
             NETDATA_CLAIM_ROOMS: ""
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      NETDATA_CLAIM_TOKEN: ""

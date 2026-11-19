@@ -23,7 +23,10 @@ workload:
       containers:
         main:
           env:
-            API_SECRET: ""
+            API_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: API_SECRET
             BASE_URL: ""
             BG_HIGH: ""
             BG_LOW: ""
@@ -37,3 +40,8 @@ workload:
             MONGO_CONNECTION: mongodb://db-user:db-password@mongodb-instance:port/db-name
             THEME: colors
             TIME_FORMAT: "24"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      API_SECRET: ""

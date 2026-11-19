@@ -13,8 +13,14 @@ workload:
           env:
             MONGODB_USERNAME: "{{ .Values.mongodbUsername }}"
             MONGODB_DATABASE: "{{ .Values.mongodbDatabase }}"
-            MONGODB_PASSWORD: "{{ .Values.password }}"
-            MONGODB_ROOT_PASSWORD: "{{ .Values.rootPassword }}"
+            MONGODB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MONGODB_PASSWORD
+            MONGODB_ROOT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MONGODB_ROOT_PASSWORD
           # -- Probe configuration
           # -- [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
           # @default -- See below
@@ -84,3 +90,8 @@ secret:
     data:
       mongodb-password: '{{ ( .Values.password | default "empty" ) }}'
       mongodb-root-password: '{{ ( .Values.rootPassword | default "empty" ) }}'
+  env-secrets:
+    enabled: true
+    data:
+      MONGODB_PASSWORD: '{{ .Values.password }}'
+      MONGODB_ROOT_PASSWORD: '{{ .Values.rootPassword }}'

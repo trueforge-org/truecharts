@@ -31,6 +31,11 @@ configmap:
       SECURE_CONNECTION: '{{ ternary "1" "0" .Values.mediainfo.SECURE_CONNECTION }}'
       DISPLAY_WIDTH: "{{ .Values.mediainfo.DISPLAY_WIDTH }}"
       DISPLAY_HEIGHT: "{{ .Values.mediainfo.DISPLAY_HEIGHT }}"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VNC_PASSWORD: ""
 persistence:
   config:
     enabled: true
@@ -65,7 +70,10 @@ workload:
             startup:
               type: tcp
           env:
-            VNC_PASSWORD: ""
+            VNC_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: VNC_PASSWORD
           envFrom:
             - configMapRef:
                 name: "mediainfo"

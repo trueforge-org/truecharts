@@ -9,8 +9,14 @@ workload:
       containers:
         main:
           env:
-            MARIADB_PASSWORD: "{{ .Values.password }}"
-            MARIADB_ROOT_PASSWORD: "{{ .Values.rootPassword }}"
+            MARIADB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MARIADB_PASSWORD
+            MARIADB_ROOT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MARIADB_ROOT_PASSWORD
             MARIADB_USER: "{{ .Values.mariadbUsername }}"
             MARIADB_DATABASE: "{{ .Values.mariadbDatabase }}"
             MARIADB_EXTRA_FLAGS: "--init-file=/init/passinit.sql"
@@ -62,6 +68,13 @@ persistence:
         main:
           subPath: passinit.sql
           mountPath: /init/passinit.sql
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MARIADB_PASSWORD: '{{ .Values.password }}'
+      MARIADB_ROOT_PASSWORD: '{{ .Values.rootPassword }}'
 
 configmap:
   passinit:

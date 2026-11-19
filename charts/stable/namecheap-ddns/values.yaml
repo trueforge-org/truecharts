@@ -24,7 +24,10 @@ workload:
           env:
             APP_DOMAIN: ""
             APP_HOST: ""
-            APP_PASSWORD: ""
+            APP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: APP_PASSWORD
           probes:
             liveness:
               enabled: false
@@ -32,3 +35,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      APP_PASSWORD: ""

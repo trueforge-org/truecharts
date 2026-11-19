@@ -13,13 +13,21 @@ workload:
             MM_SQLSETTINGS_DRIVERNAME: "postgres"
             MM_BLEVESETTINGS_INDEXDIR: "/mattermost/bleve-indexes"
             MM_SERVICESETTINGS_SITEURL: "https://test.example.com"
-            MM_SQLSETTINGS_DATASOURCE: '{{ .Values.cnpg.main.creds.std | trimAll "\""  }}'
+            MM_SQLSETTINGS_DATASOURCE:
+              secretKeyRef:
+                name: env-secrets
+                key: MM_SQLSETTINGS_DATASOURCE
 service:
   main:
     ports:
       main:
         port: 10239
         targetPort: 8065
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MM_SQLSETTINGS_DATASOURCE: '{{ .Values.cnpg.main.creds.std | trimAll "\""  }}'
 persistence:
   config:
     enabled: true
