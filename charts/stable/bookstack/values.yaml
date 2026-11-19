@@ -16,6 +16,10 @@ service:
         port: 10112
         protocol: http
         targetPort: 80
+bookstack:
+  # Must be changed. Laravel key: "base64:" followed by base64 of 32 random bytes.
+  appKey: "base64:UExBQ0VIT0xERVJBUFBLRVlDSEFOR0VNRTAwMDAwMDA="
+
 workload:
   main:
     podSpec:

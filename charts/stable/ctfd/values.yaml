@@ -12,6 +12,10 @@ service:
         targetPort: 8000
         port: 10613
 
+ctfd:
+  # Must be changed. Random string (32 characters recommended).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:

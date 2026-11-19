@@ -15,6 +15,10 @@ securityContext:
 
 # EteSync configuration docs:
 # https://github.com/etesync/server#configuration
+etesync:
+  # Must be changed. Django SECRET_KEY, random string (32+ characters).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:

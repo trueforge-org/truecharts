@@ -24,6 +24,12 @@ service:
         enabled: true
         port: 25
         targetPort: 25
+anonaddy:
+  # Must be changed. Random 32 character string (it is base64 encoded by the chart).
+  appKey: "PLACEHOLDERAPPKEYCHANGEME0000000"
+  # Must be changed. Long random string (32+ characters).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:

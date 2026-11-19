@@ -15,6 +15,10 @@ service:
       main:
         port: 10228
         protocol: http
+baserow:
+  # Must be changed. Random string (32 characters recommended).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:
