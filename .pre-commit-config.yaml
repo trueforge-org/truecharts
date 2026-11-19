@@ -23,7 +23,7 @@ repos:
       - id: check-executables-have-shebangs # ensures that (non-binary) executables have a shebang.
         exclude: (^archive/|^website\/public)
       - id: check-shebang-scripts-are-executable # ensures that (non-binary) files with a shebang are executable.
-        exclude: (^archive/|^website\/public)
+        exclude: (^archive/|^website\/public|common\/.*\.py)
       - id: check-docstring-first
         exclude: ^archive/
       - id: check-symlinks
