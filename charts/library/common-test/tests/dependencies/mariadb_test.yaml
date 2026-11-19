@@ -364,3 +364,31 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "/dependencies/mariadb/depconfig/rootPassword': minLength: got 3, want 4"
+
+  - it: should give the mariadb dependency a writable /run/mysqld, also when the chart disables varrun
+    set:
+      persistence:
+        varrun:
+          enabled: false
+      dependencies:
+        mariadb:
+          depconfig:
+            password: test-password
+            rootPassword: test-password
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: mariadb-run
+            mountPath: /run/mysqld
+            readOnly: false
+      - documentSelector:
+          path: kind
+          value: StatefulSet
+        equal:
+          path: spec.template.spec.volumes[?(@.name == 'mariadb-run')].emptyDir.medium
+          value: Memory
