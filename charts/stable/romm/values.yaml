@@ -34,7 +34,10 @@ workload:
             # application settings
             # Generate a key with openssl rand -hex 32 ✓
             # required
-            ROMM_AUTH_SECRET_KEY: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
+            ROMM_AUTH_SECRET_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ROMM_AUTH_SECRET_KEY
             # Disables CSRF protection (not recommended)
             # DISABLE_CSRF_PROTECTION: false
             # Disable auth on download endpoint (WebRcade, Tinfoil)
@@ -95,7 +98,10 @@ workload:
             DB_PORT: 5432
             DB_NAME: "{{ .Values.cnpg.main.database }}"
             DB_USER: "{{ .Values.cnpg.main.user }}"
-            DB_PASSWD: "{{ .Values.cnpg.main.creds.password }}"
+            DB_PASSWD:
+              secretKeyRef:
+                name: env-secrets
+                key: DB_PASSWD
             # Extra query parameters for the database connection, in JSON format (e.g. {"unix_socket": "/path/to/db"})
             # DB_QUERY_JSON: ""
             # Host name of Redis/Valkey instance
@@ -105,7 +111,10 @@ workload:
             # Username for Redis/Valkey instance
             REDIS_USERNAME: "default"
             # Password for Redis/Valkey instance
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
             # Database number for Redis/Valkey instance
             # REDIS_DB: 0
             # Enable SSL for Redis/Valkey instance
@@ -117,7 +126,10 @@ workload:
             # Client ID for IGDB API
             IGDB_CLIENT_ID: ""
             # Client secret for IGDB API
-            IGDB_CLIENT_SECRET: ""
+            IGDB_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: IGDB_CLIENT_SECRET
             # Screenscraper username
             # SCREENSCRAPER_USER: ""
             # Screenscraper password
@@ -231,3 +243,12 @@ cnpg:
 
 redis:
   enabled: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ROMM_AUTH_SECRET_KEY: 'CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME'
+      DB_PASSWD: '{{ .Values.cnpg.main.creds.password }}'
+      REDIS_PASSWORD: '{{ .Values.redis.password }}'
+      IGDB_CLIENT_SECRET: ''

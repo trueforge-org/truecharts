@@ -50,7 +50,10 @@ workload:
             DB_PORT: 3306
             DB_DATABASE: "{{ .Values.mariadb.mariadbDatabase }}"
             DB_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
-            DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DB_PASSWORD
 persistence:
   nginx:
     enabled: true
@@ -60,3 +63,9 @@ mariadb:
   enabled: true
   mariadbUsername: servas
   mariadbDatabase: servas
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DB_PASSWORD: '{{ .Values.mariadb.password }}'

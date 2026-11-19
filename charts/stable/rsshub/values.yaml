@@ -50,12 +50,41 @@ workload:
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: url
             HTTP_BASIC_AUTH_NAME: ""
-            HTTP_BASIC_AUTH_PASS: ""
+            HTTP_BASIC_AUTH_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: HTTP_BASIC_AUTH_PASS
             BITBUCKET_USERNAME: ""
-            BITBUCKET_PASSWORD: ""
-            GITHUB_ACCESS_TOKEN: ""
-            GOOGLE_FONTS_API_KEY: ""
+            BITBUCKET_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: BITBUCKET_PASSWORD
+            GITHUB_ACCESS_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: GITHUB_ACCESS_TOKEN
+            GOOGLE_FONTS_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: GOOGLE_FONTS_API_KEY
             YOUTUBE_KEY: ""
-            TELEGRAM_TOKEN: ""
-            LASTFM_API_KEY: ""
+            TELEGRAM_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TELEGRAM_TOKEN
+            LASTFM_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: LASTFM_API_KEY
 updated: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      HTTP_BASIC_AUTH_PASS: ''
+      BITBUCKET_PASSWORD: ''
+      GITHUB_ACCESS_TOKEN: ''
+      GOOGLE_FONTS_API_KEY: ''
+      TELEGRAM_TOKEN: ''
+      LASTFM_API_KEY: ''

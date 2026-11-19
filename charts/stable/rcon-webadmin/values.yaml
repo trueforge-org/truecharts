@@ -61,5 +61,18 @@ workload:
             RWA_WEBSOCKET_URL_SSL: "{{ .Values.rcon.rwa_websocket_url_ssl }}"
             RWA_WEBSOCKET_URL: "{{ .Values.rcon.rwa_websocket_url }}"
             RWA_USERNAME: admin
-            RWA_PASSWORD: pass
-            RWA_RCON_PASSWORD: pass
+            RWA_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: RWA_PASSWORD
+            RWA_RCON_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: RWA_RCON_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      RWA_PASSWORD: 'pass'
+      RWA_RCON_PASSWORD: 'pass'

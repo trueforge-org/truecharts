@@ -26,7 +26,10 @@ workload:
           env:
             # Init for Seafile admin
             INIT_SEAFILE_ADMIN_EMAIL: "me@example.com"
-            INIT_SEAFILE_ADMIN_PASSWORD: "a_very_secret_password"
+            INIT_SEAFILE_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: INIT_SEAFILE_ADMIN_PASSWORD
             # for Seafile server
             TIME_ZONE: "UTC"
             SEAFILE_LOG_TO_STDOUT: "true"
@@ -34,7 +37,10 @@ workload:
             SEAFILE_SERVER_HOSTNAME: "seafile.mydomain.com"
             SEAFILE_SERVER_PROTOCOL: "https"
             # other secrets
-            JWT_PRIVATE_KEY: "a_very_very_very_very_secret_key"
+            JWT_PRIVATE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_PRIVATE_KEY
             # for database
             SEAFILE_MYSQL_DB_HOST:
               secretKeyRef:
@@ -46,8 +52,14 @@ workload:
             SEAFILE_MYSQL_DB_CCNET_DB_NAME: "ccnet_db"
             SEAFILE_MYSQL_DB_SEAFILE_DB_NAME: "seafile_db"
             SEAFILE_MYSQL_DB_SEAHUB_DB_NAME: "seahub_db"
-            INIT_SEAFILE_MYSQL_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
-            SEAFILE_MYSQL_DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            INIT_SEAFILE_MYSQL_ROOT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: INIT_SEAFILE_MYSQL_ROOT_PASSWORD
+            SEAFILE_MYSQL_DB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SEAFILE_MYSQL_DB_PASSWORD
             # for cached
             CACHE_PROVIDER: "redis"
             ## for redis
@@ -57,7 +69,10 @@ workload:
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: plainhost
             REDIS_PORT: "6379"
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
             # for notification
             ENABLE_NOTIFICATION_SERVER: "false"
             NOTIFICATION_SERVER_URL: ""
@@ -80,3 +95,13 @@ mariadb:
 
 redis:
   enabled: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      INIT_SEAFILE_ADMIN_PASSWORD: 'a_very_secret_password'
+      JWT_PRIVATE_KEY: 'a_very_very_very_very_secret_key'
+      INIT_SEAFILE_MYSQL_ROOT_PASSWORD: '{{ .Values.mariadb.rootPassword }}'
+      SEAFILE_MYSQL_DB_PASSWORD: '{{ .Values.mariadb.password }}'
+      REDIS_PASSWORD: '{{ .Values.redis.password }}'

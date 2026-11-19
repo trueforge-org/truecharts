@@ -16,7 +16,10 @@ workload:
             REDIS_REPLICATION_MODE: master
             ALLOW_EMPTY_PASSWORD: "yes"
             REDIS_PORT: "{{ .Values.service.main.ports.main.targetPort }}"
-            REDIS_PASSWORD: "{{ .Values.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
           probes:
             liveness:
               enabled: true
@@ -150,3 +153,9 @@ persistence:
         path: ping_liveness_local_and_master.sh
       - key: ping_readiness_local_and_master.sh
         path: ping_readiness_local_and_master.sh
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      REDIS_PASSWORD: '{{ .Values.password }}'

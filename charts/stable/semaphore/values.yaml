@@ -46,7 +46,10 @@ workload:
             SEMAPHORE_PLAYBOOK_PATH: "{{.Values.persistence.data.mountPath }}"
             SEMAPHORE_ADMIN: admin
             SEMAPHORE_ADMIN_NAME: admin
-            SEMAPHORE_ADMIN_PASSWORD: changeme
+            SEMAPHORE_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SEMAPHORE_ADMIN_PASSWORD
             SEMAPHORE_ADMIN_EMAIL: admin@localhost
             # LDAP
             # no | yes
@@ -73,3 +76,9 @@ cnpg:
     enabled: true
     user: semaphore
     database: semaphore
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SEMAPHORE_ADMIN_PASSWORD: 'changeme'
