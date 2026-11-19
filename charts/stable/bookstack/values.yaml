@@ -30,7 +30,10 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DB_PASSWORD
             APP_KEY:
               secretKeyRef:
                 name: secrets
@@ -43,3 +46,8 @@ mariadb:
   enabled: true
   mariadbUsername: bookstack
   mariadbDatabase: bookstack
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DB_PASSWORD: "{{ .Values.mariadb.password }}"

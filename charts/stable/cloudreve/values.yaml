@@ -13,11 +13,17 @@ workload:
             CR_CONF_Database.Host: "{{ .Values.cnpg.main.creds.host }}"
             CR_CONF_Database.User: "{{ .Values.cnpg.main.user }}"
             CR_CONF_Database.Name: "{{ .Values.cnpg.main.database }}"
-            CR_CONF_Database.Password: "{{ .Values.cnpg.main.creds.password }}"
+            CR_CONF_Database.Password:
+              secretKeyRef:
+                name: env-secrets
+                key: CR_CONF_Database.Password
             CR_CONF_Database.Port: 5432
             CR_CONF_Redis.Server: '{{ .Values.redis.creds.plain | trimAll "\"" }}:6379'
             CR_CONF_Redis.User: "{{ .Values.redis.redisUsername }}"
-            CR_CONF_Redis.Password: "{{ .Values.redis.creds.redisPassword }}"
+            CR_CONF_Redis.Password:
+              secretKeyRef:
+                name: env-secrets
+                key: CR_CONF_Redis.Password
 persistence:
   config:
     enabled: true
@@ -41,3 +47,9 @@ cnpg:
     enabled: true
     user: cloudreve
     database: cloudreve
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      CR_CONF_Database.Password: "{{ .Values.cnpg.main.creds.password }}"
+      CR_CONF_Redis.Password: "{{ .Values.redis.creds.redisPassword }}"

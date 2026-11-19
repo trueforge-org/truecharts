@@ -21,7 +21,10 @@ workload:
         main:
           env:
             BASE_PATH: ""
-            JWT_SECRET: "bytestash JWT secret"
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
             TOKEN_EXPIRY: "24h"
             ALLOW_NEW_ACCOUNTS: "false"
             DEBUG: "false"
@@ -31,5 +34,14 @@ workload:
             OIDC_DISPLAY_NAME: ""
             OIDC_ISSUER_URL: ""
             OIDC_CLIENT_ID: ""
-            OIDC_CLIENT_SECRET: ""
+            OIDC_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: OIDC_CLIENT_SECRET
             OIDC_SCOPES: ""
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "bytestash JWT secret"
+      OIDC_CLIENT_SECRET: ""

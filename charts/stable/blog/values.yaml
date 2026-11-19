@@ -48,7 +48,10 @@ workload:
                 name: cnpg-main-urls
                 key: host
             BLOG_NICK: username
-            BLOG_PASS: password
+            BLOG_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: BLOG_PASS
 persistence:
   data:
     enabled: true
@@ -58,3 +61,8 @@ cnpg:
     enabled: true
     user: blog
     database: blog
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      BLOG_PASS: "password"

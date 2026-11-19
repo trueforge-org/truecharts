@@ -21,8 +21,20 @@ workload:
       containers:
         main:
           env:
-            PLEX_TOKEN: ""
+            PLEX_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: PLEX_TOKEN
             PLEX_URL: ""
             PYTHONUNBUFFERED: "1"
             STREAMABLE_LOGIN: ""
-            STREAMABLE_PASSWORD: ""
+            STREAMABLE_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: STREAMABLE_PASSWORD
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PLEX_TOKEN: ""
+      STREAMABLE_PASSWORD: ""

@@ -32,8 +32,14 @@ workload:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             REDIS_SERVER_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
             REDIS_SERVER_PORT: "6379"
-            REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
-            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            REDIS_SERVER_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_SERVER_PASSWORD
+            DATABASE_URL:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_URL
             # AFFINE_SERVER_EXTERNAL_URL: "https://affine.example.com"
             # AFFINE_SERVER_HOST: "affine.example.com"
             # AFFINE_SERVER_HTTPS: "true"
@@ -48,8 +54,14 @@ workload:
             NODE_ENV: production
             REDIS_SERVER_HOST: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
             REDIS_SERVER_PORT: "6379"
-            REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
-            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            REDIS_SERVER_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_SERVER_PASSWORD
+            DATABASE_URL:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_URL
           command:
             - node
           args:
@@ -84,3 +96,10 @@ cnpg:
 redis:
   enabled: true
   redisUsername: default
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      REDIS_SERVER_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+      DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'

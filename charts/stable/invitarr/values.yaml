@@ -25,7 +25,10 @@ workload:
       containers:
         main:
           env:
-            token: ""
+            token:
+              secretKeyRef:
+                name: env-secrets
+                key: token
           probes:
             liveness:
               enabled: false
@@ -33,3 +36,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      token: ""

@@ -57,13 +57,19 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DB_PASSWORD
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
             APP_KEY:
               secretKeyRef:
                 name: anonaddy-secrets
@@ -82,3 +88,10 @@ mariadb:
   enabled: true
   mariadbUsername: anonaddy
   mariadbDatabase: anonaddy
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DB_PASSWORD: "{{ .Values.mariadb.password }}"
+      REDIS_PASSWORD: "{{ .Values.redis.password }}"

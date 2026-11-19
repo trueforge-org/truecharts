@@ -9,13 +9,16 @@ Also the webservice password can be given upfront. If you don't set a webservice
 Both can easily provide this via a regular environment variable.
 
 ```yaml
+secret:
+  env-secrets:
+    data:
+      DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
             SETTINGS_ENCRYPTION_KEY: "<real encryption key>"
 ```
 ### Example Encryption Key Generation

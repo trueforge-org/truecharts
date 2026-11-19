@@ -41,7 +41,10 @@ workload:
             GAME_ID: "920720"
             GAME_PARAMS: -port=5555 -QueryPort=27015 -NoLiveServer -EnableCheats
             IDENTIFIER: dockeroasis
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             PROVIDER_KEY: " 8IhohaMRZIJJubv5 "
             SLOTS: "20"
             USERNAME: ""
@@ -53,3 +56,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

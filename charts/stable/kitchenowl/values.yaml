@@ -66,11 +66,20 @@ workload:
             FRONT_URL: ""
             OIDC_ISSUER: ""
             OIDC_CLIENT_ID: ""
-            OIDC_CLIENT_SECRET: ""
+            OIDC_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: OIDC_CLIENT_SECRET
             APPLE_CLIENT_ID: ""
-            APPLE_CLIENT_SECRET: ""
+            APPLE_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: APPLE_CLIENT_SECRET
             GOOGLE_CLIENT_ID: ""
-            GOOGLE_CLIENT_SECRET: ""
+            GOOGLE_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: GOOGLE_CLIENT_SECRET
             JWT_SECRET_KEY:
               secretKeyRef:
                 name: kitchenowl-secrets
@@ -138,3 +147,10 @@ cnpg:
     enabled: true
     user: kitchenowl
     database: kitchenowl
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      OIDC_CLIENT_SECRET: ""
+      APPLE_CLIENT_SECRET: ""
+      GOOGLE_CLIENT_SECRET: ""

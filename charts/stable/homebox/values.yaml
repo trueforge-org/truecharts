@@ -37,7 +37,10 @@ workload:
             # the binary refuses to start if this is shorter than 32 bytes.
             # Generate with openssl rand -base64 48.
             # Must stay stable across restarts — rotating it invalidates every issued API key.
-            HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
+            HBOX_AUTH_API_KEY_PEPPER:
+              secretKeyRef:
+                name: env-secrets
+                key: HBOX_AUTH_API_KEY_PEPPER
 
             # log level to use: trace, debug, info, warn, error, fatal, panic
             HBOX_LOG_LEVEL: "info"
@@ -76,3 +79,8 @@ cnpg:
     enabled: true
     user: homebox
     database: homebox
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"

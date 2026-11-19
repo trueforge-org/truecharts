@@ -61,7 +61,10 @@ workload:
                 key: url
             # Superuser
             SUPER_USER: "admin"
-            SUPER_PASS: ""
+            SUPER_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: SUPER_PASS
             SUPER_EMAIL: ""
 service:
   main:
@@ -88,3 +91,8 @@ cnpg:
     database: etesync
 redis:
   enabled: true
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SUPER_PASS: ""

@@ -51,7 +51,10 @@ workload:
             EMAIL_SMTP_HOST: ""
             EMAIL_SMTP_PORT: 587
             EMAIL_SMTP_USER: ""
-            EMAIL_SMTP_PASSWORD: ""
+            EMAIL_SMTP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: EMAIL_SMTP_PASSWORD
             DATABASE_HOST:
               secretKeyRef:
                 name: cnpg-main-urls
@@ -65,7 +68,10 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
             SECRET_KEY:
               secretKeyRef:
                 name: secrets
@@ -82,3 +88,9 @@ cnpg:
 redis:
   enabled: true
   redisUsername: "default"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      EMAIL_SMTP_PASSWORD: ""
+      REDIS_PASSWORD: "{{ .Values.redis.password }}"

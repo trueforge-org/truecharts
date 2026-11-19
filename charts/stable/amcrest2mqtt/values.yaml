@@ -37,8 +37,21 @@ workload:
             # -- User name used to connect to the Amcrest device
             AMCREST_USERNAME: "admin"
             # -- Password used to connect to the Amcrest device
-            AMCREST_PASSWORD: "changeme"
+            AMCREST_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: AMCREST_PASSWORD
             # -- User name used to connect to the MQTT broker
             MQTT_USERNAME: "mqttuser"
             # -- Password used to connect to the MQTT broker
-            MQTT_PASSWORD: "changeme"
+            MQTT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MQTT_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      AMCREST_PASSWORD: "changeme"
+      MQTT_PASSWORD: "changeme"

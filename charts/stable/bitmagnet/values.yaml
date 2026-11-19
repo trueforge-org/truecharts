@@ -44,7 +44,10 @@ workload:
               secretKeyRef:
                 name: cnpg-main-urls
                 key: host
-            TMDB_API_KEY: ""
+            TMDB_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: TMDB_API_KEY
             DHT_CRAWLER_SAVE_FILES_THRESHOLD: "100"
           args:
             - worker
@@ -107,3 +110,8 @@ configmap:
             connMaxLifetime: 14400 # Grafana v5.4+
             postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
             timescaledb: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TMDB_API_KEY: ""

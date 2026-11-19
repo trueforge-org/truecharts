@@ -27,9 +27,15 @@ workload:
             # without http/https, preferrably the ingress url
             HOST: "cannery.local"
             # ecto://postgres:postgres@cannery-db/cannery
-            DATABASE_URL: '{{ printf "ecto://%s:%s@%s:5432/%s" .Values.cnpg.main.user  .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            DATABASE_URL:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_URL
             CLOAK_KEY: "change-me-32-random-bytes-base64"
-            SECRET_KEY_BASE: "change-me-this-is-really-important-seriously-change-it-please-use-a-64-byte-secret-key"
+            SECRET_KEY_BASE:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET_KEY_BASE
             # Ecto should use ipv6 to connect to PostgreSQL
             ECTO_IPV6: false
             # Controls the pool size to use with PostgreSQL. Defaults to 10.
@@ -45,7 +51,10 @@ workload:
             # The username for your SMTP relay. Must be set!
             SMTP_USERNAME: "example@gmail.com"
             # The password for your SMTP relay. Must be set!
-            SMTP_PASSWORD: "example"
+            SMTP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SMTP_PASSWORD
             # Set to true to enable SSL for emails. Defaults to false.
             SMTP_SSL: false
             # Sets the sender email in sent emails. Defaults to no-reply@HOST where HOST was previously defined.
@@ -62,3 +71,10 @@ cnpg:
     enabled: true
     user: cannery
     database: cannery
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DATABASE_URL: '{{ printf "ecto://%s:%s@%s:5432/%s" .Values.cnpg.main.user  .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+      SECRET_KEY_BASE: "change-me-this-is-really-important-seriously-change-it-please-use-a-64-byte-secret-key"
+      SMTP_PASSWORD: "example"

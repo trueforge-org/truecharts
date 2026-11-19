@@ -41,8 +41,14 @@ workload:
             CLIENT_URL: http://localhost:3000
             LIBRARY_BROWSE_ROOT: "{{ .Values.persistence.books.mountPath }}"
             BOOK_DOCK_PATH: "{{ .Values.persistence.bookdock.mountPath }}"
-            JWT_SECRET: changeme_changeme
-            SETUP_BOOTSTRAP_TOKEN: changeme
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
+            SETUP_BOOTSTRAP_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: SETUP_BOOTSTRAP_TOKEN
             NODE_MAX_OLD_SPACE_SIZE: "2048"
 
 persistence:
@@ -70,3 +76,9 @@ cnpg:
           - CREATE EXTENSION IF NOT EXISTS pg_trgm;
           - CREATE EXTENSION IF NOT EXISTS unaccent;
           - CREATE EXTENSION IF NOT EXISTS vector;
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "changeme_changeme"
+      SETUP_BOOTSTRAP_TOKEN: "changeme"

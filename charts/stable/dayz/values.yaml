@@ -40,7 +40,10 @@ workload:
             GAME_ID: "1042420"
             GAME_PARAMS: ""
             GAME_PORT: "2302"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -50,3 +53,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

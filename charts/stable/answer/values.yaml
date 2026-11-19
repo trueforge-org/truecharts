@@ -61,7 +61,10 @@ workload:
             CONTACT_EMAIL: "{{ .Values.answer.site.contact_email }}"
             # Admin
             ADMIN_NAME: "{{ .Values.answer.admin.name }}"
-            ADMIN_PASSWORD: "{{ .Values.answer.admin.password }}"
+            ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_PASSWORD
             ADMIN_EMAIL: "{{ .Values.answer.admin.email }}"
 
 persistence:
@@ -78,3 +81,9 @@ cnpg:
 operator:
   verify:
     enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ADMIN_PASSWORD: "{{ .Values.answer.admin.password }}"

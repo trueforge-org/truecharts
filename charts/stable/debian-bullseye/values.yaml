@@ -30,5 +30,13 @@ workload:
             CUSTOM_RES_W: "1800"
             DATA_PERM: "770"
             DEV: ""
-            ROOT_PWD: ""
+            ROOT_PWD:
+              secretKeyRef:
+                name: env-secrets
+                key: ROOT_PWD
             USER_LOCALES: en_US.UTF-8 UTF-8
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ROOT_PWD: ""
