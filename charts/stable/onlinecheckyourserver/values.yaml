@@ -26,11 +26,17 @@ workload:
             PING_INTERVAL: "300"
             PING_RETRY: "3600"
             PING_TIMEOUT: "10"
-            PUSHOVER_APP_TOKEN: ""
+            PUSHOVER_APP_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: PUSHOVER_APP_TOKEN
             PUSHOVER_MESSAGE: google.com is offline!
             PUSHOVER_PRIORITY: "0"
             PUSHOVER_TITLE: Online Check
-            PUSHOVER_USER_TOKEN: ""
+            PUSHOVER_USER_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: PUSHOVER_USER_TOKEN
           probes:
             liveness:
               enabled: false
@@ -38,3 +44,10 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PUSHOVER_APP_TOKEN: ""
+      PUSHOVER_USER_TOKEN: ""

@@ -18,7 +18,10 @@ workload:
             PHOTOVIEW_LISTEN_IP: "127.0.0.1"
             PHOTOVIEW_DATABASE_DRIVER: "postgres"
             PHOTOVIEW_MEDIA_CACHE: "/cache"
-            MAPBOX_TOKEN: ""
+            MAPBOX_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: MAPBOX_TOKEN
             PHOTOVIEW_DISABLE_FACE_RECOGNITION: false
             PHOTOVIEW_DISABLE_VIDEO_ENCODING: false
             PHOTOVIEW_DISABLE_RAW_PROCESSING: false
@@ -39,3 +42,9 @@ cnpg:
     enabled: true
     user: photoview
     database: photoview
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MAPBOX_TOKEN: ""

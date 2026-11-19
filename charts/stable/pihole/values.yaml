@@ -27,7 +27,10 @@ workload:
             PIHOLE_UID: "{{ .Values.securityContext.container.PUID }}"
             PIHOLE_GID: "{{ .Values.securityContext.pod.fsGroup }}"
             FTLCONF_dns_upstreams: "8.8.8.8;8.8.4.4"
-            FTLCONF_webserver_api_password: "somepassword"
+            FTLCONF_webserver_api_password:
+              secretKeyRef:
+                name: env-secrets
+                key: FTLCONF_webserver_api_password
           probes:
             liveness:
               type: http
@@ -64,3 +67,9 @@ persistence:
   dnsmasq:
     enabled: true
     mountPath: "/etc/dnsmasq.d"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      FTLCONF_webserver_api_password: "somepassword"

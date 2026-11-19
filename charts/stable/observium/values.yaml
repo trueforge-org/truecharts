@@ -34,7 +34,10 @@ workload:
         main:
           env:
             OBSERVIUM_ADMIN_USER: "please-change"
-            OBSERVIUM_ADMIN_PASS: "Ch4angeME"
+            OBSERVIUM_ADMIN_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: OBSERVIUM_ADMIN_PASS
             OBSERVIUM_base_url: ""
             #
             OBSERVIUM_auth_mechanism: "mysql"
@@ -45,7 +48,10 @@ workload:
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
             OBSERVIUM_db_name: observium
-            OBSERVIUM_db_pass: "{{ .Values.mariadb.password }}"
+            OBSERVIUM_db_pass:
+              secretKeyRef:
+                name: env-secrets
+                key: OBSERVIUM_db_pass
             OBSERVIUM_db_user: observium
             OBSERVIUM_cache__enable: true
             OBSERVIUM_cache__driver: "auto"
@@ -61,3 +67,10 @@ persistence:
     mountPath: /config
   varrun:
     enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      OBSERVIUM_ADMIN_PASS: "Ch4angeME"
+      OBSERVIUM_db_pass: "{{ .Values.mariadb.password }}"

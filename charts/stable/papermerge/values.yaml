@@ -26,8 +26,14 @@ workload:
                 name: papermerge-secrets
                 key: PAPERMERGE__SECURITY__SECRET_KEY
             PAPERMERGE__AUTH__USERNAME: admin
-            PAPERMERGE__AUTH__PASSWORD: admin
-            PAPERMERGE__DATABASE__URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password .Values.cnpg.main.creds.host .Values.cnpg.main.database }}'
+            PAPERMERGE__AUTH__PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PAPERMERGE__AUTH__PASSWORD
+            PAPERMERGE__DATABASE__URL:
+              secretKeyRef:
+                name: env-secrets
+                key: PAPERMERGE__DATABASE__URL
             PAPERMERGE__REDIS__URL:
               secretKeyRef:
                 expandObjectName: false
@@ -50,3 +56,10 @@ cnpg:
     enabled: true
     user: papermerge
     database: papermerge
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PAPERMERGE__AUTH__PASSWORD: 'admin'
+      PAPERMERGE__DATABASE__URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password .Values.cnpg.main.creds.host .Values.cnpg.main.database }}'

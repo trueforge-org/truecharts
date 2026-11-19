@@ -115,7 +115,10 @@ workload:
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: url
             PAPERLESS_ADMIN_USER: "admin"
-            PAPERLESS_ADMIN_PASSWORD: "admin"
+            PAPERLESS_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PAPERLESS_ADMIN_PASSWORD
             PAPERLESS_ADMIN_MAIL: "admin@admin.com"
             PAPERLESS_OCR_LANGUAGE: "eng"
             PAPERLESS_OCR_LANGUAGES: "eng fra deu spa ita"
@@ -167,3 +170,9 @@ workload:
               type: http
               path: /
               port: "{{ .Values.service.tika.ports.tika.port }}"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PAPERLESS_ADMIN_PASSWORD: "admin"
