@@ -32,7 +32,10 @@ workload:
             SLSKD_DOWNLOADS_DIR: "{{ .Values.persistence.complete.mountPath }}"
             SLSKD_INCOMPLETE_DIR: "{{ .Values.persistence.incomplete.mountPath }}"
             SLSKD_USERNAME: "admin"
-            SLSKD_PASSWORD: "admin123"
+            SLSKD_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SLSKD_PASSWORD
             SLSKD_JWT_KEY:
               secretKeyRef:
                 name: slskd-secrets
@@ -70,3 +73,13 @@ persistence:
   complete:
     enabled: true
     mountPath: "/downloads/complete"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SLSKD_PASSWORD: "admin123"
+
+slskd:
+  # -- Must be changed. JWT signing key, at least 16 characters (64 recommended).
+  jwtKey: "PLACEHOLDERJWTKEYCHANGEME000000000000000000000000000000000000000"

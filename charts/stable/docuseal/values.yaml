@@ -25,8 +25,9 @@ workload:
           env:
             DATABASE_URL:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
           probes:
             liveness:
               type: http
@@ -43,8 +44,9 @@ persistence:
     enabled: true
     mountPath: /data
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: docuseal
-    database: docuseal
+    depconfig:
+      postgresqlUsername: docuseal
+      postgresqlDatabase: docuseal

@@ -37,5 +37,13 @@ workload:
       containers:
         main:
           env:
-            VNC_PW: vncpassword
+            VNC_PW:
+              secretKeyRef:
+                name: env-secrets
+                key: VNC_PW
             VNC_RESOLUTION: 1920x1080
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VNC_PW: "vncpassword"

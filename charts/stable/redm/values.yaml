@@ -60,7 +60,15 @@ workload:
           env:
             GAME_CONFIG: server.cfg
             MANUAL_UPDATES: ""
-            SERVER_KEY: ""
+            SERVER_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SERVER_KEY
             SRV_ADR: https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/
             SRV_NAME: ""
             START_VARS: ""
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SERVER_KEY: ""

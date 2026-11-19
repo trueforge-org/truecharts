@@ -48,9 +48,16 @@ workload:
             NODE_ENV: production
             HOSTNAME: "0.0.0.0"
             PORT: "{{ .Values.service.main.ports.main.port }}"
-            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
+            DATABASE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
             JOB_SERVER_URL: "http://{{ printf \"%s-%s\" .Release.Name \"jobserver\" }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.service.jobserver.ports.main.port }}"
-            SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"
+            SESSION_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: SESSION_SECRET
           probes:
             liveness:
               path: /api/health
@@ -71,8 +78,15 @@ workload:
             NODE_ENV: production
             PORT: "{{ .Values.service.jobserver.ports.main.port }}"
             HOST: "0.0.0.0"
-            DATABASE_URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user (urlquery .Values.cnpg.main.creds.password) (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database }}'
-            SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"
+            DATABASE_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+            SESSION_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: SESSION_SECRET
             SESSION_POLL_INTERVAL_MS: "5000"
             CRON_ACTIVITY_SYNC: "*/1 * * * *"
             CRON_RECENT_ITEMS_SYNC: "*/1 * * * *"
@@ -97,8 +111,15 @@ workload:
               port: "{{ .Values.service.jobserver.ports.main.port }}"
               path: /health
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: postgres
-    database: streamystats
+    depconfig:
+      postgresqlUsername: postgres
+      postgresqlDatabase: streamystats
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SESSION_SECRET: "{{ .Values.streamystats.sessionSecret }}"

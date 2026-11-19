@@ -47,11 +47,19 @@ workload:
         main:
           env:
             PAPERLESS_ADMIN_USER: "admin"
-            PAPERLESS_ADMIN_PASSWORD: "changeme"
+            PAPERLESS_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PAPERLESS_ADMIN_PASSWORD
             PAPERLESS_ADMIN_MAIL: "admin@admin.com"
             PAPERLESS_OCR_LANGUAGE: "eng"
             PAPERLESS_OCR_LANGUAGES: "eng fra deu spa ita"
             PAPERLESS_CONSUMER_POLLING: 120
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PAPERLESS_ADMIN_PASSWORD: "changeme"
 persistence:
   consume:
     type: nfs

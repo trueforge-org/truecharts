@@ -35,10 +35,12 @@ persistence:
     enabled: true
     mountPath: /etc/letsencrypt
     size: 256Gi
-mariadb:
-  enabled: true
-  mariadbUsername: npm
-  mariadbDatabase: npm
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: npm
+      mariadbDatabase: npm
 
 securityContext:
   container:
@@ -70,11 +72,15 @@ workload:
           env:
             DISABLE_IPV6: true
             DB_MYSQL_PORT: 3306
-            DB_MYSQL_NAME: "{{ .Values.mariadb.mariadbDatabase }}"
-            DB_MYSQL_USER: "{{ .Values.mariadb.mariadbUsername }}"
+            DB_MYSQL_NAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+            DB_MYSQL_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
             DB_MYSQL_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            DB_MYSQL_PASSWORD: "{{ .Values.mariadb.password }}"
+            DB_MYSQL_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password

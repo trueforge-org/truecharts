@@ -23,7 +23,10 @@ workload:
         main:
           env:
             MQTT_HOST: ""
-            MQTT_PASS: ""
+            MQTT_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: MQTT_PASS
             MQTT_USER: ""
             TOPIC_PREFIX: venstar2mqtt
             VENSTAR_HOST: ""
@@ -34,3 +37,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MQTT_PASS: ""

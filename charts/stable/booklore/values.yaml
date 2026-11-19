@@ -25,8 +25,12 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: jdbc-mariadb
-            DATABASE_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
-            DATABASE_PASSWORD: "{{ .Values.mariadb.password }}"
+            DATABASE_USERNAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+            DATABASE_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
             BOOKLORE_PORT: "{{ .Values.service.main.ports.main.port }}"
 persistence:
   data:
@@ -37,6 +41,8 @@ persistence:
     mountPath: /bookdrop
   varrun:
     enabled: false
-mariadb:
-  enabled: true
-  mariadbUsername: booklore
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: booklore

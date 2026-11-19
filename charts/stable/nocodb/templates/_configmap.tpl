@@ -1,10 +1,10 @@
 {{/* Define the configmap */}}
 {{- define "nocodb.configmap" -}}
 
-{{- $pgPass := .Values.cnpg.main.creds.password | trimAll "\"" }}
-{{- $pgUser := .Values.cnpg.main.user }}
-{{- $pgDB := .Values.cnpg.main.database }}
-{{- $pgHost := printf "%v-cnpg-main-rw" (include "tc.v1.common.lib.chart.names.fullname" $) }}
+{{- $pgPass := .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
+{{- $pgUser := .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+{{- $pgDB := .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
+{{- $pgHost := (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") }}
 enabled: true
 data:
   NC_DB: "{{ printf "pg://%v:5432?u=%v&p=%v&d=%v" $pgHost $pgUser $pgPass $pgDB }}"

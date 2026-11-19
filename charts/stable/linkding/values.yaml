@@ -30,4 +30,12 @@ workload:
             LD_DISABLE_BACKGROUND_TASKS: false
             LD_DISABLE_URL_VALIDATION: false
             LD_SUPERUSER_NAME: "superuser"
-            LD_SUPERUSER_PASSWORD: "somesecret"
+            LD_SUPERUSER_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: LD_SUPERUSER_PASSWORD
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      LD_SUPERUSER_PASSWORD: "somesecret"

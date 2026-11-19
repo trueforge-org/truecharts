@@ -51,10 +51,19 @@ workload:
               -QueryPort=27016 -Port=27015 -CubePort=27018 -NoBattlEye
               -nosteamclient -game -server -log
             MAP: CubeWorld_Light
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             SERVER_NAME: PIXARKDocker
-            SRV_ADMIN_PWD: adminDocker
-            SRV_PWD: Docker
+            SRV_ADMIN_PWD:
+              secretKeyRef:
+                name: env-secrets
+                key: SRV_ADMIN_PWD
+            SRV_PWD:
+              secretKeyRef:
+                name: env-secrets
+                key: SRV_PWD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -64,3 +73,11 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""
+      SRV_ADMIN_PWD: 'adminDocker'
+      SRV_PWD: 'Docker'

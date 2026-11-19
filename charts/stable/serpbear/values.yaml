@@ -9,6 +9,8 @@ persistence:
     mountPath: /app/data
 
 serpbear:
+  # Session/cookie secret. MUST be changed, use a random string of at least 32 characters.
+  secret: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
   api_key: ""
   app_url: http://localhost:10605
   password: secret

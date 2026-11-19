@@ -46,8 +46,8 @@ workload:
               path: /
           env:
             CHEVERETO_DB_DRIVER: mysql
-            CHEVERETO_DB_NAME: "{{ .Values.mariadb.mariadbUsername }}"
-            CHEVERETO_DB_USER: "{{ .Values.mariadb.mariadbDatabase }}"
+            CHEVERETO_DB_NAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+            CHEVERETO_DB_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
             CHEVERETO_DB_PORT: "3306"
             CHEVERETO_TAG: "free"
             CHEVERETO_DB_HOST:
@@ -70,7 +70,9 @@ persistence:
   content:
     enabled: true
     mountPath: /var/www/html/content/
-mariadb:
-  enabled: true
-  mariadbUsername: chevereto
-  mariadbDatabase: chevereto
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: chevereto
+      mariadbDatabase: chevereto

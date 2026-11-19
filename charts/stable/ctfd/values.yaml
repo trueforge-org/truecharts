@@ -12,6 +12,10 @@ service:
         targetPort: 8000
         port: 10613
 
+ctfd:
+  # Must be changed. Random string (32 characters recommended).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:
@@ -30,14 +34,17 @@ workload:
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             MAIL_USEAUTH: false
             MAILFROM_ADDR: ""
             MAIL_SERVER: ""
             MAIL_PORT: 587
             MAIL_USERNAME: ""
-            MAIL_PASSWORD: ""
+            MAIL_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MAIL_PASSWORD
             MAIL_TLS: false
             MAIL_SSL: false
             # CTFd will not load any plugins which may alleviate issues preventing CTFd from starting, default is false.
@@ -45,15 +52,18 @@ workload:
             REVERSE_PROXY: false
             # majorleaguecyber
             OAUTH_CLIENT_ID: ""
-            OAUTH_CLIENT_SECRET: ""
+            OAUTH_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: OAUTH_CLIENT_SECRET
 securityContext:
   container:
     readOnlyRootFilesystem: false
     runAsGroup: 0
     runAsUser: 0
-redis:
-  enabled: true
-  redisUsername: default
+dependencies:
+  valkey:
+    enabled: true
 
 persistence:
   uploads:
@@ -62,3 +72,9 @@ persistence:
   logs:
     enabled: true
     mountPath: "/logs"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MAIL_PASSWORD: ""
+      OAUTH_CLIENT_SECRET: ""

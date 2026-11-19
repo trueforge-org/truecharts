@@ -41,7 +41,10 @@ workload:
               path: /health/
           env:
             ADMIN_USERNAME: "{{ .Values.config.admin_username }}"
-            ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"
+            ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_PASSWORD
             DATA_DIR: "/data"
 
 persistence:
@@ -54,3 +57,9 @@ persistence:
   home:
     enabled: true
     mountPath: "/home/archivebox"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ADMIN_PASSWORD: "{{ .Values.config.admin_password }}"

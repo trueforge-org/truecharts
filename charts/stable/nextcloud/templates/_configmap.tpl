@@ -32,8 +32,8 @@
 {{- $accessHost := (include "nextcloud.accesshost" $) -}}
 {{- $accessHostPort := regexReplaceAll ".*://(.*)" $accessUrl "${1}" -}}
 {{- $accessProtocol := regexReplaceAll "(.*)://.*" $accessUrl "${1}" -}}
-{{- $redisHost := .Values.redis.creds.plainhost | trimAll "\"" -}}
-{{- $redisPass := .Values.redis.password | trimAll "\"" -}}
+{{- $redisHost := .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" -}}
+{{- $redisPass := .Values.dependencies.valkey.depconfig.password | trimAll "\"" -}}
 {{- $healthHost := "kube.internal.healthcheck" -}}
 
 php-tune:
@@ -112,16 +112,16 @@ nextcloud-config:
   enabled: true
   data:
     {{/* Database */}}
-    POSTGRES_DB: {{ .Values.cnpg.main.database | quote }}
-    POSTGRES_USER: {{ .Values.cnpg.main.user | quote }}
-    POSTGRES_PASSWORD: {{ .Values.cnpg.main.password | trimAll "\"" }}
-    POSTGRES_HOST: {{ .Values.cnpg.main.creds.host | trimAll "\"" }}
+    POSTGRES_DB: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase | quote }}
+    POSTGRES_USER: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername | quote }}
+    POSTGRES_PASSWORD: {{ .Values.dependencies.postgresql.depconfig.password | trimAll "\"" }}
+    POSTGRES_HOST: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}
 
     {{/* Compatibility Layer to support database changes */}}
-    NX_POSTGRES_NAME: {{ .Values.cnpg.main.database | quote }}
-    NX_POSTGRES_USER: {{ .Values.cnpg.main.user | quote }}
-    NX_POSTGRES_PASSWORD: {{ .Values.cnpg.main.password | trimAll "\"" }}
-    NX_POSTGRES_HOST: {{ .Values.cnpg.main.creds.host | trimAll "\"" }}
+    NX_POSTGRES_NAME: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase | quote }}
+    NX_POSTGRES_USER: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername | quote }}
+    NX_POSTGRES_PASSWORD: {{ .Values.dependencies.postgresql.depconfig.password | trimAll "\"" }}
+    NX_POSTGRES_HOST: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}
 
     {{/* Redis */}}
     NX_REDIS_HOST: {{ $redisHost }}

@@ -1,23 +1,16 @@
 {{- define "plausible.secret" -}}
-{{- $fname := (include "tc.v1.common.lib.chart.names.fullname" .) -}}
-{{- $secretName := printf "%s-secret" $fname -}}
 
 {{- $plausible := .Values.plausible -}}
 {{- $email := $plausible.email -}}
 {{- $maxmind := $plausible.maxmind -}}
 {{- $google := $plausible.google -}}
 
-{{- $baseKey := randAlphaNum 64 -}}
-{{- with (lookup "v1" "Secret" .Release.Namespace $secretName) -}}
-  {{- $baseKey = index .data "SECRET_KEY_BASE" | b64dec -}}
-{{- end }}
-
 enabled: true
 data:
-  SECRET_KEY_BASE: {{ $baseKey }}
+  SECRET_KEY_BASE: {{ required "plausible.secretKeyBase must be set" $plausible.secretKeyBase | quote }}
 
-  DATABASE_URL: {{ .Values.cnpg.main.creds.std }}
-  CLICKHOUSE_DATABASE_URL: {{ .Values.clickhouse.creds.complete }}
+  DATABASE_URL: {{ .Values.dependencies.postgresql.depconfig.creds.complete }}
+  CLICKHOUSE_DATABASE_URL: {{ .Values.dependencies.clickhouse.depconfig.creds.complete }}
 
   MAILER_EMAIL: {{ $email.mailer_email | quote }}
   MAILER_NAME: {{ $email.mailer_name | quote }}

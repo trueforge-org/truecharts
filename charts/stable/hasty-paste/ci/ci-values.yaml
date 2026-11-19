@@ -1,8 +1,6 @@
-workload:
-  main:
-    podSpec:
-      containers:
-        main:
-          env:
-            AUTH_TOKEN_SECRET: CmKH8PetPXfkBKWqejMyeLafMkHSY1agTk0z3yd1bY8=
-            SESSION_SECRET: CmKH8PetPXfkBKWqejMyeLafMkHSY1agTk0z3yd1bY8=
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      AUTH_TOKEN_SECRET: CmKH8PetPXfkBKWqejMyeLafMkHSY1agTk0z3yd1bY8=
+      SESSION_SECRET: CmKH8PetPXfkBKWqejMyeLafMkHSY1agTk0z3yd1bY8=

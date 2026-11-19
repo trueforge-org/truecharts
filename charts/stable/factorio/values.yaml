@@ -46,7 +46,10 @@ workload:
             GENERATE_NEW_SAVE: false
             LOAD_LATEST_SAVE: true
             SAVE_NAME: "_autosave1"
-            TOKEN: ""
+            TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TOKEN
             UPDATE_MODS_ON_START: ""
             USERNAME: ""
 
@@ -54,3 +57,8 @@ persistence:
   config:
     enabled: true
     mountPath: /factorio
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TOKEN: ""

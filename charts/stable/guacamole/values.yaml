@@ -251,10 +251,11 @@ persistence:
         2-apply-seed:
           mountPath: /tc-scripts/apply-seed.sh
           subPath: apply-seed.sh
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: guacamole
-    database: guacamole
+    depconfig:
+      postgresqlUsername: guacamole
+      postgresqlDatabase: guacamole
 
 updated: true

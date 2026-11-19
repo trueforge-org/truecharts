@@ -29,15 +29,17 @@ workload:
             SPOOLMAN_DB_TYPE: postgres
             SPOOLMAN_DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             SPOOLMAN_DB_PORT: 5432
-            SPOOLMAN_DB_NAME: "{{ .Values.cnpg.main.database }}"
-            SPOOLMAN_DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+            SPOOLMAN_DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            SPOOLMAN_DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             SPOOLMAN_DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
 
             # Logging level: DEBUG, INFO, WARNING, ERROR, CRITICAL
             # Logs will only be reported if the level is higher than the level set here
@@ -83,8 +85,9 @@ persistence:
     enabled: true
     mountPath: "/logs"
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: spoolman
-    database: spoolman
+    depconfig:
+      postgresqlUsername: spoolman
+      postgresqlDatabase: spoolman

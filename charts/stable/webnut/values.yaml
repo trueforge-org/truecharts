@@ -26,8 +26,17 @@ workload:
             UPS_HOST: "127.0.0.1"
             UPS_PORT: 3493
             UPS_USER: monuser
-            UPS_PASSWORD: secret
+            UPS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: UPS_PASSWORD
 persistence:
   config:
     enabled: true
     mountPath: "/config"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      UPS_PASSWORD: "secret"

@@ -18,7 +18,10 @@ workload:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # required for Credentials for IGDB
             TWITCH_CLIENT_ID: "fake_client_id"
-            TWITCH_CLIENT_SECRET: "fake_access_secret"
+            TWITCH_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: TWITCH_CLIENT_SECRET
 persistence:
   database:
     enabled: true
@@ -26,3 +29,9 @@ persistence:
   library:
     enabled: true
     mountPath: "/app/wdosglibrary"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TWITCH_CLIENT_SECRET: "fake_access_secret"

@@ -66,7 +66,10 @@ workload:
             GALAXY_NAME: AvorionDocker
             GAME_ID: "565060"
             GAME_PARAMS: ""
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -76,3 +79,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

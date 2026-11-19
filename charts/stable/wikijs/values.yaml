@@ -9,11 +9,12 @@ service:
       main:
         port: 10045
         targetPort: 3000
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: wikijs
-    database: wikijs
+    depconfig:
+      postgresqlUsername: wikijs
+      postgresqlDatabase: wikijs
 # /wiki/data is a temporary dir. Without mounting as emptyDir it's only writable by root.
 # https://docs.requarks.io/en/install/config#data-paths
 persistence:
@@ -36,14 +37,16 @@ workload:
               path: "/healthz"
           env:
             DB_TYPE: "postgres"
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PORT: "5432"
             DB_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost

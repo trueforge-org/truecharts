@@ -2,9 +2,5 @@
 {{- define "etesync.secret" -}}
 enabled: true
 data:
-  {{- with (lookup "v1" "Secret" .Release.Namespace "etesync-secret") }}
-  secret.txt: {{ index .data "secret.txt" | b64dec }}
-  {{- else }}
-  secret.txt: {{ randAlphaNum 32 }}
-  {{- end }}
+  secret.txt: {{ required "etesync.secretKey must be set" .Values.etesync.secretKey }}
 {{- end -}}

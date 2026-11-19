@@ -31,7 +31,16 @@ workload:
           env:
             DISABLE_AUTH: "false"
             GROUPID: "{{ .Values.securityContext.pod.fsGroup }}"
-            PASSWORD: rstudio
+            PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWORD
             ROOT: "FALSE"
             USER: rstudio
             USERID: 568
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWORD: 'rstudio'

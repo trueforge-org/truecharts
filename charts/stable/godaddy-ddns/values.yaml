@@ -22,8 +22,14 @@ workload:
       containers:
         main:
           env:
-            GODADDY_API_KEY: ""
-            GODADDY_API_SECRET: ""
+            GODADDY_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: GODADDY_API_KEY
+            GODADDY_API_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: GODADDY_API_SECRET
             GODADDY_DOMAINS: ""
           probes:
             liveness:
@@ -32,3 +38,10 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GODADDY_API_KEY: ""
+      GODADDY_API_SECRET: ""

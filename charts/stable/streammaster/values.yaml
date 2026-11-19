@@ -37,18 +37,21 @@ workload:
             DEFAULT_SSL_PORT: "{{ .Values.service.sslport.ports.sslport.port }}"
             # Default is 5
             BACKUP_VERSIONS_TO_KEEP: 5
-            POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
-            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             POSTGRES_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             POSTGRES_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-cnpg:
-  main:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
+dependencies:
+  postgresql:
     enabled: true
-    user: streammaster
-    database: streammaster
+    depconfig:
+      postgresqlUsername: streammaster
+      postgresqlDatabase: streammaster

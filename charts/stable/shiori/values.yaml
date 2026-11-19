@@ -18,22 +18,25 @@ workload:
             SHIORI_DIR: "{{ .Values.persistence.data.mountPath }}"
             SHIORI_DBMS: "postgresql"
             SHIORI_PG_PORT: "5432"
-            SHIORI_PG_USER: "{{ .Values.cnpg.main.user }}"
-            SHIORI_PG_NAME: "{{ .Values.cnpg.main.database }}"
+            SHIORI_PG_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            SHIORI_PG_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             SHIORI_PG_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             SHIORI_PG_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
 persistence:
   data:
     enabled: true
     mountPath: /data
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: shiori
-    password: shiori
+    depconfig:
+      postgresqlUsername: shiori
+      password: shiori

@@ -59,8 +59,14 @@ workload:
               type: http
               path: /
           env:
-            WEBUI_PWD: "CHANGE_ME_VERY_SECURE"
-            GUI_PWD: "CHANGE_ME_VERY_SECURE"
+            WEBUI_PWD:
+              secretKeyRef:
+                name: env-secrets
+                key: WEBUI_PWD
+            GUI_PWD:
+              secretKeyRef:
+                name: env-secrets
+                key: GUI_PWD
             # MOD_AUTO_RESTART_ENABLED: true
             # MOD_AUTO_RESTART_CRON: "0 6 * * *"
 
@@ -78,3 +84,10 @@ persistence:
 # You can also mount /downloads/incoming and /downloads/temp as separate volumes,
 # but be aware that completed files will be copied instead of moved,
 # since they would reside on different filesystems.
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      WEBUI_PWD: "CHANGE_ME_VERY_SECURE"
+      GUI_PWD: "CHANGE_ME_VERY_SECURE"

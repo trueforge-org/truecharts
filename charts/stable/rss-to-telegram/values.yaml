@@ -27,7 +27,10 @@ workload:
           env:
             CHATID: ""
             DELAY: "60"
-            TOKEN: ""
+            TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TOKEN
           probes:
             liveness:
               enabled: false
@@ -35,3 +38,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TOKEN: ''

@@ -24,8 +24,9 @@ workload:
             DOMAIN: "https://{{ if .Values.ingress }}{{ if .Values.ingress.main.enabled }}{{ ( index .Values.ingress.main.hosts 0 ).host }}{{ else }}placeholder.com{{ end }}{{ else }}placeholder.com{{ end }}"
             DATABASE_URL:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
           envFrom:
             - configMapRef:
                 name: vaultwardenconfig
@@ -83,8 +84,8 @@ vaultwarden:
     enabled: false
     # Disabling the admin token will make the admin portal accessible to anyone, use carefully: https://github.com/dani-garcia/bitwarden_rs/wiki/Disable-admin-token
     disableAdminToken: false
-    ## Token for admin login, will be generated if not defined. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
-    # token:
+    ## Token for admin login. Must be changed when the admin portal is enabled. https://github.com/dani-garcia/bitwarden_rs/wiki/Enabling-admin-page
+    token: "PLACEHOLDERADMINTOKEN"
   # Enable SMTP. https://github.com/dani-garcia/bitwarden_rs/wiki/SMTP-configuration
   smtp:
     enabled: false
@@ -144,11 +145,12 @@ persistence:
   data:
     enabled: true
     mountPath: "/data"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: vaultwarden
-    database: vaultwarden
+    depconfig:
+      postgresqlUsername: vaultwarden
+      postgresqlDatabase: vaultwarden
 
 ingress:
   main:

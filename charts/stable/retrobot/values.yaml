@@ -30,4 +30,13 @@ workload:
             MAX_WORKERS: -1
             MAX_WORKERS_PER_GAME: 3
             RECORDING_FRAMERATE: 30
-            DISCORD_TOKEN: ""
+            DISCORD_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: DISCORD_TOKEN
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DISCORD_TOKEN: ''

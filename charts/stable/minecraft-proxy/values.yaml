@@ -44,7 +44,10 @@ workload:
               type: tcp
           env:
             RCON_PORT: "{{ .Values.service.rcon.ports.rcon.port }}"
-            RCON_PASSWORD: "secretrconpass"
+            RCON_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: RCON_PASSWORD
             TYPE: "BUNGEECORD"
             ONLINE_MODE: false
             MEMORY: 512M
@@ -69,3 +72,8 @@ persistence:
   plugins:
     enabled: true
     mountPath: "/plugins"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      RCON_PASSWORD: "secretrconpass"

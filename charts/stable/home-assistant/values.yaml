@@ -52,7 +52,7 @@ configmap:
     data:
       init.sh: |-
         #!/bin/sh
-        {{- $haDBURL := (printf "%s?client_encoding=utf8" ($.Values.cnpg.main.creds.std | trimAll "\"")) }}
+        {{- $haDBURL := (printf "%s?client_encoding=utf8" ($.Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\"")) }}
         config="/config/configuration.yaml"
         default="/config/init"
         if [ ! -f "$config" ]; then
@@ -92,12 +92,13 @@ configmap:
         recorder:
           purge_keep_days: 30
           commit_interval: 3
-          db_url: {{ (printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"")) | quote }}
-cnpg:
-  main:
+          db_url: {{ (printf "%s?client_encoding=utf8" (.Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\"")) | quote }}
+dependencies:
+  postgresql:
     enabled: true
-    user: home-assistant
-    database: home-assistant
+    depconfig:
+      postgresqlUsername: home-assistant
+      postgresqlDatabase: home-assistant
 
 securityContext:
   container:

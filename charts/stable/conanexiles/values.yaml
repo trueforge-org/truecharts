@@ -47,7 +47,10 @@ workload:
           env:
             GAME_ID: "443030"
             GAME_PARAMS: ""
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
             WS_CONTENT: ""
@@ -58,3 +61,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

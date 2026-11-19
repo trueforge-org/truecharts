@@ -45,6 +45,8 @@ ingress:
       api: api
 
 ollama:
+  # Must be changed. WebUI secret key, any long random string (64+ chars recommended).
+  webuiSecretKey: "PLACEHOLDERWEBUISECRETKEYCHANGEMEPLACEHOLDERWEBUISECRETKEYCHANGEME"
   registration:
     enabled: true
     # admin | user | pending

@@ -16,21 +16,29 @@ service:
         port: 10112
         protocol: http
         targetPort: 80
+bookstack:
+  # Must be changed. Laravel key: "base64:" followed by base64 of 32 random bytes.
+  appKey: "base64:UExBQ0VIT0xERVJBUFBLRVlDSEFOR0VNRTAwMDAwMDA="
+
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            DB_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
-            DB_DATABASE: "{{ .Values.mariadb.mariadbDatabase }}"
+            DB_USERNAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+            DB_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
             APP_URL: ""
             DB_HOST:
               secretKeyRef:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
             APP_KEY:
               secretKeyRef:
                 name: secrets
@@ -39,7 +47,9 @@ persistence:
   config:
     enabled: true
     mountPath: /config
-mariadb:
-  enabled: true
-  mariadbUsername: bookstack
-  mariadbDatabase: bookstack
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: bookstack
+      mariadbDatabase: bookstack

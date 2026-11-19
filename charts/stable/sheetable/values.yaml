@@ -8,11 +8,12 @@ persistence:
     enabled: true
     mountPath: /app/config
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: sheetable
-    database: sheetable
+    depconfig:
+      postgresqlUsername: sheetable
+      postgresqlDatabase: sheetable
 secretEnv:
   ADMIN_EMAIL: email@domain.com
   ADMIN_PASSWORD: changeme
@@ -36,13 +37,19 @@ workload:
             DB_DRIVER: postgres
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_PORT: "5432"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             PORT: "{{ .Values.service.main.ports.main.port }}"
+
+sheetable:
+  # -- Must be changed. Secret used to sign API tokens.
+  apiSecret: "PLACEHOLDERAPISECRET"
