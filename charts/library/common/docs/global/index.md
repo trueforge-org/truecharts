@@ -84,6 +84,7 @@ traefik:
     - name: tc-basic-secure-headers
 minNodePort: 9000
 stopAll: false
+dropEmptyKeys: false
 ```
 
 ---
@@ -301,6 +302,20 @@ Stop all objects of the chart and its dependencies, including CNPG clusters. Sta
 | Type | `bool` |
 | Required | ❌ |
 | Helm `tpl` | ❌ |
+| Default | `false` |
+
+---
+
+## `dropEmptyKeys`
+
+Drop keys with an empty (null or `""`, after `tpl`) value from container `env` and `args`, and from Secret and ConfigMap `data`. Can be overridden per container, Secret and ConfigMap.
+
+| Field | Value |
+| --- | --- |
+| Key | `global.dropEmptyKeys` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
 | Default | `false` |
 
 ---

@@ -1427,6 +1427,14 @@
        "description": "Base64 encoded content of the ConfigMap entry"
       },
       "description": "Binary entries of the ConfigMap, keyed by file name. Values must be base64 encoded."
+     },
+     "dropEmptyKeys": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Drop keys of `data` with an empty (null or `\"\"`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this ConfigMap.",
+      "default": false
      }
     },
     "additionalProperties": false,
@@ -6330,6 +6338,14 @@
      "type": "boolean",
      "description": "Stop all objects of the chart and its dependencies, including CNPG clusters. Stand-alone pods are not stopped.",
      "default": false
+    },
+    "dropEmptyKeys": {
+     "type": [
+      "boolean",
+      "string"
+     ],
+     "description": "Drop keys with an empty (null or `\"\"`, after `tpl`) value from container `env` and `args`, and from Secret and ConfigMap `data`. Can be overridden per container, Secret and ConfigMap.",
+     "default": false
     }
    },
    "additionalProperties": false,
@@ -6395,7 +6411,8 @@
      ]
     },
     "minNodePort": 9000,
-    "stopAll": false
+    "stopAll": false,
+    "dropEmptyKeys": false
    }
   },
   "hpa": {
@@ -13941,6 +13958,14 @@
       "type": "string",
       "description": "Type of the Secret, eg `Opaque` or `kubernetes.io/tls`.",
       "default": "Opaque"
+     },
+     "dropEmptyKeys": {
+      "type": [
+       "boolean",
+       "string"
+      ],
+      "description": "Drop keys of `data` with an empty (null or `\"\"`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this Secret.",
+      "default": false
      }
     },
     "additionalProperties": false,
@@ -16976,6 +17001,14 @@
           "args": {
            "$ref": "#/definitions/workload.podSpec.containers.args",
            "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/workload/podSpec/containers/args)."
+          },
+          "dropEmptyKeys": {
+           "type": [
+            "boolean",
+            "string"
+           ],
+           "description": "Drop `env` and `args` entries with an empty (null or `\"\"`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this container.",
+           "default": false
           },
           "extraArgs": {
            "oneOf": [

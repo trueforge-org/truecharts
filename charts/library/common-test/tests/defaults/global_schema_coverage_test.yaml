@@ -85,3 +85,40 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/global/minNodePort': "
+
+  - it: should render with global dropEmptyKeys set to a boolean
+    set:
+      global:
+        dropEmptyKeys: true
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0
+
+  - it: should render with global dropEmptyKeys set to a tpl string
+    set:
+      dropAll: true
+      global:
+        dropEmptyKeys: "{{ .Values.dropAll }}"
+      service:
+        my-service:
+          enabled: true
+          primary: true
+          ports:
+            my-port:
+              enabled: true
+              primary: true
+              port: 12345
+    asserts:
+      - isKind:
+          of: Service
+        documentIndex: 0

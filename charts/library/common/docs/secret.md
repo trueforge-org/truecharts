@@ -192,6 +192,20 @@ Type of the Secret, eg `Opaque` or `kubernetes.io/tls`.
 
 ---
 
+## `$name.dropEmptyKeys`
+
+Drop keys of `data` with an empty (null or `""`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this Secret.
+
+| Field | Value |
+| --- | --- |
+| Key | `secret.$name.dropEmptyKeys` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
 ## Full Examples
 
 ### Basic Secret

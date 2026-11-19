@@ -206,6 +206,20 @@ Base64 encoded content of the ConfigMap entry
 
 ---
 
+## `$name.dropEmptyKeys`
+
+Drop keys of `data` with an empty (null or `""`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this ConfigMap.
+
+| Field | Value |
+| --- | --- |
+| Key | `configmap.$name.dropEmptyKeys` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
 ## Full Examples
 
 ### Basic ConfigMap

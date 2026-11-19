@@ -153,3 +153,72 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: "at '/workload/my-workload/podSpec/containers/main/termination': additional properties 'unknownKey' not allowed"
+
+  - it: should render a container with a boolean dropEmptyKeys
+    set:
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                dropEmptyKeys: true
+                args:
+                  - --port
+                  - ""
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port
+
+  - it: should render a container with a string dropEmptyKeys
+    set:
+      dropArgs: true
+      workload:
+        my-workload:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              main:
+                enabled: true
+                primary: true
+                imageSelector: ubuntuImage
+                dropEmptyKeys: "{{ .Values.dropArgs }}"
+                args:
+                  - --port
+                  - ""
+                probes:
+                  liveness:
+                    enabled: false
+                  readiness:
+                    enabled: false
+                  startup:
+                    enabled: false
+    asserts:
+      - documentIndex: 0
+        isKind:
+          of: Deployment
+      - documentIndex: 0
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port

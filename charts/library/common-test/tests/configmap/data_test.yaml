@@ -93,3 +93,119 @@ tests:
             foo: |
               Some other text
               some_text
+
+  - it: should drop empty data keys when global dropEmptyKeys is true
+    set:
+      global:
+        dropEmptyKeys: true
+      emptyValue: ""
+      zeroValue: 0
+      falseValue: false
+      configmap:
+        my-configmap1:
+          enabled: true
+          data:
+            foo: bar
+            empty: ""
+            tplEmpty: "{{ .Values.emptyValue }}"
+            zero: "{{ .Values.zeroValue }}"
+            no: "{{ .Values.falseValue }}"
+    asserts:
+      - documentIndex: *configmapDoc
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configmapDoc
+        equal:
+          path: data
+          value:
+            foo: bar
+            zero: "0"
+            no: "false"
+
+  - it: should keep empty data keys when dropEmptyKeys is not set
+    set:
+      configmap:
+        my-configmap1:
+          enabled: true
+          data:
+            foo: bar
+            empty: ""
+    asserts:
+      - documentIndex: *configmapDoc
+        equal:
+          path: data
+          value:
+            foo: bar
+            empty: ""
+
+  - it: should render empty data when all data keys are dropped
+    set:
+      global:
+        dropEmptyKeys: true
+      emptyValue: ""
+      configmap:
+        my-configmap1:
+          enabled: true
+          data:
+            empty: ""
+            tplEmpty: "{{ .Values.emptyValue }}"
+    asserts:
+      - documentIndex: *configmapDoc
+        isKind:
+          of: ConfigMap
+      - documentIndex: *configmapDoc
+        equal:
+          path: data
+          value: {}
+
+  - it: should keep empty data keys when configmap dropEmptyKeys is false and global is true
+    set:
+      global:
+        dropEmptyKeys: true
+      configmap:
+        my-configmap1:
+          enabled: true
+          dropEmptyKeys: false
+          data:
+            foo: bar
+            empty: ""
+    asserts:
+      - documentIndex: *configmapDoc
+        equal:
+          path: data
+          value:
+            foo: bar
+            empty: ""
+
+  - it: should drop empty data keys when configmap dropEmptyKeys is true and global is false
+    set:
+      configmap:
+        my-configmap1:
+          enabled: true
+          dropEmptyKeys: true
+          data:
+            foo: bar
+            empty: ""
+    asserts:
+      - documentIndex: *configmapDoc
+        equal:
+          path: data
+          value:
+            foo: bar
+
+  - it: should drop empty data keys when configmap dropEmptyKeys is a tpl string rendering true
+    set:
+      dropConfig: true
+      configmap:
+        my-configmap1:
+          enabled: true
+          dropEmptyKeys: "{{ .Values.dropConfig }}"
+          data:
+            foo: bar
+            empty: ""
+    asserts:
+      - documentIndex: *configmapDoc
+        equal:
+          path: data
+          value:
+            foo: bar

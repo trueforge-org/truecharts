@@ -470,3 +470,490 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/workload/workload-name/podSpec/containers/container-name1/env/key1/secretKeyRef/expandObjectName'': got null, want boolean or string'
+
+  - it: should drop empty env entries when global dropEmptyKeys is true
+    set:
+      global:
+        dropEmptyKeys: true
+      emptyValue: ""
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                env:
+                  VAR_EMPTY: ""
+                  VAR_NULL:
+                  VAR_TPL_EMPTY: "{{ .Values.emptyValue }}"
+                  VAR_ZERO: 0
+                  VAR_FALSE: false
+                  VAR_VALUE: value1
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_NULL
+            value: ""
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_TPL_EMPTY
+            value: ""
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_ZERO
+            value: "0"
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_FALSE
+            value: "false"
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_VALUE
+            value: value1
+
+  - it: should keep empty env entries when dropEmptyKeys is not set
+    set:
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                env:
+                  VAR_EMPTY: ""
+                  VAR_NULL:
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_NULL
+            value: ""
+
+  - it: should keep empty env entries when global dropEmptyKeys is false
+    set:
+      global:
+        dropEmptyKeys: false
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                env:
+                  VAR_EMPTY: ""
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+
+  - it: should drop empty env entries when container dropEmptyKeys is true
+    set:
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: true
+                env:
+                  VAR_EMPTY: ""
+                  VAR_VALUE: value1
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_VALUE
+            value: value1
+
+  - it: should keep empty env entries when container dropEmptyKeys is false and global is true
+    set:
+      global:
+        dropEmptyKeys: true
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: false
+                env:
+                  VAR_EMPTY: ""
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+
+  - it: should drop empty env entries when container dropEmptyKeys is a tpl string rendering true
+    set:
+      dropEnv: true
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: "{{ .Values.dropEnv }}"
+                env:
+                  VAR_EMPTY: ""
+                  VAR_VALUE: value1
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_VALUE
+            value: value1
+
+  - it: should keep empty env entries when container dropEmptyKeys is a tpl string rendering false
+    set:
+      global:
+        dropEmptyKeys: true
+      dropEnv: false
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: "{{ .Values.dropEnv }}"
+                env:
+                  VAR_EMPTY: ""
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_EMPTY
+            value: ""
+
+  - it: should drop env refs to empty values in configmap and secret when global dropEmptyKeys is true
+    set:
+      global:
+        dropEmptyKeys: true
+      image: *image
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key1: ""
+            key2: value2
+      configmap:
+        configmap-name:
+          enabled: true
+          data:
+            key1: ""
+            key2: value2
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                env:
+                  VAR_SECRET_EMPTY:
+                    secretKeyRef:
+                      name: secret-name
+                      key: key1
+                  VAR_SECRET_VALUE:
+                    secretKeyRef:
+                      name: secret-name
+                      key: key2
+                  VAR_CONFIGMAP_EMPTY:
+                    configMapKeyRef:
+                      name: configmap-name
+                      key: key1
+                  VAR_CONFIGMAP_VALUE:
+                    configMapKeyRef:
+                      name: configmap-name
+                      key: key2
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_SECRET_EMPTY
+            valueFrom:
+              secretKeyRef:
+                key: key1
+                name: test-release-name-common-test-secret-name
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_CONFIGMAP_EMPTY
+            valueFrom:
+              configMapKeyRef:
+                key: key1
+                name: test-release-name-common-test-configmap-name
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_SECRET_VALUE
+            valueFrom:
+              secretKeyRef:
+                key: key2
+                name: test-release-name-common-test-secret-name
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_CONFIGMAP_VALUE
+            valueFrom:
+              configMapKeyRef:
+                key: key2
+                name: test-release-name-common-test-configmap-name
+
+  - it: should keep env refs with expandObjectName false to empty values when dropEmptyKeys is true
+    set:
+      global:
+        dropEmptyKeys: true
+      image: *image
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key1: ""
+            key2: value2
+      configmap:
+        configmap-name:
+          enabled: true
+          data:
+            key1: ""
+            key2: value2
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                env:
+                  VAR_SECRET_RAW:
+                    secretKeyRef:
+                      expandObjectName: false
+                      name: secret-name
+                      key: key1
+                  VAR_CONFIGMAP_RAW:
+                    configMapKeyRef:
+                      expandObjectName: false
+                      name: configmap-name
+                      key: key1
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_SECRET_RAW
+            valueFrom:
+              secretKeyRef:
+                key: key1
+                name: secret-name
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_CONFIGMAP_RAW
+            valueFrom:
+              configMapKeyRef:
+                key: key1
+                name: configmap-name
+
+  - it: should drop env refs to empty values when container dropEmptyKeys is true and global is false
+    set:
+      image: *image
+      secret:
+        secret-name:
+          enabled: true
+          data:
+            key1: ""
+            key2: value2
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: true
+                env:
+                  VAR_SECRET_EMPTY:
+                    secretKeyRef:
+                      name: secret-name
+                      key: key1
+                  VAR_SECRET_VALUE:
+                    secretKeyRef:
+                      name: secret-name
+                      key: key2
+    asserts:
+      - documentSelector:
+          path: kind
+          value: Deployment
+        notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_SECRET_EMPTY
+            valueFrom:
+              secretKeyRef:
+                key: key1
+                name: test-release-name-common-test-secret-name
+      - documentSelector:
+          path: kind
+          value: Deployment
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: VAR_SECRET_VALUE
+            valueFrom:
+              secretKeyRef:
+                key: key2
+                name: test-release-name-common-test-secret-name

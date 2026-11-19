@@ -89,6 +89,15 @@
           "description": "Base64 encoded content of the ConfigMap entry"
         },
         "description": "Binary entries of the ConfigMap, keyed by file name. Values must be base64 encoded."
+      },
+      "dropEmptyKeys": {
+        "type": [
+          "boolean",
+          "string"
+        ],
+        "description": "Drop keys of `data` with an empty (null or `\"\"`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this ConfigMap.",
+        "default": false,
+        "x-helm-tpl": true
       }
     },
     "additionalProperties": false,

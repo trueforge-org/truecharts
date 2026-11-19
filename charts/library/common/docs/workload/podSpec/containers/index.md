@@ -299,6 +299,20 @@ workload:
 
 ---
 
+## `dropEmptyKeys`
+
+Drop `env` and `args` entries with an empty (null or `""`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this container.
+
+| Field | Value |
+| --- | --- |
+| Key | `workload.$name.podSpec.containers.$name.dropEmptyKeys` |
+| Type | `bool` |
+| Required | ❌ |
+| Helm `tpl` | ✅ |
+| Default | `false` |
+
+---
+
 ## `extraArgs`
 
 Arguments that are appended **after** `args`, as a string or a list.

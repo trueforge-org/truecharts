@@ -108,6 +108,15 @@
       "type": "boolean",
       "description": "Stop all objects of the chart and its dependencies, including CNPG clusters. Stand-alone pods are not stopped.",
       "default": false
+    },
+    "dropEmptyKeys": {
+      "type": [
+        "boolean",
+        "string"
+      ],
+      "description": "Drop keys with an empty (null or `\"\"`, after `tpl`) value from container `env` and `args`, and from Secret and ConfigMap `data`. Can be overridden per container, Secret and ConfigMap.",
+      "default": false,
+      "x-helm-tpl": true
     }
   },
   "additionalProperties": false,
@@ -173,6 +182,7 @@
       ]
     },
     "minNodePort": 9000,
-    "stopAll": false
+    "stopAll": false,
+    "dropEmptyKeys": false
   }
 }
