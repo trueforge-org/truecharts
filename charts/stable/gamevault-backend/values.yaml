@@ -72,7 +72,10 @@ workload:
                 key: password
             # ADMIN
             SERVER_ADMIN_USERNAME: "{{ .Values.gamevault.server.admin_username }}"
-            SERVER_ADMIN_PASSWORD: "{{ .Values.gamevault.server.admin_password }}"
+            SERVER_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SERVER_ADMIN_PASSWORD
             SERVER_REGISTRATION_DISABLED: "{{ .Values.gamevault.server.registration_disabled }}"
             SERVER_ACCOUNT_ACTIVATION_DISABLED: "{{ .Values.gamevault.server.account_activation_disabled }}"
             # SERVER
@@ -88,7 +91,10 @@ workload:
             # RAWG
             RAWG_API_URL: "{{ .Values.gamevault.rawg.api_url }}"
             RAWG_API_CACHE_DAYS: "{{ .Values.gamevault.rawg.api_cache_days }}"
-            RAWG_API_KEY: "{{ .Values.gamevault.rawg.api_key }}"
+            RAWG_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: RAWG_API_KEY
 persistence:
   logs:
     enabled: true
@@ -104,3 +110,10 @@ cnpg:
     enabled: true
     user: gamevault
     database: gamevault
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SERVER_ADMIN_PASSWORD: '{{ .Values.gamevault.server.admin_password }}'
+      RAWG_API_KEY: '{{ .Values.gamevault.rawg.api_key }}'

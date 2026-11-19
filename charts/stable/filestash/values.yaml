@@ -27,7 +27,10 @@ workload:
           env:
             APPLICATION_URL: "http://localhost:8334"
             GDRIVE_CLIENT_ID: ""
-            GDRIVE_CLIENT_SECRET: ""
+            GDRIVE_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: GDRIVE_CLIENT_SECRET
             DROPBOX_CLIENT_ID: ""
             ONLYOFFICE_URL: ""
 
@@ -35,3 +38,9 @@ persistence:
   data:
     enabled: true
     mountPath: /app/data/state
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GDRIVE_CLIENT_SECRET: ""

@@ -36,10 +36,16 @@ workload:
                 key: plainhost
             dbuser: "{{ .Values.mariadb.mariadbUsername }}"
             dbname: "{{ .Values.mariadb.mariadbDatabase }}"
-            dbpass: "{{ .Values.mariadb.password }}"
+            dbpass:
+              secretKeyRef:
+                name: env-secrets
+                key: dbpass
             dbport: 3306
             igdbclientid: "{{ .Values.gaseous.igdb.id }}"
-            igdbclientsecret: "{{ .Values.gaseous.igdb.secret }}"
+            igdbclientsecret:
+              secretKeyRef:
+                name: env-secrets
+                key: igdbclientsecret
 
 persistence:
   config:
@@ -56,3 +62,10 @@ mariadb:
   enabled: true
   mariadbUsername: gaseous
   mariadbDatabase: gaseous
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      dbpass: '{{ .Values.mariadb.password }}'
+      igdbclientsecret: '{{ .Values.gaseous.igdb.secret }}'

@@ -34,7 +34,10 @@ workload:
               secretKeyRef:
                 name: cnpg-main-urls
                 key: std
-            FF_SYNCSERVER_SECRET: "changeme"
+            FF_SYNCSERVER_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: FF_SYNCSERVER_SECRET
 service:
   main:
     ports:
@@ -51,3 +54,9 @@ cnpg:
     enabled: true
     user: firefox-syncserver
     database: firefox-syncserver
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      FF_SYNCSERVER_SECRET: "changeme"

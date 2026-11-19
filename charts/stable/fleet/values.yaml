@@ -32,7 +32,10 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: jdbc-mariadb
-            fleet_database_password: "{{ .Values.mariadb.password }}"
+            fleet_database_password:
+              secretKeyRef:
+                name: env-secrets
+                key: fleet_database_password
 # secretEnv:
 
 service:
@@ -51,3 +54,9 @@ mariadb:
   enabled: true
   mariadbUsername: fleet
   mariadbDatabase: fleet
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      fleet_database_password: '{{ .Values.mariadb.password }}'

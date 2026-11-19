@@ -30,7 +30,10 @@ workload:
             startup:
               type: tcp
           env:
-            ALPHA_VANTAGE_API_KEY: ""
+            ALPHA_VANTAGE_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ALPHA_VANTAGE_API_KEY
             ACCESS_TOKEN_SALT:
               secretKeyRef:
                 name: ghostfolio-secrets
@@ -48,7 +51,10 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
             REDIS_PORT: "6379"
 cnpg:
   main:
@@ -57,3 +63,10 @@ cnpg:
     database: ghostfolio
 redis:
   enabled: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ALPHA_VANTAGE_API_KEY: ""
+      REDIS_PASSWORD: '{{ .Values.redis.password }}'

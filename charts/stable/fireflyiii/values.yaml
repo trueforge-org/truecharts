@@ -46,7 +46,10 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REDIS_PASSWORD
             STATIC_CRON_TOKEN:
               secretKeyRef:
                 name: firefly-secrets
@@ -87,3 +90,9 @@ cnpg:
     enabled: true
     user: firefly
     database: firefly
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      REDIS_PASSWORD: '{{ .Values.redis.password }}'

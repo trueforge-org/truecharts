@@ -36,7 +36,10 @@ workload:
         main:
           env:
             INSTANCE_IP: "127.0.0.1"
-            ADMIN_PASSWORD: "password"
+            ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_PASSWORD
             INSTANCE_IDENTIFIER: "truecharts-dns-gravity"
             BOOTSTRAP_ROLES: "dns;api;etcd;discovery;backup;monitoring;tsdb"
             ADMIN_TOKEN:
@@ -49,3 +52,9 @@ persistence:
   data:
     enabled: true
     mountPath: "/data"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ADMIN_PASSWORD: "password"
