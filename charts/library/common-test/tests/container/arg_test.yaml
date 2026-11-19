@@ -124,3 +124,192 @@ tests:
               - --accept-eula
               - --path
               - /some/path
+
+  - it: should drop empty args and extraArgs when global dropEmptyKeys is true
+    set:
+      global:
+        dropEmptyKeys: true
+      emptyValue: ""
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                args:
+                  - --port
+                  - ""
+                  - "{{ .Values.emptyValue }}"
+                  - "0"
+                extraArgs:
+                  - ""
+                  - --accept-eula
+    asserts:
+      - documentIndex: &deploymentDoc 0
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port
+            - "0"
+            - --accept-eula
+
+  - it: should drop args given as an empty string when dropEmptyKeys is true
+    set:
+      global:
+        dropEmptyKeys: true
+      emptyValue: ""
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                args: "{{ .Values.emptyValue }}"
+    asserts:
+      - documentIndex: *deploymentDoc
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        notExists:
+          path: spec.template.spec.containers[0].args
+
+  - it: should keep empty args when dropEmptyKeys is not set
+    set:
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                args:
+                  - --port
+                  - ""
+    asserts:
+      - documentIndex: *deploymentDoc
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port
+            - ""
+
+  - it: should keep empty args when container dropEmptyKeys is false and global is true
+    set:
+      global:
+        dropEmptyKeys: true
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: false
+                args:
+                  - --port
+                  - ""
+    asserts:
+      - documentIndex: *deploymentDoc
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port
+            - ""
+
+  - it: should drop empty args and extraArgs when container dropEmptyKeys is true
+    set:
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: true
+                args:
+                  - --port
+                  - ""
+                extraArgs:
+                  - ""
+                  - --accept-eula
+    asserts:
+      - documentIndex: *deploymentDoc
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port
+            - --accept-eula
+
+  - it: should drop empty args when container dropEmptyKeys is a tpl string rendering true
+    set:
+      dropArgs: true
+      image: *image
+      workload:
+        workload-name:
+          enabled: true
+          primary: true
+          type: Deployment
+          podSpec:
+            containers:
+              container-name1:
+                enabled: true
+                primary: true
+                imageSelector: image
+                probes: *probes
+                dropEmptyKeys: "{{ .Values.dropArgs }}"
+                args:
+                  - --port
+                  - ""
+    asserts:
+      - documentIndex: *deploymentDoc
+        isKind:
+          of: Deployment
+      - documentIndex: *deploymentDoc
+        equal:
+          path: spec.template.spec.containers[0].args
+          value:
+            - --port

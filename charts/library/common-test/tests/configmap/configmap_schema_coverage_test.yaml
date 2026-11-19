@@ -52,3 +52,39 @@ tests:
           path: binaryData["file.bin"]
           value: aGVsbG8=
         documentIndex: 0
+
+  - it: should drop empty data keys with a boolean dropEmptyKeys
+    set:
+      configmap:
+        my-configmap:
+          enabled: true
+          dropEmptyKeys: true
+          data:
+            foo: bar
+            empty: ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentIndex: 0
+      - equal:
+          path: data
+          value:
+            foo: bar
+        documentIndex: 0
+
+  - it: should drop empty data keys with a string dropEmptyKeys
+    set:
+      dropConfig: true
+      configmap:
+        my-configmap:
+          enabled: true
+          dropEmptyKeys: "{{ .Values.dropConfig }}"
+          data:
+            foo: bar
+            empty: ""
+    asserts:
+      - equal:
+          path: data
+          value:
+            foo: bar
+        documentIndex: 0
