@@ -1811,6 +1811,13 @@ dependencies:
     persistence:
       data:
         mountPath: /config
+      # -- The start script writes the password sync file and the socket here, so it needs its own writable
+      # directory, also when the chart disables the root [persistence.varrun]
+      run:
+        enabled: true
+        type: emptyDir
+        mountPath: /run/mysqld
+        medium: Memory
   postgresql:
     enabled: false
     # -- Applied to this dependency only, so it does not run as root when the chart does
