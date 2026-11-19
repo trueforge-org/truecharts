@@ -19,6 +19,8 @@ nitter:
   cache:
     listMinutes: 240
     rssMinutes: 10
+  # Must be changed. HMAC key used to sign proxied media URLs, any random string (32+ chars recommended).
+  hmacKey: "PLACEHOLDERHMACKEYCHANGEME123456"
   config:
     base64Media: false
     enableRSS: true

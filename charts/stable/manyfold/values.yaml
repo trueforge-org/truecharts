@@ -9,6 +9,9 @@ securityContext:
     runAsNonRoot: false
     runAsUser: 0
     runAsGroup: 0
+manyfold:
+  # Must be changed. Rails SECRET_KEY_BASE, any long random string (64+ chars recommended).
+  secretKeyBase: "PLACEHOLDERSECRETKEYBASECHANGEMEPLACEHOLDERSECRETKEYBASECHANGEME"
 service:
   main:
     ports:

@@ -50,6 +50,9 @@ workload:
             AWS_SECRET_ACCESS_KEY: ""
             AWS_BUCKET: ""
             AWS_BUCKET_PATH: ""
+nocodb:
+  # Must be changed. JWT signing secret, any long random string (32+ chars recommended).
+  authJwtSecret: "PLACEHOLDERAUTHJWTSECRETCHANGEME"
 service:
   main:
     ports:

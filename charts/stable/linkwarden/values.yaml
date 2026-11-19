@@ -4,6 +4,9 @@ image:
   pullPolicy: IfNotPresent
   tag: v2.17.0@sha256:7c11fde57d1a0c819b6de0079966eba3a33584d718464af7dacde22bd470ae46
 
+linkwarden:
+  # Must be changed. NextAuth secret, any long random string (32+ chars recommended).
+  nextauthSecret: "PLACEHOLDERNEXTAUTHSECRETCHANGEME"
 config:
   nextauth_url: "http://example.com"
   pagination_take_count: 20

@@ -8,6 +8,9 @@ backendImage:
   pullPolicy: IfNotPresent
   tag: v0.8.1@sha256:6a048135399691da25aec04ea107666cb7ce8eb46f5fed9a46a5ac254fe23073
 
+kitchenowl:
+  # Must be changed. JWT signing secret, any long random string (50+ chars recommended).
+  jwtSecretKey: "PLACEHOLDERJWTSECRETKEYCHANGEMEPLACEHOLDERJWTSECRETKEY"
 service:
   main:
     enabled: true

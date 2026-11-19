@@ -3,6 +3,10 @@ image:
   repository: docker.io/outlinewiki/outline
   pullPolicy: IfNotPresent
   tag: 1.13.0@sha256:4583bb244dbb4464d8a632c75044d3b2f9fe44382b6a4b84d97995f473b823e4
+outline:
+  # Must be changed. Both must be hex strings of exactly 64 characters (32 bytes).
+  secretKey: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+  utilsSecret: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
 service:
   main:
     ports:

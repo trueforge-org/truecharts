@@ -6,6 +6,9 @@ image:
 securityContext:
   container:
     readOnlyRootFilesystem: false
+lldap:
+  # Must be changed. JWT signing secret, any long random string (32+ chars recommended).
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEMEPLACEHOLDERJWTSECRET"
 service:
   main:
     ports:

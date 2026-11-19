@@ -3,7 +3,6 @@
 
 {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
 {{- $secretName := printf "%s-mesh-secret" $fullname -}}
-{{- $secretStoreName := printf "%s-sec-store" $fullname -}}
 
 {{- $config := .Values.meshcentral -}}
 {{- $mc_custom := .Values.additional_meshcentral -}}
@@ -29,13 +28,6 @@
   {{- end -}}
 {{- end -}}
 
-{{- $sessionKey := "" -}}
-{{- with (lookup "v1" "Secret" .Release.Namespace $secretStoreName) -}}
-  {{- $sessionKey = (index .data "session_key") | b64dec -}}
-{{- else -}}
-  {{- $sessionKey = randAlphaNum 32 -}}
-{{- end -}}
-
 {{/* Inject some values */}}
 {{- $_ := set $config "$schema" "http://info.meshcentral.com/downloads/meshcentral-config-schema.json" -}}
 
@@ -49,6 +41,7 @@
 {{- $_ := set $config.settings.postgres "host" (.Values.cnpg.main.creds.host | trimAll "\"") -}}
 {{- $_ := set $config.settings.postgres "port" 5432 -}}
 {{- $_ := set $config.settings.postgres "password" (.Values.cnpg.main.creds.password | trimAll "\"") -}}
+{{- $sessionKey := required "meshcentral.settings.sessionKey must be set" $config.settings.sessionKey -}}
 {{- $_ := set $config.settings "sessionKey" $sessionKey -}}
 {{- $_ := set $config.settings "port" .Values.service.main.ports.main.port -}}
 
