@@ -27,6 +27,9 @@ service:
         protocol: http
         port: 5003
 
+peppermint:
+  # Application secret. MUST be changed, use a random string of at least 64 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 workload:
   main:
     podSpec:

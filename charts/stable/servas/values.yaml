@@ -16,6 +16,9 @@ service:
         protocol: http
         targetPort: 80
         port: 11080
+servas:
+  # Laravel application key. MUST be changed, use a random string of exactly 32 characters.
+  appKey: "PLACEHOLDERAPPKEYXXXXXXXXXXXXXXX"
 workload:
   main:
     podSpec:

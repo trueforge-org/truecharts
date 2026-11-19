@@ -62,6 +62,9 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+paperless:
+  # Django secret key. MUST be changed, use a random string of at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:

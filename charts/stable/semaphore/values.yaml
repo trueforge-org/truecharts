@@ -19,6 +19,9 @@ service:
         protocol: http
         targetPort: 3000
 
+semaphore:
+  # Access key encryption secret. MUST be changed, use a random base64 string (32 bytes recommended).
+  accessKeyEncryption: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:

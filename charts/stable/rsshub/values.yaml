@@ -29,6 +29,9 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+rsshub:
+  # Suffix for the node name (release name is prepended). Set any short unique string.
+  nodeName: "PLACEHOLDERNODENAME"
 workload:
   main:
     podSpec:
@@ -39,7 +42,7 @@ workload:
             NODE_ENV: production
             CACHE_TYPE: "redis"
             PUPPETEER_WS_ENDPOINT: "ws://localhost:3000"
-            NODE_NAME: "{{ .Release.Name }}-{{ randAlphaNum 5 }}"
+            NODE_NAME: "{{ .Release.Name }}-{{ .Values.rsshub.nodeName }}"
             # User  defined
             # ALLOW_ORIGIN: ""
             DISALLOW_ROBOT: false

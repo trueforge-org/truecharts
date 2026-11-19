@@ -15,6 +15,9 @@ service:
       main:
         targetPort: 80
         port: 12000
+papermerge:
+  # Security secret key. MUST be changed, use a random string of at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:

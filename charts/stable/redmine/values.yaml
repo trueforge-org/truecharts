@@ -4,6 +4,8 @@ image:
   pullPolicy: IfNotPresent
   tag: 6.1.0
 redmine:
+  # Rails secret key base. MUST be changed, use a random string of at least 80 characters.
+  secretKeyBase: "PLACEHOLDERSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   plugins_migrate: true
   no_db_migrate: false
 service:

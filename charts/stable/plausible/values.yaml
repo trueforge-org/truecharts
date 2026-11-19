@@ -11,6 +11,8 @@ service:
 # Plausible self-hosting documentation
 # https://plausible.io/docs/self-hosting
 plausible:
+  # Secret key base. MUST be changed, use a random string of at least 64 characters.
+  secretKeyBase: "PLACEHOLDERSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   # Server
   server:
     base_url: http://localhost:10277

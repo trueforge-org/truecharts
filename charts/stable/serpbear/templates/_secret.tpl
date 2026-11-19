@@ -1,16 +1,9 @@
 {{/* Define the secret */}}
 {{- define "serpbear.secret" -}}
 
-{{- $secretName := (printf "%s-serpbear-secret" (include "tc.v1.common.lib.chart.names.fullname" $)) }}
-
 enabled: true
 data:
-  {{/* Secret Key */}}
-  {{- with (lookup "v1" "Secret" .Release.Namespace $secretName) }}
-  SECRET: {{ index .data "SECRET" }}
-  {{- else }}
-  SECRET: {{ randAlphaNum 32 }}
-  {{- end }}
+  SECRET: {{ required "serpbear.secret must be set" .Values.serpbear.secret | quote }}
   {{- with .Values.serpbear.api_key }}
   APIKEY: {{ . }}
   {{- end }}
