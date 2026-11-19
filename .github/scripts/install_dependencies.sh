@@ -23,7 +23,7 @@ CERT_MANAGER_CHART_VERSION="v1.19.3"
 # renovate: datasource=helm depName=cloudnative-pg repository=oci://ghcr.io/cloudnative-pg/charts
 CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
 # renovate: datasource=helm depName=valkey-operator repository=https://valkey.io/valkey-helm
-VALKEY_OPERATOR_CHART_VERSION="0.8.0"
+VALKEY_OPERATOR_CHART_VERSION="0.9.0"
 # renovate: datasource=helm depName=metrics-server repository=oci://ghcr.io/home-operations/charts-mirror
 METRICS_SERVER_CHART_VERSION="3.13.0"
 # renovate: datasource=helm depName=volsync repository=oci://oci.trueforge.org/truecharts
