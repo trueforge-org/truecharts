@@ -31,6 +31,12 @@ tests:
             plainhost: test-release-name-common-test-mariadb-main
             plainporthost: test-release-name-common-test-mariadb-main:3306
             url: mysql://test:test-password@test-release-name-common-test-mariadb-main:3306/test
+            urlmariadb: mariadb://test:test-password@test-release-name-common-test-mariadb-main:3306/test
+            urlmysql2: mysql2://test:test-password@test-release-name-common-test-mariadb-main:3306/test
+            urlpymysql: mysql+pymysql://test:test-password@test-release-name-common-test-mariadb-main:3306/test
+            authporthost: test:test-password@test-release-name-common-test-mariadb-main:3306
+            jdbcauth: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test?user=test&password=test-password
+            dotnet: Server=test-release-name-common-test-mariadb-main;Port=3306;Database=test;User ID=test;Password=test-password
             urlnossl: mysql://test:test-password@test-release-name-common-test-mariadb-main:3306/test?sslmode=disable
             jdbc: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test
             jdbc-mariadb: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/test
@@ -174,6 +180,12 @@ tests:
             plainhost: test-release-name-common-test-mariadb-main
             plainporthost: test-release-name-common-test-mariadb-main:3306
             url: mysql://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb
+            urlmariadb: mariadb://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb
+            urlmysql2: mysql2://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb
+            urlpymysql: mysql+pymysql://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb
+            authporthost: myuser:testpassword@test-release-name-common-test-mariadb-main:3306
+            jdbcauth: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/mydb?user=myuser&password=testpassword
+            dotnet: Server=test-release-name-common-test-mariadb-main;Port=3306;Database=mydb;User ID=myuser;Password=testpassword
             urlnossl: mysql://myuser:testpassword@test-release-name-common-test-mariadb-main:3306/mydb?sslmode=disable
             jdbc: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/mydb
             jdbc-mariadb: jdbc:mariadb://test-release-name-common-test-mariadb-main:3306/mydb

@@ -30,6 +30,14 @@ tests:
             plainhost: test-release-name-common-test-postgresql-main
             plainporthost: test-release-name-common-test-postgresql-main:5432
             url: postgresql://app:test-password@test-release-name-common-test-postgresql-main:5432/app
+            urlpostgres: postgres://app:test-password@test-release-name-common-test-postgresql-main:5432/app
+            urlecto: ecto://app:test-password@test-release-name-common-test-postgresql-main:5432/app
+            urlpsycopg2: postgresql+psycopg2://app:test-password@test-release-name-common-test-postgresql-main:5432/app
+            urlasyncpg: postgresql+asyncpg://app:test-password@test-release-name-common-test-postgresql-main:5432/app
+            urlutf8: postgresql://app:test-password@test-release-name-common-test-postgresql-main:5432/app?client_encoding=utf8
+            authporthost: app:test-password@test-release-name-common-test-postgresql-main:5432
+            jdbcauth: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/app?user=app&password=test-password
+            npgsql: Host=test-release-name-common-test-postgresql-main;Port=5432;Database=app;Username=app;Password=test-password
             urlnossl: postgresql://app:test-password@test-release-name-common-test-postgresql-main:5432/app?sslmode=disable
             jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/app
       - documentSelector: &workloadDoc
@@ -152,6 +160,14 @@ tests:
             plainhost: test-release-name-common-test-postgresql-main
             plainporthost: test-release-name-common-test-postgresql-main:5432
             url: postgresql://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb
+            urlpostgres: postgres://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb
+            urlecto: ecto://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb
+            urlpsycopg2: postgresql+psycopg2://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb
+            urlasyncpg: postgresql+asyncpg://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb
+            urlutf8: postgresql://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb?client_encoding=utf8
+            authporthost: myuser:testpassword@test-release-name-common-test-postgresql-main:5432
+            jdbcauth: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/mydb?user=myuser&password=testpassword
+            npgsql: Host=test-release-name-common-test-postgresql-main;Port=5432;Database=mydb;Username=myuser;Password=testpassword
             urlnossl: postgresql://myuser:testpassword@test-release-name-common-test-postgresql-main:5432/mydb?sslmode=disable
             jdbc: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/mydb
       - documentSelector: &workloadDoc
@@ -371,3 +387,43 @@ tests:
     asserts:
       - failedTemplate:
           errorPattern: 'at ''/dependencies/postgresql/depconfig/postgresqlDatabase'': got null, want string'
+
+  - it: should encode special characters in the url variants of the credentials secret
+    set:
+      dependencies:
+        postgresql:
+          mode: standalone
+          depconfig:
+            password: "p@ss:w/rd+1"
+          enabled: true
+    asserts:
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.urlpostgres
+          value: postgres://app:p%40ss%3Aw%2Frd%2B1@test-release-name-common-test-postgresql-main:5432/app
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.urlecto
+          value: ecto://app:p%40ss%3Aw%2Frd%2B1@test-release-name-common-test-postgresql-main:5432/app
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.authporthost
+          value: app:p%40ss%3Aw%2Frd%2B1@test-release-name-common-test-postgresql-main:5432
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.jdbcauth
+          value: jdbc:postgresql://test-release-name-common-test-postgresql-main:5432/app?user=app&password=p%40ss%3Aw%2Frd%2B1
+      - documentSelector:
+          path: metadata.name
+          value: test-release-name-postgresqlcreds
+        equal:
+          path: stringData.npgsql
+          value: Host=test-release-name-common-test-postgresql-main;Port=5432;Database=app;Username=app;Password=p@ss:w/rd+1

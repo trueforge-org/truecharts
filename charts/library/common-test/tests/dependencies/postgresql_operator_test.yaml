@@ -124,6 +124,14 @@ tests:
             plainhost: test-release-name-common-test-cnpg-main-rw
             plainporthost: test-release-name-common-test-cnpg-main-rw:5432
             url: postgresql://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database
+            urlpostgres: postgres://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database
+            urlecto: ecto://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database
+            urlpsycopg2: postgresql+psycopg2://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database
+            urlasyncpg: postgresql+asyncpg://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database
+            urlutf8: postgresql://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database?client_encoding=utf8
+            authporthost: my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432
+            jdbcauth: jdbc:postgresql://test-release-name-common-test-cnpg-main-rw:5432/my-database?user=my-user&password=testpassword
+            npgsql: Host=test-release-name-common-test-cnpg-main-rw;Port=5432;Database=my-database;Username=my-user;Password=testpassword
             urlnossl: postgresql://my-user:testpassword@test-release-name-common-test-cnpg-main-rw:5432/my-database?sslmode=disable
             jdbc: jdbc:postgresql://test-release-name-common-test-cnpg-main-rw:5432/my-database
 
@@ -235,7 +243,23 @@ tests:
             plainporthost: test-release-name-common-test-cnpg-main-pooler-rw:5432
             plainporthostRO: test-release-name-common-test-cnpg-main-pooler-ro:5432
             url: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
+            urlpostgres: postgres://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
+            urlecto: ecto://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
+            urlpsycopg2: postgresql+psycopg2://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
+            urlasyncpg: postgresql+asyncpg://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database
+            urlutf8: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database?client_encoding=utf8
+            authporthost: app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432
+            jdbcauth: jdbc:postgresql://test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database?user=app&password=testpassword
+            npgsql: Host=test-release-name-common-test-cnpg-main-pooler-rw;Port=5432;Database=my-database;Username=app;Password=testpassword
             urlRO: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
+            urlpostgresRO: postgres://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
+            urlectoRO: ecto://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
+            urlpsycopg2RO: postgresql+psycopg2://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
+            urlasyncpgRO: postgresql+asyncpg://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database
+            urlutf8RO: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database?client_encoding=utf8
+            authporthostRO: app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432
+            jdbcauthRO: jdbc:postgresql://test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database?user=app&password=testpassword
+            npgsqlRO: Host=test-release-name-common-test-cnpg-main-pooler-ro;Port=5432;Database=my-database;Username=app;Password=testpassword
             urlnossl: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database?sslmode=disable
             urlnosslRO: postgresql://app:testpassword@test-release-name-common-test-cnpg-main-pooler-ro:5432/my-database?sslmode=disable
             jdbc: jdbc:postgresql://test-release-name-common-test-cnpg-main-pooler-rw:5432/my-database

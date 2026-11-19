@@ -97,6 +97,7 @@ tests:
             plainporthost: valkey-test-release-name-common-test-valkey:6379
             plainhostpass: valkey-test-release-name-common-test-valkey:testpassword
             url: redis://default:testpassword@valkey-test-release-name-common-test-valkey:6379/0
+            urlnouser: redis://:testpassword@valkey-test-release-name-common-test-valkey:6379/0
 
   - it: should still create the credentials of mariadb in operator mode
     template: common.yaml
