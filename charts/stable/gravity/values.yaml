@@ -29,6 +29,10 @@ service:
         targetPort: 53
         port: 53
 
+gravity:
+  # Must be changed. Random string, at least 32 characters.
+  adminToken: "PLACEHOLDERADMINTOKEN0000000000000"
+
 workload:
   main:
     podSpec:

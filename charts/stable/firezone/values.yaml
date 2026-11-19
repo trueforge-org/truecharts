@@ -28,6 +28,14 @@ service:
         protocol: udp
         port: 51820
 firezone:
+  # All of these must be changed. Plain random strings, the chart base64 encodes them.
+  secrets:
+    guardianSecretKey: "PLACEHOLDERGUARDIANSECRETKEY00000000000000000"
+    databaseEncryptionKey: "PLACEHOLDERDATABASEKEY0000000000"
+    secretKeyBase: "PLACEHOLDERSECRETKEYBASE000000000000000000000000"
+    liveViewSigningSalt: "PLACEHOLDERLIVEVIEWSALT00"
+    cookieSigningSalt: "PLACEHOLDERCOOKIESIGNSALT"
+    cookieEncryptionSalt: "PLACEHOLDERCOOKIEENCSALT0"
   web:
     external_url: "https://example.com"
     trusted_proxies: []

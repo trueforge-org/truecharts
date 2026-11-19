@@ -8,6 +8,9 @@ service:
     ports:
       main:
         port: 10132
+hedgedoc:
+  # Must be changed. Random string, at least 32 characters.
+  sessionSecret: "PLACEHOLDERSESSIONSECRET00000000000"
 persistence:
   uploads:
     enabled: true

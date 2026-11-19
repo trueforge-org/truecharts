@@ -9,6 +9,9 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+flowise:
+  # Must be changed. Random string, at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEY000000000000"
 service:
   main:
     ports:

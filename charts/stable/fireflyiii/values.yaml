@@ -73,6 +73,11 @@ persistence:
     mountPath: "/var/www/html/storage/upload"
   varrun:
     enabled: false
+fireflyiii:
+  # Must be changed. Exactly 32 characters.
+  appKey: "PLACEHOLDERAPPKEY0000000000000000"
+  # Must be changed. At least 32 characters.
+  cronToken: "PLACEHOLDERCRONTOKEN00000000000000"
 cronjob:
   schedule: "0 3 * * *"
   annotations: {}

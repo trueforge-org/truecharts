@@ -1,12 +1,7 @@
 {{/* Define the configmap */}}
 {{- define "invidious.secret" -}}
 
-{{- $secretName := printf "%s-invidious-secret" (include "tc.v1.common.lib.chart.names.fullname" .) -}}
-
-{{- $hmac := randAlphaNum 64 -}}
-{{- with (lookup "v1" "Secret" .Release.Namespace $secretName) -}}
-  {{- $hmac = (index .data "HMAC_KEY") | b64dec -}}
-{{- end -}}
+{{- $hmac := required "invidious.hmacKey must be set" .Values.invidious.hmacKey -}}
 
 {{- $vNet := .Values.invidious.network }}
 {{- $vLog := .Values.invidious.logging }}

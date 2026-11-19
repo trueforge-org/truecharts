@@ -69,6 +69,8 @@ workload:
             - secretRef:
                 name: invidious-secret
 invidious:
+  # Must be changed. Random string, at least 64 characters.
+  hmacKey: "PLACEHOLDERHMACKEY00000000000000000000000000000000000000000000"
   network:
     inbound:
       external_port: 10594

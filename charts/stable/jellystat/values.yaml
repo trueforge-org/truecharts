@@ -23,6 +23,10 @@ service:
         protocol: tcp
         port: 10682
         targetPort: 3004
+jellystat:
+  # Must be changed. Random string, at least 32 characters.
+  jwtSecret: "PLACEHOLDERJWTSECRET00000000000000"
+
 workload:
   main:
     podSpec:

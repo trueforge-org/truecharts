@@ -15,6 +15,10 @@ service:
       main:
         port: 3333
         targetPort: 3333
+ghostfolio:
+  # Must be changed. Random strings, at least 32 characters.
+  accessTokenSalt: "PLACEHOLDERACCESSTOKENSALT0000000000"
+  jwtSecretKey: "PLACEHOLDERJWTSECRETKEY00000000000000"
 workload:
   main:
     podSpec:
