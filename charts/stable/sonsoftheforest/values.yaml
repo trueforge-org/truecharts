@@ -140,3 +140,9 @@ persistence:
           mountPath: /serverdata/serverfiles/userdata/dedicatedserver.cfg
           subPath: dedicatedserver.cfg
           readOnly: true
+configmap:
+  sonsoftheforest-dscfg:
+    enabled: true
+    data:
+      dedicatedserver.cfg: |-
+        {{ tpl (.Values.sonsoftheforest.server | toJson) . }}

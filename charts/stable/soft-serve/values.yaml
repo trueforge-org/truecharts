@@ -38,3 +38,13 @@ workload:
           envFrom:
             - secretRef:
                 name: "env-secret"
+secret:
+  env-secret:
+    enabled: true
+    data:
+      SOFT_SERVE_BIND_ADDRESS: 0.0.0.0
+      SOFT_SERVE_REPO_PATH: '{{ .Values.persistence.repos.mountPath }}'
+      SOFT_SERVE_PORT: '{{ .Values.service.main.ports.main.port }}'
+      SOFT_SERVE_HOST: '{{ .Values.softserve.host }}'
+      SOFT_SERVE_KEY_PATH: '{{ .Values.softserve.key_path }}'
+      SOFT_SERVE_INITIAL_ADMIN_KEY: '{{ .Values.softserve.init_admin_key }}'
