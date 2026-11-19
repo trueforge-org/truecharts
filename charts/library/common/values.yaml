@@ -8,6 +8,9 @@ global:
   # -- Set a global namespace
   # TODO: Currently some objects do not support this
   namespace: ""
+  # -- Drop keys with an empty (null or "") value from container env and args,
+  # and from secret and configmap data. Can be overruled per container, secret and configmap.
+  dropEmptyKeys: false
   diagnosticMode:
     enabled: false
   fallbackDefaults:

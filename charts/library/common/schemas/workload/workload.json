@@ -88,6 +88,15 @@
                   "description": "Arguments of the container (`args`), which replace the `CMD` of the image. A single argument can be given as a string. See [args](/truecharts-common/workload/podSpec/containers/args).",
                   "x-helm-tpl": true
                 },
+                "dropEmptyKeys": {
+                  "type": [
+                    "boolean",
+                    "string"
+                  ],
+                  "description": "Drop `env` and `args` entries with an empty (null or `\"\"`, after `tpl`) value. Overrides `global.dropEmptyKeys` for this container.",
+                  "default": false,
+                  "x-helm-tpl": true
+                },
                 "extraArgs": {
                   "oneOf": [
                     {

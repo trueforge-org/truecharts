@@ -10,8 +10,36 @@ objectData: The object data to be used to render the container.
   {{- $key := .key -}}
   {{- $name := (.name | toString) -}}
   {{- $caller := .caller -}}
+  {{- $dropEmpty := include "tc.v1.common.lib.util.dropEmptyKeys" (dict "rootCtx" $rootCtx "objectData" $objectData) -}}
 
   {{- range $k, $v := $objectData.env -}}
+    {{- $skip := false -}}
+    {{- if and $dropEmpty (not (kindIs "map" $v)) -}}
+      {{- if include "tc.v1.common.lib.util.isEmptyValue" (dict "rootCtx" $rootCtx "value" $v) -}}
+        {{- $skip = true -}}
+      {{- end -}}
+    {{- else if and $dropEmpty (kindIs "map" $v) -}}
+      {{/* Trace single key refs to objects defined in values */}}
+      {{- range $ref := (list "configMapKeyRef" "secretKeyRef") -}}
+        {{- if hasKey $v $ref -}}
+          {{- $obj := get $v $ref -}}
+          {{- if and (kindIs "map" $obj) $obj.name $obj.key -}}
+            {{- $expand := include "tc.v1.common.lib.util.expandName" (dict "rootCtx" $rootCtx "objectData" $obj "name" $k "caller" $caller "key" "env") -}}
+            {{- if eq $expand "true" -}}
+              {{- $item := ($ref | trimSuffix "KeyRef" | lower) -}}
+              {{- $refData := get (get $rootCtx.Values $item | default dict) (tpl $obj.name $rootCtx) -}}
+              {{- if and $refData (kindIs "map" $refData.data) (hasKey $refData.data $obj.key) -}}
+                {{- if include "tc.v1.common.lib.util.isEmptyValue" (dict "rootCtx" $rootCtx "value" (get $refData.data $obj.key)) -}}
+                  {{- $skip = true -}}
+                {{- end -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- if not $skip -}}
     {{- include "tc.v1.common.helper.container.envDupeCheck" (dict "rootCtx" $rootCtx "objectData" $objectData "source" (printf "%s.%s.env" $key $name) "key" $k "caller" $caller) }}
 - name: {{ $k | quote }}
     {{- if not (kindIs "map" $v) -}}
@@ -90,6 +118,7 @@ objectData: The object data to be used to render the container.
       apiVersion: {{ $v.fieldRef.apiVersion | quote }}
         {{- end -}}
       {{- end -}}
+    {{- end -}}
     {{- end -}}
 
   {{- end -}}
