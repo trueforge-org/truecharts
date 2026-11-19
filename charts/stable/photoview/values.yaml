@@ -43,4 +43,4 @@ secret:
   secrets:
     enabled: true
     data:
-      PHOTOVIEW_POSTGRES_URL: '{{ printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"") }}'
+      PHOTOVIEW_POSTGRES_URL: '{{ printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"") | replace "\x27" "\x27\x27" }}'

@@ -30,9 +30,9 @@ configmap:
   collabora-config:
     enabled: true
     data:
-      aliasgroup1: '{{ join "," .Values.collabora.aliasgroup1 }}'
-      server_name: '{{ .Values.collabora.server_name }}'
-      dictionaries: '{{ join " " .Values.collabora.dictionaries }}'
+      aliasgroup1: '{{ join "," .Values.collabora.aliasgroup1 | replace "\x27" "\x27\x27" }}'
+      server_name: '{{ .Values.collabora.server_name | replace "\x27" "\x27\x27" }}'
+      dictionaries: '{{ join " " .Values.collabora.dictionaries | replace "\x27" "\x27\x27" }}'
       username: '{{ .Values.collabora.username | replace "\x27" "\x27\x27" }}'
       password: '{{ .Values.collabora.password | replace "\x27" "\x27\x27" }}'
       DONT_GEN_SSL_CERT: '{{ .Values.collabora.no_gen_ssl }}'

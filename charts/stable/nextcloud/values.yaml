@@ -618,11 +618,11 @@ configmap:
   collabora-config:
     enabled: '{{ .Values.nextcloud.collabora.enabled }}'
     data:
-      aliasgroup1: '{{ (include "nextcloud.accessurl" $) }}'
-      server_name: '{{ (regexReplaceAll ".*://(.*)" (include "nextcloud.accessurl" $) "${1}") }}'
-      dictionaries: '{{ join " " .Values.nextcloud.collabora.dictionaries }}'
-      username: '{{ .Values.nextcloud.collabora.username }}'
-      password: '{{ .Values.nextcloud.collabora.password }}'
+      aliasgroup1: '{{ (include "nextcloud.accessurl" $) | replace "\x27" "\x27\x27" }}'
+      server_name: '{{ (regexReplaceAll ".*://(.*)" (include "nextcloud.accessurl" $) "${1}") | replace "\x27" "\x27\x27" }}'
+      dictionaries: '{{ join " " .Values.nextcloud.collabora.dictionaries | replace "\x27" "\x27\x27" }}'
+      username: '{{ .Values.nextcloud.collabora.username | replace "\x27" "\x27\x27" }}'
+      password: '{{ .Values.nextcloud.collabora.password | replace "\x27" "\x27\x27" }}'
       DONT_GEN_SSL_CERT: "true"
       # mount_jail_tree is only used for local storage
       # not needed for WOPI https://github.com/CollaboraOnline/online/issues/3604#issuecomment-989833814

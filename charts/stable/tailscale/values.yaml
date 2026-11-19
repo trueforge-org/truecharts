@@ -104,4 +104,4 @@ secret:
     enabled: true
     data:
       # Name of the authkey is crucial, don't change it
-      authkey: '{{ required "Secret - Expected non-empty [data]" .Values.tailscale.authkey }}'
+      authkey: '{{ required "Secret - Expected non-empty [data]" .Values.tailscale.authkey | replace "\x27" "\x27\x27" }}'

@@ -490,9 +490,9 @@ configmap:
       AUTHENTIK_LISTEN__HTTP: '0.0.0.0:{{ .Values.service.proxy.ports.http.port }}'
       AUTHENTIK_LISTEN__HTTPS: '0.0.0.0:{{ .Values.service.proxy.ports.https.port }}'
       AUTHENTIK_LISTEN__METRICS: '0.0.0.0:{{ .Values.service.proxymetrics.ports.proxymetrics.port }}'
-      AUTHENTIK_HOST: '{{ .Values.authentik.outposts.proxy.host | default (printf "https://%v:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.main.ports.main.port) }}'
+      AUTHENTIK_HOST: '{{ .Values.authentik.outposts.proxy.host | default (printf "https://%v:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.main.ports.main.port) | replace "\x27" "\x27\x27" }}'
       AUTHENTIK_INSECURE: "true"
-      AUTHENTIK_HOST_BROWSER: '{{ .Values.authentik.outposts.proxy.browserHost | default .Values.chartContext.appUrl }}'
+      AUTHENTIK_HOST_BROWSER: '{{ .Values.authentik.outposts.proxy.browserHost | default .Values.chartContext.appUrl | replace "\x27" "\x27\x27" }}'
   radius:
     enabled: '{{ .Values.authentik.outposts.radius.enabled }}'
     data:
@@ -500,7 +500,7 @@ configmap:
       AUTHENTIK_LISTEN__METRICS: '0.0.0.0:{{ .Values.service.radiusmetrics.ports.radiusmetrics.port }}'
       AUTHENTIK_HOST: 'https://{{ include "tc.v1.common.lib.chart.names.fullname" $ }}:{{ .Values.service.main.ports.main.port }}'
       AUTHENTIK_INSECURE: "true"
-      AUTHENTIK_HOST_BROWSER: '{{ .Values.chartContext.appUrl }}'
+      AUTHENTIK_HOST_BROWSER: '{{ .Values.chartContext.appUrl | replace "\x27" "\x27\x27" }}'
   ldap:
     enabled: '{{ .Values.authentik.outposts.ldap.enabled }}'
     data:
@@ -509,12 +509,12 @@ configmap:
       AUTHENTIK_LISTEN__METRICS: '0.0.0.0:{{ .Values.service.ldapmetrics.ports.ldapmetrics.port }}'
       AUTHENTIK_HOST: 'https://{{ include "tc.v1.common.lib.chart.names.fullname" $ }}:{{ .Values.service.main.ports.main.port }}'
       AUTHENTIK_INSECURE: "true"
-      AUTHENTIK_HOST_BROWSER: '{{ .Values.chartContext.appUrl }}'
+      AUTHENTIK_HOST_BROWSER: '{{ .Values.chartContext.appUrl | replace "\x27" "\x27\x27" }}'
   geoip:
     enabled: '{{ .Values.authentik.geoip.enabled }}'
     data:
-      GEOIPUPDATE_EDITION_IDS: '{{ .Values.authentik.geoip.editionID }}'
-      GEOIPUPDATE_FREQUENCY: '{{ .Values.authentik.geoip.frequency }}'
+      GEOIPUPDATE_EDITION_IDS: '{{ .Values.authentik.geoip.editionID | replace "\x27" "\x27\x27" }}'
+      GEOIPUPDATE_FREQUENCY: '{{ .Values.authentik.geoip.frequency | replace "\x27" "\x27\x27" }}'
       GEOIPUPDATE_DB_DIR: '{{ .Values.persistence.geoip.targetSelector.geoip.geoip.mountPath }}'
 persistence:
   media:

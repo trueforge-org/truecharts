@@ -50,9 +50,9 @@ secret:
   jenkins-secret:
     enabled: true
     data:
-      JAVA_OPTS: '{{ join " " .Values.jenkins.java_opts }}'
-      JENKINS_OPTS: '{{ join " " (concat (list (printf "--httpPort=%v" .Values.service.main.ports.main.port)) .Values.jenkins.jenkins_opts) }}'
-      JENKINS_JAVA_OPTS: '{{ join " " (concat (list (printf "-Djenkins.model.Jenkins.slaveAgentPort=%v" .Values.service.agent.ports.agent.port) "-Djenkins.model.Jenkins.slaveAgentPortEnforce=true") .Values.jenkins.jenkins_java_opts) }}'
+      JAVA_OPTS: '{{ join " " .Values.jenkins.java_opts | replace "\x27" "\x27\x27" }}'
+      JENKINS_OPTS: '{{ join " " (concat (list (printf "--httpPort=%v" .Values.service.main.ports.main.port)) .Values.jenkins.jenkins_opts) | replace "\x27" "\x27\x27" }}'
+      JENKINS_JAVA_OPTS: '{{ join " " (concat (list (printf "-Djenkins.model.Jenkins.slaveAgentPort=%v" .Values.service.agent.ports.agent.port) "-Djenkins.model.Jenkins.slaveAgentPortEnforce=true") .Values.jenkins.jenkins_java_opts) | replace "\x27" "\x27\x27" }}'
       PLUGINS_FORCE_UPGRADE: '{{ .Values.jenkins.plugins_force_upgrade }}'
       TRY_UPGRADE_IF_NO_MARKER: '{{ .Values.jenkins.upgrade_if_no_marker }}'
 
