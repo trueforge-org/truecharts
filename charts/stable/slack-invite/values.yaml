@@ -24,5 +24,14 @@ workload:
         main:
           env:
             COMMUNITY_NAME: myslackteam
-            SLACK_TOKEN: Enter YOur slack token here
+            SLACK_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: SLACK_TOKEN
             SLACK_URL: myslackteam.slack.com
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SLACK_TOKEN: "Enter YOur slack token here"

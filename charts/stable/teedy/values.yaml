@@ -39,6 +39,19 @@ workload:
                 name: cnpg-main-urls
                 key: jdbc
             DOCS_ADMIN_EMAIL_INIT: ""
-            DOCS_ADMIN_PASSWORD_INIT: ""
+            DOCS_ADMIN_PASSWORD_INIT:
+              secretKeyRef:
+                name: env-secrets
+                key: DOCS_ADMIN_PASSWORD_INIT
             DOCS_SMTP_USERNAME: ""
-            DOCS_SMTP_PASSWORD: ""
+            DOCS_SMTP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DOCS_SMTP_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DOCS_ADMIN_PASSWORD_INIT: ""
+      DOCS_SMTP_PASSWORD: ""

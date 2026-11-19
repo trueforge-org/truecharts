@@ -52,8 +52,14 @@ workload:
             STRAPI_DISABLE_UPDATE_NOTIFICATION: true
             FAST_REFRESH: false
             EXTRA_ARGS: ""
-            JWT_SECRET: my_jwt_secret
-            ADMIN_JWT_SECRET: my_admin_jwt_secret
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
+            ADMIN_JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_JWT_SECRET
             APP_KEYS: '["keya", "keyb"]'
 
 resources:
@@ -61,3 +67,10 @@ resources:
     cpu: 1000m
   limits:
     cpu: 4000m
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "my_jwt_secret"
+      ADMIN_JWT_SECRET: "my_admin_jwt_secret"

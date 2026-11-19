@@ -33,10 +33,19 @@ workload:
         main:
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
-            JWT_SECRET: "changeme"
-            COOKIE_SECRET: "changeme"
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
+            COOKIE_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: COOKIE_SECRET
             # Optional MaxMind GeoIP license key
-            MAXMIND_LICENSE_KEY: ""
+            MAXMIND_LICENSE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: MAXMIND_LICENSE_KEY
             CORS_ORIGIN: "*"
             LOG_LEVEL: info
             # Enable reverse proxy support
@@ -50,3 +59,11 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: url
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "changeme"
+      COOKIE_SECRET: "changeme"
+      MAXMIND_LICENSE_KEY: ""

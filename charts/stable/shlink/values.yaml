@@ -37,7 +37,10 @@ workload:
               path: "/rest/health"
           env:
             DEFAULT_DOMAIN: ""
-            GEOLITE_LICENSE_KEY: ""
+            GEOLITE_LICENSE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: GEOLITE_LICENSE_KEY
             ANONYMIZE_REMOTE_ADDR: true
             ENABLE_PERIODIC_VISIT_LOCATE: true
             IS_HTTPS_ENABLED: true
@@ -58,3 +61,9 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
                 key: url
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GEOLITE_LICENSE_KEY: ""
