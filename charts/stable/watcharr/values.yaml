@@ -20,6 +20,8 @@ service:
         port: 10684
 
 watcharr:
+  # -- Must be changed. JWT signing secret.
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEME000000000000000000000000000000000000"
   mode: prod
   jellyfin_host: ""
   signup_enabled: true
@@ -34,7 +36,10 @@ workload:
           env:
             JELLYFIN_HOST: "{{ .Values.watcharr.jellyfin_host }}"
             SIGNUP_ENABLED: "{{ .Values.watcharr.signup_enabled }}"
-            TMDB_KEY: "{{ .Values.watcharr.tmdb_key }}"
+            TMDB_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: TMDB_KEY
             DEBUG: "{{ .Values.watcharr.debug }}"
             MODE: "{{ .Values.watcharr.mode }}"
             JWT_SECRET:
@@ -46,3 +51,8 @@ persistence:
   data:
     enabled: true
     mountPath: "/data"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TMDB_KEY: "{{ .Values.watcharr.tmdb_key }}"

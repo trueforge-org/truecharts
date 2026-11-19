@@ -17,10 +17,10 @@ guacamole-config:
     GUACD_PORT: {{ .Values.service.guacd.ports.guacd.port | quote }}
   {{/* Database */}}
     POSTGRESQL_PORT: "5432"
-    POSTGRESQL_DATABASE: {{ .Values.cnpg.main.database }}
-    POSTGRESQL_USER: {{ .Values.cnpg.main.user }}
-    POSTGRESQL_HOSTNAME: {{ .Values.cnpg.main.creds.host }}
-    POSTGRESQL_PASSWORD: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
+    POSTGRESQL_DATABASE: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
+    POSTGRESQL_USER: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+    POSTGRESQL_HOSTNAME: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost }}
+    POSTGRESQL_PASSWORD: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
   {{/* LDAP */}}
   {{- if (get .Values.guacamole "ldap").LDAP_HOSTNAME }}
     {{ include "guac.env" (dict "ob" "ldap" "key" "LDAP_HOSTNAME" "rootCtx" $) }}

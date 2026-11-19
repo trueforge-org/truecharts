@@ -3,7 +3,6 @@
 
 {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
 {{- $secretName := printf "%s-mesh-secret" $fullname -}}
-{{- $secretStoreName := printf "%s-sec-store" $fullname -}}
 
 {{- $config := .Values.meshcentral -}}
 {{- $mc_custom := .Values.additional_meshcentral -}}
@@ -29,13 +28,6 @@
   {{- end -}}
 {{- end -}}
 
-{{- $sessionKey := "" -}}
-{{- with (lookup "v1" "Secret" .Release.Namespace $secretStoreName) -}}
-  {{- $sessionKey = (index .data "session_key") | b64dec -}}
-{{- else -}}
-  {{- $sessionKey = randAlphaNum 32 -}}
-{{- end -}}
-
 {{/* Inject some values */}}
 {{- $_ := set $config "$schema" "http://info.meshcentral.com/downloads/meshcentral-config-schema.json" -}}
 
@@ -44,11 +36,12 @@
 {{- end -}}
 
 {{- $_ := set $config.settings "postgres" dict -}}
-{{- $_ := set $config.settings.postgres "database" .Values.cnpg.main.database -}}
-{{- $_ := set $config.settings.postgres "user" .Values.cnpg.main.user -}}
-{{- $_ := set $config.settings.postgres "host" (.Values.cnpg.main.creds.host | trimAll "\"") -}}
+{{- $_ := set $config.settings.postgres "database" .Values.dependencies.postgresql.depconfig.postgresqlDatabase -}}
+{{- $_ := set $config.settings.postgres "user" .Values.dependencies.postgresql.depconfig.postgresqlUsername -}}
+{{- $_ := set $config.settings.postgres "host" (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") -}}
 {{- $_ := set $config.settings.postgres "port" 5432 -}}
-{{- $_ := set $config.settings.postgres "password" (.Values.cnpg.main.creds.password | trimAll "\"") -}}
+{{- $_ := set $config.settings.postgres "password" (.Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"") -}}
+{{- $sessionKey := required "meshcentral.settings.sessionKey must be set" $config.settings.sessionKey -}}
 {{- $_ := set $config.settings "sessionKey" $sessionKey -}}
 {{- $_ := set $config.settings "port" .Values.service.main.ports.main.port -}}
 

@@ -19,6 +19,8 @@ nitter:
   cache:
     listMinutes: 240
     rssMinutes: 10
+  # Must be changed. HMAC key used to sign proxied media URLs, any random string (32+ chars recommended).
+  hmacKey: "PLACEHOLDERHMACKEYCHANGEME123456"
   config:
     base64Media: false
     enableRSS: true
@@ -37,7 +39,7 @@ nitter:
     infiniteScroll: false
 
 # See: https://github.com/zedeus/nitter/wiki/Creating-session-tokens
-configmap:
+secret:
   nitter-sessions:
     enabled: true
     data:
@@ -67,18 +69,19 @@ workload:
 persistence:
   nitter-config:
     enabled: true
-    type: configmap
+    type: secret
     objectName: nitter-config
     mountPath: /src/nitter.conf
     subPath: nitter.conf
     readOnly: true
   nitter-sessions:
     enabled: true
-    type: configmap
+    type: secret
     objectName: nitter-sessions
     mountPath: /src/sessions.jsonl
     subPath: sessions.jsonl
     readOnly: true
 
-redis:
-  enabled: true
+dependencies:
+  valkey:
+    enabled: true

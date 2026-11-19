@@ -22,8 +22,8 @@ workload:
             startup:
               path: "/ping"
           env:
-            MYSQL_USER: "{{ .Values.mariadb.mariadbUsername }}"
-            MYSQL_DATABASE: "{{ .Values.mariadb.mariadbDatabase }}"
+            MYSQL_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+            MYSQL_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
             MYSQL_PORT: 3306
             REDIS_PORT: 6379
             REDIS_DB: 1
@@ -42,13 +42,21 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            MYSQL_PASSWORD: "{{ .Values.mariadb.password }}"
+            MYSQL_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
-            REDIS_PW: "{{ .Values.redis.password }}"
+            REDIS_PW:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
 service:
   main:
     ports:
@@ -64,9 +72,11 @@ persistence:
   data:
     enabled: true
     mountPath: /data
-redis:
-  enabled: true
-mariadb:
-  enabled: true
-  mariadbUsername: friendica
-  mariadbDatabase: friendica
+dependencies:
+  valkey:
+    enabled: true
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: friendica
+      mariadbDatabase: friendica

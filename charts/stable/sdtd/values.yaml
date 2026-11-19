@@ -91,7 +91,10 @@ workload:
             ENABLE_BEPINEX: "false"
             GAME_ID: "294420"
             GAME_PARAMS: -logfile 7DaysToDie_Data/output_log.txt $@
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             SERVERCONFIG: serverconfig.xml
             USERNAME: ""
             VALIDATE: "false"
@@ -99,3 +102,9 @@ workload:
             startup:
               spec:
                 failureThreshold: 360
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ''

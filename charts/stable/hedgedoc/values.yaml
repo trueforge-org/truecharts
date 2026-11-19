@@ -2,21 +2,25 @@
 image:
   repository: quay.io/hedgedoc/hedgedoc
   pullPolicy: IfNotPresent
-  tag: 1.12.0@sha256:22ecd09364506c05b2786433a1c5e16596d002d92a198216bbc6a0684b7d415a
+  tag: 1.12.0@sha256:1df4cbc99611ccc9761fd46b08b91e4fc787e9adc5b3f190d1b897a29b825452
 service:
   main:
     ports:
       main:
         port: 10132
+hedgedoc:
+  # Must be changed. Random string, at least 32 characters.
+  sessionSecret: "PLACEHOLDERSESSIONSECRET00000000000"
 persistence:
   uploads:
     enabled: true
     mountPath: "/hedgedoc/public/uploads"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: hedgedoc
-    database: hedgedoc
+    depconfig:
+      postgresqlUsername: hedgedoc
+      postgresqlDatabase: hedgedoc
 
 workload:
   main:
@@ -28,20 +32,22 @@ workload:
             CMD_PORT: "{{ .Values.service.main.ports.main.port }}"
             CMD_DB_PORT: "5432"
             CMD_DB_DIALECT: "postgres"
-            CMD_DB_USERNAME: "{{ .Values.cnpg.main.user }}"
-            CMD_DB_DATABASE: "{{ .Values.cnpg.main.database }}"
+            CMD_DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            CMD_DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             CMD_SESSION_SECRET:
               secretKeyRef:
                 name: secrets
                 key: CMD_SESSION_SECRET
             CMD_DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             CMD_DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             # User Defined
             CMD_FORBIDDEN_NOTE_IDS: "robots.txt, favicon.ico, api, build, css, docs, fonts, js, uploads, vendor, views"
             CMD_IMAGE_UPLOAD_TYPE: "filesystem"

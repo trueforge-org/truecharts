@@ -11,6 +11,10 @@ service:
         targetPort: 3000
         port: 10186
 
+hammond:
+  # Must be changed. Random string, at least 32 characters.
+  jwtSecret: "PLACEHOLDERJWTSECRET00000000000000"
+
 workload:
   main:
     podSpec:

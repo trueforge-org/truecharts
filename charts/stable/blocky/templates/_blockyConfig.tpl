@@ -9,8 +9,8 @@ data:
 
 {{- define "blocky.config" -}}
 redis:
-  address: {{ printf "%v-%v" .Release.Name "redis" }}:6379
-  password: {{ .Values.redis.creds.redisPassword | trimAll "\"" }}
+  address: {{ .Values.dependencies.valkey.depconfig.creds.plainporthost | trimAll "\"" }}
+  password: {{ (index .Values.dependencies.valkey.depconfig.creds "valkey-password") | trimAll "\"" }}
   database: 0
   required: true
   connectionAttempts: 10
@@ -26,7 +26,7 @@ queryLog:
   # directory (should be mounted as volume in docker) for csv, db connection string for mysql/postgresql
   #postgresql target: postgres://user:password@db_host_or_ip:5432/db_name
   {{- if eq .Values.queryLog.type "postgresql" }}
-  target: {{ .Values.cnpg.main.creds.std }}
+  target: {{ .Values.dependencies.postgresql.depconfig.creds.complete }}
   {{- else }}
   target: {{ .Values.queryLog.target }}
   {{- end }}

@@ -2,7 +2,7 @@
 {{- define "clamav.cronjob" -}}
 enabled: {{ .Values.clamav.cron_enabled }}
 type: "CronJob"
-schedule: {{ .Values.clamav.cron_schedule }}
+schedule: {{ .Values.clamav.cron_schedule | quote }}
 podSpec:
   restartPolicy: Never
   containers:
@@ -11,10 +11,10 @@ podSpec:
       primary: true
       imageSelector: "image"
       env:
-        date_format: {{ .Values.clamav.date_format }}
-        log_file_name: {{ .Values.clamav.log_file_name }}
-        report_path: {{ .Values.clamav.report_path | trimSuffix "/" }}
-        extra_args: {{ .Values.clamav.extra_args }}
+        date_format: {{ .Values.clamav.date_format | quote }}
+        log_file_name: {{ .Values.clamav.log_file_name | quote }}
+        report_path: {{ .Values.clamav.report_path | trimSuffix "/" | quote }}
+        extra_args: {{ .Values.clamav.extra_args | quote }}
       command: ["sh", "-c"]
       probes:
         liveness:

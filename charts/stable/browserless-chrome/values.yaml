@@ -55,7 +55,10 @@ workload:
             # KEEP_ALIVE: true
 
             # PREBOOT_CHROME: true
-            TOKEN: ""
+            TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TOKEN
 persistence:
   downloads:
     enabled: true
@@ -65,3 +68,8 @@ persistence:
     mountPath: /metrics
 
 updated: true
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TOKEN: ""

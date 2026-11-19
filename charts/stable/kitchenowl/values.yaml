@@ -8,6 +8,9 @@ backendImage:
   pullPolicy: IfNotPresent
   tag: v0.8.1@sha256:6a048135399691da25aec04ea107666cb7ce8eb46f5fed9a46a5ac254fe23073
 
+kitchenowl:
+  # Must be changed. JWT signing secret, any long random string (50+ chars recommended).
+  jwtSecretKey: "PLACEHOLDERJWTSECRETKEYCHANGEMEPLACEHOLDERJWTSECRETKEY"
 service:
   main:
     enabled: true
@@ -66,11 +69,20 @@ workload:
             FRONT_URL: ""
             OIDC_ISSUER: ""
             OIDC_CLIENT_ID: ""
-            OIDC_CLIENT_SECRET: ""
+            OIDC_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: OIDC_CLIENT_SECRET
             APPLE_CLIENT_ID: ""
-            APPLE_CLIENT_SECRET: ""
+            APPLE_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: APPLE_CLIENT_SECRET
             GOOGLE_CLIENT_ID: ""
-            GOOGLE_CLIENT_SECRET: ""
+            GOOGLE_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: GOOGLE_CLIENT_SECRET
             JWT_SECRET_KEY:
               secretKeyRef:
                 name: kitchenowl-secrets
@@ -79,14 +91,16 @@ workload:
             DB_DRIVER: "postgresql"
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
           probes:
             liveness:
               enabled: true
@@ -133,8 +147,16 @@ workload:
               type: tcp
               port: "{{ .Values.service.main.ports.main.targetPort }}"
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: kitchenowl
-    database: kitchenowl
+    depconfig:
+      postgresqlUsername: kitchenowl
+      postgresqlDatabase: kitchenowl
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      OIDC_CLIENT_SECRET: ""
+      APPLE_CLIENT_SECRET: ""
+      GOOGLE_CLIENT_SECRET: ""

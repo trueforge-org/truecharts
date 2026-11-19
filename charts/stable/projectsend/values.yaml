@@ -47,7 +47,9 @@ persistence:
     mountPath: "/data"
   varrun:
     enabled: true
-mariadb:
-  enabled: true
-  mariadbUsername: projectsend
-  mariadbDatabase: projectsend
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: projectsend
+      mariadbDatabase: projectsend

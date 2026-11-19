@@ -74,5 +74,18 @@ workload:
             BACKUPS_DIRECTORY: /backups
             BACKUPS_MAX_AGE: 3
             SUPERVISOR_HTTP_USER: admin
-            SUPERVISOR_HTTP_PASS: secret
-            SERVER_PASS: secret
+            SUPERVISOR_HTTP_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: SUPERVISOR_HTTP_PASS
+            SERVER_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: SERVER_PASS
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SUPERVISOR_HTTP_PASS: "secret"
+      SERVER_PASS: "secret"

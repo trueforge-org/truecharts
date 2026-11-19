@@ -69,9 +69,15 @@ workload:
             am_ark_SessionName: "arkserver"
             am_serverMap: "TheIsland"
             am_ark_MaxPlayers: "10"
-            am_ark_ServerPassword: "password"
+            am_ark_ServerPassword:
+              secretKeyRef:
+                name: env-secrets
+                key: am_ark_ServerPassword
             am_ark_RCONEnabled: "True"
-            am_ark_ServerAdminPassword: "123456789"
+            am_ark_ServerAdminPassword:
+              secretKeyRef:
+                name: env-secrets
+                key: am_ark_ServerAdminPassword
             am_arkflag_USECACHE: "true"
 
           probes:
@@ -238,3 +244,10 @@ configmap:
         bServerGameLogEnabled=True
       crontab:
         10 */8 * * * arkmanager saveworld && arkmanager backup
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      am_ark_ServerPassword: "password"
+      am_ark_ServerAdminPassword: "123456789"

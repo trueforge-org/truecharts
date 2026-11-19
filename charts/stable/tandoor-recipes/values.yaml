@@ -28,15 +28,17 @@ workload:
             DB_ENGINE: django.db.backends.postgresql
             POSTGRES_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             POSTGRES_PORT: 5432
-            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             POSTGRES_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+            POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             TANDOOR_PORT: "{{ .Values.service.main.ports.main.port }}"
             ALLOWED_HOSTS: "*"
             COMMENT_PREF_DEFAULT: 1
@@ -70,8 +72,13 @@ persistence:
     enabled: true
     mountPath: /opt/recipes/staticfiles
     type: emptyDir
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: recipes
-    database: recipes
+    depconfig:
+      postgresqlUsername: recipes
+      postgresqlDatabase: recipes
+
+tandoor:
+  # -- Must be changed. Django secret key, 50 characters recommended.
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000000000000000000000"

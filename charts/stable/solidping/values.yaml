@@ -24,8 +24,9 @@ workload:
             SP_DB_TYPE: postgres
             SP_DB_URL:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
             SP_FILESTORAGE_LOCAL_ROOT: /data/files
 
 service:
@@ -41,8 +42,9 @@ persistence:
     enabled: true
     mountPath: /data
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: solidping
-    database: solidping
+    depconfig:
+      postgresqlUsername: solidping
+      postgresqlDatabase: solidping

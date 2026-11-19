@@ -23,10 +23,12 @@ persistence:
   import:
     enabled: true
     mountPath: "/photoprism/import"
-mariadb:
-  enabled: true
-  mariadbUsername: photoprism
-  mariadbDatabase: photoprism
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: photoprism
+      mariadbDatabase: photoprism
 
 securityContext:
   container:
@@ -66,4 +68,13 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: mariadb-password
-            PHOTOPRISM_ADMIN_PASSWORD: "please-change"
+            PHOTOPRISM_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PHOTOPRISM_ADMIN_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PHOTOPRISM_ADMIN_PASSWORD: "please-change"

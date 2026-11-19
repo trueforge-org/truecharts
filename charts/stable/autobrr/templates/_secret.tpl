@@ -1,16 +1,9 @@
-{{/* Define the configmap */}}
-{{- define "autobrr.configmaps" -}}
+{{/* Define the config as a secret, it contains the session secret */}}
+{{- define "autobrr.secrets" -}}
 {{- $fullname := (include "tc.v1.common.lib.chart.names.fullname" $) -}}
-{{- $secretName := printf "%s-autobrr-secret" (include "tc.v1.common.lib.chart.names.fullname" .) }}
 
 {{- $mainPort := .Values.service.main.ports.main.port -}}
 {{- $logLevel := .Values.autobrr.log_level -}}
-
-{{- $sessionSecret := randAlphaNum 32 -}}
-
- {{- with lookup "v1" "Secret" .Release.Namespace $secretName -}}
-   {{- $sessionSecret = index .data "sessionSecret" | b64dec -}}
- {{- end }}
 
 autobrr-config:
   enabled: true
@@ -76,7 +69,7 @@ autobrr-config:
 
       # Session secret
       #
-      sessionSecret = "{{ $sessionSecret }}"
+      sessionSecret = "{{ required "autobrr.sessionSecret must be set" .Values.autobrr.sessionSecret }}"
 
       # Custom definitions
       #

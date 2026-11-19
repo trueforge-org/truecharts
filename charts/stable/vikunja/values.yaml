@@ -22,6 +22,8 @@ workload:
               port: 10220
               path: /health
 vikunja:
+  # -- Must be changed. JWT signing secret.
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEME0000"
   service:
     publicurl: http://localhost/
     jwtttl: 259200
@@ -163,13 +165,14 @@ metrics:
     type: "servicemonitor"
     prometheusRule:
       enabled: false
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: vikunja
-    database: vikunja
-redis:
-  enabled: true
+    depconfig:
+      postgresqlUsername: vikunja
+      postgresqlDatabase: vikunja
+  valkey:
+    enabled: true
 
 securityContext:
   container:

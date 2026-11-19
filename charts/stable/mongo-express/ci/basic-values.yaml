@@ -1,7 +1,9 @@
-mongodb:
-  enabled: true
-  mongodbUsername: mongoexpress
-  mongodbDatabase: mongoexpress
+dependencies:
+  mongodb:
+    enabled: true
+    depconfig:
+      mongodbUsername: mongoexpress
+      mongodbDatabase: mongoexpress
 
 workload:
   main:
@@ -10,10 +12,9 @@ workload:
         main:
           env:
             ME_CONFIG_MONGODB_PORT: 27017
-            ME_CONFIG_MONGODB_AUTH_DATABASE: "{{ .Values.mongodb.mongodbDatabase }}"
-            ME_CONFIG_MONGODB_AUTH_USERNAME: "{{ .Values.mongodb.mongodbUsername }}"
+            ME_CONFIG_MONGODB_AUTH_DATABASE: "{{ .Values.dependencies.mongodb.depconfig.mongodbDatabase }}"
+            ME_CONFIG_MONGODB_AUTH_USERNAME: "{{ .Values.dependencies.mongodb.depconfig.mongodbUsername }}"
             ME_CONFIG_BASICAUTH_USERNAME: admin
-            ME_CONFIG_BASICAUTH_PASSWORD: pass
             ME_CONFIG_MONGODB_SSL: false
             ME_CONFIG_MONGODB_ENABLE_ADMIN: false
             ME_CONFIG_MONGODB_SERVER:
@@ -21,4 +22,8 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
                 key: plainhost
-            ME_CONFIG_MONGODB_AUTH_PASSWORD: "{{ .Values.mongodb.password }}"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ME_CONFIG_BASICAUTH_PASSWORD: pass

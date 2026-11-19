@@ -16,15 +16,14 @@ service:
         targetPort: 3000
         port: 3000
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: tracearr
-    database: tracearr
-
-redis:
-  enabled: true
-  redisUsername: default
+    depconfig:
+      postgresqlUsername: tracearr
+      postgresqlDatabase: tracearr
+  valkey:
+    enabled: true
 
 workload:
   main:
@@ -33,20 +32,38 @@ workload:
         main:
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
-            JWT_SECRET: "changeme"
-            COOKIE_SECRET: "changeme"
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
+            COOKIE_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: COOKIE_SECRET
             # Optional MaxMind GeoIP license key
-            MAXMIND_LICENSE_KEY: ""
+            MAXMIND_LICENSE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: MAXMIND_LICENSE_KEY
             CORS_ORIGIN: "*"
             LOG_LEVEL: info
             # Enable reverse proxy support
             TRUST_PROXY: true
             DATABASE_URL:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "changeme"
+      COOKIE_SECRET: "changeme"
+      MAXMIND_LICENSE_KEY: ""

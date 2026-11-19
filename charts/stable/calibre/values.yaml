@@ -36,8 +36,16 @@ workload:
         main:
           env:
             CLI_ARGS:
-            PASSWORD: ""
+            PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWORD
 persistence:
   config:
     enabled: true
     mountPath: /config
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWORD: ""

@@ -38,4 +38,12 @@ workload:
             SONARR__API: ""
             RADARR__API: ""
             DISCORD__ROLE_ID: ""
-            DISCORD__TOKEN: ""
+            DISCORD__TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: DISCORD__TOKEN
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DISCORD__TOKEN: ""

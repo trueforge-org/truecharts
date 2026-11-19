@@ -18,13 +18,14 @@ persistence:
     mountPath: "/var/www/html/storage/logs"
   varrun:
     enabled: false
-mariadb:
-  enabled: true
-  mariadbUsername: mixpost
-  mariadbDatabase: mixpost
-redis:
-  enabled: true
-  redisUsername: default
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: mixpost
+      mariadbDatabase: mixpost
+  valkey:
+    enabled: true
 securityContext:
   container:
     runAsNonRoot: false
@@ -49,9 +50,12 @@ workload:
             # APP_URL: domain with https:// (needs to be set)
             APP_URL: https://subdomain.mydomain.com
             # Key Generator https://laravel-encryption-key-generator.vercel.app/
-            APP_KEY: MySecretKey
-            DB_DATABASE: "{{ .Values.mariadb.mariadbDatabase }}"
-            DB_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
+            APP_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: APP_KEY
+            DB_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+            DB_USERNAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
             DB_HOST:
               secretKeyRef:
                 expandObjectName: false
@@ -65,10 +69,15 @@ workload:
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
             REDIS_PASSWORD:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      APP_KEY: "MySecretKey"

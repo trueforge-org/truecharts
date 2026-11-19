@@ -40,7 +40,10 @@ workload:
             ENABLE_BEPINEX: ""
             GAME_ID: "1829350"
             GAME_PARAMS: ""
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             SERVER_NAME: V Rising Docker
             USERNAME: ""
             VALIDATE: "false"
@@ -52,3 +55,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

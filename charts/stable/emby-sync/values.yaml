@@ -25,4 +25,12 @@ workload:
           env:
             DEFAULT_ROOM: ""
             EMBY_SERVER: ""
-            SECRET_KEY: ""
+            SECRET_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET_KEY
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SECRET_KEY: ""

@@ -16,11 +16,12 @@ persistence:
   ssl:
     enabled: true
     mountPath: "/etc/nginx/ssl"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: kanboard
-    database: kanboard
+    depconfig:
+      postgresqlUsername: kanboard
+      postgresqlDatabase: kanboard
 
 securityContext:
   container:
@@ -37,14 +38,16 @@ workload:
             MAIL_CONFIGURATION: false
             LOG_DRIVER: stdout
             DB_DRIVER: "postgres"
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PORT: "5432"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_HOSTNAME:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost

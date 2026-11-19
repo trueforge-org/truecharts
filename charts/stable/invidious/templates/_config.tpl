@@ -1,12 +1,7 @@
 {{/* Define the configmap */}}
 {{- define "invidious.secret" -}}
 
-{{- $secretName := printf "%s-invidious-secret" (include "tc.v1.common.lib.chart.names.fullname" .) -}}
-
-{{- $hmac := randAlphaNum 64 -}}
-{{- with (lookup "v1" "Secret" .Release.Namespace $secretName) -}}
-  {{- $hmac = (index .data "HMAC_KEY") | b64dec -}}
-{{- end -}}
+{{- $hmac := required "invidious.hmacKey must be set" .Values.invidious.hmacKey -}}
 
 {{- $vNet := .Values.invidious.network }}
 {{- $vLog := .Values.invidious.logging }}
@@ -29,10 +24,10 @@ data:
     # Database
     check_tables: true
     db:
-      user: {{ .Values.cnpg.main.user }}
-      dbname: {{ .Values.cnpg.main.database }}
-      password: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
-      host: {{ .Values.cnpg.main.creds.host | trimAll "\"" }}
+      user: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+      dbname: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
+      password: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
+      host: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}
       port: 5432
 
     # Network

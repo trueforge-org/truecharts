@@ -104,7 +104,10 @@ workload:
             AUTH_TOKEN_HEADER: Authorization
             AUTH_TOKEN_PREFIX: Bearer
             # We can potentially use this in the future...
-            CSRF_TOKEN: ""
+            CSRF_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: CSRF_TOKEN
           probes:
             liveness:
               enabled: true
@@ -324,6 +327,10 @@ configmap:
                 strip_path: false
 
 secret:
+  env-secrets:
+    enabled: true
+    data:
+      CSRF_TOKEN: ""
   csrf:
     enabled: true
     data:

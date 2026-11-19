@@ -30,8 +30,10 @@
   )) -}}
 
 {{/* Add [hostAliases] to nextcloud and collabora pod */}}
-{{- $_ := set .Values.workload.main.podSpec "hostAliases" $hostAlias -}}
-{{- $_ := set .Values.workload.collabora.podSpec "hostAliases" $hostAlias -}}
+{{- if .Values.nextcloud.general.accessIP -}}
+  {{- $_ := set .Values.workload.main.podSpec "hostAliases" $hostAlias -}}
+  {{- $_ := set .Values.workload.collabora.podSpec "hostAliases" $hostAlias -}}
+{{- end -}}
 
 {{/* Add [init perms] container to nextcloud */}}
 {{- if not (get .Values.workload.main.podSpec "initContainers") -}}

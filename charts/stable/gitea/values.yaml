@@ -81,14 +81,15 @@ customConfig: []
 #       value: testvalue
 
 # Enabled postgres
-cnpg:
-  main:
-    enabled: true
-    user: gitea
-    database: gitea
 # --  memcached dependency settings
-memcached:
-  enabled: true
+dependencies:
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: gitea
+      postgresqlDatabase: gitea
+  memcached:
+    enabled: true
 
 securityContext:
   container:

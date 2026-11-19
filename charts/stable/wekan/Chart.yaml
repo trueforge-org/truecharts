@@ -12,16 +12,9 @@ apiVersion: v2
 appVersion: 13.18.0
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.3.0
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
-    alias: ""
-    tags: []
-    import-values: []
-  - name: mongodb
-    version: 18.1.5
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mongodb.enabled
     alias: ""
     tags: []
     import-values: []
@@ -44,5 +37,4 @@ sources:
   - https://hub.docker.com/r/wekanteam/wekan
   - https://wekan.github.io/
 type: application
-version: 27.9.0
-
+version: 28.0.0

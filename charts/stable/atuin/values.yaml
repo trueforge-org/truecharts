@@ -33,21 +33,24 @@ workload:
             ATUIN_CONFIG_DIR: /config
             ATUIN_DB_URI:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
-            ATUIN_DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+            ATUIN_DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             ATUIN_DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
 
 persistence:
   config:
     enabled: true
     mountPath: "/config"
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: atuin
-    database: atuin
+    depconfig:
+      postgresqlUsername: atuin
+      postgresqlDatabase: atuin

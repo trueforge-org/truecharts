@@ -38,6 +38,15 @@ wordpress:
   last_name: TrueCharts
   blog_name: Truecharts Blog
   enable_reverse_proxy_headers: true
+  # -- Must be changed. Authentication keys and salts, use unique random strings.
+  authKey: "PLACEHOLDERAUTHKEY00000000000000"
+  secureAuthKey: "PLACEHOLDERSECUREAUTHKEY00000000"
+  loggedInKey: "PLACEHOLDERLOGGEDINKEY0000000000"
+  nonceKey: "PLACEHOLDERNONCEKEY0000000000000"
+  authSalt: "PLACEHOLDERAUTHSALT0000000000000"
+  secureAuthSalt: "PLACEHOLDERSECUREAUTHSALT0000000"
+  loggedInSalt: "PLACEHOLDERLOGGEDINSALT000000000"
+  nonceSalt: "PLACEHOLDERNONCESALT000000000000"
 smtp:
   enabled: false
   host: ""
@@ -63,7 +72,9 @@ persistence:
   config:
     enabled: true
     mountPath: /bitnami/wordpress
-mariadb:
-  enabled: true
-  mariadbUsername: wordpress
-  mariadbDatabase: wordpress
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: wordpress
+      mariadbDatabase: wordpress

@@ -63,8 +63,9 @@ persistence:
         main: {}
         init-config: {}
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: wisemapping
-    database: wisemapping
+    depconfig:
+      postgresqlUsername: wisemapping
+      postgresqlDatabase: wisemapping

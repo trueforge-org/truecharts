@@ -24,7 +24,20 @@ workload:
         main:
           env:
             CLIENT_ID: ""
-            CLIENT_SECRET: ""
-            NEXTAUTH_SECRET: ""
+            CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: CLIENT_SECRET
+            NEXTAUTH_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: NEXTAUTH_SECRET
             NEXTAUTH_URL: ""
             REDDIT_REDIRECT: ""
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      CLIENT_SECRET: ""
+      NEXTAUTH_SECRET: ""

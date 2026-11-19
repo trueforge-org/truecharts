@@ -14,6 +14,8 @@ service:
 autobrr:
   # ERROR | DEBUG |INFO | WARN | TRACE
   log_level: DEBUG
+  # Must be changed. Random string (32 characters recommended).
+  sessionSecret: "PLACEHOLDERSESSIONSECRETCHANGEME"
 
 workload:
   main:
@@ -34,7 +36,7 @@ persistence:
     mountPath: /config
   autobrr-config:
     enabled: true
-    type: configmap
+    type: secret
     objectName: autobrr-config
     mountPath: /config/config.toml
     subPath: config.toml

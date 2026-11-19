@@ -13,7 +13,11 @@ workload:
             MM_SQLSETTINGS_DRIVERNAME: "postgres"
             MM_BLEVESETTINGS_INDEXDIR: "/mattermost/bleve-indexes"
             MM_SERVICESETTINGS_SITEURL: "https://test.example.com"
-            MM_SQLSETTINGS_DATASOURCE: '{{ .Values.cnpg.main.creds.std | trimAll "\""  }}'
+            MM_SQLSETTINGS_DATASOURCE:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
 service:
   main:
     ports:
@@ -39,8 +43,9 @@ persistence:
   bleveindexes:
     enabled: true
     mountPath: "/mattermost/bleve-indexes"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: mattermost
-    database: mattermost
+    depconfig:
+      postgresqlUsername: mattermost
+      postgresqlDatabase: mattermost

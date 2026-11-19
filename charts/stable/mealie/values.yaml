@@ -98,11 +98,12 @@ persistence:
       main:
         main:
           mountPath: /nltk_data
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: mealie
-    database: mealie
+    depconfig:
+      postgresqlUsername: mealie
+      postgresqlDatabase: mealie
 
 ingress:
   main:

@@ -22,8 +22,14 @@ workload:
       containers:
         main:
           env:
-            DDNSR53_CREDENTIALS_ACCESSKEYID: ABCDEFGHIJKLMNO123456
-            DDNSR53_CREDENTIALS_SECRETACCESSKEY: abcdefgh123456IJKLMN+OPQRS7890+ABCDEFGH
+            DDNSR53_CREDENTIALS_ACCESSKEYID:
+              secretKeyRef:
+                name: env-secrets
+                key: DDNSR53_CREDENTIALS_ACCESSKEYID
+            DDNSR53_CREDENTIALS_SECRETACCESSKEY:
+              secretKeyRef:
+                name: env-secrets
+                key: DDNSR53_CREDENTIALS_SECRETACCESSKEY
             DDNSR53_ROUTE53_HOSTEDZONEID: ABCEEFG123456789
             DDNSR53_ROUTE53_RECORDSSET_0_NAME: ddns.example.com.
             DDNSR53_ROUTE53_RECORDSSET_0_TTL: "300"
@@ -39,3 +45,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DDNSR53_CREDENTIALS_ACCESSKEYID: "ABCDEFGHIJKLMNO123456"
+      DDNSR53_CREDENTIALS_SECRETACCESSKEY: "abcdefgh123456IJKLMN+OPQRS7890+ABCDEFGH"

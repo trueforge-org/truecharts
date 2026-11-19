@@ -36,25 +36,36 @@ workload:
             BLOG_NAME: "Max Musermann"
             BLOG_LANG: "en"
             BLOG_DB_CONNECTION: "postgres"
-            BLOG_POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            BLOG_POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             BLOG_POSTGRES_PORT: "5432"
-            BLOG_DB_NAME: "{{ .Values.cnpg.main.database }}"
+            BLOG_DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             BLOG_POSTGRES_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             BLOG_POSTGRES_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             BLOG_NICK: username
-            BLOG_PASS: password
+            BLOG_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: BLOG_PASS
 persistence:
   data:
     enabled: true
     mountPath: /var/www/html/data
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: blog
-    database: blog
+    depconfig:
+      postgresqlUsername: blog
+      postgresqlDatabase: blog
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      BLOG_PASS: "password"

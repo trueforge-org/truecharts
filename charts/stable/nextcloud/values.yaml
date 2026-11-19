@@ -537,14 +537,14 @@ persistence:
       preview-cron:
         preview-cron:
           mountPath: /var/log/nextcloud
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: nextcloud
-    database: nextcloud
-redis:
-  enabled: true
-  username: default
+    depconfig:
+      postgresqlUsername: nextcloud
+      postgresqlDatabase: nextcloud
+  valkey:
+    enabled: true
 
 ingressMiddlewares:
   traefik:

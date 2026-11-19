@@ -32,16 +32,26 @@ workload:
             COMMENTO_ENABLE_LOGGING: false
             SMTP_SKIP_HOST_VERIFY: false
             COMMENTO_SMTP_USERNAME: ""
-            COMMENTO_SMTP_PASSWORD: ""
+            COMMENTO_SMTP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: COMMENTO_SMTP_PASSWORD
             COMMENTO_SMTP_HOST: ""
             COMMENTO_SMTP_FROM_ADDRESS: ""
             COMMENTO_SMTP_PORT: 587
             COMMENTO_POSTGRES:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
-cnpg:
-  main:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+dependencies:
+  postgresql:
     enabled: true
-    user: comment-plusplus
-    database: comment-plusplus
+    depconfig:
+      postgresqlUsername: comment-plusplus
+      postgresqlDatabase: comment-plusplus
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      COMMENTO_SMTP_PASSWORD: ""

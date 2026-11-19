@@ -22,9 +22,9 @@ server-worker:
   enabled: true
   data:
     {{/* Dependencies */}}
-    AUTHENTIK_POSTGRESQL__NAME: {{ .Values.cnpg.main.database }}
-    AUTHENTIK_POSTGRESQL__USER: {{ .Values.cnpg.main.user }}
-    AUTHENTIK_POSTGRESQL__HOST: {{ .Values.cnpg.main.creds.host }}
+    AUTHENTIK_POSTGRESQL__NAME: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
+    AUTHENTIK_POSTGRESQL__USER: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+    AUTHENTIK_POSTGRESQL__HOST: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost }}
     AUTHENTIK_POSTGRESQL__PORT: "5432"
 
     {{/* Outposts */}}

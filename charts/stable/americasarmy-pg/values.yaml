@@ -39,7 +39,10 @@ workload:
           env:
             GAME_ID: "203300"
             GAME_PARAMS: -port=7778 -SAP=8778 -SQP=27015 -aauregion=1 -log=Server.log
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             SRV_NAME: Army Docker
             USERNAME: ""
             VALIDATE: "false"
@@ -50,3 +53,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

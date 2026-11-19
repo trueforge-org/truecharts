@@ -31,12 +31,25 @@ workload:
             FEATURES_QUERY_LOG_CONFIG: true
             FEATURES_SERVICES: true
             FEATURES_STATS_CONFIG: true
-            ORIGIN_PASSWORD: password
+            ORIGIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ORIGIN_PASSWORD
             ORIGIN_URL: https://192.168.1.2:3000
             ORIGIN_USERNAME: username
             REPLICA_AUTO_SETUP: false
             REPLICA_INTERFACE_NAME: ""
-            REPLICA_PASSWORD: password
+            REPLICA_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: REPLICA_PASSWORD
             REPLICA_URL: http://192.168.1.3
             REPLICA_USERNAME: username
             RUN_ON_START: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ORIGIN_PASSWORD: "password"
+      REPLICA_PASSWORD: "password"

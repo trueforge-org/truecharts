@@ -26,12 +26,18 @@ workload:
       containers:
         main:
           env:
-            ACCESS_KEY: your_access_key_here
+            ACCESS_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ACCESS_KEY
             CRON_SCHEDULE: 0 * * * *
             REGION: bucket_region_here
             S3PATH: s3://your_bucket_name
             S3SYNCPARAMS: ""
-            SECRET_KEY: your_secret_key_here
+            SECRET_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET_KEY
           probes:
             liveness:
               enabled: false
@@ -39,3 +45,10 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ACCESS_KEY: 'your_access_key_here'
+      SECRET_KEY: 'your_secret_key_here'

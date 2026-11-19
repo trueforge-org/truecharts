@@ -80,7 +80,15 @@ workload:
             startup:
               type: tcp
           env:
-            VNC_PASSWORD: ""
+            VNC_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: VNC_PASSWORD
           envFrom:
             - configMapRef:
                 name: "jdownloader"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VNC_PASSWORD: ""

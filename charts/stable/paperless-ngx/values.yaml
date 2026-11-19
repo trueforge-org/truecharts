@@ -45,14 +45,14 @@ persistence:
     mountPath: "/media"
   varrun:
     enabled: false
-redis:
-  enabled: true
-  redisUsername: "default"
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: "paperless-ng"
-    database: "paperless-ng"
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: "paperless-ng"
+      postgresqlDatabase: "paperless-ng"
 tika:
   enabled: false
 
@@ -62,6 +62,9 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+paperless:
+  # Django secret key. MUST be changed, use a random string of at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:
@@ -90,8 +93,8 @@ workload:
             USERMAP_GID: "{{ .Values.securityContext.pod.fsGroup }}"
             PAPERLESS_TIME_ZONE: "{{ .Values.TZ }}"
             PAPERLESS_DBENGINE: "postgresql"
-            PAPERLESS_DBNAME: "{{ .Values.cnpg.main.database }}"
-            PAPERLESS_DBUSER: "{{ .Values.cnpg.main.user }}"
+            PAPERLESS_DBNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            PAPERLESS_DBUSER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             PAPERLESS_DBPORT: "5432"
             PAPERLESS_TIKA_ENABLED: '{{ ternary 1 0 .Values.tika.enabled }}'
             PAPERLESS_TIKA_GOTENBERG_ENDPOINT: '{{ printf "http://%v-gotenberg:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.gotenberg.ports.gotenberg.targetPort }}'
@@ -99,12 +102,14 @@ workload:
             PAPERLESS_WEBSERVER_WORKERS: 2
             PAPERLESS_DBPASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             PAPERLESS_DBHOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             PAPERLESS_SECRET_KEY:
               secretKeyRef:
                 name: secrets
@@ -112,10 +117,13 @@ workload:
             PAPERLESS_REDIS:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             PAPERLESS_ADMIN_USER: "admin"
-            PAPERLESS_ADMIN_PASSWORD: "admin"
+            PAPERLESS_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PAPERLESS_ADMIN_PASSWORD
             PAPERLESS_ADMIN_MAIL: "admin@admin.com"
             PAPERLESS_OCR_LANGUAGE: "eng"
             PAPERLESS_OCR_LANGUAGES: "eng fra deu spa ita"
@@ -167,3 +175,9 @@ workload:
               type: http
               path: /
               port: "{{ .Values.service.tika.ports.tika.port }}"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PAPERLESS_ADMIN_PASSWORD: "admin"

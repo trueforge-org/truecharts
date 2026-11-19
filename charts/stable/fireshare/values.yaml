@@ -21,7 +21,10 @@ workload:
                 name: fireshare-secrets
                 key: SECRET_KEY
             MINUTES_BETWEEN_VIDEO_SCANS: 5
-            ADMIN_PASSWORD: "changeme"
+            ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_PASSWORD
             # TODO ADD LDAP
             # LDAP_ENABLE: false
             # LDAP_URL: ""
@@ -30,6 +33,10 @@ workload:
             # LDAP_BASEDN: ""
             # LDAP_USER_FILTER: ""
             # LDAP_ADMIN_GROUP: ""
+
+fireshare:
+  # Must be changed. Random string, at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEY000000000000"
 
 service:
   main:
@@ -52,3 +59,9 @@ persistence:
   images:
     enabled: true
     mountPath: /images
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ADMIN_PASSWORD: "changeme"

@@ -1,13 +1,7 @@
 {{/* Define the secrets */}}
 {{- define "watcharr.secrets" -}}
-{{- $secretName := (printf "%s-watcharr-secrets" (include "tc.v1.common.lib.chart.names.fullname" $)) }}
-
-{{- $secretKey := randAlphaNum 64 -}}
-
- {{- with lookup "v1" "Secret" .Release.Namespace $secretName -}}
-   {{- $secretKey = index .data "JWT_SECRET" | b64dec -}}
- {{- end }}
+{{- $secretKey := required "watcharr.jwtSecret must be set" .Values.watcharr.jwtSecret }}
 enabled: true
 data:
-  JWT_SECRET: {{ $secretKey }}
+  JWT_SECRET: {{ $secretKey | quote }}
 {{- end -}}

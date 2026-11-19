@@ -41,7 +41,10 @@ workload:
             GAME_NAME: cstrike
             GAME_PARAMS: -secure +maxplayers 32 +map de_dust2
             GAME_PORT: "27015"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -57,3 +60,8 @@ workload:
               enabled: true
               type: tcp
               port: "{{ .Values.service.tcprcon.ports.tcprcon.targetPort }}"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

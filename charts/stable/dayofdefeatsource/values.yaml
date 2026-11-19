@@ -41,7 +41,10 @@ workload:
             GAME_NAME: dod
             GAME_PARAMS: -secure +maxplayers 24 +map dod_kalt
             GAME_PORT: "27015"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -54,3 +57,8 @@ workload:
             startup:
               port: "{{ .Values.service.tcprcon.ports.tcprcon.targetPort }}"
               type: tcp
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

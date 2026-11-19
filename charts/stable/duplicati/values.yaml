@@ -25,8 +25,14 @@ workload:
               type: http
               path: /
           env:
-            DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
-            SETTINGS_ENCRYPTION_KEY: "real_encryption_key"
+            DUPLICATI__WEBSERVICE_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DUPLICATI__WEBSERVICE_PASSWORD
+            SETTINGS_ENCRYPTION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SETTINGS_ENCRYPTION_KEY
             DUPLICATI__ALLOW_INSECURE_DATAFOLDER: true
             # DOTNET_SYSTEM_IO_DISABLEFILELOCKING: true
 
@@ -34,3 +40,9 @@ persistence:
   config:
     enabled: true
     mountPath: /data
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DUPLICATI__WEBSERVICE_PASSWORD: "SuperSecretPassword"
+      SETTINGS_ENCRYPTION_KEY: "real_encryption_key"

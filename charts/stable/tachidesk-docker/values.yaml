@@ -22,7 +22,10 @@ workload:
             DOWNLOAD_AS_CBZ: true
             BASIC_AUTH_ENABLED: false
             BASIC_AUTH_USERNAME: ""
-            BASIC_AUTH_PASSWORD: ""
+            BASIC_AUTH_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: BASIC_AUTH_PASSWORD
             DEBUG: false
             GQL_DEBUG: false
             WEB_UI_ENABLED: true
@@ -63,3 +66,9 @@ persistence:
   local-library:
     enabled: true
     mountPath: /home/suwayomi/.local/share/Tachidesk/local
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      BASIC_AUTH_PASSWORD: ""

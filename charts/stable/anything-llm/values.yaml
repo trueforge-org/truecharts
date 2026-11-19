@@ -19,6 +19,10 @@ service:
         protocol: http
         port: 3001
 
+anythingLlm:
+  # Must be changed. Long random string (64 characters recommended).
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEMEPLACEHOLDERJWTSECRETCHANGEME0000000000"
+
 workload:
   main:
     podSpec:

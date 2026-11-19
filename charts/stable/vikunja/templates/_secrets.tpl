@@ -1,17 +1,13 @@
 {{/* Define the secrets */}}
 {{- define "vikunja.secrets" -}}
 
-{{- $secretStorage := printf "%s-storage-secret" (include "tc.v1.common.lib.chart.names.fullname" .) -}}
-{{- $pgHost := printf "%v-cnpg-main-rw" (include "tc.v1.common.lib.chart.names.fullname" $) -}}
-{{- $jwtSecret := randAlphaNum 32 -}}
-{{- with lookup "v1" "Secret" .Release.Namespace $secretStorage -}}
-  {{- $jwtSecret = index .data "JWT_SECRET" | b64dec -}}
-{{- end }}
+{{- $pgHost := (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") -}}
+{{- $jwtSecret := required "vikunja.jwtSecret must be set" .Values.vikunja.jwtSecret }}
 secret:
   secret-storage:
     enabled: true
     data:
-      JWT_SECRET: {{ $jwtSecret }}
+      JWT_SECRET: {{ $jwtSecret | quote }}
 
   config:
     enabled: true
@@ -19,8 +15,8 @@ secret:
       config.yaml: |
         database:
           type: postgres
-          user: {{ .Values.cnpg.main.user }}
-          password: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
+          user: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+          password: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
           host: {{ $pgHost }}
 
         cache:
@@ -29,8 +25,8 @@ secret:
 
         redis:
           enabled: true
-          host: {{ printf "%v-%v:%v" .Release.Name "redis" "6379" }}
-          password: {{ .Values.redis.creds.redisPassword | trimAll "\""}}
+          host: {{ .Values.dependencies.valkey.depconfig.creds.plainporthost | trimAll "\"" }}
+          password: {{ (index .Values.dependencies.valkey.depconfig.creds "valkey-password") | trimAll "\""}}
           db: 0
 
         keyvalue:
@@ -39,7 +35,7 @@ secret:
         service:
           publicurl: {{ .Values.vikunja.service.publicurl | quote }}
           interface: {{ printf ":%v" .Values.service.main.ports.main.port }}
-          JWTSecret: {{ $jwtSecret }}
+          JWTSecret: {{ $jwtSecret | quote }}
           timezone: {{ .Values.TZ | quote }}
           {{- /* Multiply by 1, so large integers are not rendered in scientific notation
             See: https://github.com/helm/helm/issues/1707#issuecomment-1167860346 */}}

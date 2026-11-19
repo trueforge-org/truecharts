@@ -21,14 +21,14 @@ persistence:
     mountPath: "/config"
   varrun:
     enabled: false
-redis:
-  enabled: true
-  redisUsername: default
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: speedtest-tracker
-    database: speedtest-tracker
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: speedtest-tracker
+      postgresqlDatabase: speedtest-tracker
 
 securityContext:
   container:
@@ -64,15 +64,17 @@ workload:
             DB_CONNECTION: pgsql
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_PORT: "5432"
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             APP_KEY:
               secretKeyRef:
                 name: speedtest-tracker-secrets
@@ -80,16 +82,33 @@ workload:
             MAIL_MAILER: "smtp"
             MAIL_PORT: 465
             MAIL_USERNAME: ""
-            MAIL_PASSWORD: ""
+            MAIL_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MAIL_PASSWORD
             MAIL_SCHEME: "SSL"
             MAIL_FROM_ADDRESS: ""
             MAIL_FROM_NAME: "Speedtest Tracker"
-            TELEGRAM_BOT_TOKEN: ""
+            TELEGRAM_BOT_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TELEGRAM_BOT_TOKEN
             CACHE_DRIVER: redis
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             PUBLIC_DASHBOARD: true
             APP_NAME: "Speedtest Tracker"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MAIL_PASSWORD: ""
+      TELEGRAM_BOT_TOKEN: ""
+
+speedtestTracker:
+  # -- Must be changed. Laravel application key, exactly 32 characters (or "base64:" followed by a base64 encoded 32 byte key).
+  appKey: "PLACEHOLDERAPPKEYCHANGEME0000000"
