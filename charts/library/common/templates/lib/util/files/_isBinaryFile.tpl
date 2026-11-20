@@ -13,7 +13,7 @@ Returns: "true" or "false"
   {{- $rootCtx := .rootCtx -}}
   {{- $filePath := .filePath -}}
   {{- $looksBinary := false -}}
-  
+
   {{/* Check common binary file extensions */}}
   {{- $binaryExtensions := list
       "png" "jpg" "jpeg" "gif" "bmp" "tiff" "ico" "svg"

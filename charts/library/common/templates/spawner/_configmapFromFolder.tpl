@@ -43,7 +43,7 @@
       {{- $_ := set $objectData "shortName" $folder -}}
       {{- $_ := set $objectData "labels" $entry.labels -}}
       {{- $_ := set $objectData "annotations" $entry.annotations -}}
-      
+
       {{/* Set text and binary data separately */}}
       {{- if $entry.text -}}
         {{- $_ := set $objectData "data" $entry.text -}}

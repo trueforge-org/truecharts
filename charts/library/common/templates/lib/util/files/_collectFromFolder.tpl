@@ -22,7 +22,7 @@ Returns: A dictionary where keys are folder names and values contain:
   {{- $rootCtx := .rootCtx -}}
   {{- $basePath := trimSuffix "/" .basePath -}}
   {{- $overrides := .overrides | default dict -}}
-  
+
   {{- $result := dict -}}
 
   {{/* Step 1: Glob once and group the files by their folder */}}
