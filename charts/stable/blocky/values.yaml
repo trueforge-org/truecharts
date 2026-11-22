@@ -319,7 +319,15 @@ rbac:
         verbs:
           - list
           - watch
-      # HTTPRoute, TLSRoute, GRPCRoute
+      # EndpointSlices required by the Service watcher
+      - apiGroups:
+          - discovery.k8s.io
+        resources:
+          - endpointslices
+        verbs:
+          - list
+          - watch
+      # Gateway, ListenerSet, HTTPRoute, TLSRoute, GRPCRoute
       - apiGroups:
           - gateway.networking.k8s.io
         resources:
@@ -342,12 +350,20 @@ rbac:
           - dnsendpoints/status
         verbs:
           - "*"
+      # Node
+      - apiGroups:
+          - ""
+        resources:
+          - nodes
+        verbs:
+          - list
+          - watch
 
 k8sgateway:
   enabled: true
   # -- TTL for non-apex responses (in seconds)
   ttl: 300
-  # -- Limit what kind of resources to watch, e.g. watchedResources: [ Ingress | Service | HTTPRoute | TLSRoute | GRPCRoute | DNSEndpoint ]
+  # -- Resource types to watch. Supported: Ingress, Service, HTTPRoute, TLSRoute, GRPCRoute, DNSEndpoint, Node.
   watchedResources:
     - Ingress
     - Service
