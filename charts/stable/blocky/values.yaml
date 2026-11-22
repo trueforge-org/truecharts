@@ -350,14 +350,15 @@ rbac:
           - dnsendpoints/status
         verbs:
           - "*"
-      # Node
-      - apiGroups:
-          - ""
-        resources:
-          - nodes
-        verbs:
-          - list
-          - watch
+      ## Additional permissions for Node watcher (optional)
+      # # Node
+      # - apiGroups:
+      #     - ""
+      #   resources:
+      #     - nodes
+      #   verbs:
+      #     - list
+      #     - watch
 
 k8sgateway:
   enabled: true
