@@ -183,7 +183,7 @@ Another image, a fixed password, or more resources for the dependency only:
 ```yaml
 valkeyImage:
   repository: oci.trueforge.org/containerforge/valkey
-  tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+  tag: 9.0.4@sha256:ae7fe6bf2d849a671056ceb99a6ba5ed183c2aaf00e0da70a0821d373b643ff8
   pullPolicy: IfNotPresent
 
 dependencies:
@@ -227,7 +227,7 @@ The nodes use `valkeyImage` and the exporter `valkeyExporterImage`, both on the 
 ```yaml
 myValkeyImage:
   repository: oci.trueforge.org/containerforge/valkey
-  tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+  tag: 9.0.4@sha256:ae7fe6bf2d849a671056ceb99a6ba5ed183c2aaf00e0da70a0821d373b643ff8
   pullPolicy: IfNotPresent
 
 dependencies:
