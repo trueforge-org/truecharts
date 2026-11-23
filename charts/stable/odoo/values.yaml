@@ -70,7 +70,7 @@ persistence:
           mountPath: "/mnt/extra-addons"
   odoo-config:
     enabled: true
-    type: configmap
+    type: secret
     objectName: odoo-config
     targetSelector:
       main:

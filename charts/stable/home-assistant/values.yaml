@@ -7,7 +7,7 @@ image:
 yqImage:
   pullPolicy: IfNotPresent
   repository: oci.trueforge.org/containerforge/go-yq
-  tag: "4.54.2@sha256:61d8761052c690d70eeab9691546a6e16378422a8c07030dbf42d7d36041311d"
+  tag: "4.54.3@sha256:6bc96b27afd5bf67c8af7d93f2346c2395bb5244fab3d9051f3094ba36ece2a5"
 
 service:
   main:
@@ -24,6 +24,12 @@ workload:
           enabled: true
           imageSelector: yqImage
           command: /config/init/init.sh
+          env:
+            HA_DB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
 
 # Enable a prometheus-operator servicemonitor
 prometheus:
@@ -52,7 +58,6 @@ configmap:
     data:
       init.sh: |-
         #!/bin/sh
-        {{- $haDBURL := (printf "%s?client_encoding=utf8" ($.Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\"")) }}
         config="/config/configuration.yaml"
         default="/config/init"
         if [ ! -f "$config" ]; then
@@ -66,7 +71,7 @@ configmap:
         fi
 
         echo "Updating database URL"
-        yq -i '.recorder.db_url = "{{ $haDBURL }}"' "$config"
+        yq -i '.recorder.db_url = strenv(HA_DB_URL) + "?client_encoding=utf8"' "$config"
         echo "Done"
 
         echo "Creating include files..."
@@ -92,7 +97,8 @@ configmap:
         recorder:
           purge_keep_days: 30
           commit_interval: 3
-          db_url: {{ (printf "%s?client_encoding=utf8" (.Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\"")) | quote }}
+          # Set by init.sh from the postgresql secret
+          db_url: ""
 dependencies:
   postgresql:
     enabled: true

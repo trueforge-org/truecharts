@@ -4,10 +4,10 @@
 {{- end }}
 {{- include "tc.v1.common.loader.init" . }}
 
-{{/* Render configmap for blocky */}}
+{{/* Render the blocky config as a secret, as it contains database credentials */}}
 {{- $configmapFile := include "blocky.configmap" . | fromYaml -}}
 {{- if $configmapFile -}}
-  {{- $_ := set .Values.configmap "config" $configmapFile -}}
+  {{- $_ := set .Values.secret "config" $configmapFile -}}
 {{- end -}}
 
 {{- $gatewayconfig := include "k8sgateway.configmap" . | fromYaml -}}
@@ -15,10 +15,10 @@
   {{- $_ := set .Values.configmap "corefile" $gatewayconfig -}}
 {{- end -}}
 
-{{/* Always mount the configmap, with the basic config, plus the 'blockyConfig' */}}
+{{/* Always mount the config secret, with the basic config, plus the 'blockyConfig' */}}
 {{- define "blocky.configmap.mount" -}}
 enabled: true
-type: configmap
+type: secret
 mountPath: /app/config.yml
 objectName: config
 readOnly: true

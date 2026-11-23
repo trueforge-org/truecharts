@@ -153,7 +153,7 @@ workload:
               cpu: 200m
               memory: 500Mi
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: nextcloud-config
           probes:
             liveness:
@@ -433,7 +433,7 @@ persistence:
           readOnly: true
   redis-session:
     enabled: true
-    type: configmap
+    type: secret
     objectName: redis-session
     targetSelector:
       main:

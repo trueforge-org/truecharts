@@ -88,6 +88,11 @@ configmap:
     data:
       bitmagnet.json: >-
         {{ .Files.Get "dashboard.json" | indent 8 }}
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TMDB_API_KEY: ""
   datasource:
     enabled: true
     labels:
@@ -113,8 +118,3 @@ configmap:
             connMaxLifetime: 14400 # Grafana v5.4+
             postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
             timescaledb: false
-secret:
-  env-secrets:
-    enabled: true
-    data:
-      TMDB_API_KEY: ""

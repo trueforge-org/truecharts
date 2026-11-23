@@ -36,7 +36,7 @@ data:
 
 {{- define "wisemapping.configVolume" -}}
 enabled: true
-type: configmap
+type: secret
 objectName: wisemapping-config
 targetSelector:
   main:

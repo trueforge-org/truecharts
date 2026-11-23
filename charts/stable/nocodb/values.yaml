@@ -22,7 +22,7 @@ workload:
             startup:
               path: "/dashboard"
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: configmap
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"

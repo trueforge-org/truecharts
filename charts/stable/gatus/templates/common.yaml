@@ -1,2 +1,9 @@
+{{- include "tc.v1.common.loader.init" . }}
 
-{{ include "tc.v1.common.loader.all" . }}
+{{/* Pass the database URL from the secret, so it is not stored in the config ConfigMap */}}
+{{- if .Values.dependencies.postgresql.enabled }}
+  {{- $dbURL := dict "secretKeyRef" (dict "expandObjectName" false "name" (printf "%s-%s" .Release.Name "postgresqlcreds") "key" "url") -}}
+  {{- $_ := set .Values.workload.main.podSpec.containers.main.env "GATUS_DB_URL" $dbURL -}}
+{{- end }}
+
+{{ include "tc.v1.common.loader.apply" . }}

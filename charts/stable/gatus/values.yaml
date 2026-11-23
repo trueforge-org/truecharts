@@ -50,7 +50,8 @@ configmap:
         {{- if .Values.dependencies.postgresql.enabled }}
         storage:
           type: postgres
-          path: {{ (printf "%s?client_encoding=utf8" (.Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\"")) | quote }}
+          # Gatus expands the env var, which is read from the postgresql secret
+          path: "${GATUS_DB_URL}?client_encoding=utf8"
         {{- end }}
         metrics: true
         endpoints:

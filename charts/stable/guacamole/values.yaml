@@ -112,7 +112,7 @@ workload:
             runAsGroup: 1001
             readOnlyRootFilesystem: false
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: guacamole-config
           probes:
             liveness:
@@ -135,7 +135,7 @@ workload:
             runAsGroup: 1001
             readOnlyRootFilesystem: false
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: guacamole-config
           command:
             - /bin/sh
@@ -151,7 +151,7 @@ workload:
             runAsGroup: 1001
             readOnlyRootFilesystem: false
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: guacamole-config
           command:
             - /bin/sh

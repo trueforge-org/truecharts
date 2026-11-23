@@ -401,6 +401,7 @@ configmap:
         {{ .Files.Get "dashboard.json" | indent 8 }}
       blockypostgres.json: >-
         {{ .Files.Get "dashboardpsql.json" | indent 8 }}
+secret:
   datasource:
     enabled: true
     labels:

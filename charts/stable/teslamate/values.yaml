@@ -48,7 +48,23 @@ workload:
                 name: env-secrets
                 key: MQTT_PASSWORD
 
-configmap:
+dependencies:
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: teslamate
+      postgresqlDatabase: teslamate
+    operator:
+      cluster:
+        initdb:
+          postInitApplicationSQL:
+            - ALTER USER teslamate WITH SUPERUSER
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MQTT_PASSWORD: ""
   datasource:
     enabled: true
     labels:
@@ -74,24 +90,6 @@ configmap:
             connMaxLifetime: 14400 # Grafana v5.4+
             postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
             timescaledb: false
-
-dependencies:
-  postgresql:
-    enabled: true
-    depconfig:
-      postgresqlUsername: teslamate
-      postgresqlDatabase: teslamate
-    operator:
-      cluster:
-        initdb:
-          postInitApplicationSQL:
-            - ALTER USER teslamate WITH SUPERUSER
-
-secret:
-  env-secrets:
-    enabled: true
-    data:
-      MQTT_PASSWORD: ""
 
 teslamate:
   # -- Must be changed. Key used to encrypt the Tesla API tokens in the database. Changing it later invalidates stored tokens.

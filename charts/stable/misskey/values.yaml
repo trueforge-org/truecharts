@@ -57,7 +57,7 @@ workload:
 persistence:
   misskeyconfig:
     enabled: true
-    type: configmap
+    type: secret
     objectName: misskeyconfig
     mountPath: "/misskey/.config"
   files:
