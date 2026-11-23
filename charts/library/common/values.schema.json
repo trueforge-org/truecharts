@@ -19,7 +19,7 @@
    "default": {
     "repository": "oci.trueforge.org/containerforge/whoami",
     "pullPolicy": "IfNotPresent",
-    "tag": "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
+    "tag": "1.12.0@sha256:9ed5d0de8d00aeb16d2788a533da2b0739799592977f72e63c49bfee9459b2d7"
    }
   },
   "chartContext": {
@@ -195,7 +195,7 @@
    "description": "Image of the gluetun VPN client, used by the gluetun addon.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/gluetun",
-    "tag": "3.41.3@sha256:9f64b09c9ac35a5b3c66b0044efe5ad57f574140db91c408b5a32c7834151e91",
+    "tag": "3.41.3@sha256:ba40dbb6c3df9c9455aa267806eb7f6f65f398d38441322e0ba6995bb7476a26",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -204,7 +204,7 @@
    "description": "Image of netshoot, a network troubleshooting toolbox, used by the netshoot addon.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/netshoot",
-    "tag": "1.0.0@sha256:ecb3a85aed66ac72c76f9cb608656f7dbc810bb349eb301d1ea4d7a7f7ab9027",
+    "tag": "1.0.0@sha256:eee45eed15b73d3bda1eb412d73d8e700164614ffc7828224fd140a234135f09",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -213,7 +213,7 @@
    "description": "Image of Tailscale, used by the tailscale addon.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/tailscale",
-    "tag": "1.104.4@sha256:c991b2cb4baa7d891f213687a70aaa1ec32254c560ef85fac0db14002438c442",
+    "tag": "1.104.7@sha256:05ddc02288c12ed6b66f321fd6658f8097003c42ec47ee83ed4d2cd7262418d7",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -222,7 +222,7 @@
    "description": "Image of code-server, used by the codeserver addon.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/code-server",
-    "tag": "4.141.0@sha256:7539bf1f492206f49dfc22b483adfcefd010e6a2be6be4e42a04376fa7f9338f",
+    "tag": "4.141.0@sha256:86a5a90dce309048d4aeb9dfe4763e9c7b2114b788256bdf2b2447cb382cdaa7",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -231,7 +231,7 @@
    "description": "Image of Ubuntu, used by the init containers that fix permissions (autoperms) and by the wait-for-database init containers.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/ubuntu",
-    "tag": "26.4@sha256:6694765a55a999799d0b37f806a0e0ba11ceb4dcb22392b63f1b74b4123ea175",
+    "tag": "26.4@sha256:19cb2ceefb7364eed299290b4f4270d50a2eaa9393b0002b267f5b4f13926454",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -240,7 +240,7 @@
    "description": "Image of kubectl, for containers that select it with `imageSelector: kubectlImage`.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/kubectl",
-    "tag": "1.31.1@sha256:b9e298a180ef0022918994dc19949a609eb1c1fee2e9d6893e24ca29c8247186",
+    "tag": "1.31.1@sha256:8d06e36804a6489acf59f64104428956fc850245c32d3047bdd39a5279c4638a",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -249,7 +249,7 @@
    "description": "Image of the PostgreSQL client, used by the init container that waits for the postgresql dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/postgresql-client",
-    "tag": "18.6.0@sha256:8a8dae7394298f8923fc3e493ee6251e8186a6bdf21b92cb9ef820bcdd6a2754",
+    "tag": "18.6.0@sha256:2eedec2d745aa6ca38bab06880bc95ebbb21b9d93557f5eb8ba0691850769b04",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -258,7 +258,7 @@
    "description": "Image of the postgresql dependency (PostgreSQL 18), used when `dependencies.postgresql` runs in standalone mode.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/postgresql",
-    "tag": "18.6.0@sha256:afbcd31f4e0d4d6174dced7c68819e0493b2194c5a0f6b783e16ed137944555b",
+    "tag": "18.6.0@sha256:fd164dac097aa58797c210e24700b7155bf02e4a725c7b2c2669621063cce50e",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -267,7 +267,7 @@
    "description": "Image of the clickhouse dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/clickhouse",
-    "tag": "26.10.2.103@sha256:5ea8293b50edf862efaa9362629ccfabcf93e2ffed5da552bde9fcb82d844b68",
+    "tag": "26.10.2.103@sha256:d1e736f34d03ce9db58a1386cb35288007c0cabd2455aebd70a9c17ab6da4ce4",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -276,7 +276,7 @@
    "description": "Image of the mariadb dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/mariadb",
-    "tag": "11.8.6@sha256:24e779c583b4355d5b0972072de1240b685b78b0b8465acff5bea782b304e439",
+    "tag": "11.8.6@sha256:9b383e42693608a70f24e9758b4c40cb9340e80da2f3b88ef740fdf57cb86440",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -285,7 +285,7 @@
    "description": "Image of the memcached dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/memcache",
-    "tag": "1.6.40@sha256:970ce84d9e893fed91d74ffea3e83ca814c1ee8e07ef2f4a4a5a7ae96603c06b",
+    "tag": "1.6.40@sha256:ac7a77a2fb8855af499a7cb2df614a73895c838e5c08f5c6a1b09ece1e7f0138",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -294,7 +294,7 @@
    "description": "Image of the mongodb dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/mongodb",
-    "tag": "9.0.4@sha256:1ee3da52f298ea42c4d8a423bd1ad49845bac521c49181c9cddd74b7a27fcd03",
+    "tag": "9.0.4@sha256:d631852bc0b690d8bd7039b0d9d390a9d75aafb5bbc4541aebd8c1416ccd05d0",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -303,7 +303,7 @@
    "description": "Image of the valkey dependency, used in `standalone` mode and, via `dependencies.valkey.operator.imageSelector`, for the nodes in `operator` mode.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/valkey",
-    "tag": "9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e",
+    "tag": "9.0.4@sha256:ae7fe6bf2d849a671056ceb99a6ba5ed183c2aaf00e0da70a0821d373b643ff8",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -312,7 +312,7 @@
    "description": "Image of the metrics exporter of the valkey dependency in `operator` mode, selected by `dependencies.valkey.operator.exporter.imageSelector`.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/redis-exporter",
-    "tag": "1.94.0@sha256:4e7642d5892fe7a74811af07444bc08550d2ab6d334a9f0323b399e6823f2a17",
+    "tag": "1.98.0@sha256:0aeafbe2c22c956a6fc60b1f8a9dcd3753671224687a4d7873336ec3fcbfcf8b",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -321,7 +321,7 @@
    "description": "Image of the MariaDB client, used by the init container that waits for the mariadb dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/mariadb-client",
-    "tag": "13.0.2@sha256:4fb8874313506b7f343815e2af1501eb9d29114aed806ba841c7a9f9e417bea7",
+    "tag": "13.0.2@sha256:c6f01866f536935c8decda4f31038f636a93f70d4338e23c6e91426218ec13c8",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -330,7 +330,7 @@
    "description": "Image of the Valkey client tools, used by the init container that waits for the valkey dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/valkey-tools",
-    "tag": "1.1.0@sha256:1dbc0f283db1ea8da9a348b7bf916607c54b18e3db964e62d897f7543545be37",
+    "tag": "1.1.0@sha256:c38cf07ba20f5555dd6dfae5bfc90669cb1b57c53187b216780f17dfe4f11caf",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -339,7 +339,7 @@
    "description": "Image of the MongoDB shell, used by the init container that waits for the mongodb dependency.",
    "default": {
     "repository": "oci.trueforge.org/containerforge/mongosh",
-    "tag": "2.14.2@sha256:cfe55f326bd53a269f76872557e9a445bb679046e0d825bc81544164a90def1f",
+    "tag": "2.14.3@sha256:ee42101225eb25033abb12c054ca20eff12d2d4ea74c6c17a0f6aa4f7bfe1ce3",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -348,7 +348,7 @@
    "description": "Image of PostgreSQL 15 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 15`.",
    "default": {
     "repository": "ghcr.io/cloudnative-pg/postgresql",
-    "tag": "15.19-standard-trixie@sha256:f617efc030d3099362e7fca616bb6d83d102599abf9b7b5e225482e4d0306aa3",
+    "tag": "15.20-standard-trixie@sha256:3317fc8aeb05409518ba57b871de9a6032dc98d15c5697ed470588f9380f89af",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -357,7 +357,7 @@
    "description": "Image of PostgreSQL 16 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 16`.",
    "default": {
     "repository": "ghcr.io/cloudnative-pg/postgresql",
-    "tag": "16.15-standard-trixie@sha256:1ec419e997a8bde5263b6951f4c5ebc4aa2e1937927001f2561025c0a816e174",
+    "tag": "16.16-standard-trixie@sha256:c1d2ebeaf7b254264bdb63997270cc9d5e007ba5be4efe6112ae801d1ad68118",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -366,7 +366,7 @@
    "description": "Image of PostgreSQL 17 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 17`.",
    "default": {
     "repository": "ghcr.io/cloudnative-pg/postgresql",
-    "tag": "17.11-standard-trixie@sha256:ed6923f9ba2399cf9070379a353c710c29ced8a294be73986a2c3dae7e599ce3",
+    "tag": "17.12-standard-trixie@sha256:14f7842047c843a1a055024c0ba63a8740b08f886ab3fc2e1d2bb87af0988b67",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -375,7 +375,7 @@
    "description": "Image of PostgreSQL 18 (CloudNativePG), used by CNPG clusters of the postgresql dependency with `pgVersion: 18`.",
    "default": {
     "repository": "ghcr.io/cloudnative-pg/postgresql",
-    "tag": "18.6-standard-trixie@sha256:39add80f5b1e573e2f6b641c66fd1a2f8dede67ca0330e870285bc1078551390",
+    "tag": "18.7-standard-trixie@sha256:1abcfd1cac6d53cda5185706819aab36d66a4ed88e99fc2ae44ab0826aa99f00",
     "pullPolicy": "IfNotPresent"
    }
   },
@@ -6944,7 +6944,7 @@
      "description": "Tag of the image. Pin it by digest, as `<version>@sha256:<digest>`.",
      "default": "",
      "examples": [
-      "1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa"
+      "1.12.0@sha256:9ed5d0de8d00aeb16d2788a533da2b0739799592977f72e63c49bfee9459b2d7"
      ]
     }
    },
