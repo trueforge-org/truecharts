@@ -27,7 +27,7 @@ VALKEY_OPERATOR_CHART_VERSION="0.9.0"
 # renovate: datasource=docker depName=ghcr.io/home-operations/charts-mirror/metrics-server
 METRICS_SERVER_CHART_VERSION="3.14.0"
 # renovate: datasource=docker depName=oci.trueforge.org/truecharts/volsync
-VOLSYNC_CHART_VERSION="3.15.16"
+VOLSYNC_CHART_VERSION="3.19.2"
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 GATEWAY_API_VERSION="v1.7.0"
 # sha256 of standard-install.yaml for GATEWAY_API_VERSION, it MUST be updated together with the version above
