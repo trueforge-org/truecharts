@@ -11,11 +11,11 @@ fi
 echo "Chart name: $curr_chart"
 
 # renovate: datasource=docker depName=ghcr.io/prometheus-community/charts/kube-prometheus-stack
-KUBE_PROMETHEUS_STACK_CHART_VERSION="82.18.0"
+KUBE_PROMETHEUS_STACK_CHART_VERSION="93.9.0"
 # renovate: datasource=docker depName=registry.k8s.io/ingress-nginx/charts/ingress-nginx
 INGRESS_NGINX_CHART_VERSION="v4.15.1"
 # renovate: datasource=docker depName=oci.trueforge.org/truecharts/snapshot-controller
-SNAPSHOT_CONTROLLER_CHART_VERSION="4.19.2"
+SNAPSHOT_CONTROLLER_CHART_VERSION="6.2.4"
 # renovate: datasource=docker depName=quay.io/metallb/chart/metallb
 METALLB_CHART_VERSION="0.15.3"
 # renovate: datasource=docker depName=quay.io/jetstack/charts/cert-manager
@@ -27,7 +27,7 @@ VALKEY_OPERATOR_CHART_VERSION="0.9.0"
 # renovate: datasource=docker depName=ghcr.io/home-operations/charts-mirror/metrics-server
 METRICS_SERVER_CHART_VERSION="3.14.0"
 # renovate: datasource=docker depName=oci.trueforge.org/truecharts/volsync
-VOLSYNC_CHART_VERSION="3.19.2"
+VOLSYNC_CHART_VERSION="5.1.4"
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 GATEWAY_API_VERSION="v1.7.0"
 # sha256 of standard-install.yaml for GATEWAY_API_VERSION, it MUST be updated together with the version above
