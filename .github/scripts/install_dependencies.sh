@@ -25,7 +25,7 @@ CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
 # renovate: datasource=helm depName=valkey-operator repository=https://valkey.io/valkey-helm
 VALKEY_OPERATOR_CHART_VERSION="0.9.0"
 # renovate: datasource=docker depName=ghcr.io/home-operations/charts-mirror/metrics-server
-METRICS_SERVER_CHART_VERSION="3.13.0"
+METRICS_SERVER_CHART_VERSION="3.13.1"
 # renovate: datasource=docker depName=oci.trueforge.org/truecharts/volsync
 VOLSYNC_CHART_VERSION="3.15.16"
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
