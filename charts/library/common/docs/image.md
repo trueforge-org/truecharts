@@ -40,7 +40,7 @@ Default value:
 ```yaml
 repository: oci.trueforge.org/containerforge/whoami
 pullPolicy: IfNotPresent
-tag: 1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa
+tag: 1.12.0@sha256:9ed5d0de8d00aeb16d2788a533da2b0739799592977f72e63c49bfee9459b2d7
 ```
 
 ---
@@ -96,7 +96,7 @@ Example
 
 ```yaml
 image:
-  tag: 1.12.0@sha256:ab5d621fc3ecf2ddcc52a728551bab0b942c1e777126b9595df1cfa4e7b9adfa
+  tag: 1.12.0@sha256:9ed5d0de8d00aeb16d2788a533da2b0739799592977f72e63c49bfee9459b2d7
 ```
 
 ---
@@ -214,7 +214,7 @@ postgresql18Image:
 valkeyImage:
   repository: oci.trueforge.org/containerforge/valkey
   pullPolicy: IfNotPresent
-  tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+  tag: 9.0.4@sha256:ae7fe6bf2d849a671056ceb99a6ba5ed183c2aaf00e0da70a0821d373b643ff8
 ```
 
 The CloudNativePG images follow the `pgVersion` and `type` of the cluster, for example `postgres17Image` for `pgVersion: 17` and `postgresPostgis17Image` for the `postgis` type:

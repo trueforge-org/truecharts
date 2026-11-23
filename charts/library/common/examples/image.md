@@ -72,7 +72,7 @@ postgresql18Image:
 valkeyImage:
   repository: oci.trueforge.org/containerforge/valkey
   pullPolicy: IfNotPresent
-  tag: 9.0.4@sha256:387b5f54777a6451f73f1a49a45b5bb6d29e1e5838b7b5a9c84d80370995531e
+  tag: 9.0.4@sha256:ae7fe6bf2d849a671056ceb99a6ba5ed183c2aaf00e0da70a0821d373b643ff8
 ```
 
 The CloudNativePG images follow the `pgVersion` and `type` of the cluster, for example `postgres17Image` for `pgVersion: 17` and `postgresPostgis17Image` for the `postgis` type:

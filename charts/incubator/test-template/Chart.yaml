@@ -2,7 +2,7 @@ annotations:
   artifacthub.io/links: |-
     - name: support
     url: https://discord.com/invite/tVsPTHWTtr
-  truecharts.org/train: stable
+  truecharts.org/train: incubator
   trueforge.org/category: custom
   trueforge.org/max_helm_version: "4.1"
   trueforge.org/max_kubernetes_version: 1.35.0
@@ -12,7 +12,7 @@ apiVersion: v2
 appVersion: 3.5.4
 dependencies:
   - name: common
-    version: 32.2.0
+    version: 32.2.1
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
@@ -20,8 +20,8 @@ dependencies:
     import-values: []
 deprecated: false
 description: Test Template to test the new common chart
-home: https://truecharts.org/charts/stable/app-template
-icon: https://truecharts.org/img/hotlink-ok/chart-icons/app-template.webp
+home: https://truecharts.org/charts/incubator/test-template
+icon: https://truecharts.org/img/hotlink-ok/chart-icons/test-template.webp
 keywords:
   - custom
 kubeVersion: '>=1.33.0-0'
@@ -32,7 +32,7 @@ maintainers:
 name: test-template
 sources:
   - https://ghcr.io/miguelndecarvalho/speedtest-exporter
-  - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/app-template
+  - https://github.com/trueforge-org/truecharts/tree/master/charts/incubator/test-template
 type: application
-version: 22.0.0
+version: 22.0.2
 

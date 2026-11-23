@@ -106,7 +106,7 @@ tests:
           value: Gateway
         equal:
           path: spec.listeners[0].tls.options
-          value: 
+          value:
             some.example/option: value
       - documentSelector:
           path: kind
@@ -207,7 +207,7 @@ tests:
           value: GatewayClass
         equal:
           path: spec.parametersRef
-          value: 
+          value:
             group: example.com
             kind: Config
             name: some-config

@@ -2,7 +2,7 @@
 image:
   repository: ghcr.io/utkuozdemir/nvidia_gpu_exporter
   pullPolicy: IfNotPresent
-  tag: 1.19.0@sha256:4b18ec4390279d90c8f40e952ba1d575f7df1691f29bb5be79843238483b35f5
+  tag: 2.0.0@sha256:bd7ca0426cbfd4a5e5b33625b873541c5da58c52569f9e141db8e76c7d3e9256
 securityContext:
   container:
     privileged: true
@@ -26,6 +26,8 @@ workload:
             - :{{ .Values.service.main.ports.main.port }}
             - --web.telemetry-path
             - "{{ .Values.metricsEndpoint }}"
+            - --collect.backend
+            - "{{ .Values.collectBackend }}"
             - --nvidia-smi-command
             - nvidia-smi
             - --log.level
@@ -82,6 +84,8 @@ metrics:
         path: "{{ .Values.metricsEndpoint }}"
 
 metricsEndpoint: "/metrics"
+# GPU metrics backend: nvml (driver library), exec (nvidia-smi) or demo (synthetic data, no GPU needed)
+collectBackend: nvml
 logs:
   general:
     level: info

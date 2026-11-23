@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./values.schema.json
 image:
   repository: ghcr.io/0xerr0r/blocky
-  tag: v0.36.0@sha256:191c0f1e688aa37698297ef4059e11a2b080299a878f5b31d6d32ace9d0c54b2
+  tag: v0.37.0@sha256:d9b6344d7c8f3fe577a47bc97b523faa116f7ea8a8901bfaf800a4dbdce64c96
   pullPolicy: IfNotPresent
 k8sgatewayImage:
-  repository: ghcr.io/k8s-gateway/k8s_gateway
+  repository: codeberg.org/k8s-gateway/k8s_gateway
   pullPolicy: IfNotPresent
-  tag: 1.8.2@sha256:e7d334bc486fc78e2f2366da2029b7308240d500330e85d2367d4d9cc46a5e52
+  tag: 1.10.0@sha256:007636228aa5659e224f79b81e0ce6ddc64eab03c082adbb74e95361288fb7d3
 
 workload:
   main:
@@ -319,7 +319,15 @@ rbac:
         verbs:
           - list
           - watch
-      # HTTPRoute, TLSRoute, GRPCRoute
+      # EndpointSlices required by the Service watcher
+      - apiGroups:
+          - discovery.k8s.io
+        resources:
+          - endpointslices
+        verbs:
+          - list
+          - watch
+      # Gateway, ListenerSet, HTTPRoute, TLSRoute, GRPCRoute
       - apiGroups:
           - gateway.networking.k8s.io
         resources:
@@ -342,12 +350,21 @@ rbac:
           - dnsendpoints/status
         verbs:
           - "*"
+      ## Additional permissions for Node watcher (optional)
+      # # Node
+      # - apiGroups:
+      #     - ""
+      #   resources:
+      #     - nodes
+      #   verbs:
+      #     - list
+      #     - watch
 
 k8sgateway:
   enabled: true
   # -- TTL for non-apex responses (in seconds)
   ttl: 300
-  # -- Limit what kind of resources to watch, e.g. watchedResources: [ Ingress | Service | HTTPRoute | TLSRoute | GRPCRoute | DNSEndpoint ]
+  # -- Resource types to watch. Supported: Ingress, Service, HTTPRoute, TLSRoute, GRPCRoute, DNSEndpoint, Node.
   watchedResources:
     - Ingress
     - Service

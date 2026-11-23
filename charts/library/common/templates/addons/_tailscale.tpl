@@ -6,7 +6,7 @@ It will include / inject the required templates based on the given values.
   {{- $ts := $.Values.addons.tailscale -}}
   {{- if $ts.enabled -}}
     {{- $settings := $ts.settings | default dict -}}
-    
+
     {{/* Merge settings into environment variables */}}
     {{- $env := $ts.container.env | default dict -}}
     {{- if $settings.config -}}

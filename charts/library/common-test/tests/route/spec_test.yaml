@@ -34,7 +34,7 @@ tests:
           value: HTTPRoute
         equal:
           path: spec.rules
-          value: 
+          value:
             - backendRefs:
                 - group: ""
                   kind: Service
@@ -402,7 +402,7 @@ tests:
           value: HTTPRoute
         equal:
           path: spec.rules[0].timeouts
-          value: 
+          value:
             request: 10s
             backendRequest: 5s
       - documentSelector:
@@ -806,7 +806,7 @@ tests:
           value: HTTPRoute
         equal:
           path: spec.hostnames
-          value: 
+          value:
             - "*.example.com"
             - test-release-name.example.com
 
@@ -876,7 +876,7 @@ tests:
           value: HTTPRoute
         equal:
           path: spec.parentRefs[0]
-          value: 
+          value:
             group: gateway.networking.k8s.io
             kind: Gateway
             name: some-gateway
