@@ -31,9 +31,22 @@ workload:
       containers:
         main:
           env:
-            DATABASE_CONNECTION: ""
-            http_PASS: ""
+            DATABASE_CONNECTION:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_CONNECTION
+            http_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: http_PASS
             http_USER: ""
             TUBESYNC_DEBUG: "False"
             TUBESYNC_HOSTS: ""
             TUBESYNC_WORKERS: "2"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      http_PASS: ""
+      DATABASE_CONNECTION: ""

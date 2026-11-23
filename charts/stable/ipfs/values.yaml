@@ -66,5 +66,13 @@ workload:
               path: "/webui"
           env:
             IPFS_PROFILE: "server"
-            IPFS_SWARM_KEY: ""
+            IPFS_SWARM_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: IPFS_SWARM_KEY
             IPFS_SWARM_KEY_FILE: ""
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      IPFS_SWARM_KEY: ""

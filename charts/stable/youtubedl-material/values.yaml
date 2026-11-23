@@ -26,11 +26,12 @@ persistence:
   video:
     enabled: true
     mountPath: /app/video
-mongodb:
-  enabled: true
-  # DB name seems to be hardcoded in their app
-  mongodbUsername: ytdl_material
-  mongodbDatabase: ytdl_material
+dependencies:
+  mongodb:
+    enabled: true
+    depconfig:
+      mongodbUsername: ytdl_material
+      mongodbDatabase: ytdl_material
 
 securityContext:
   container:
@@ -69,10 +70,19 @@ workload:
             ytdl_allow_quality_select: true
             ytdl_download_only_mode: false
             ytdl_use_api_key: false
-            ytdl_api_key: ""
-            ytdl_youtube_api_key: ""
+            ytdl_api_key:
+              secretKeyRef:
+                name: env-secrets
+                key: ytdl_api_key
+            ytdl_youtube_api_key:
+              secretKeyRef:
+                name: env-secrets
+                key: ytdl_youtube_api_key
             ytdl_use_twitch_api: false
-            ytdl_twitch_api_key: ""
+            ytdl_twitch_api_key:
+              secretKeyRef:
+                name: env-secrets
+                key: ytdl_twitch_api_key
             ytdl_twitch_auto_download_chat: false
             ytdl_use_sponsorblock_api: false
             ytdl_generate_nfo_files: false
@@ -91,3 +101,11 @@ workload:
             ytdl_jwt_expiration: 86400
             ytdl_allow_advanced_download: false
             ytdl_use_cookies: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ytdl_api_key: ""
+      ytdl_youtube_api_key: ""
+      ytdl_twitch_api_key: ""

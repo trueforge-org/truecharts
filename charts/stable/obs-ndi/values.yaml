@@ -27,7 +27,10 @@ workload:
             startup:
               type: tcp
           env:
-            VNC_PW: "headless"
+            VNC_PW:
+              secretKeyRef:
+                name: env-secrets
+                key: VNC_PW
 service:
   main:
     ports:
@@ -51,3 +54,8 @@ persistence:
   configpath:
     enabled: true
     mountPath: /config/obs-studio
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VNC_PW: "headless"

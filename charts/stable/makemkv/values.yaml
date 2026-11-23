@@ -54,6 +54,11 @@ configmap:
       AUTO_DISC_RIPPER_PARALLEL_RIP: '{{ ternary "1" "0" .Values.makemkv.AUTO_DISC_RIPPER_PARALLEL_RIP }}'
       AUTO_DISC_RIPPER_NO_GUI_PROGRESS: '{{ ternary "1" "0" .Values.makemkv.AUTO_DISC_RIPPER_NO_GUI_PROGRESS }}'
       AUTO_DISC_RIPPER_FORCE_UNIQUE_OUTPUT_DIR: '{{ ternary "1" "0" .Values.makemkv.AUTO_DISC_RIPPER_FORCE_UNIQUE_OUTPUT_DIR }}'
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VNC_PASSWORD: ""
 persistence:
   config:
     enabled: true
@@ -91,7 +96,10 @@ workload:
             startup:
               type: tcp
           env:
-            VNC_PASSWORD: ""
+            VNC_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: VNC_PASSWORD
           envFrom:
             - configMapRef:
                 name: "makemkv"

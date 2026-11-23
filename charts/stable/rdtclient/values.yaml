@@ -97,7 +97,10 @@ workload:
           env:
             RPC_PORT: "{{ .Values.service.aria2.ports.rpc.port }}"
             LISTEN_PORT: "{{ .Values.service.torrent.ports.torrent.port }}"
-            RPC_SECRET: "{{ .Values.aria2.rpc_secret }}"
+            RPC_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: RPC_SECRET
             DISK_CACHE: "{{ .Values.aria2.disk_cache }}"
             IPV6_MODE: false
             UPDATE_TRACKERS: "{{ .Values.aria2.update_trackers }}"
@@ -113,3 +116,9 @@ persistence:
       aria2:
         aria2:
           mountPath: /config
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      RPC_SECRET: '{{ .Values.aria2.rpc_secret }}'

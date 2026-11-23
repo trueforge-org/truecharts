@@ -50,11 +50,12 @@ persistence:
         nginx:
           mountPath: /etc/nginx/templates/nginx.conf.template
           subPath: nginx.conf.template
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: tt-rss
-    database: tt-rss
+    depconfig:
+      postgresqlUsername: tt-rss
+      postgresqlDatabase: tt-rss
 
 workload:
   main:
@@ -80,18 +81,23 @@ workload:
           env:
             TTRSS_SELF_URL_PATH: ""
             # tt-rss tests with "-z" so an empty string should still allow the randomly generated password to be made.
-            ADMIN_USER_PASS: ""
-            TTRSS_DB_NAME: "{{ .Values.cnpg.main.database }}"
-            TTRSS_DB_USER: "{{ .Values.cnpg.main.user }}"
+            ADMIN_USER_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: ADMIN_USER_PASS
+            TTRSS_DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            TTRSS_DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             TTRSS_DB_PORT: "5432"
             TTRSS_DB_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             TTRSS_DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
   nginx:
     enabled: true
     type: Deployment
@@ -151,17 +157,19 @@ workload:
                 - test -f /var/www/html/tt-rss/lock/update_daemon.lock
           env:
             TTRSS_SELF_URL_PATH: ""
-            TTRSS_DB_NAME: "{{ .Values.cnpg.main.database }}"
-            TTRSS_DB_USER: "{{ .Values.cnpg.main.user }}"
+            TTRSS_DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            TTRSS_DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             TTRSS_DB_PORT: "5432"
             TTRSS_DB_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             TTRSS_DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
 service:
   # Main service links to ingress easier (according to nextcloud's values.yaml)
   # That's why the nginx is swapped with app
@@ -234,3 +242,9 @@ configmap:
 
           }
         }
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ADMIN_USER_PASS: ""

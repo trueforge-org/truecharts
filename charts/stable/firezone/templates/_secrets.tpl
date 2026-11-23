@@ -1,29 +1,13 @@
 {{/* Define the secrets */}}
 {{- define "firezone.secrets" -}}
-{{- $secretName := (printf "%s-firezone-secrets" (include "tc.v1.common.lib.chart.names.fullname" $)) -}}
-
 # firezone requires all these keys to be in base 64 | b64enc format presented in the container, so this b64enc here is intentional
 # https://www.firezone.dev/docs/reference/env-vars#secrets-and-encryption
-{{- $keyGuardian := randAlphaNum 48 | b64enc -}}
-{{- $keyDatabase := randAlphaNum 32 | b64enc -}}
-{{- $keySecret := randAlphaNum 48 | b64enc -}}
-{{- $keyLive := randAlphaNum 24 | b64enc -}}
-{{- $keyCookieSigning := randAlphaNum 6 | b64enc -}}
-{{- $keyCookieEncrypt := randAlphaNum 6 | b64enc -}}
-{{- with (lookup "v1" "Secret" .Release.Namespace $secretName) -}}
-  {{- $keyGuardian = index .data "GUARDIAN_SECRET_KEY" | b64dec -}}
-  {{- $keyDatabase = index .data "DATABASE_ENCRYPTION_KEY" | b64dec -}}
-  {{- $keySecret = index .data "SECRET_KEY_BASE" | b64dec -}}
-  {{- $keyLive = index .data "LIVE_VIEW_SIGNING_SALT" | b64dec -}}
-  {{- $keyCookieSigning = index .data "COOKIE_SIGNING_SALT" | b64dec -}}
-  {{- $keyCookieEncrypt = index .data "COOKIE_ENCRYPTION_SALT" | b64dec -}}
-{{- end }}
 enabled: true
 data:
-  GUARDIAN_SECRET_KEY: {{ $keyGuardian }}
-  DATABASE_ENCRYPTION_KEY: {{ $keyDatabase }}
-  SECRET_KEY_BASE: {{ $keySecret }}
-  LIVE_VIEW_SIGNING_SALT: {{ $keyLive }}
-  COOKIE_SIGNING_SALT: {{ $keyCookieSigning }}
-  COOKIE_ENCRYPTION_SALT: {{ $keyCookieEncrypt }}
+  GUARDIAN_SECRET_KEY: {{ required "firezone.secrets.guardianSecretKey must be set" .Values.firezone.secrets.guardianSecretKey | b64enc }}
+  DATABASE_ENCRYPTION_KEY: {{ required "firezone.secrets.databaseEncryptionKey must be set" .Values.firezone.secrets.databaseEncryptionKey | b64enc }}
+  SECRET_KEY_BASE: {{ required "firezone.secrets.secretKeyBase must be set" .Values.firezone.secrets.secretKeyBase | b64enc }}
+  LIVE_VIEW_SIGNING_SALT: {{ required "firezone.secrets.liveViewSigningSalt must be set" .Values.firezone.secrets.liveViewSigningSalt | b64enc }}
+  COOKIE_SIGNING_SALT: {{ required "firezone.secrets.cookieSigningSalt must be set" .Values.firezone.secrets.cookieSigningSalt | b64enc }}
+  COOKIE_ENCRYPTION_SALT: {{ required "firezone.secrets.cookieEncryptionSalt must be set" .Values.firezone.secrets.cookieEncryptionSalt | b64enc }}
 {{- end -}}

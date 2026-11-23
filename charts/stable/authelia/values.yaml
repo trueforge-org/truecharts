@@ -24,21 +24,38 @@ workload:
         main:
           env:
             # Update the following secrets with your own values
-            AUTHELIA_SESSION_SECRET: some-secret-replace-me
-            AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: some-secret-replace-me
-            AUTHELIA_STORAGE_ENCRYPTION_KEY: some-secret-replace-me
+            AUTHELIA_SESSION_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: AUTHELIA_SESSION_SECRET
+            AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET
+            AUTHELIA_STORAGE_ENCRYPTION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: AUTHELIA_STORAGE_ENCRYPTION_KEY
             # Don't change the following envs
             X_AUTHELIA_CONFIG: "{{ .Values.persistence.configfile.mountPath }}"
             AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
             AUTHELIA_SERVER_ADDRESS: "tcp://:{{ .Values.service.main.ports.main.port }}/"
-            AUTHELIA_STORAGE_POSTGRES_ADDRESS: "tcp://{{ .Values.cnpg.main.creds.host }}:{{ .Values.cnpg.main.creds.port }}"
-            AUTHELIA_STORAGE_POSTGRES_DATABASE: "{{ .Values.cnpg.main.database }}"
-            AUTHELIA_STORAGE_POSTGRES_USERNAME: "{{ .Values.cnpg.main.user }}"
-            AUTHELIA_STORAGE_POSTGRES_PASSWORD: '{{ .Values.cnpg.main.creds.password | trimAll "\"" }}'
-            AUTHELIA_SESSION_REDIS_HOST: '{{ .Values.redis.creds.plain | trimAll "\"" }}'
-            AUTHELIA_SESSION_REDIS_PORT: "{{ .Values.redis.service.main.ports.main.port }}"
+            AUTHELIA_STORAGE_POSTGRES_ADDRESS: 'tcp://{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}:{{ .Values.dependencies.postgresql.depconfig.creds.plainport | trimAll "\"" }}'
+            AUTHELIA_STORAGE_POSTGRES_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            AUTHELIA_STORAGE_POSTGRES_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            AUTHELIA_STORAGE_POSTGRES_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+            AUTHELIA_SESSION_REDIS_HOST: '{{ .Values.dependencies.valkey.depconfig.creds.plain | trimAll "\"" }}'
+            AUTHELIA_SESSION_REDIS_PORT: "{{ .Values.dependencies.valkey.service.main.ports.main.port }}"
             AUTHELIA_SESSION_REDIS_DATABASE_INDEX: "0"
-            AUTHELIA_SESSION_REDIS_PASSWORD: '{{ .Values.redis.creds.redisPassword | trimAll "\"" }}'
+            AUTHELIA_SESSION_REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
 
           probes:
             liveness:
@@ -57,6 +74,12 @@ service:
         port: 9091
 
 secret:
+  env-secrets:
+    enabled: true
+    data:
+      AUTHELIA_SESSION_SECRET: "some-secret-replace-me"
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET: "some-secret-replace-me"
+      AUTHELIA_STORAGE_ENCRYPTION_KEY: "some-secret-replace-me"
   authelia-configfile:
     enabled: true
     data:
@@ -75,11 +98,11 @@ persistence:
     type: secret
     objectName: authelia-configfile
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: authelia
-    database: authelia
-
-redis:
-  enabled: true
+    depconfig:
+      postgresqlUsername: authelia
+      postgresqlDatabase: authelia
+  valkey:
+    enabled: true

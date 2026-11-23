@@ -28,5 +28,14 @@ workload:
       containers:
         main:
           env:
-            GUAC_PASS: ""
+            GUAC_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: GUAC_PASS
             GUAC_USER: ""
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GUAC_PASS: ''

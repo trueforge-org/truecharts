@@ -22,24 +22,34 @@ workload:
             liveness:
               type: http
               httpHeaders:
-                Authorization: '{{ printf "Basic %s" ((printf "%s:%s" .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_USERNAME .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_PASSWORD) | b64enc) }}'
+                Authorization: '{{ printf "Basic %s" ((printf "%s:%s" .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_USERNAME (index .Values.secret "env-secrets" "data" "ME_CONFIG_BASICAUTH_PASSWORD")) | b64enc) }}'
             readiness:
               type: http
               httpHeaders:
-                Authorization: '{{ printf "Basic %s" ((printf "%s:%s" .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_USERNAME .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_PASSWORD) | b64enc) }}'
+                Authorization: '{{ printf "Basic %s" ((printf "%s:%s" .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_USERNAME (index .Values.secret "env-secrets" "data" "ME_CONFIG_BASICAUTH_PASSWORD")) | b64enc) }}'
             startup:
               type: http
               httpHeaders:
-                Authorization: '{{ printf "Basic %s" ((printf "%s:%s" .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_USERNAME .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_PASSWORD) | b64enc) }}'
+                Authorization: '{{ printf "Basic %s" ((printf "%s:%s" .Values.workload.main.podSpec.containers.main.env.ME_CONFIG_BASICAUTH_USERNAME (index .Values.secret "env-secrets" "data" "ME_CONFIG_BASICAUTH_PASSWORD")) | b64enc) }}'
           env:
             ME_CONFIG_MONGODB_PORT: ""
             ME_CONFIG_MONGODB_SERVER: ""
             ME_CONFIG_BASICAUTH_USERNAME: ""
-            ME_CONFIG_BASICAUTH_PASSWORD: ""
+            ME_CONFIG_BASICAUTH_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ME_CONFIG_BASICAUTH_PASSWORD
             # https://codemirror.net/5/demo/theme.html
             ME_CONFIG_OPTIONS_EDITORTHEME: default
             ME_CONFIG_MONGODB_AUTH_DATABASE: ""
             ME_CONFIG_MONGODB_AUTH_USERNAME: ""
-            ME_CONFIG_MONGODB_AUTH_PASSWORD: ""
-mongodb:
-  enabled: false
+            ME_CONFIG_MONGODB_AUTH_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mongodbcreds" }}'
+                key: mongodb-password
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ME_CONFIG_BASICAUTH_PASSWORD: ""

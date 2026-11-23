@@ -157,23 +157,28 @@ workload:
         main:
           env:
             GF_SECURITY_ADMIN_USER: "admin"
-            GF_SECURITY_ADMIN_PASSWORD: "testpassword"
+            GF_SECURITY_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: GF_SECURITY_ADMIN_PASSWORD
             GF_INSTALL_PLUGINS: ""
             GF_AUTH_LDAP_ENABLED: "false"
             GF_AUTH_LDAP_ALLOW_SIGN_UP: "false"
             GF_SERVER_HTTP_PORT: 3000
             GF_DATABASE_TYPE: postgres
-            GF_DATABASE_NAME: "{{ .Values.cnpg.main.user }}"
-            GF_DATABASE_USER: "{{ .Values.cnpg.main.database }}"
+            GF_DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            GF_DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             GF_DATABASE_SSL_MODE: disable
             GF_DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             GF_DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
           probes:
             liveness:
               path: "/api/health"
@@ -201,7 +206,10 @@ workload:
             # WATCH_CLIENT_TIMEOUT: 3600
             SKIP_TLS_VERIFY: false
             REQ_USERNAME: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_USER }}"
-            REQ_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_PASSWORD }}"
+            REQ_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: GF_SECURITY_ADMIN_PASSWORD
             REQ_URL: "http://localhost:3000/api/admin/provisioning/dashboards/reload"
             REQ_METHOD: POST
           probes:
@@ -238,7 +246,10 @@ workload:
             # WATCH_CLIENT_TIMEOUT: 3600
             SKIP_TLS_VERIFY: false
             REQ_USERNAME: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_USER }}"
-            REQ_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_PASSWORD }}"
+            REQ_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: GF_SECURITY_ADMIN_PASSWORD
             REQ_URL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
             REQ_METHOD: POST
           probes:
@@ -275,7 +286,10 @@ workload:
             # WATCH_CLIENT_TIMEOUT: 3600
             SKIP_TLS_VERIFY: false
             REQ_USERNAME: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_USER }}"
-            REQ_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_PASSWORD }}"
+            REQ_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: GF_SECURITY_ADMIN_PASSWORD
             REQ_URL: "http://localhost:3000/api/admin/provisioning/alerts/reload"
             REQ_METHOD: POST
           probes:
@@ -312,7 +326,10 @@ workload:
             # WATCH_CLIENT_TIMEOUT: 3600
             SKIP_TLS_VERIFY: false
             REQ_USERNAME: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_USER }}"
-            REQ_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_PASSWORD }}"
+            REQ_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: GF_SECURITY_ADMIN_PASSWORD
             REQ_URL: "http://localhost:3000/api/admin/provisioning/plugins/reload"
             REQ_METHOD: POST
           probes:
@@ -349,7 +366,10 @@ workload:
             # WATCH_CLIENT_TIMEOUT: 3600
             SKIP_TLS_VERIFY: false
             REQ_USERNAME: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_USER }}"
-            REQ_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.GF_SECURITY_ADMIN_PASSWORD }}"
+            REQ_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: GF_SECURITY_ADMIN_PASSWORD
             REQ_URL: "http://localhost:3000/api/admin/provisioning/notifiers/reload"
             REQ_METHOD: POST
           probes:
@@ -499,8 +519,15 @@ serviceAccount:
 podOptions:
   automountServiceAccountToken: true
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: grafana
-    database: grafana
+    depconfig:
+      postgresqlUsername: grafana
+      postgresqlDatabase: grafana
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GF_SECURITY_ADMIN_PASSWORD: "testpassword"

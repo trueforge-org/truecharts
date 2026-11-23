@@ -33,7 +33,10 @@ workload:
             GAME_PARAMS: +server.maxplayers 10
             GAME_PORT: "28015"
             OXIDE_MOD: ""
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             SERVER_DISCRIPTION: Simple Unraid Rust Docker Server
             SERVER_NAME: RustDockerServer
             USERNAME: ""
@@ -45,3 +48,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ''

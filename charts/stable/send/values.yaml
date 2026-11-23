@@ -33,14 +33,14 @@ workload:
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
             REDIS_PASSWORD:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
-            REDIS_USER: "{{ .Values.redis.redisUsername }}"
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
+            REDIS_USER: "default"
             REDIS_PORT: "6379"
 
 persistence:
@@ -48,5 +48,6 @@ persistence:
     enabled: true
     mountPath: /uploads
 
-redis:
-  enabled: true
+dependencies:
+  valkey:
+    enabled: true

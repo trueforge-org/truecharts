@@ -3,21 +3,25 @@ image:
   repository: docker.io/outlinewiki/outline
   pullPolicy: IfNotPresent
   tag: 1.13.0@sha256:4583bb244dbb4464d8a632c75044d3b2f9fe44382b6a4b84d97995f473b823e4
+outline:
+  # Must be changed. Both must be hex strings of exactly 64 characters (32 bytes).
+  secretKey: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+  utilsSecret: "deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
 service:
   main:
     ports:
       main:
         port: 10196
 # Enabled redis
-redis:
-  enabled: true
-  redisUsername: default
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: outline
-    database: outline
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: outline
+      postgresqlDatabase: outline
 
 securityContext:
   container:
@@ -90,12 +94,13 @@ workload:
 
             DATABASE_URL:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             SECRET_KEY:
               secretKeyRef:

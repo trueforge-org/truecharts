@@ -51,7 +51,10 @@ workload:
             CAVES: "true"
             FORCE_X64: "true"
             GAME_ID: "343050"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -61,3 +64,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

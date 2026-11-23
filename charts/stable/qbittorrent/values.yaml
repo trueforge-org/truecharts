@@ -79,7 +79,10 @@ workload:
               enabled: false
           env:
             QBT_USERNAME: "{{ .Values.qbitportforward.QBT_USERNAME }}"
-            QBT_PASSWORD: "{{ .Values.qbitportforward.QBT_PASSWORD }}"
+            QBT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: QBT_PASSWORD
             QBT_ADDR: '{{ printf "http://%v:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.main.ports.main.port }}'
             GTN_ADDR: '{{ printf "http://%v-gluetun:8000" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
           command: /usr/src/app/main.sh
@@ -87,3 +90,9 @@ persistence:
   config:
     enabled: true
     mountPath: "/config"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      QBT_PASSWORD: '{{ .Values.qbitportforward.QBT_PASSWORD }}'

@@ -24,5 +24,14 @@ workload:
         main:
           env:
             SHLINK_SERVER_URL: ""
-            SHLINK_SERVER_API_KEY: ""
+            SHLINK_SERVER_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SHLINK_SERVER_API_KEY
             SHLINK_SERVER_NAME: ""
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SHLINK_SERVER_API_KEY: ''

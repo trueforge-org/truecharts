@@ -28,13 +28,13 @@ api:
   data:
     API_PORT: {{ .Values.service.main.ports.main.port | quote }}
     {{/* Database */}}
-  {{- if .Values.cnpg.main.enabled }}
+  {{- if .Values.dependencies.postgresql.enabled }}
     DB_ENGINE: "postgres"
     POSTGRES_PORT: "5432"
-    POSTGRES_USER: {{ .Values.cnpg.main.user }}
-    POSTGRES_PASSWORD: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
-    POSTGRES_DB: {{ .Values.cnpg.main.database }}
-    POSTGRES_SERVER: {{ .Values.cnpg.main.creds.host }}
+    POSTGRES_USER: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+    POSTGRES_PASSWORD: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
+    POSTGRES_DB: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
+    POSTGRES_SERVER: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost }}
   {{- end }}
     {{/* User Defined */}}
     {{/* General */}}

@@ -24,6 +24,8 @@ sidecarImage:
   tag: 2.14.3@sha256:52d311dcedd587421a236c4d6c621f05614c40a51386e955e0699dca97ec0880
 
 authentik:
+  # Must be changed. Random string (32+ characters).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
   credentials:
     # Only works on initial install
     email: my-mail@example.com
@@ -522,11 +524,12 @@ persistence:
       geoip:
         geoip:
           mountPath: /usr/share/GeoIP
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: authentik
-    database: authentik
+    depconfig:
+      postgresqlUsername: authentik
+      postgresqlDatabase: authentik
 
 metrics:
   servermetrics:

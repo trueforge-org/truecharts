@@ -15,6 +15,9 @@ service:
       main:
         targetPort: 80
         port: 12000
+papermerge:
+  # Security secret key. MUST be changed, use a random string of at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:
@@ -26,12 +29,19 @@ workload:
                 name: papermerge-secrets
                 key: PAPERMERGE__SECURITY__SECRET_KEY
             PAPERMERGE__AUTH__USERNAME: admin
-            PAPERMERGE__AUTH__PASSWORD: admin
-            PAPERMERGE__DATABASE__URL: '{{ printf "postgresql://%s:%s@%s:5432/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password .Values.cnpg.main.creds.host .Values.cnpg.main.database }}'
+            PAPERMERGE__AUTH__PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PAPERMERGE__AUTH__PASSWORD
+            PAPERMERGE__DATABASE__URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
             PAPERMERGE__REDIS__URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
 persistence:
   config:
@@ -42,11 +52,17 @@ persistence:
     mountPath: "/core_app/media"
   varrun:
     enabled: false
-redis:
-  enabled: true
-  redisUsername: papermerge
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: papermerge
-    database: papermerge
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: papermerge
+      postgresqlDatabase: papermerge
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PAPERMERGE__AUTH__PASSWORD: 'admin'

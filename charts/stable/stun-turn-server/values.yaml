@@ -48,7 +48,10 @@ workload:
             CERT_LENGTH: "2048"
             CERT_VALID_DAYS: "3650"
             CIPHER_LIST: ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384
-            CLI_PASSWORD: ""
+            CLI_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: CLI_PASSWORD
             DATA_PERM: "770"
             DH_FILE: dhparam.pem
             DH_LENGTH: "2048"
@@ -59,5 +62,15 @@ workload:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             PRIVKEY_FILE: privkey.pem
             REALM: ""
-            SECRET: ""
+            SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET
             TOTAL_QUOTA: "100"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      CLI_PASSWORD: ""
+      SECRET: ""

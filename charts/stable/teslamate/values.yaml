@@ -27,23 +27,44 @@ workload:
               secretKeyRef:
                 name: teslamate-secrets
                 key: TESLAMATE_ENCRYPTION_KEY
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
+            DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DATABASE_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+            DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DISABLE_MQTT: true
             MQTT_HOST: ""
             MQTT_PORT: 1883
             MQTT_USERNAME: ""
-            MQTT_PASSWORD: ""
+            MQTT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MQTT_PASSWORD
 
-configmap:
+dependencies:
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: teslamate
+      postgresqlDatabase: teslamate
+    operator:
+      cluster:
+        initdb:
+          postInitApplicationSQL:
+            - ALTER USER teslamate WITH SUPERUSER
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MQTT_PASSWORD: ""
   datasource:
     enabled: true
     labels:
@@ -55,13 +76,13 @@ configmap:
         - name: TeslaMate
           type: postgres
           uid: TeslaMate
-          url: {{ printf "%s.%s:5432" (.Values.cnpg.main.creds.host | trimAll "\"") .Release.Namespace }}
+          url: {{ printf "%s.%s:5432" (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") .Release.Namespace }}
           access: proxy
-          user: {{ .Values.cnpg.main.user }}
+          user: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
           secureJsonData:
-            password: {{ .Values.cnpg.main.creds.password | default "na" }}
+            password: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | default "na" }}
           jsonData:
-            database: {{ .Values.cnpg.main.database }}
+            database: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
             sslmode: 'disable' # disable/require/verify-ca/verify-full
             maxOpenConns: 100 # Grafana v5.4+
             maxIdleConns: 100 # Grafana v5.4+
@@ -70,12 +91,6 @@ configmap:
             postgresVersion: 1500 # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
             timescaledb: false
 
-cnpg:
-  main:
-    enabled: true
-    user: teslamate
-    database: teslamate
-    cluster:
-      initdb:
-        postInitApplicationSQL:
-          - ALTER USER teslamate WITH SUPERUSER
+teslamate:
+  # -- Must be changed. Key used to encrypt the Tesla API tokens in the database. Changing it later invalidates stored tokens.
+  encryptionKey: "PLACEHOLDERENCRYPTIONKEYCHANGEME00000000000000000000000000000000"

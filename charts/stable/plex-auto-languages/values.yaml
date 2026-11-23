@@ -33,5 +33,14 @@ workload:
             startup:
               enabled: false
           env:
-            PLEX_TOKEN: YOUR_TOKEN_PLEX
+            PLEX_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: PLEX_TOKEN
             PLEX_URL: http://plex:32400
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PLEX_TOKEN: 'YOUR_TOKEN_PLEX'

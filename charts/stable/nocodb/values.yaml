@@ -22,7 +22,7 @@ workload:
             startup:
               path: "/dashboard"
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: configmap
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
@@ -40,16 +40,25 @@ workload:
             NC_REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             NC_AUTH_JWT_SECRET:
               secretKeyRef:
                 name: secrets
                 key: NC_AUTH_JWT_SECRET
-            AWS_ACCESS_KEY_ID: ""
-            AWS_SECRET_ACCESS_KEY: ""
+            AWS_ACCESS_KEY_ID:
+              secretKeyRef:
+                name: env-secrets
+                key: AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: AWS_SECRET_ACCESS_KEY
             AWS_BUCKET: ""
             AWS_BUCKET_PATH: ""
+nocodb:
+  # Must be changed. JWT signing secret, any long random string (32+ chars recommended).
+  authJwtSecret: "PLACEHOLDERAUTHJWTSECRETCHANGEME"
 service:
   main:
     ports:
@@ -59,11 +68,17 @@ persistence:
   data:
     enabled: true
     mountPath: "/usr/app/data"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: nocodb
-    database: nocodb
-redis:
-  enabled: true
-  redisUsername: default
+    depconfig:
+      postgresqlUsername: nocodb
+      postgresqlDatabase: nocodb
+  valkey:
+    enabled: true
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""

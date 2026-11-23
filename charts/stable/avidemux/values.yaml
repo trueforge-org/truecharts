@@ -53,7 +53,10 @@ workload:
             - configMapRef:
                 name: "avidemux"
           env:
-            VNC_PASSWORD: ""
+            VNC_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: VNC_PASSWORD
 persistence:
   config:
     enabled: true
@@ -63,3 +66,9 @@ persistence:
     mountPath: /storage
   varrun:
     enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      VNC_PASSWORD: ""

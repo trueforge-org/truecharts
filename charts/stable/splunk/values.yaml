@@ -47,7 +47,10 @@ workload:
         main:
           env:
             SPLUNK_START_ARGS: --accept-license
-            SPLUNK_PASSWORD: changeme
+            SPLUNK_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SPLUNK_PASSWORD
 persistence:
   appcreds:
     enabled: true
@@ -58,3 +61,9 @@ persistence:
   data:
     enabled: true
     mountPath: /splunkdata
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SPLUNK_PASSWORD: "changeme"

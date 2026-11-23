@@ -15,6 +15,10 @@ securityContext:
 
 # EteSync configuration docs:
 # https://github.com/etesync/server#configuration
+etesync:
+  # Must be changed. Django SECRET_KEY, random string (32+ characters).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:
@@ -43,25 +47,30 @@ workload:
             DEBUG_DJANGO: false
             # Postgres
             DB_ENGINE: postgres
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
+            DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DATABASE_PORT: 5432
             REDIS_URI:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             # Superuser
             SUPER_USER: "admin"
-            SUPER_PASS: ""
+            SUPER_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: SUPER_PASS
             SUPER_EMAIL: ""
 service:
   main:
@@ -81,10 +90,16 @@ persistence:
     subPath: "secret.txt"
     objectName: "etesync-secret"
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: etesync
-    database: etesync
-redis:
-  enabled: true
+    depconfig:
+      postgresqlUsername: etesync
+      postgresqlDatabase: etesync
+  valkey:
+    enabled: true
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SUPER_PASS: ""

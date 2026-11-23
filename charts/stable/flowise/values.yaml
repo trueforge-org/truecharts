@@ -9,6 +9,9 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+flowise:
+  # Must be changed. Random string, at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEY000000000000"
 service:
   main:
     ports:
@@ -32,15 +35,17 @@ workload:
             OVERRIDE_DATABASE: true
             DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DATABASE_PORT: 5432
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
+            DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+            DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DATABASE_SSL: false
             # child | main
             EXECUTION_MODE: main
@@ -49,7 +54,10 @@ workload:
             DEBUG: true
             # optional auth
             FLOWISE_USERNAME: user
-            FLOWISE_PASSWORD: 1234
+            FLOWISE_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: FLOWISE_PASSWORD
             FLOWISE_FILE_SIZE_LIMIT: 50mb
             CORS_ORIGINS: "*"
             # IFRAME_ORIGINS="*"
@@ -77,8 +85,15 @@ persistence:
   storage:
     enabled: true
     mountPath: "/config/storage"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: flowise
-    database: flowise
+    depconfig:
+      postgresqlUsername: flowise
+      postgresqlDatabase: flowise
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      FLOWISE_PASSWORD: "1234"

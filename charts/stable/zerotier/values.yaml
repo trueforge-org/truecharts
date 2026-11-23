@@ -44,6 +44,19 @@ workload:
             startup:
               enabled: false
           env:
-            ZEROTIER_API_SECRET: ""
+            ZEROTIER_API_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: ZEROTIER_API_SECRET
             ZEROTIER_IDENTITY_PUBLIC: ""
-            ZEROTIER_IDENTITY_SECRET: ""
+            ZEROTIER_IDENTITY_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: ZEROTIER_IDENTITY_SECRET
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ZEROTIER_API_SECRET: ""
+      ZEROTIER_IDENTITY_SECRET: ""

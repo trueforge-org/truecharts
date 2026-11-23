@@ -10,14 +10,22 @@ workload:
         main:
           env:
             CR_CONF_Database.Type: postgres
-            CR_CONF_Database.Host: "{{ .Values.cnpg.main.creds.host }}"
-            CR_CONF_Database.User: "{{ .Values.cnpg.main.user }}"
-            CR_CONF_Database.Name: "{{ .Values.cnpg.main.database }}"
-            CR_CONF_Database.Password: "{{ .Values.cnpg.main.creds.password }}"
+            CR_CONF_Database.Host: '{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}'
+            CR_CONF_Database.User: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            CR_CONF_Database.Name: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            CR_CONF_Database.Password:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             CR_CONF_Database.Port: 5432
-            CR_CONF_Redis.Server: '{{ .Values.redis.creds.plain | trimAll "\"" }}:6379'
-            CR_CONF_Redis.User: "{{ .Values.redis.redisUsername }}"
-            CR_CONF_Redis.Password: "{{ .Values.redis.creds.redisPassword }}"
+            CR_CONF_Redis.Server: '{{ .Values.dependencies.valkey.depconfig.creds.plain | trimAll "\"" }}:6379'
+            CR_CONF_Redis.User: "default"
+            CR_CONF_Redis.Password:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
 persistence:
   config:
     enabled: true
@@ -33,11 +41,11 @@ service:
       main:
         port: 5212
         targetPort: 5212
-redis:
-  enabled: true
-  redisUsername: default
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: cloudreve
-    database: cloudreve
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: cloudreve
+      postgresqlDatabase: cloudreve

@@ -1,22 +1,14 @@
 {{/* Define the secrets */}}
 {{- define "authentik.secrets" -}}
 
-  {{- $fullname := include "tc.v1.common.lib.chart.names.fullname" $ -}}
-  {{- $fetchname := printf "%v-server-worker" $fullname -}}
-
-  {{- $secretKey := randAlphaNum 32 -}}
-  {{- with (lookup "v1" "Secret" .Release.Namespace $fetchname) -}}
-    {{- $secretKey = index .data "AUTHENTIK_SECRET_KEY" | b64dec -}}
-  {{- end }}
-
 server-worker:
   enabled: true
   data:
     {{/* Dependencies */}}
-    AUTHENTIK_POSTGRESQL__PASSWORD: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
+    AUTHENTIK_POSTGRESQL__PASSWORD: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
 
     {{/* Secret Key */}}
-    AUTHENTIK_SECRET_KEY: {{ $secretKey }}
+    AUTHENTIK_SECRET_KEY: {{ required "authentik.secretKey must be set" .Values.authentik.secretKey }}
 
     {{/* Initial credentials */}}
     AUTHENTIK_BOOTSTRAP_EMAIL: {{ .Values.authentik.credentials.email | quote }}

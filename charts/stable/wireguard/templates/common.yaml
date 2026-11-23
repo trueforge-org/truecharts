@@ -13,7 +13,10 @@
   {{- $_ := set .Values.secret "wg-config-secret" $secret -}}
 {{- end -}}
 
-{{- $_ := set .Values.persistence "configfile" (include "wireguard.configfile" . | fromYaml) -}}
+{{- $configfile := include "wireguard.configfile" . | fromYaml -}}
+{{- if $configfile -}}
+  {{- $_ := set .Values.persistence "configfile" $configfile -}}
+{{- end -}}
 
 {{/* Render the templates */}}
 {{ include "tc.v1.common.loader.apply" . }}

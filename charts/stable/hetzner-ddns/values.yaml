@@ -22,7 +22,10 @@ workload:
       containers:
         main:
           env:
-            API_TOKEN: my-secret-api-token
+            API_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: API_TOKEN
             RECORD_TYPE: A
             ZONE_NAME: example.com
           probes:
@@ -32,3 +35,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      API_TOKEN: "my-secret-api-token"

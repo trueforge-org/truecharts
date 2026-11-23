@@ -23,9 +23,15 @@ workload:
         main:
           env:
             PROFILE_ID: ""
-            RADARR_KEY: ""
+            RADARR_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: RADARR_KEY
             RADARR_URL: ""
-            RADARR4K_KEY: ""
+            RADARR4K_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: RADARR4K_KEY
             RADARR4K_URL: ""
           probes:
             liveness:
@@ -34,3 +40,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      RADARR_KEY: ""
+      RADARR4K_KEY: ""

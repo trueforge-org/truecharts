@@ -37,7 +37,10 @@ workload:
             # the binary refuses to start if this is shorter than 32 bytes.
             # Generate with openssl rand -base64 48.
             # Must stay stable across restarts — rotating it invalidates every issued API key.
-            HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"
+            HBOX_AUTH_API_KEY_PEPPER:
+              secretKeyRef:
+                name: env-secrets
+                key: HBOX_AUTH_API_KEY_PEPPER
 
             # log level to use: trace, debug, info, warn, error, fatal, panic
             HBOX_LOG_LEVEL: "info"
@@ -50,19 +53,21 @@ workload:
             # postgres hostname
             HBOX_DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             # postgres port
             HBOX_DATABASE_PORT: "5432"
             # postgres username
-            HBOX_DATABASE_USERNAME: "{{ .Values.cnpg.main.user }}"
+            HBOX_DATABASE_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             # postgres password
             HBOX_DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             # postgres database name
-            HBOX_DATABASE_DATABASE: "{{ .Values.cnpg.main.database }}"
+            HBOX_DATABASE_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             # postgres ssl mode require or disable
             HBOX_DATABASE_SSL_MODE: "disable"
 
@@ -71,8 +76,14 @@ persistence:
     enabled: true
     mountPath: /data
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: homebox
-    database: homebox
+    depconfig:
+      postgresqlUsername: homebox
+      postgresqlDatabase: homebox
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      HBOX_AUTH_API_KEY_PEPPER: "CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME-CHANGE_ME"

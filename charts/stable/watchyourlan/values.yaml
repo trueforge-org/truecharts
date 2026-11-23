@@ -32,11 +32,12 @@ persistence:
     enabled: true
     mountPath: "/data"
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: watchyourlan
-    database: watchyourlan
+    depconfig:
+      postgresqlUsername: watchyourlan
+      postgresqlDatabase: watchyourlan
 workload:
   main:
     podSpec:
@@ -55,7 +56,10 @@ workload:
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # unsure on postgres format for PG_CONNECT
-            PG_CONNECT: '{{ printf "postgres://%s:%s@%s:5432/%s" .Values.cnpg.main.user .Values.cnpg.main.creds.password .Values.cnpg.main.creds.host .Values.cnpg.main.database }}'
+            PG_CONNECT:
+              secretKeyRef:
+                name: env-secrets
+                key: PG_CONNECT
             USE_DB: postgres
             # User Defined
             HOST: "{{ .Values.watchyourlan.gui_ip }}"
@@ -63,3 +67,9 @@ workload:
             THEME: "{{ .Values.watchyourlan.theme }}"
             TIMEOUT: "{{ .Values.watchyourlan.timeout }}"
             SHOUTRRR_URL: "{{ .Values.watchyourlan.shoutrrr_url }}"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PG_CONNECT: '{{ printf "postgres://%s:%s@%s:5432/%s" .Values.dependencies.postgresql.depconfig.postgresqlUsername (.Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"") (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}'

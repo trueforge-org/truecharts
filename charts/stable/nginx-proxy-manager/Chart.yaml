@@ -12,16 +12,9 @@ apiVersion: v2
 appVersion: 2.17.1
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
-    alias: ""
-    tags: []
-    import-values: []
-  - name: mariadb
-    version: 19.1.5
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
@@ -45,5 +38,4 @@ sources:
   - https://hub.docker.com/r/jc21/nginx-proxy-manager
   - https://nginxproxymanager.com/
 type: application
-version: 17.3.3
-
+version: 18.0.0

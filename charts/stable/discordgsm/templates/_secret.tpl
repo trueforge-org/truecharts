@@ -3,7 +3,7 @@
 {{- $gsm := .Values.gsm -}}
 enabled: true
 data:
-  DATABASE_URL: {{ .Values.cnpg.main.creds.std | trimAll "\""  }}
+  DATABASE_URL: {{ .Values.dependencies.postgresql.depconfig.creds.complete | trimAll "\""  }}
   DB_CONNECTION: {{ print "postgres" }}
   APP_TOKEN: {{ $gsm.app_token | quote }}
   {{- with $gsm.whitelist_guilds }}

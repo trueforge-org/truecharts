@@ -11,6 +11,8 @@ securityContext:
     runAsGroup: 1000
 
 twofauth:
+  # -- Must be changed. Laravel application key, exactly 32 characters (or "base64:" followed by a base64 encoded 32 byte key).
+  appKey: "PLACEHOLDERAPPKEYCHANGEME0000000"
   app:
     name: 2FAuth
     site_owner: mail@example.com
@@ -71,7 +73,10 @@ workload:
             MAIL_PORT: "{{ .Values.twofauth.mail.port }}"
             MAIL_FROM: "{{ .Values.twofauth.mail.from }}"
             MAIL_USERNAME: "{{ .Values.twofauth.mail.user }}"
-            MAIL_PASSWORD: "{{ .Values.twofauth.mail.pass }}"
+            MAIL_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MAIL_PASSWORD
             MAIL_ENCRYPTION: "{{ .Values.twofauth.mail.encryption }}"
             MAIL_FROM_NAME: "{{ .Values.twofauth.mail.from_name }}"
             MAIL_FROM_ADDRESS: "{{ .Values.twofauth.mail.from_address }}"
@@ -88,17 +93,19 @@ workload:
             WEBAUTHN_USER_VERIFICATION: "{{ .Values.twofauth.webauthn.user_verified }}"
             # Postgres
             DB_CONNECTION: pgsql
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PORT: 5432
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
 
 service:
   main:
@@ -115,8 +122,15 @@ persistence:
   varrun:
     enabled: false
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: twofauth
-    database: twofauth
+    depconfig:
+      postgresqlUsername: twofauth
+      postgresqlDatabase: twofauth
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MAIL_PASSWORD: "{{ .Values.twofauth.mail.pass }}"

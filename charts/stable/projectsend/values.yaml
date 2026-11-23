@@ -37,7 +37,7 @@ persistence:
     mountPath: "/config"
   projectsend-config:
     enabled: true
-    type: configmap
+    type: secret
     objectName: projectsend-config
     mountPath: /config/projectsend/sys.config.php
     subPath: sys.config.php
@@ -47,7 +47,9 @@ persistence:
     mountPath: "/data"
   varrun:
     enabled: true
-mariadb:
-  enabled: true
-  mariadbUsername: projectsend
-  mariadbDatabase: projectsend
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: projectsend
+      mariadbDatabase: projectsend

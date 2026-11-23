@@ -26,13 +26,25 @@ workload:
       containers:
         main:
           env:
-            SECRET_KEY_BASE: sensitive_secret_key_base
+            SECRET_KEY_BASE:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET_KEY_BASE
             SMTP_ADDRESS: smtp.yourhost.com
             SMTP_AUTHENTICATION: plain
             SMTP_DOMAIN: smtp.yourhost.com
             SMTP_EMAIL_FROM: ciao@yourhost.com
             SMTP_EMAIL_TO: you@yourhost.com
             SMTP_ENABLE_STARTTLS_AUTO: "true"
-            SMTP_PASSWORD: sensitive_password
+            SMTP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SMTP_PASSWORD
             SMTP_PORT: "587"
             SMTP_USERNAME: ciao
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SECRET_KEY_BASE: "sensitive_secret_key_base"
+      SMTP_PASSWORD: "sensitive_password"

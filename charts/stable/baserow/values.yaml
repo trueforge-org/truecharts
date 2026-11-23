@@ -15,6 +15,10 @@ service:
       main:
         port: 10228
         protocol: http
+baserow:
+  # Must be changed. Random string (32 characters recommended).
+  secretKey: "PLACEHOLDERSECRETKEYCHANGEME0000"
+
 workload:
   main:
     podSpec:
@@ -35,10 +39,10 @@ workload:
             startup:
               type: tcp
           env:
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
+            DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DATABASE_PORT: "5432"
-            REDIS_USER: "{{ .Values.redis.redisUsername }}"
+            REDIS_USER: "default"
             REDIS_PORT: "6379"
             REDIS_PROTOCOL: "redis"
             BASEROW_CADDY_ADDRESSES: ":{{ .Values.service.main.ports.main.port }}"
@@ -51,21 +55,30 @@ workload:
             EMAIL_SMTP_HOST: ""
             EMAIL_SMTP_PORT: 587
             EMAIL_SMTP_USER: ""
-            EMAIL_SMTP_PASSWORD: ""
+            EMAIL_SMTP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: EMAIL_SMTP_PASSWORD
             DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
             SECRET_KEY:
               secretKeyRef:
                 name: secrets
@@ -74,11 +87,16 @@ persistence:
   data:
     enabled: true
     mountPath: /baserow/data
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: baserow
-    database: baserow
-redis:
-  enabled: true
-  redisUsername: "default"
+    depconfig:
+      postgresqlUsername: baserow
+      postgresqlDatabase: baserow
+  valkey:
+    enabled: true
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      EMAIL_SMTP_PASSWORD: ""

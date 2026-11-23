@@ -17,9 +17,17 @@ workload:
         main:
           env:
             APP_IPMI_HOST: ""
-            APP_IPMI_PASS: ""
+            APP_IPMI_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: APP_IPMI_PASS
             APP_IPMI_USER: ""
 persistence:
   data:
     enabled: true
     mountPath: /data
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      APP_IPMI_PASS: ""

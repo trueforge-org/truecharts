@@ -23,23 +23,37 @@ workload:
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
             MYSQL_PORT: "3306"
-            MYSQL_USERNAME: "{{ .Values.mariadb.mariadbUsername }}"
-            MYSQL_PSW: "{{ .Values.mariadb.password }}"
-            MYSQL_DATABASE: "{{ .Values.mariadb.mariadbDatabase }}"
-            MYSQL_ROOT_PASSWORD: "{{ .Values.mariadb.rootPassword }}"
-            JWT_SECRET: "MyJWTSecret"
+            MYSQL_USERNAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+            MYSQL_PSW:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
+            MYSQL_DATABASE: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+            MYSQL_ROOT_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-root-password
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
             JWT_EXP: 1
             USER_LIMIT: -1
             UPLOAD_DIR: /uploads
             API_PORT: "{{ .Values.service.main.ports.api.port }}"
-            TREFLE_KEY: ""
+            TREFLE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: TREFLE_KEY
             LOG_LEVEL: INFO
             ALLOWED_ORIGINS: "*"
             CACHE_TTL: 86400
             CACHE_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
             CACHE_PORT: 6379
             SSL_ENABLED: false
@@ -67,11 +81,18 @@ persistence:
   varrun:
     enabled: false
 
-mariadb:
-  enabled: true
-  mariadbUsername: plantit
-  mariadbDatabase: plantit
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: plantit
+      mariadbDatabase: plantit
+  valkey:
+    enabled: true
 
-redis:
-  enabled: true
-  redisUsername: default
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "MyJWTSecret"
+      TREFLE_KEY: ""

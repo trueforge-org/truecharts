@@ -75,6 +75,15 @@ workload:
             GAME_ID: "233780"
             GAME_PARAMS: -config=server.cfg -mod=
             GAME_PORT: "2302"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

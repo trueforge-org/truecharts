@@ -30,4 +30,13 @@ workload:
           env:
             GITURL: ""
             PYUSER: ""
-            PYPASS: ""
+            PYPASS:
+              secretKeyRef:
+                name: env-secrets
+                key: PYPASS
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PYPASS: ''

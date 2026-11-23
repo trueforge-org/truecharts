@@ -25,7 +25,7 @@ workload:
           # We run it on every boot just in case an upgrade (or the user)
           # manages to nuke the config file
           type: init
-          imageSelector: alpineImage
+          imageSelector: ubuntuImage
           command: /bin/sh
           # This script creates an (almost) empty config file with the aim to prevent
           # Notifiarr from generating a default password.
@@ -47,7 +47,10 @@ workload:
         main:
           env:
             TMPDIR: /tmpdir
-            DN_API_KEY: "{{ .Values.notifiarr.apikey }}"
+            DN_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: DN_API_KEY
             DN_BIND_ADDR: '{{ printf "0.0.0.0:%v" .Values.service.main.ports.main.port }}'
             DN_UPSTREAMS_0: '{{ join " " .Values.notifiarr.upstreams }}'
 persistence:
@@ -70,3 +73,9 @@ persistence:
     type: emptyDir
     mountPath: /tmpdir
     medium: Memory
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DN_API_KEY: "{{ .Values.notifiarr.apikey }}"

@@ -19,11 +19,12 @@ service:
 persistence:
   varrun:
     enabled: true
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: quassel-core
-    database: quassel-core
+    depconfig:
+      postgresqlUsername: quassel-core
+      postgresqlDatabase: quassel-core
 
 securityContext:
   container:
@@ -45,16 +46,18 @@ workload:
               type: tcp
           env:
             DB_BACKEND: "PostgreSQL"
-            DB_PGSQL_USERNAME: "{{ .Values.cnpg.main.user }}"
-            DB_PGSQL_DATABASE: "{{ .Values.cnpg.main.database }}"
+            DB_PGSQL_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_PGSQL_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DB_PGSQL_PORT: 5432
             AUTH_AUTHENTICATOR: "Database"
             RUN_OPTS: "--config-from-environment"
             DB_PGSQL_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_PGSQL_HOSTNAME:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost

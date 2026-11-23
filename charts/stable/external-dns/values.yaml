@@ -48,17 +48,44 @@ workload:
             startup:
               path: "/healthz"
           env:
-            CF_API_TOKEN: ""
-            CF_API_KEY: ""
+            CF_API_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: CF_API_TOKEN
+            CF_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: CF_API_KEY
             CF_API_EMAIL: ""
-            DO_TOKEN: ""
+            DO_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: DO_TOKEN
             DNSIMPLE_OAUTH: ""
-            LINODE_TOKEN: ""
-            OVH_APPLICATION_KEY: ""
-            OVH_APPLICATION_SECRET: ""
-            OVH_CONSUMER_KEY: ""
-            SCW_ACCESS_KEY: ""
-            SCW_SECRET_KEY: ""
+            LINODE_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: LINODE_TOKEN
+            OVH_APPLICATION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: OVH_APPLICATION_KEY
+            OVH_APPLICATION_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: OVH_APPLICATION_SECRET
+            OVH_CONSUMER_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: OVH_CONSUMER_KEY
+            SCW_ACCESS_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SCW_ACCESS_KEY
+            SCW_SECRET_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SCW_SECRET_KEY
 # -- Whether Role Based Access Control objects like roles and rolebindings should be created
 rbac:
   main:
@@ -148,3 +175,16 @@ serviceAccount:
     primary: true
 podOptions:
   automountServiceAccountToken: true
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      CF_API_TOKEN: ""
+      CF_API_KEY: ""
+      DO_TOKEN: ""
+      LINODE_TOKEN: ""
+      OVH_APPLICATION_SECRET: ""
+      SCW_ACCESS_KEY: ""
+      SCW_SECRET_KEY: ""
+      OVH_APPLICATION_KEY: ""
+      OVH_CONSUMER_KEY: ""

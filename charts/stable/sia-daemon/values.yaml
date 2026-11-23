@@ -42,5 +42,18 @@ workload:
       containers:
         main:
           env:
-            SIA_API_PASSWORD: ""
-            SIA_WALLET_PASSWORD: ""
+            SIA_API_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SIA_API_PASSWORD
+            SIA_WALLET_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SIA_WALLET_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SIA_API_PASSWORD: ""
+      SIA_WALLET_PASSWORD: ""

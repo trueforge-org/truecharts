@@ -62,17 +62,22 @@ workload:
             DB_PORT: 5432
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             # ADMIN
             SERVER_ADMIN_USERNAME: "{{ .Values.gamevault.server.admin_username }}"
-            SERVER_ADMIN_PASSWORD: "{{ .Values.gamevault.server.admin_password }}"
+            SERVER_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SERVER_ADMIN_PASSWORD
             SERVER_REGISTRATION_DISABLED: "{{ .Values.gamevault.server.registration_disabled }}"
             SERVER_ACCOUNT_ACTIVATION_DISABLED: "{{ .Values.gamevault.server.account_activation_disabled }}"
             # SERVER
@@ -88,7 +93,10 @@ workload:
             # RAWG
             RAWG_API_URL: "{{ .Values.gamevault.rawg.api_url }}"
             RAWG_API_CACHE_DAYS: "{{ .Values.gamevault.rawg.api_cache_days }}"
-            RAWG_API_KEY: "{{ .Values.gamevault.rawg.api_key }}"
+            RAWG_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: RAWG_API_KEY
 persistence:
   logs:
     enabled: true
@@ -99,8 +107,16 @@ persistence:
   games:
     enabled: true
     mountPath: /games
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: gamevault
-    database: gamevault
+    depconfig:
+      postgresqlUsername: gamevault
+      postgresqlDatabase: gamevault
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SERVER_ADMIN_PASSWORD: '{{ .Values.gamevault.server.admin_password }}'
+      RAWG_API_KEY: '{{ .Values.gamevault.rawg.api_key }}'

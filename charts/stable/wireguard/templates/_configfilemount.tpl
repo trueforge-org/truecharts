@@ -1,5 +1,5 @@
 {{- define "wireguard.configfile" -}}
-{{- if and .Values.wg.configFileHostPath ( not .Values.wg.config.enable ) }}
+{{- if and .Values.wg.configFileHostPath ( not .Values.wg.config.enabled ) }}
 enabled: true
 type: hostPath
 readOnly: true

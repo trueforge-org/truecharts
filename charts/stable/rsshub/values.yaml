@@ -12,9 +12,9 @@ service:
       main:
         port: 10191
 # Enabled redis
-redis:
-  enabled: true
-  redisUsername: default
+dependencies:
+  valkey:
+    enabled: true
 additionalContainers:
   browserless:
     name: browserless
@@ -29,6 +29,9 @@ securityContext:
     readOnlyRootFilesystem: false
     runAsUser: 0
     runAsGroup: 0
+rsshub:
+  # Suffix for the node name (release name is prepended). Set any short unique string.
+  nodeName: "PLACEHOLDERNODENAME"
 workload:
   main:
     podSpec:
@@ -39,7 +42,7 @@ workload:
             NODE_ENV: production
             CACHE_TYPE: "redis"
             PUPPETEER_WS_ENDPOINT: "ws://localhost:3000"
-            NODE_NAME: "{{ .Release.Name }}-{{ randAlphaNum 5 }}"
+            NODE_NAME: "{{ .Release.Name }}-{{ .Values.rsshub.nodeName }}"
             # User  defined
             # ALLOW_ORIGIN: ""
             DISALLOW_ROBOT: false
@@ -47,15 +50,48 @@ workload:
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
             HTTP_BASIC_AUTH_NAME: ""
-            HTTP_BASIC_AUTH_PASS: ""
+            HTTP_BASIC_AUTH_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: HTTP_BASIC_AUTH_PASS
             BITBUCKET_USERNAME: ""
-            BITBUCKET_PASSWORD: ""
-            GITHUB_ACCESS_TOKEN: ""
-            GOOGLE_FONTS_API_KEY: ""
-            YOUTUBE_KEY: ""
-            TELEGRAM_TOKEN: ""
-            LASTFM_API_KEY: ""
+            BITBUCKET_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: BITBUCKET_PASSWORD
+            GITHUB_ACCESS_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: GITHUB_ACCESS_TOKEN
+            GOOGLE_FONTS_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: GOOGLE_FONTS_API_KEY
+            YOUTUBE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: YOUTUBE_KEY
+            TELEGRAM_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TELEGRAM_TOKEN
+            LASTFM_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: LASTFM_API_KEY
 updated: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      HTTP_BASIC_AUTH_PASS: ''
+      BITBUCKET_PASSWORD: ''
+      GITHUB_ACCESS_TOKEN: ''
+      GOOGLE_FONTS_API_KEY: ''
+      TELEGRAM_TOKEN: ''
+      LASTFM_API_KEY: ''
+      YOUTUBE_KEY: ""

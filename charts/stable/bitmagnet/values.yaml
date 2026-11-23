@@ -22,11 +22,12 @@ service:
         port: "{{ .Values.service.torrent.ports.tcp.port }}"
         targetPort: "{{ .Values.service.torrent.ports.tcp.targetPort }}"
         protocol: udp
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: bitmagnet
-    database: bitmagnet
+    depconfig:
+      postgresqlUsername: bitmagnet
+      postgresqlDatabase: bitmagnet
 
 workload:
   main:
@@ -34,17 +35,22 @@ workload:
       containers:
         main:
           env:
-            POSTGRES_NAME: "{{ .Values.cnpg.main.database }}"
-            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             POSTGRES_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             POSTGRES_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
-            TMDB_API_KEY: ""
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
+            TMDB_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: TMDB_API_KEY
             DHT_CRAWLER_SAVE_FILES_THRESHOLD: "100"
           args:
             - worker
@@ -82,6 +88,11 @@ configmap:
     data:
       bitmagnet.json: >-
         {{ .Files.Get "dashboard.json" | indent 8 }}
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TMDB_API_KEY: ""
   datasource:
     enabled: true
     labels:
@@ -93,13 +104,13 @@ configmap:
         - name: BitmagnetPostgres
           type: postgres
           uid: bitmagnetpostgres
-          url: {{ printf "%s.%s:5432" (.Values.cnpg.main.creds.host | trimAll "\"") .Release.Namespace }}
+          url: {{ printf "%s.%s:5432" (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") .Release.Namespace }}
           access: proxy
-          user: {{ .Values.cnpg.main.user }}
+          user: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
           secureJsonData:
-            password: {{ .Values.cnpg.main.creds.password | default "na" }}
+            password: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" | default "na" }}
           jsonData:
-            database: {{ .Values.cnpg.main.database }}
+            database: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
             sslmode: 'disable' # disable/require/verify-ca/verify-full
             maxOpenConns: 100 # Grafana v5.4+
             maxIdleConns: 100 # Grafana v5.4+

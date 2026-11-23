@@ -31,7 +31,10 @@ workload:
           env:
             GAME_ID: "748090"
             GAME_PARAMS: +server.gameport 27016
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             SRV_NAME: Colony Survival Docker
             SRV_NETTYPE: SteamOnline
             SRV_WORLDNAME: ColonySurvival
@@ -44,3 +47,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

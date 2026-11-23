@@ -12,17 +12,10 @@ apiVersion: v2
 appVersion: 0.154.3
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
-    tags: []
-    import-values: []
-  - name: valkey
-    version: 3.1.8
-    repository: oci://oci.trueforge.org/truecharts
-    condition: redis.enabled
-    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -42,5 +35,4 @@ sources:
   - https://ghcr.io/manyfold3d/manyfold
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/manyfold
 type: application
-version: 9.5.8
-
+version: 10.0.0

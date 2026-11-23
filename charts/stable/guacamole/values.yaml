@@ -112,7 +112,7 @@ workload:
             runAsGroup: 1001
             readOnlyRootFilesystem: false
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: guacamole-config
           probes:
             liveness:
@@ -135,7 +135,7 @@ workload:
             runAsGroup: 1001
             readOnlyRootFilesystem: false
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: guacamole-config
           command:
             - /bin/sh
@@ -151,7 +151,7 @@ workload:
             runAsGroup: 1001
             readOnlyRootFilesystem: false
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: guacamole-config
           command:
             - /bin/sh
@@ -251,10 +251,11 @@ persistence:
         2-apply-seed:
           mountPath: /tc-scripts/apply-seed.sh
           subPath: apply-seed.sh
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: guacamole
-    database: guacamole
+    depconfig:
+      postgresqlUsername: guacamole
+      postgresqlDatabase: guacamole
 
 updated: true

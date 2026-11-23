@@ -3,7 +3,7 @@
 
 {{ $DOMAIN := .Values.config.nodeIP | quote -}}
 {{ $URL := (printf "http://%s:%v/" .Values.config.nodeIP .Values.service.main.ports.main.port) }}
-{{- $pgHost := printf "%v-cnpg-main-rw" (include "tc.v1.common.lib.chart.names.fullname" $) -}}
+{{- $pgHost := (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") -}}
 
 {{- if and (.Values.ingress.main.enabled) (gt (len .Values.ingress.main.hosts) 0) -}}
   {{- $DOMAIN = (index .Values.ingress.main.hosts 0).host -}}
@@ -20,7 +20,7 @@ secret:
       [cache]
       ADAPTER = memcache
       ENABLED = true
-      HOST = {{ printf "%v-%v:%v" .Release.Name "memcached" "11211" }}
+      HOST = {{ printf "%v-memcached-main:11211" (include "tc.v1.common.lib.chart.names.fullname" $) }}
       {{- range $catindex, $catvalue := .Values.customConfig }}
       {{- if eq $catvalue.name "cache" }}
       {{- range $index, $value := $catvalue.keys }}
@@ -32,9 +32,9 @@ secret:
       [database]
       DB_TYPE = postgres
       HOST = {{ printf "%v:5432" $pgHost }}
-      NAME = {{ .Values.cnpg.main.database }}
-      PASSWD = {{ .Values.cnpg.main.creds.password }}
-      USER = {{ .Values.cnpg.main.user }}
+      NAME = {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
+      PASSWD = {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
+      USER = {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
       {{- range $catindex, $catvalue := .Values.customConfig }}
       {{- if eq $catvalue.name "database" }}
       {{- range $index, $value := $catvalue.keys }}

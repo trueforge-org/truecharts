@@ -34,7 +34,10 @@ workload:
             - /etc/minio/certs
           env:
             MINIO_ROOT_USER: "{{ .Values.minio.rootUser }}"
-            MINIO_ROOT_PASSWORD: "{{ .Values.minio.rootPassword }}"
+            MINIO_ROOT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: MINIO_ROOT_PASSWORD
             MINIO_VOLUMES: /data
             MINIO_CONSOLE_ADDRESS: ":9001"
             MINIO_BROWSER_REDIRECT_URL: "{{ .Values.minio.browserRedirectUrl }}"
@@ -69,6 +72,10 @@ service:
         protocol: '{{ ternary "https" "http" .Values.minio.tls }}'
 
 secret:
+  env-secrets:
+    enabled: true
+    data:
+      MINIO_ROOT_PASSWORD: "{{ .Values.minio.rootPassword }}"
   license:
     enabled: true
     data:

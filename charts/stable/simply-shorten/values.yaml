@@ -28,5 +28,14 @@ workload:
         main:
           env:
             db_url: "/config/db/urls.sqlite"
-            password: user
+            password:
+              secretKeyRef:
+                name: env-secrets
+                key: password
             username: pass
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      password: "user"

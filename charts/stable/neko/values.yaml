@@ -99,8 +99,14 @@ workload:
             NEKO_CONTROL_PROTECTION: "{{ .Values.neko.control_protection }}"
             NEKO_IMPLICIT_CONTROL: "{{ .Values.neko.implicit_control }}"
             NEKO_LOCKS: '{{ join " " .Values.neko.locks }}'
-            NEKO_PASSWORD: "{{ .Values.neko.auth.user_pass }}"
-            NEKO_PASSWORD_ADMIN: "{{ .Values.neko.auth.admin_pass }}"
+            NEKO_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: NEKO_PASSWORD
+            NEKO_PASSWORD_ADMIN:
+              secretKeyRef:
+                name: env-secrets
+                key: NEKO_PASSWORD_ADMIN
             NEKO_PROXY: "{{ .Values.neko.proxy }}"
             NEKO_SCREEN: "{{ .Values.neko.screen }}"
             NEKO_CORS: '{{ join " " .Values.neko.cors }}'
@@ -114,3 +120,9 @@ persistence:
   downloads:
     enabled: true
     mountPath: /home/neko/Downloads
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      NEKO_PASSWORD: '{{ .Values.neko.auth.user_pass }}'
+      NEKO_PASSWORD_ADMIN: '{{ .Values.neko.auth.admin_pass }}'

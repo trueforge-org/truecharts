@@ -49,7 +49,10 @@ workload:
             GAME_ID: "629800"
             GAME_PARAMS: ""
             GAME_PORT: "7777"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             QUERY_PORT: "27015"
             USERNAME: ""
             VALIDATE: "false"
@@ -60,3 +63,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

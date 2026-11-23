@@ -19,6 +19,9 @@ service:
         protocol: http
         targetPort: 3000
 
+semaphore:
+  # Access key encryption secret. MUST be changed, use a random base64 string (32 bytes recommended).
+  accessKeyEncryption: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:
@@ -27,17 +30,19 @@ workload:
           env:
             # DB
             SEMAPHORE_DB_DIALECT: postgres
-            SEMAPHORE_DB_USER: "{{ .Values.cnpg.main.user }}"
-            SEMAPHORE_DB: "{{ .Values.cnpg.main.database }}"
+            SEMAPHORE_DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            SEMAPHORE_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             SEMAPHORE_DB_PORT: 5432
             SEMAPHORE_DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             SEMAPHORE_DB_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             SEMAPHORE_ACCESS_KEY_ENCRYPTION:
               secretKeyRef:
                 name: semaphore-secrets
@@ -46,7 +51,10 @@ workload:
             SEMAPHORE_PLAYBOOK_PATH: "{{.Values.persistence.data.mountPath }}"
             SEMAPHORE_ADMIN: admin
             SEMAPHORE_ADMIN_NAME: admin
-            SEMAPHORE_ADMIN_PASSWORD: changeme
+            SEMAPHORE_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SEMAPHORE_ADMIN_PASSWORD
             SEMAPHORE_ADMIN_EMAIL: admin@localhost
             # LDAP
             # no | yes
@@ -68,8 +76,15 @@ persistence:
     enabled: true
     mountPath: /data
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: semaphore
-    database: semaphore
+    depconfig:
+      postgresqlUsername: semaphore
+      postgresqlDatabase: semaphore
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SEMAPHORE_ADMIN_PASSWORD: 'changeme'

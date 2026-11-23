@@ -8,14 +8,14 @@ service:
     ports:
       main:
         port: 10153
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: shlink
-    database: shlink
-redis:
-  enabled: true
-  redisUsername: "default"
+    depconfig:
+      postgresqlUsername: shlink
+      postgresqlDatabase: shlink
+  valkey:
+    enabled: true
 
 securityContext:
   container:
@@ -37,24 +37,35 @@ workload:
               path: "/rest/health"
           env:
             DEFAULT_DOMAIN: ""
-            GEOLITE_LICENSE_KEY: ""
+            GEOLITE_LICENSE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: GEOLITE_LICENSE_KEY
             ANONYMIZE_REMOTE_ADDR: true
             ENABLE_PERIODIC_VISIT_LOCATE: true
             IS_HTTPS_ENABLED: true
             PORT: "{{ .Values.service.main.ports.main.port }}"
             DB_DRIVER: "postgres"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             REDIS_SERVERS:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GEOLITE_LICENSE_KEY: ""

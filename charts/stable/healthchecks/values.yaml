@@ -37,4 +37,12 @@ workload:
             SITE_ROOT: "https://healthchecks.domain"
             SITE_NAME: ""
             SUPERUSER_EMAIL: "email@healthchecks.io"
-            SUPERUSER_PASSWORD: "myVeryStrongPassword"
+            SUPERUSER_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SUPERUSER_PASSWORD
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SUPERUSER_PASSWORD: "myVeryStrongPassword"

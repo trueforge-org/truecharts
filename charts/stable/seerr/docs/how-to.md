@@ -56,7 +56,7 @@ Check the logs for the container and verify the postgres data was populated, you
                 - --with
                 - "data only"
                 - /config/db.sqlite3
-                - "{{ .Values.cnpg.main.creds.std }}"
+                - "{{ .Values.dependencies.postgresql.depconfig.creds.complete }}"
 
     persistence:
       config:

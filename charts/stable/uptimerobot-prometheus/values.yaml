@@ -35,4 +35,13 @@ workload:
             startup:
               type: tcp
           env:
-            UPTIMEROBOT_API_KEY: ""
+            UPTIMEROBOT_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: UPTIMEROBOT_API_KEY
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      UPTIMEROBOT_API_KEY: ""

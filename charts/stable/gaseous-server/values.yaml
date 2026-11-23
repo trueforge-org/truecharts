@@ -34,12 +34,19 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            dbuser: "{{ .Values.mariadb.mariadbUsername }}"
-            dbname: "{{ .Values.mariadb.mariadbDatabase }}"
-            dbpass: "{{ .Values.mariadb.password }}"
+            dbuser: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
+            dbname: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+            dbpass:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
             dbport: 3306
             igdbclientid: "{{ .Values.gaseous.igdb.id }}"
-            igdbclientsecret: "{{ .Values.gaseous.igdb.secret }}"
+            igdbclientsecret:
+              secretKeyRef:
+                name: env-secrets
+                key: igdbclientsecret
 
 persistence:
   config:
@@ -52,7 +59,15 @@ persistence:
     enabled: true
     mountPath: "/root/.gaseous-server/Data"
 
-mariadb:
-  enabled: true
-  mariadbUsername: gaseous
-  mariadbDatabase: gaseous
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: gaseous
+      mariadbDatabase: gaseous
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      igdbclientsecret: '{{ .Values.gaseous.igdb.secret }}'

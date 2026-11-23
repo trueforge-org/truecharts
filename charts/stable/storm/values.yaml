@@ -26,7 +26,20 @@ workload:
           env:
             DELUGE_RPC_HOSTNAME: ""
             DELUGE_RPC_PORT: 58846
-            DELUGE_RPC_PASSWORD: ""
+            DELUGE_RPC_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DELUGE_RPC_PASSWORD
             DELUGE_RPC_USERNAME: ""
             DELUGE_RPC_VERSION: v2
-            STORM_API_KEY: ""
+            STORM_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: STORM_API_KEY
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DELUGE_RPC_PASSWORD: ""
+      STORM_API_KEY: ""

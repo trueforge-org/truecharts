@@ -28,8 +28,17 @@ workload:
         main:
           env:
             BASIC_AUTH: "True"
-            BASIC_AUTH_PASSWORD: x
+            BASIC_AUTH_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: BASIC_AUTH_PASSWORD
             BASIC_AUTH_USERNAME: x
             DEBUG: "False"
             EXCLUDE_IPS: ""
             SKIP_ARCHIVED_LOGS: "False"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      BASIC_AUTH_PASSWORD: "x"

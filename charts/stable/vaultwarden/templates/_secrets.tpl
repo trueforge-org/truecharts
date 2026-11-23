@@ -3,7 +3,7 @@
 
 {{- $adminToken := "" }}
 {{- if eq .Values.vaultwarden.admin.enabled true }}
-{{- $adminToken = .Values.vaultwarden.admin.token | default (randAlphaNum 48) | quote }}
+{{- $adminToken = required "vaultwarden.admin.token must be set" .Values.vaultwarden.admin.token | quote }}
 {{- end -}}
 
 {{- $smtpUser := "" }}

@@ -4,6 +4,8 @@ image:
   pullPolicy: IfNotPresent
   tag: 6.1.0
 redmine:
+  # Rails secret key base. MUST be changed, use a random string of at least 80 characters.
+  secretKeyBase: "PLACEHOLDERSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   plugins_migrate: true
   no_db_migrate: false
 service:
@@ -17,11 +19,12 @@ persistence:
     enabled: true
     mountPath: "/usr/src/redmine/files"
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: redmine
-    database: redmine
+    depconfig:
+      postgresqlUsername: redmine
+      postgresqlDatabase: redmine
 
 securityContext:
   container:
@@ -36,20 +39,22 @@ workload:
       containers:
         main:
           env:
-            REDMINE_DB_DATABASE: "{{ .Values.cnpg.main.database }}"
-            REDMINE_DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+            REDMINE_DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            REDMINE_DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             REDMINE_DB_PORT: "5432"
             # Anything but empty means true, empty means false
             REDMINE_NO_DB_MIGRATE: '{{ ternary "true" "" .Values.redmine.no_db_migrate }}'
             REDMINE_PLUGINS_MIGRATE: '{{ ternary "true" "" .Values.redmine.plugins_migrate }}'
             REDMINE_DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             REDMINE_DB_POSTGRES:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             REDMINE_SECRET_KEY_BASE:
               secretKeyRef:
                 name: secrets

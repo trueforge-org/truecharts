@@ -51,10 +51,16 @@ workload:
               enabled: false
           env:
             PLEX_URL: "{{ .Values.pps.plex.url }}"
-            PLEX_TOKEN: "{{ .Values.pps.plex.token }}"
+            PLEX_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: PLEX_TOKEN
             SPOTIFY_USER_ID: "{{ .Values.pps.spotify.user_id }}"
             SPOTIFY_CLIENT_ID: "{{ .Values.pps.spotify.client_id }}"
-            SPOTIFY_CLIENT_SECRET: "{{ .Values.pps.spotify.client_secret }}"
+            SPOTIFY_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: SPOTIFY_CLIENT_SECRET
             DEEZER_USER_ID: "{{ .Values.pps.deezer.user_id }}"
             DEEZER_PLAYLIST_ID: '{{ join " " .Values.pps.deezer.playlist_id }}'
             WRITE_MISSING_AS_CSV: "{{ .Values.pps.other.write_missing_as_csv }}"
@@ -68,3 +74,10 @@ persistence:
   data:
     enabled: true
     mountPath: /data
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PLEX_TOKEN: "{{ .Values.pps.plex.token }}"
+      SPOTIFY_CLIENT_SECRET: "{{ .Values.pps.spotify.client_secret }}"

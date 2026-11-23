@@ -51,7 +51,10 @@ workload:
             INTERFACE: 0.0.0.0
             PORT: "{{ .Values.service.metrics.ports.metrics.port }}"
             URL: '{{ printf "http://%v:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.main.ports.main.port }}'
-            APIKEY: "{{ .Values.exportarr.apiKey }}"
+            APIKEY:
+              secretKeyRef:
+                name: env-secrets
+                key: APIKEY
 
 persistence:
   config:
@@ -76,3 +79,8 @@ metrics:
       - port: metrics
         path: /metrics
     targetSelector: metrics
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      APIKEY: "{{ .Values.exportarr.apiKey }}"

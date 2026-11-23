@@ -12,17 +12,10 @@ apiVersion: v2
 appVersion: 4.19.1
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
-    tags: []
-    import-values: []
-  - name: valkey
-    version: 3.1.8
-    repository: oci://oci.trueforge.org/truecharts
-    condition: redis.enabled
-    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -44,5 +37,4 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/cloudreve
   - https://hub.docker.com/r/cloudreve/cloudreve
 type: application
-version: 15.2.6
-
+version: 16.0.0

@@ -41,8 +41,17 @@ workload:
             IPV6_MODE: false
             UPDATE_TRACKERS: false
             CUSTOM_TRACKER_URL: "https://trackerslist.com/all_aria2.txt"
-            RPC_SECRET: "ChangemeNow"
+            RPC_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: RPC_SECRET
 persistence:
   config:
     enabled: true
     mountPath: /config
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      RPC_SECRET: "ChangemeNow"

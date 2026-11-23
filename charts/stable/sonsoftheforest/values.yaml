@@ -119,7 +119,10 @@ workload:
             SERVER_DIR: "{{ .Values.persistence.serverfiles.mountPath }}"
             GAME_ID: "{{ .Values.sonsoftheforest.game.id }}"
             USERNAME: "{{ .Values.sonsoftheforest.game.user }}"
-            PASSWRD: "{{ .Values.sonsoftheforest.game.password }}"
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             GAME_PARAMS: '{{ join " " .Values.sonsoftheforest.game.params }}'
             VALIDATE: "{{ .Values.sonsoftheforest.game.validate }}"
 
@@ -140,3 +143,9 @@ persistence:
           mountPath: /serverdata/serverfiles/userdata/dedicatedserver.cfg
           subPath: dedicatedserver.cfg
           readOnly: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: "{{ .Values.sonsoftheforest.game.password }}"

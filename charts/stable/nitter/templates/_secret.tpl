@@ -1,20 +1,15 @@
-{{/* Define the configmap */}}
-{{- define "nitter.configmaps" -}}
-{{- $fullname := (include "tc.v1.common.lib.chart.names.fullname" $) -}}
+{{/* Define the config as a secret, it contains the hmac key and the redis password */}}
+{{- define "nitter.secrets" -}}
 
 {{- $config := .Values.nitter.config -}}
 {{- $general := .Values.nitter.general -}}
 {{- $cache := .Values.nitter.cache -}}
 {{- $preferences := .Values.nitter.preferences -}}
 
-{{- $redisHost := .Values.redis.creds.plainhost | trimAll "\"" -}}
-{{- $redisPass := .Values.redis.creds.redisPassword | trimAll "\"" -}}
+{{- $redisHost := .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" -}}
+{{- $redisPass := (index .Values.dependencies.valkey.depconfig.creds "valkey-password") | trimAll "\"" -}}
 
-{{- $hmacKey := randAlphaNum 32 -}}
-
- {{- with lookup "v1" "Secret" .Release.Namespace $fullname -}}
-   {{- $hmacKey = index .data "hmacKey" | b64dec -}}
- {{- end }}
+{{- $hmacKey := required "nitter.hmacKey must be set" .Values.nitter.hmacKey -}}
 
 nitter-config:
   enabled: true

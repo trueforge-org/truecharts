@@ -1,8 +1,26 @@
-configmap:
-  # Some included dashboards, which can be enabled when prefered
-  dashboard-certmanager:
-    enabled: true
-  dashboard-traefik:
-    enabled: true
-  dashboard-nginx:
-    enabled: true
+dashboards:
+  grafana:
+    ceph-cluster:
+      enabled: true
+    ceph-osd-single:
+      enabled: true
+    ceph-pools:
+      enabled: true
+    cert-manager:
+      enabled: true
+    cnpg:
+      enabled: true
+    flux-cluster:
+      enabled: true
+    flux-control-plane:
+      enabled: true
+    metallb:
+      enabled: true
+    nginx:
+      enabled: true
+    node-feature-discovery:
+      enabled: true
+    prometheus-smartctl-exporter:
+      enabled: true
+    traefik:
+      enabled: true

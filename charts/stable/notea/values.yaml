@@ -22,8 +22,14 @@ workload:
       containers:
         main:
           env:
-            PASSWORD: ""
-            STORE_PASSWORD: ""
+            PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWORD
+            STORE_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: STORE_PASSWORD
             STORE_USER: ""
           probes:
             liveness:
@@ -32,3 +38,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWORD: ""
+      STORE_PASSWORD: ""

@@ -15,6 +15,10 @@ service:
       main:
         port: 3333
         targetPort: 3333
+ghostfolio:
+  # Must be changed. Random strings, at least 32 characters.
+  accessTokenSalt: "PLACEHOLDERACCESSTOKENSALT0000000000"
+  jwtSecretKey: "PLACEHOLDERJWTSECRETKEY00000000000000"
 workload:
   main:
     podSpec:
@@ -30,7 +34,10 @@ workload:
             startup:
               type: tcp
           env:
-            ALPHA_VANTAGE_API_KEY: ""
+            ALPHA_VANTAGE_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ALPHA_VANTAGE_API_KEY
             ACCESS_TOKEN_SALT:
               secretKeyRef:
                 name: ghostfolio-secrets
@@ -41,19 +48,31 @@ workload:
                 key: JWT_SECRET_KEY
             DATABASE_URL:
               secretKeyRef:
-                name: ghostfolio-secrets
-                key: DATABASE_URL
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: urlutf8
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
             REDIS_PORT: "6379"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: ghostfolio
-    database: ghostfolio
-redis:
-  enabled: true
+    depconfig:
+      postgresqlUsername: ghostfolio
+      postgresqlDatabase: ghostfolio
+  valkey:
+    enabled: true
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ALPHA_VANTAGE_API_KEY: ""

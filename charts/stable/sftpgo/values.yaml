@@ -68,7 +68,10 @@ workload:
             SFTPGO_PLUGIN_AUTH_LDAP_URL: "ldap://192.168.1.5:389"
             SFTPGO_PLUGIN_AUTH_LDAP_BASE_DN: "dc=mylab,dc=local"
             SFTPGO_PLUGIN_AUTH_LDAP_BIND_DN: "cn=Administrator,cn=users,dc=mylab,dc=local"
-            SFTPGO_PLUGIN_AUTH_LDAP_PASSWORD: "Password.123456"
+            SFTPGO_PLUGIN_AUTH_LDAP_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SFTPGO_PLUGIN_AUTH_LDAP_PASSWORD
             SFTPGO_PLUGIN_AUTH_LDAP_SEARCH_QUERY: "(&(objectClass=user)(sAMAccountType=805306368)(sAMAccountName=%username%))"
             SFTPGO_PLUGIN_AUTH_LDAP_GROUP_ATTRIBUTES: "memberOf"
             SFTPGO_PLUGIN_AUTH_PRIMARY_GROUP_PREFIX: ""
@@ -82,10 +85,16 @@ workload:
             SFTPGO_PLUGIN_AUTH_CA_CERTIFICATES: ""
             # ref - https://github.com/sftpgo/sftpgo-plugin-eventsearch
             SFTPGO_PLUGIN_EVENTSEARCH_DRIVER: ""
-            SFTPGO_PLUGIN_EVENTSEARCH_DSN: ""
+            SFTPGO_PLUGIN_EVENTSEARCH_DSN:
+              secretKeyRef:
+                name: env-secrets
+                key: SFTPGO_PLUGIN_EVENTSEARCH_DSN
             # ref - https://github.com/sftpgo/sftpgo-plugin-eventstore
             SFTPGO_PLUGIN_EVENTSTORE_DRIVER: ""
-            SFTPGO_PLUGIN_EVENTSTORE_DSN: ""
+            SFTPGO_PLUGIN_EVENTSTORE_DSN:
+              secretKeyRef:
+                name: env-secrets
+                key: SFTPGO_PLUGIN_EVENTSTORE_DSN
             SFTPGO_PLUGIN_EVENTSTORE_INSTANCE_ID: ""
             SFTPGO_PLUGIN_EVENTSTORE_RETENTION: "0"
             # ref - https://github.com/sftpgo/sftpgo-plugin-geoipfilter
@@ -108,3 +117,11 @@ persistence:
   shareaccess:
     enabled: true
     mountPath: /shareaccess
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SFTPGO_PLUGIN_AUTH_LDAP_PASSWORD: 'Password.123456'
+      SFTPGO_PLUGIN_EVENTSEARCH_DSN: ""
+      SFTPGO_PLUGIN_EVENTSTORE_DSN: ""

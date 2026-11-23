@@ -21,6 +21,9 @@ securityContext:
     runAsNonRoot: false
     runAsUser: 0
     runAsGroup: 0
+pinry:
+  # Django secret key. MUST be changed, use a random string of at least 32 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXX"
 workload:
   main:
     podSpec:

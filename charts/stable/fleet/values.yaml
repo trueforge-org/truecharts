@@ -32,7 +32,11 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: jdbc-mariadb
-            fleet_database_password: "{{ .Values.mariadb.password }}"
+            fleet_database_password:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
 # secretEnv:
 
 service:
@@ -47,7 +51,9 @@ persistence:
     mountPath: /config
   varrun:
     enabled: true
-mariadb:
-  enabled: true
-  mariadbUsername: fleet
-  mariadbDatabase: fleet
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: fleet
+      mariadbDatabase: fleet

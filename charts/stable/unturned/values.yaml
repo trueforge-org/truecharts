@@ -43,7 +43,10 @@ workload:
             GAME_PORT: "{{ .Values.service.main.ports.main.port }}"
             GAME_ID: "1110390"
             USERNAME: ""
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             ROCKET_FORCE_UPDATE: ""
             ROCKET_MOD: ""
             ROCKET_URL: https://ci.rocketmod.net/job/Rocket.Unturned/lastSuccessfulBuild/artifact/Rocket.Unturned/bin/Release/Rocket.zip
@@ -56,3 +59,9 @@ persistence:
   steamcmd:
     enabled: true
     mountPath: /serverdata/steamcmd
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

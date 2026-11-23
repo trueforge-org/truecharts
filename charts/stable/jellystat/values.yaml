@@ -23,6 +23,10 @@ service:
         protocol: tcp
         port: 10682
         targetPort: 3004
+jellystat:
+  # Must be changed. Random string, at least 32 characters.
+  jwtSecret: "PLACEHOLDERJWTSECRET00000000000000"
+
 workload:
   main:
     podSpec:
@@ -39,15 +43,17 @@ workload:
             # PORT variables do not work.
             # PORT: "{{ .Values.service.main.ports.main.port }}"
             # WS_PORT: "{{ .Values.service.main.ports.ws.port }}"
-            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             POSTGRES_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             POSTGRES_IP:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             POSTGRES_PORT: 5432
             JWT_SECRET:
               secretKeyRef:
@@ -57,9 +63,9 @@ persistence:
   backup:
     enabled: true
     mountPath: "/app/backend/backup-data"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    # static name
-    user: jfstat
-    database: jfstat
+    depconfig:
+      postgresqlUsername: jfstat
+      postgresqlDatabase: jfstat

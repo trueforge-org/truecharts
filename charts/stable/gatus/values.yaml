@@ -47,10 +47,11 @@ configmap:
     enabled: true
     data:
       config.yaml: |
-        {{- if .Values.cnpg.main.enabled }}
+        {{- if .Values.dependencies.postgresql.enabled }}
         storage:
           type: postgres
-          path: {{ (printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"")) | quote }}
+          # Gatus expands the env var, which is read from the postgresql secret
+          path: "${GATUS_DB_URL}?client_encoding=utf8"
         {{- end }}
         metrics: true
         endpoints:
@@ -94,11 +95,12 @@ workload:
             - --ingress-class={{ .Values.sidecar.ingressClass }}
             - --gateway-name={{ .Values.sidecar.gatewayName }}
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: gatus
-    database: gatus
+    depconfig:
+      postgresqlUsername: gatus
+      postgresqlDatabase: gatus
 
 # Need sysctl to allow ICMP ping from non-root containers
 securityContext:

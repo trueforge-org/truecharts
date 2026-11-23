@@ -199,10 +199,16 @@ workload:
             # steam
             GAME_ID: "{{ .Values.palworld.steam.id }}"
             USERNAME: "{{ .Values.palworld.steam.username }}"
-            PASSWRD: "{{ .Values.palworld.steam.password }}"
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             VALIDATE: "{{ .Values.palworld.steam.validate }}"
             # game
-            SRV_ADMIN_PWD: "{{ .Values.palworld.game.AdminPassword }}"
+            SRV_ADMIN_PWD:
+              secretKeyRef:
+                name: env-secrets
+                key: SRV_ADMIN_PWD
             UPDATE_PUBLIC_IP: "{{ .Values.palworld.update_public_ip }}"
             GAME_PARAMS: '{{ printf "-port=%v -publicport=%v -rconport=%v %s" .Values.service.main.ports.main.port .Values.service.main.ports.main.port .Values.service.rcon.ports.rcon.port (join " " .Values.palworld.params) }}'
             GAME_PARAMS_EXTRA: '{{ join " " .Values.palworld.params_extra }}'
@@ -223,3 +229,10 @@ persistence:
           mountPath: /serverdata/serverfiles
         update-config-ini:
           mountPath: /serverdata/serverfiles
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: "{{ .Values.palworld.steam.password }}"
+      SRV_ADMIN_PWD: "{{ .Values.palworld.game.AdminPassword }}"

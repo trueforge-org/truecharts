@@ -29,7 +29,10 @@ workload:
         main:
           env:
             SCHEDULE: "3600"
-            TOKEN: 1a2b3c4d5e6f71a2b3c4d5e6f71a2b3c4d5e6f7b
+            TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TOKEN
           probes:
             liveness:
               enabled: false
@@ -37,3 +40,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TOKEN: "1a2b3c4d5e6f71a2b3c4d5e6f71a2b3c4d5e6f7b"

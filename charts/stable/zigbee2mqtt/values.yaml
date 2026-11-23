@@ -33,7 +33,10 @@ workload:
             ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: "{{ .Values.workload.main.podSpec.containers.main.env.ZIGBEE2MQTT_CONFIG_PERMIT_JOIN }}"
             ZIGBEE2MQTT_CONFIG_MQTT_SERVER: "{{ .Values.workload.main.podSpec.containers.main.env.ZIGBEE2MQTT_CONFIG_MQTT_SERVER }}"
             ZIGBEE2MQTT_CONFIG_MQTT_USER: "{{ .Values.secret.ZIGBEE2MQTT_CONFIG_MQTT_USER }}"
-            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: "{{ .Values.secret.ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD }}"
+            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD
             ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC: "{{ .Values.workload.main.podSpec.containers.main.env.ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC }}"
             ZIGBEE2MQTT_CONFIG_SERIAL_PORT: "{{ .Values.workload.main.podSpec.containers.main.env.ZIGBEE2MQTT_CONFIG_SERIAL_PORT }}"
             ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: "{{ .Values.workload.main.podSpec.containers.main.env.ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER }}"
@@ -88,4 +91,13 @@ workload:
             # ZIGBEE2MQTT_CONFIG_SERIAL_PORT: "/dev/ttyUSB0"
             # ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: "auto"
             ZIGBEE2MQTT_CONFIG_MQTT_USER: ""
-            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ""
+            ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ZIGBEE2MQTT_CONFIG_MQTT_PASSWORD: ""

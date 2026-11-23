@@ -57,20 +57,21 @@ workload:
             IMMICH_PORT: "{{ .Values.service.main.ports.main.port }}"
             IMMICH_WORKERS_INCLUDE: api
             NODE_ENV: production
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
-            DB_DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_HOSTNAME: "{{ .Values.cnpg.main.creds.host }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_HOSTNAME: '{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}'
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_PORT: "5432"
-            REDIS_HOSTNAME: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+            REDIS_HOSTNAME: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
             REDIS_PASSWORD:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
           probes:
@@ -170,20 +171,21 @@ workload:
             IMMICH_PORT: "{{ .Values.service.microservices.ports.microservices.port }}"
             REVERSE_GEOCODING_DUMP_DIRECTORY: "{{ .Values.persistence.microcache.targetSelector.microservices.microservices.mountPath }}"
             IMMICH_WORKERS_EXCLUDE: api
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
-            DB_DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_HOSTNAME: "{{ .Values.cnpg.main.creds.host }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_HOSTNAME: '{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}'
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_PORT: "5432"
-            REDIS_HOSTNAME: '{{ .Values.redis.creds.plainhost | trimAll "\"" }}'
+            REDIS_HOSTNAME: '{{ .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}'
             REDIS_PASSWORD:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
-                key: redis-password
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
             REDIS_PORT: "6379"
             REDIS_DBINDEX: "0"
           probes:
@@ -301,22 +303,22 @@ persistence:
       microservices:
         microservices: {}
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: immich
-    database: immich
-    type: vectorchord
-    cluster:
-      initdb:
-        postInitApplicationSQL:
-          - ALTER USER immich WITH SUPERUSER;
-          - CREATE EXTENSION IF NOT EXISTS cube;
-          - CREATE EXTENSION IF NOT EXISTS earthdistance;
-
-redis:
-  enabled: true
-  redisUsername: default
+    depconfig:
+      postgresqlUsername: immich
+      postgresqlDatabase: immich
+    operator:
+      type: vectorchord
+      cluster:
+        initdb:
+          postInitApplicationSQL:
+            - ALTER USER immich WITH SUPERUSER;
+            - CREATE EXTENSION IF NOT EXISTS cube;
+            - CREATE EXTENSION IF NOT EXISTS earthdistance;
+  valkey:
+    enabled: true
 
 ingress:
   main:

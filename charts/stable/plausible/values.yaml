@@ -11,6 +11,8 @@ service:
 # Plausible self-hosting documentation
 # https://plausible.io/docs/self-hosting
 plausible:
+  # Secret key base. MUST be changed, use a random string of at least 64 characters.
+  secretKeyBase: "PLACEHOLDERSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
   # Server
   server:
     base_url: http://localhost:10277
@@ -108,12 +110,14 @@ workload:
               path: /api/health
             startup:
               type: tcp
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: plausible
-    database: plausible
-clickhouse:
-  enabled: true
-  clickhouseUsername: plausible
-  clickhouseDatabase: plausible
+    depconfig:
+      postgresqlUsername: plausible
+      postgresqlDatabase: plausible
+  clickhouse:
+    enabled: true
+    depconfig:
+      clickhouseUsername: plausible
+      clickhouseDatabase: plausible

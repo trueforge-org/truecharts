@@ -9,7 +9,10 @@ workload:
       containers:
         main:
           env:
-            SECRET_ENCRYPTION_KEY: "changemeplease"
+            SECRET_ENCRYPTION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET_ENCRYPTION_KEY
 service:
   main:
     ports:
@@ -28,3 +31,8 @@ securityContext:
     runAsNonRoot: false
     runAsUser: 0
     runAsGroup: 0
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SECRET_ENCRYPTION_KEY: "changemeplease"

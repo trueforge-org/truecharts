@@ -24,6 +24,12 @@ workload:
           enabled: true
           imageSelector: yqImage
           command: /config/init/init.sh
+          env:
+            HA_DB_URL:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
 
 # Enable a prometheus-operator servicemonitor
 prometheus:
@@ -52,7 +58,6 @@ configmap:
     data:
       init.sh: |-
         #!/bin/sh
-        {{- $haDBURL := (printf "%s?client_encoding=utf8" ($.Values.cnpg.main.creds.std | trimAll "\"")) }}
         config="/config/configuration.yaml"
         default="/config/init"
         if [ ! -f "$config" ]; then
@@ -66,7 +71,7 @@ configmap:
         fi
 
         echo "Updating database URL"
-        yq -i '.recorder.db_url = "{{ $haDBURL }}"' "$config"
+        yq -i '.recorder.db_url = strenv(HA_DB_URL) + "?client_encoding=utf8"' "$config"
         echo "Done"
 
         echo "Creating include files..."
@@ -92,12 +97,14 @@ configmap:
         recorder:
           purge_keep_days: 30
           commit_interval: 3
-          db_url: {{ (printf "%s?client_encoding=utf8" (.Values.cnpg.main.creds.std | trimAll "\"")) | quote }}
-cnpg:
-  main:
+          # Set by init.sh from the postgresql secret
+          db_url: ""
+dependencies:
+  postgresql:
     enabled: true
-    user: home-assistant
-    database: home-assistant
+    depconfig:
+      postgresqlUsername: home-assistant
+      postgresqlDatabase: home-assistant
 
 securityContext:
   container:

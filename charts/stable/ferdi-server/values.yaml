@@ -15,6 +15,10 @@ service:
       main:
         port: 10206
         targetPort: 3333
+ferdiServer:
+  # Must be changed. Random string (32 characters recommended).
+  appKey: "PLACEHOLDERAPPKEYCHANGEME00000000"
+
 workload:
   main:
     podSpec:
@@ -59,8 +63,8 @@ workload:
             DB_CONNECTION: "pg"
             DB_PORT: "5432"
             DB_SSL: false
-            DB_USER: "{{ .Values.cnpg.main.user }}"
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             # User Defined
             APP_URL: "http://localhost:3333"
             IS_CREATION_ENABLED: true
@@ -80,12 +84,14 @@ workload:
             # MAILGUN_API_KEY: ""
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
 persistence:
   data:
     enabled: true
@@ -97,8 +103,9 @@ persistence:
   recipes:
     enabled: true
     mountPath: /app/recipes
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: ferdi-server
-    database: ferdi-server
+    depconfig:
+      postgresqlUsername: ferdi-server
+      postgresqlDatabase: ferdi-server

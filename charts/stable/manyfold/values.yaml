@@ -9,6 +9,9 @@ securityContext:
     runAsNonRoot: false
     runAsUser: 0
     runAsGroup: 0
+manyfold:
+  # Must be changed. Rails SECRET_KEY_BASE, any long random string (64+ chars recommended).
+  secretKeyBase: "PLACEHOLDERSECRETKEYBASECHANGEMEPLACEHOLDERSECRETKEYBASECHANGEME"
 service:
   main:
     ports:
@@ -23,13 +26,14 @@ workload:
         main:
           env:
             DATABASE_ADAPTER: postgresql
-            DATABASE_HOST: "{{ .Values.cnpg.main.creds.host }}"
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
+            DATABASE_HOST: '{{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}'
+            DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             SECRET_KEY_BASE:
               secretKeyRef:
                 name: manyfold-secrets
@@ -37,7 +41,7 @@ workload:
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: url
           probes:
             readiness:
@@ -50,10 +54,11 @@ persistence:
   libraries:
     enabled: true
     mountPath: "/libraries"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: manyfold
-    database: manyfold
-redis:
-  enabled: true
+    depconfig:
+      postgresqlUsername: manyfold
+      postgresqlDatabase: manyfold
+  valkey:
+    enabled: true

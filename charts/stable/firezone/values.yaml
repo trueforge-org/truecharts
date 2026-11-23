@@ -28,6 +28,14 @@ service:
         protocol: udp
         port: 51820
 firezone:
+  # All of these must be changed. Plain random strings, the chart base64 encodes them.
+  secrets:
+    guardianSecretKey: "PLACEHOLDERGUARDIANSECRETKEY00000000000000000"
+    databaseEncryptionKey: "PLACEHOLDERDATABASEKEY0000000000"
+    secretKeyBase: "PLACEHOLDERSECRETKEYBASE000000000000000000000000"
+    liveViewSigningSalt: "PLACEHOLDERLIVEVIEWSALT00"
+    cookieSigningSalt: "PLACEHOLDERCOOKIESIGNSALT"
+    cookieEncryptionSalt: "PLACEHOLDERCOOKIEENCSALT0"
   web:
     external_url: "https://example.com"
     trusted_proxies: []
@@ -75,22 +83,27 @@ workload:
             # DB
             DATABASE_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DATABASE_PORT: 5432
-            DATABASE_NAME: "{{ .Values.cnpg.main.database }}"
-            DATABASE_USER: "{{ .Values.cnpg.main.user }}"
+            DATABASE_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DATABASE_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DATABASE_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             # DATABASE_POOL_SIZE
             DATABASE_SSL_ENABLED: false
             # DATABASE_SSL_OPTS: "{}"
             # Admin
             RESET_ADMIN_ON_BOOT: "{{ .Values.firezone.admin.reset_admin_on_boot }}"
             DEFAULT_ADMIN_EMAIL: "{{ .Values.firezone.admin.default_email }}"
-            DEFAULT_ADMIN_PASSWORD: "{{ .Values.firezone.admin.default_password }}"
+            DEFAULT_ADMIN_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DEFAULT_ADMIN_PASSWORD
             # Secrets and Encryption
             GUARDIAN_SECRET_KEY:
               secretKeyRef:
@@ -154,8 +167,18 @@ persistence:
   config:
     enabled: true
     mountPath: "/var/firezone"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: firezone
-    database: firezone
+    depconfig:
+      postgresqlUsername: firezone
+      postgresqlDatabase: firezone
+    operator:
+      # The old firezone migrations fail on PostgreSQL 18 (primary key column "id" is not marked NOT NULL)
+      pgVersion: 16
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DEFAULT_ADMIN_PASSWORD: '{{ .Values.firezone.admin.default_password }}'

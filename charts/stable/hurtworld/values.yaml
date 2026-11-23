@@ -40,7 +40,10 @@ workload:
             GAME_ID: "405100"
             GAME_PARAMS: ;autosaveenabled 1;addadmin 76561197963117432
             GAME_PORT: "12871"
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             QUERY_PORT: "12881"
             SRV_MAXPLAYERS: "50"
             SRV_NAME: Hurtworld Docker
@@ -53,3 +56,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

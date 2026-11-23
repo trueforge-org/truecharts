@@ -27,29 +27,35 @@ service:
         protocol: http
         port: 5003
 
+peppermint:
+  # Application secret. MUST be changed, use a random string of at least 64 characters.
+  secretKey: "PLACEHOLDERSECRETKEYXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 workload:
   main:
     podSpec:
       containers:
         main:
           env:
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             SECRET:
               secretKeyRef:
                 name: peppermint-secrets
                 key: SECRET
             API_URL: '{{ printf "http://%v:%v" (include "tc.v1.common.lib.chart.names.fullname" $) .Values.service.api.ports.api.port }}'
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: peppermint
-    database: peppermint
+    depconfig:
+      postgresqlUsername: peppermint
+      postgresqlDatabase: peppermint

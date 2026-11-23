@@ -40,7 +40,10 @@ workload:
             DATA_PERM: "770"
             GAME_ID: "746200"
             GAME_PARAMS: Port=10027 QueryPort=10037 -log
-            PASSWRD: ""
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             USERNAME: ""
             VALIDATE: "false"
           probes:
@@ -50,3 +53,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: ""

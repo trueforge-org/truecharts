@@ -63,8 +63,9 @@ persistence:
   config:
     enabled: true
     mountPath: /app/data
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    database: discord_gsm
-    user: discord_gsm
+    depconfig:
+      postgresqlDatabase: discord_gsm
+      postgresqlUsername: discord_gsm

@@ -34,7 +34,10 @@ workload:
             TG_API_HASH: " "
             TG_API_ID: " "
             TG_AUTHORIZED_USER_ID: " "
-            TG_BOT_TOKEN: ""
+            TG_BOT_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TG_BOT_TOKEN
             TG_PROGRESS_DOWNLOAD: ""
           probes:
             liveness:
@@ -43,3 +46,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TG_BOT_TOKEN: ""

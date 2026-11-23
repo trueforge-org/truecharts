@@ -2,10 +2,10 @@
 {{- define "projectsend.configmaps" -}}
 {{- $fullname := (include "tc.v1.common.lib.chart.names.fullname" $) -}}
 
-{{- $db := .Values.mariadb.mariadbDatabase -}}
-{{- $dbuser := .Values.mariadb.mariadbUsername -}}
-{{- $dbpassword := .Values.mariadb.creds.mariadbPassword | trimAll "\"" -}}
-{{- $dbhost := .Values.mariadb.creds.plainhost | trimAll "\"" -}}
+{{- $db := .Values.dependencies.mariadb.depconfig.mariadbDatabase -}}
+{{- $dbuser := .Values.dependencies.mariadb.depconfig.mariadbUsername -}}
+{{- $dbpassword := .Values.dependencies.mariadb.depconfig.creds.mariadbPassword | trimAll "\"" -}}
+{{- $dbhost := .Values.dependencies.mariadb.depconfig.creds.plainhost | trimAll "\"" -}}
 
 projectsend-config:
   enabled: true

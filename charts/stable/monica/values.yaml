@@ -3,6 +3,9 @@ image:
   repository: monica
   tag: 4.1.2@sha256:4e39d3401ebae1bb95393d7d79bbfebade3e2573cda6f86a86fce2c8c5f68053
   pullPolicy: IfNotPresent
+monica:
+  # Must be changed. Laravel APP_KEY, exactly 32 characters.
+  appKey: "PLACEHOLDERAPPKEYCHANGEME1234567"
 service:
   main:
     ports:
@@ -13,10 +16,12 @@ persistence:
   config:
     enabled: true
     mountPath: "/var/www/html/storage"
-mariadb:
-  enabled: true
-  mariadbUsername: monica
-  mariadbDatabase: monica
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: monica
+      mariadbDatabase: monica
 
 securityContext:
   container:
@@ -46,7 +51,11 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            DB_PASSWORD: "{{ .Values.mariadb.password }}"
+            DB_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
+                key: mariadb-password
             APP_KEY:
               secretKeyRef:
                 name: appkey

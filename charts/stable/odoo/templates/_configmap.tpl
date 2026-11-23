@@ -9,10 +9,10 @@
 {{- $odooPath := .Values.persistence.odoo.targetSelector.main.main.mountPath -}}
 {{- $addonsPath := .Values.persistence.addons.targetSelector.main.main.mountPath -}}
 
-{{- $pgdb := .Values.cnpg.main.database -}}
-{{- $pguser := .Values.cnpg.main.user -}}
-{{- $pgpassword := .Values.cnpg.main.creds.password | trimAll "\"" -}}
-{{- $pghost := .Values.cnpg.main.creds.host | trimAll "\"" -}}
+{{- $pgdb := .Values.dependencies.postgresql.depconfig.postgresqlDatabase -}}
+{{- $pguser := .Values.dependencies.postgresql.depconfig.postgresqlUsername -}}
+{{- $pgpassword := .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" -}}
+{{- $pghost := .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" -}}
 
 {{/* xmlrpc* keys are deprecated and http* keys are used in their place */}}
   {{- $reservedKeys := (list  "data_dir" "addons_path" "http_enable" "http_interface"

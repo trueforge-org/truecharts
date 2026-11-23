@@ -26,10 +26,16 @@ workload:
             startup:
               enabled: false
           env:
-            GITHUB_COM_TOKEN: '${GITHUB_PAT}'
+            GITHUB_COM_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: GITHUB_COM_TOKEN
             # You can set RENOVATE_AUTODISCOVER to true to run Renovate on all repos you have push access to
             RENOVATE_AUTODISCOVER: 'false'
-            RENOVATE_TOKEN: '${GITHUB_PAT}'
+            RENOVATE_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: RENOVATE_TOKEN
             RENOVATE_CONFIG_FILE: /config/renovate-config.json
             LOG_LEVEL: debug
             RENOVATE_CACHE_DIR: /tmp/renovate/cache
@@ -70,3 +76,10 @@ persistence:
     items:
       - key: renovate-config.json
         path: renovate-config.json
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      GITHUB_COM_TOKEN: '${GITHUB_PAT}'
+      RENOVATE_TOKEN: '${GITHUB_PAT}'

@@ -32,9 +32,13 @@ workload:
             FF_SYNCSERVER_FORWARDED_ALLOW_IPS: "*"
             FF_SYNCSERVER_SQLURI:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
-            FF_SYNCSERVER_SECRET: "changeme"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+            FF_SYNCSERVER_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: FF_SYNCSERVER_SECRET
 service:
   main:
     ports:
@@ -46,8 +50,15 @@ persistence:
     enabled: true
     mountPath: "/config"
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: firefox-syncserver
-    database: firefox-syncserver
+    depconfig:
+      postgresqlUsername: firefox-syncserver
+      postgresqlDatabase: firefox-syncserver
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      FF_SYNCSERVER_SECRET: "changeme"

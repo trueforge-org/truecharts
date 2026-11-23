@@ -32,22 +32,25 @@ workload:
             DB_TYPE: postgres
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_PORT: "5432"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PASS:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DB_LOG_QUERIES: "false"
 persistence:
   config:
     enabled: true
     mountPath: "/config"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: seerr
-    database: seerr
+    depconfig:
+      postgresqlUsername: seerr
+      postgresqlDatabase: seerr

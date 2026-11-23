@@ -95,14 +95,15 @@ persistence:
     enabled: true
     mountPath: "/data"
 # Enabled redis
-redis:
-  enabled: true
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: n8n
-    database: n8n
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: n8n
+      postgresqlDatabase: n8n
 
 securityContext:
   container:
@@ -129,22 +130,28 @@ workload:
           env:
             GENERIC_TIMEZONE: "{{ .Values.TZ }}"
             DB_TYPE: "postgresdb"
-            DB_POSTGRESDB_USER: "{{ .Values.cnpg.main.user }}"
-            DB_POSTGRESDB_DATABASE: "{{ .Values.cnpg.main.database }}"
+            DB_POSTGRESDB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_POSTGRESDB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DB_POSTGRESDB_PORT: 5432
             QUEUE_BULL_REDIS_PORT: 6379
             N8N_USER_FOLDER: "/data"
             DB_POSTGRESDB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_POSTGRESDB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             QUEUE_BULL_REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
-            QUEUE_BULL_REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            QUEUE_BULL_REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password

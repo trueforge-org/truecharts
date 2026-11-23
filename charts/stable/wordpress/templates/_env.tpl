@@ -8,8 +8,8 @@ configmap:
 
       {{/* Database */}}
       WORDPRESS_DATABASE_PORT_NUMBER: "3306"
-      WORDPRESS_DATABASE_USER: {{ .Values.mariadb.mariadbUsername | quote }}
-      WORDPRESS_DATABASE_NAME: {{ .Values.mariadb.mariadbDatabase | quote }}
+      WORDPRESS_DATABASE_USER: {{ .Values.dependencies.mariadb.depconfig.mariadbUsername | quote }}
+      WORDPRESS_DATABASE_NAME: {{ .Values.dependencies.mariadb.depconfig.mariadbDatabase | quote }}
 
       {{/* Wordpress */}}
       WORDPRESS_USERNAME: {{ .Values.wordpress.user | quote }}
@@ -52,13 +52,12 @@ configmap:
       PHP_UPLOAD_MAX_FILESIZE: {{ . | quote }}
       {{- end }}
 
-{{- $secretName := printf "%s-env-secret" (include "tc.v1.common.lib.chart.names.fullname" .) }}
 secret:
   env-secret:
     enabled: true
     data:
-      WORDPRESS_DATABASE_HOST: {{ .Values.mariadb.creds.plainhost }}
-      WORDPRESS_DATABASE_PASSWORD: {{ .Values.mariadb.creds.mariadbPassword | trimAll "\"" }}
+      WORDPRESS_DATABASE_HOST: {{ .Values.dependencies.mariadb.depconfig.creds.plainhost }}
+      WORDPRESS_DATABASE_PASSWORD: {{ .Values.dependencies.mariadb.depconfig.creds.mariadbPassword | trimAll "\"" }}
 
 
       WORDPRESS_PASSWORD: {{ .Values.wordpress.pass }}
@@ -69,26 +68,12 @@ secret:
       {{- end }}
 
       {{/* Salts */}}
-      WORDPRESS_AUTH_KEY: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_AUTH_KEY" "secret" $secretName) }}
-      WORDPRESS_SECURE_AUTH_KEY: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_SECURE_AUTH_KEY" "secret" $secretName) }}
-      WORDPRESS_LOGGED_IN_KEY: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_LOGGED_IN_KEY" "secret" $secretName) }}
-      WORDPRESS_NONCE_KEY: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_NONCE_KEY" "secret" $secretName) }}
-      WORDPRESS_AUTH_SALT: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_AUTH_SALT" "secret" $secretName) }}
-      WORDPRESS_SECURE_AUTH_SALT: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_SECURE_AUTH_SALT" "secret" $secretName) }}
-      WORDPRESS_LOGGED_IN_SALT: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_LOGGED_IN_SALT" "secret" $secretName) }}
-      WORDPRESS_NONCE_SALT: {{ include "wordpress.fetch" (dict "ns" .Release.Namespace "var" "WORDPRESS_NONCE_SALT" "secret" $secretName) }}
+      WORDPRESS_AUTH_KEY: {{ required "wordpress.authKey must be set" .Values.wordpress.authKey | quote }}
+      WORDPRESS_SECURE_AUTH_KEY: {{ required "wordpress.secureAuthKey must be set" .Values.wordpress.secureAuthKey | quote }}
+      WORDPRESS_LOGGED_IN_KEY: {{ required "wordpress.loggedInKey must be set" .Values.wordpress.loggedInKey | quote }}
+      WORDPRESS_NONCE_KEY: {{ required "wordpress.nonceKey must be set" .Values.wordpress.nonceKey | quote }}
+      WORDPRESS_AUTH_SALT: {{ required "wordpress.authSalt must be set" .Values.wordpress.authSalt | quote }}
+      WORDPRESS_SECURE_AUTH_SALT: {{ required "wordpress.secureAuthSalt must be set" .Values.wordpress.secureAuthSalt | quote }}
+      WORDPRESS_LOGGED_IN_SALT: {{ required "wordpress.loggedInSalt must be set" .Values.wordpress.loggedInSalt | quote }}
+      WORDPRESS_NONCE_SALT: {{ required "wordpress.nonceSalt must be set" .Values.wordpress.nonceSalt | quote }}
 {{- end }}
-
-{{- define "wordpress.fetch" -}}
-  {{- $var := .var -}}
-  {{- $secret := .secret -}}
-  {{- $ns := .ns -}}
-  {{- $ret := randAlphaNum 32 -}}
-
-  {{- with (lookup "v1" "Secret" $ns $secret) -}}
-    {{- $ret = index .data $var | b64dec -}}
-  {{- end -}}
-
-  {{- $ret -}}
-
-{{- end -}}

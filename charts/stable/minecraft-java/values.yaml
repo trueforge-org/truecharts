@@ -138,7 +138,10 @@ workload:
             LEVEL: world
             ONLINE_MODE: true
             MEMORY: 2048M
-            RCON_PASSWORD: "secretrconpass"
+            RCON_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: RCON_PASSWORD
             # PACKWIZ_URL: ""
             # CUSTOM_SERVER: ""
             # QUILT_LOADER_VERSION: ""
@@ -198,3 +201,8 @@ persistence:
   data:
     enabled: true
     mountPath: /data
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      RCON_PASSWORD: "secretrconpass"

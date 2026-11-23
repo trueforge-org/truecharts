@@ -20,10 +20,18 @@ workload:
             - --no-autoupdate
             - run
           env:
-            TUNNEL_TOKEN: ""
+            TUNNEL_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TUNNEL_TOKEN
 service:
   main:
     enabled: false
     ports:
       main:
         enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TUNNEL_TOKEN: ""

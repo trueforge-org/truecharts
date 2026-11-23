@@ -12,16 +12,9 @@ apiVersion: v2
 appVersion: 2.3.3
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
-    alias: ""
-    tags: []
-    import-values: []
-  - name: mariadb
-    version: 19.1.5
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mariadb.enabled
     alias: ""
     tags: []
     import-values: []
@@ -41,5 +34,4 @@ sources:
   - https://ghcr.io/linuxserver/fleet
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/fleet
 type: application
-version: 20.2.4
-
+version: 21.0.0

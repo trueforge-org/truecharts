@@ -26,7 +26,10 @@ workload:
             NOTIFICATION_TYPE: ""
             PROVIDER: ""
             PUSHOVER_TITLE: ""
-            PUSHOVER_TOKEN: ""
+            PUSHOVER_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: PUSHOVER_TOKEN
             PUSHOVER_USER: ""
             RECOVERY_ALERT: ""
           probes:
@@ -36,3 +39,8 @@ workload:
               enabled: false
             startup:
               enabled: false
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PUSHOVER_TOKEN: ""

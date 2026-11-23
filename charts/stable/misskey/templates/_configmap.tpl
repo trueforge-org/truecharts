@@ -26,15 +26,15 @@ data:
     #───┘ PostgreSQL configuration └────────────────────────────────
 
     db:
-      host: {{ .Values.cnpg.main.creds.host | trimAll "\"" }}
+      host: {{ .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" }}
       port: 5432
 
       # Database name
-      db: {{ .Values.cnpg.main.database }}
+      db: {{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}
 
       # Auth
-      user: {{ .Values.cnpg.main.user }}
-      pass: {{ .Values.cnpg.main.creds.password | trimAll "\"" }}
+      user: {{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}
+      pass: {{ .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" }}
 
       # Whether disable Caching queries
       #disableCache: true
@@ -45,8 +45,8 @@ data:
 
     #   ┌─────────────────────┐
     #───┘ Redis configuration └─────────────────────────────────────
-    {{- $redisHost := .Values.redis.creds.plainhost | trimAll "\"" }}
-    {{- $redisPass := .Values.redis.creds.redisPassword | trimAll "\"" }}
+    {{- $redisHost := .Values.dependencies.valkey.depconfig.creds.plainhost | trimAll "\"" }}
+    {{- $redisPass := (index .Values.dependencies.valkey.depconfig.creds "valkey-password") | trimAll "\"" }}
     redis:
       host: {{ $redisHost }}
       port: 6379

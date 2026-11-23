@@ -12,14 +12,14 @@ apiVersion: v2
 appVersion: latest
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
     tags: []
     import-values: []
-deprecated: false
-description: Open source, advanced key-value store.
+deprecated: true
+description: Open source, advanced key-value store. (DEPRECATED, use valkey instead)
 home: https://truecharts.org/charts/stable/redis
 icon: https://truecharts.org/img/hotlink-ok/chart-icons/redis.webp
 keywords:
@@ -37,5 +37,4 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/redis
   - https://hub.docker.com/r/bitnamisecure/redis
 type: application
-version: 19.1.5
-
+version: 20.0.0

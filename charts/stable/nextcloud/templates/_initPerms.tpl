@@ -4,7 +4,7 @@
 {{- $path := .Values.persistence.data.targetSelector.main.main.mountPath }}
 enabled: true
 type: install
-imageSelector: alpineImage
+imageSelector: ubuntuImage
 resources:
   excludeExtra: true
 securityContext:

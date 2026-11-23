@@ -27,7 +27,10 @@ workload:
           env:
             FG_LOG_LEVEL: info
             FG_LOG_FILE: flexget.log
-            FG_WEBUI_PASSWD: "jLeT78KBDPW"
+            FG_WEBUI_PASSWD:
+              secretKeyRef:
+                name: env-secrets
+                key: FG_WEBUI_PASSWD
 service:
   main:
     ports:
@@ -41,3 +44,9 @@ persistence:
   data:
     enabled: true
     mountPath: /data
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      FG_WEBUI_PASSWD: "jLeT78KBDPW"

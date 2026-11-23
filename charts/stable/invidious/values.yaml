@@ -26,15 +26,17 @@ workload:
           env:
             POSTGRES_DB:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
-            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+            POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             # PG* variables are for the psql client
             PGPORT: "5432"
             PGPASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
           command: ["sh", "-c"]
           args:
             - |
@@ -69,6 +71,8 @@ workload:
             - secretRef:
                 name: invidious-secret
 invidious:
+  # Must be changed. Random string, at least 64 characters.
+  hmacKey: "PLACEHOLDERHMACKEY00000000000000000000000000000000000000000000"
   network:
     inbound:
       external_port: 10594
@@ -153,10 +157,9 @@ invidious:
       show_nick: true
       automatic_instance_redirect: false
       extend_desc: false
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    database: invidious
-    # DB User cannot be changed
-    # hardcoded from upstream
-    user: kemal
+    depconfig:
+      postgresqlDatabase: invidious
+      postgresqlUsername: kemal

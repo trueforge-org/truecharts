@@ -17,7 +17,10 @@ workload:
       containers:
         main:
           env:
-            comet__Database__ConnectionString: '{{ printf "Host=%s;Port=5432;Database=%s;Username=%s;Password=%s" (.Values.cnpg.main.creds.host | trimAll "\"") .Values.cnpg.main.database .Values.cnpg.main.user .Values.cnpg.main.creds.password }}'
+            comet__Database__ConnectionString:
+              secretKeyRef:
+                name: env-secrets
+                key: comet__Database__ConnectionString
             ADDON_ID: comet.selfhosted.org
             ADDON_NAME: Comet | Selfhosted
             ZILEAN_URL: None
@@ -31,7 +34,10 @@ workload:
             FASTAPI_WORKERS: "1"
             SCRAPE_TORRENTIO: "False"
             DATABASE_TYPE: postgresql
-            DATABASE_URL: '{{ printf "%s:%s@%s:5432" .Values.cnpg.main.user  .Values.cnpg.main.creds.password (.Values.cnpg.main.creds.host | trimAll "\"") }}'
+            DATABASE_URL:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_URL
 
 persistence:
   data:
@@ -42,8 +48,15 @@ persistence:
     type: emptyDir
     mountPath: "/.cache"
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: comet
-    database: comet
+    depconfig:
+      postgresqlUsername: comet
+      postgresqlDatabase: comet
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      comet__Database__ConnectionString: '{{ printf "Host=%s;Port=5432;Database=%s;Username=%s;Password=%s" (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") .Values.dependencies.postgresql.depconfig.postgresqlDatabase .Values.dependencies.postgresql.depconfig.postgresqlUsername (.Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"") }}'
+      DATABASE_URL: '{{ printf "%s:%s@%s:5432" .Values.dependencies.postgresql.depconfig.postgresqlUsername (.Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"") (.Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"") }}'

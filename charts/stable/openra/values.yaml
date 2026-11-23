@@ -32,4 +32,13 @@ workload:
             MOTD: Have Fun!!
             Mod: ra
             Name: DEDICATED SERVER
-            Password: ""
+            Password:
+              secretKeyRef:
+                name: env-secrets
+                key: Password
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      Password: ""

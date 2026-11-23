@@ -22,11 +22,17 @@ workload:
       containers:
         main:
           env:
-            ACCESS_KEY: Your AWS Access key
+            ACCESS_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ACCESS_KEY
             CRON_SCHEDULE: 0 * * * *
             S3CMDPARAMS: ""
             S3PATH: s3://mybucket/
-            SECRET_KEY: Your AWS Access secret
+            SECRET_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: SECRET_KEY
           probes:
             liveness:
               enabled: false
@@ -34,3 +40,10 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ACCESS_KEY: 'Your AWS Access key'
+      SECRET_KEY: 'Your AWS Access secret'

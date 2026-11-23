@@ -56,7 +56,10 @@ workload:
             GAME_PORT: "{{ .Values.service.main.ports.main.port }}"
             GAME_ID: "{{ .Values.cs2.game.id }}"
             USERNAME: "{{ .Values.cs2.game.user }}"
-            PASSWRD: "{{ .Values.cs2.game.password }}"
+            PASSWRD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWRD
             GAME_PARAMS: '{{ join " " .Values.cs2.game.params }}'
             VALIDATE: "{{ .Values.cs2.game.validate }}"
 
@@ -67,3 +70,8 @@ persistence:
   serverfiles:
     enabled: true
     mountPath: /serverdata/serverfiles
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWRD: '{{ .Values.cs2.game.password }}'

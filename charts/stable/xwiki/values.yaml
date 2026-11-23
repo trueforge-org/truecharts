@@ -13,11 +13,12 @@ persistence:
   config:
     enabled: true
     mountPath: "/usr/local/xwiki"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: xwiki
-    database: xwiki
+    depconfig:
+      postgresqlUsername: xwiki
+      postgresqlDatabase: xwiki
 
 securityContext:
   container:
@@ -31,15 +32,17 @@ workload:
       containers:
         main:
           env:
-            DB_USER: "{{ .Values.cnpg.main.user }}"
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             # User Defined
             JAVA_OPTS: ""
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password

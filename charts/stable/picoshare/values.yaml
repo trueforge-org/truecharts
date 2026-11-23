@@ -16,14 +16,31 @@ workload:
           env:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             # web admin password
-            PS_SHARED_SECRET: "somesecretcode"
+            PS_SHARED_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: PS_SHARED_SECRET
             # optional
             LITESTREAM_BUCKET: ""
             LITESTREAM_ENDPOINT: ""
-            LITESTREAM_ACCESS_KEY_ID: ""
-            LITESTREAM_SECRET_ACCESS_KEY: ""
+            LITESTREAM_ACCESS_KEY_ID:
+              secretKeyRef:
+                name: env-secrets
+                key: LITESTREAM_ACCESS_KEY_ID
+            LITESTREAM_SECRET_ACCESS_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: LITESTREAM_SECRET_ACCESS_KEY
             LITESTREAM_RETENTION: 72h
 persistence:
   data:
     enabled: true
     mountPath: "/data"
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PS_SHARED_SECRET: "somesecretcode"
+      LITESTREAM_ACCESS_KEY_ID: ""
+      LITESTREAM_SECRET_ACCESS_KEY: ""

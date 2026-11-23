@@ -6,6 +6,9 @@ image:
 securityContext:
   container:
     readOnlyRootFilesystem: false
+lldap:
+  # Must be changed. JWT signing secret, any long random string (32+ chars recommended).
+  jwtSecret: "PLACEHOLDERJWTSECRETCHANGEMEPLACEHOLDERJWTSECRET"
 service:
   main:
     ports:
@@ -34,7 +37,10 @@ workload:
             # ADMIN
             LLDAP_LDAP_USER_DN: "admin"
             LLDAP_LDAP_USER_EMAIL: "admin@example.com"
-            LLDAP_LDAP_USER_PASS: "password"
+            LLDAP_LDAP_USER_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: LLDAP_LDAP_USER_PASS
             # LOGGING
             LLDAP_VERBOSE: false
             # SMTP
@@ -43,7 +49,10 @@ workload:
             LLDAP_SMTP_OPTIONS__PORT: 587
             LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: "STARTTLS"
             LLDAP_SMTP_OPTIONS__USER: ""
-            LLDAP_SMTP_OPTIONS__PASSWORD: ""
+            LLDAP_SMTP_OPTIONS__PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: LLDAP_SMTP_OPTIONS__PASSWORD
             LLDAP_SMTP_OPTIONS__FROM: "LLDAP Admin <sender@gmail.com>"
             LLDAP_SMTP_OPTIONS__REPLY_TO: "Do not reply <noreply@localhost>"
             LLDAP_JWT_SECRET:
@@ -53,14 +62,22 @@ workload:
             LLDAP_key_file: "/data/private_key"
             LLDAP_database_url:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: std
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: url
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      LLDAP_LDAP_USER_PASS: "password"
+      LLDAP_SMTP_OPTIONS__PASSWORD: ""
 persistence:
   data:
     enabled: true
     mountPath: "/data"
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: lldap
-    database: lldap
+    depconfig:
+      postgresqlUsername: lldap
+      postgresqlDatabase: lldap

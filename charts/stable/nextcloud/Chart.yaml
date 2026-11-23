@@ -12,17 +12,10 @@ apiVersion: v2
 appVersion: 35.0.2
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
-    tags: []
-    import-values: []
-  - name: valkey
-    version: 3.1.8
-    repository: oci://oci.trueforge.org/truecharts
-    condition: redis.enabled
-    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -53,5 +46,4 @@ sources:
   - https://hub.docker.com/r/clamav/clamav
   - https://hub.docker.com/r/collabora/code
 type: application
-version: 49.2.15
-
+version: 50.0.0

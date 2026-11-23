@@ -9,10 +9,12 @@ service:
       main:
         port: 10192
         targetPort: 8080
-mongodb:
-  enabled: true
-  mongodbUsername: wekan
-  mongodbDatabase: wekan
+dependencies:
+  mongodb:
+    enabled: true
+    depconfig:
+      mongodbUsername: wekan
+      mongodbDatabase: wekan
 persistence:
   data:
     enabled: true

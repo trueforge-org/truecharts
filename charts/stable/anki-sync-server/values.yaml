@@ -28,7 +28,10 @@ workload:
               path: /
           env:
             ANKISYNCD_USERNAME: "test"
-            ANKISYNCD_PASSWORD: "123456"
+            ANKISYNCD_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: ANKISYNCD_PASSWORD
 
 service:
   main:
@@ -41,3 +44,9 @@ persistence:
   config:
     enabled: true
     mountPath: /app/data
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      ANKISYNCD_PASSWORD: "123456"

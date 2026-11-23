@@ -1,79 +1,11 @@
 # yaml-language-server: $schema=./values.schema.json
-image:
-  repository: docker.io/bitnamisecure/mariadb
-  pullPolicy: IfNotPresent
-  tag: latest@sha256:cc75d8f723ad341d2dd6ece59558b4523d57f384856f7f5bd91a5ebfd2841526
+# Thin shell: everything is provided by the `mariadb` dependency of common.
 workload:
   main:
-    podSpec:
-      containers:
-        main:
-          env:
-            MARIADB_PASSWORD: "{{ .Values.password }}"
-            MARIADB_ROOT_PASSWORD: "{{ .Values.rootPassword }}"
-            MARIADB_USER: "{{ .Values.mariadbUsername }}"
-            MARIADB_DATABASE: "{{ .Values.mariadbDatabase }}"
-            MARIADB_EXTRA_FLAGS: "--init-file=/init/passinit.sql"
-          probes:
-            liveness:
-              enabled: true
-              type: exec
-              command:
-                - /bin/bash
-                - -ec
-                - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
-            readiness:
-              enabled: true
-              type: exec
-              command:
-                - /bin/bash
-                - -ec
-                - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
-            startup:
-              enabled: true
-              type: exec
-              command:
-                - /bin/bash
-                - -ec
-                - "until /opt/bitnami/scripts/mariadb/healthcheck.sh; do sleep 2; done"
+    enabled: false
 service:
   main:
-    ports:
-      main:
-        port: 3306
-        targetPort: 3306
-securityContext:
-  container:
-    readOnlyRootFilesystem: false
-    runAsGroup: 0
-persistence:
-  data:
+    enabled: false
+dependencies:
+  mariadb:
     enabled: true
-    mountPath: "/bitnami/mariadb"
-  passinit:
-    enabled: true
-    type: configmap
-    objectName: passinit
-    items:
-      - key: passinit.sql
-        path: passinit.sql
-    targetSelector:
-      main:
-        main:
-          subPath: passinit.sql
-          mountPath: /init/passinit.sql
-
-configmap:
-  passinit:
-    enabled: true
-    data:
-      passinit.sql: |
-        ALTER USER root@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD("{{ .Values.rootPassword }}");
-        ALTER USER {{ .Values.mariadbUsername }}@'%' IDENTIFIED VIA mysql_native_password USING PASSWORD("{{ .Values.password }}");
-        FLUSH PRIVILEGES;
-
-mariadbUsername: "test"
-mariadbDatabase: "test"
-## DEVNOTE: These password defaults always need to match common
-rootPassword: "PLACEHOLDERROOTPASSWORD"
-password: "PLACEHOLDERPASSWORD"

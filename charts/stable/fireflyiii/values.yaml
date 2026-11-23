@@ -21,8 +21,8 @@ workload:
             startup:
               path: "/healthcheck"
           env:
-            DB_USERNAME: "{{ .Values.cnpg.main.user }}"
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
+            DB_USERNAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             DB_CONNECTION: pgsql
             DB_PORT: 5432
             REDIS_DB: "0"
@@ -35,18 +35,24 @@ workload:
             TRUSTED_PROXIES: "172.16.0.0/16"
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             REDIS_HOST:
               secretKeyRef:
                 expandObjectName: false
-                name: '{{ printf "%s-%s" .Release.Name "rediscreds" }}'
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
                 key: plainhost
-            REDIS_PASSWORD: "{{ .Values.redis.password }}"
+            REDIS_PASSWORD:
+              secretKeyRef:
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "valkeycreds" }}'
+                key: valkey-password
             STATIC_CRON_TOKEN:
               secretKeyRef:
                 name: firefly-secrets
@@ -73,17 +79,23 @@ persistence:
     mountPath: "/var/www/html/storage/upload"
   varrun:
     enabled: false
+fireflyiii:
+  # Must be changed. Exactly 32 characters.
+  appKey: "PLACEHOLDERAPPKEY0000000000000000"
+  # Must be changed. At least 32 characters.
+  cronToken: "PLACEHOLDERCRONTOKEN00000000000000"
 cronjob:
   schedule: "0 3 * * *"
   annotations: {}
   failedJobsHistoryLimit: 5
   successfulJobsHistoryLimit: 2
 # Enabled redis
-redis:
-  enabled: true
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  valkey:
     enabled: true
-    user: firefly
-    database: firefly
+  postgresql:
+    enabled: true
+    depconfig:
+      postgresqlUsername: firefly
+      postgresqlDatabase: firefly

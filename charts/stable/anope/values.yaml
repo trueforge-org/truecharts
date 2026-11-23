@@ -31,7 +31,10 @@ workload:
             IP_ADDR: ""
             IRCD: inspircd3
             LOCAL_HOSTNAME: services
-            PASSWORD: ""
+            PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: PASSWORD
             PORT: "7000"
             SSL: "yes"
 
@@ -42,3 +45,9 @@ workload:
               enabled: false
             startup:
               enabled: false
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      PASSWORD: ""

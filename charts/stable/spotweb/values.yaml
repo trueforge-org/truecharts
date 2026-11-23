@@ -9,11 +9,12 @@ service:
       main:
         port: 10050
         targetPort: 80
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: spotweb
-    database: spotweb
+    depconfig:
+      postgresqlUsername: spotweb
+      postgresqlDatabase: spotweb
 
 securityContext:
   container:
@@ -34,16 +35,27 @@ workload:
             SPOTWEB_RETRIEVE: "15min"
             DB_ENGINE: "pdo_pgsql"
             DB_PORT: "5432"
-            DB_DATABASE: "{{ .Values.cnpg.main.database }}"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
+            DB_DATABASE: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_SCHEMA: "public"
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             SPOTWEB_USERNAME: "myawesomeuser"
-            SPOTWEB_PASSWORD: "changeme"
+            SPOTWEB_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: SPOTWEB_PASSWORD
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      SPOTWEB_PASSWORD: "changeme"

@@ -23,7 +23,10 @@ workload:
       containers:
         main:
           env:
-            API_SECRET: ""
+            API_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: API_SECRET
             BASE_URL: ""
             BG_HIGH: ""
             BG_LOW: ""
@@ -34,6 +37,15 @@ workload:
               delta direction upbat timeago devicestatus errorcodes ar2 simplealarms
               profile
             INSECURE_USE_http: "true"
-            MONGO_CONNECTION: mongodb://db-user:db-password@mongodb-instance:port/db-name
+            MONGO_CONNECTION:
+              secretKeyRef:
+                name: env-secrets
+                key: MONGO_CONNECTION
             THEME: colors
             TIME_FORMAT: "24"
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      API_SECRET: ""
+      MONGO_CONNECTION: "mongodb://db-user:db-password@mongodb-instance:port/db-name"

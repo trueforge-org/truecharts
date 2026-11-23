@@ -28,21 +28,29 @@ workload:
             PORT: "{{ .Values.service.main.ports.main.port }}"
             POSTGRES_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
             POSTGRES_PORT: "5432"
-            POSTGRES_USER: "{{ .Values.cnpg.main.user }}"
+            POSTGRES_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             POSTGRES_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
-            POSTGRES_DB: "{{ .Values.cnpg.main.database }}"
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
+            POSTGRES_DB: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
             APP_URL: http://localhost:3000
             CLIENT_URL: http://localhost:3000
             LIBRARY_BROWSE_ROOT: "{{ .Values.persistence.books.mountPath }}"
             BOOK_DOCK_PATH: "{{ .Values.persistence.bookdock.mountPath }}"
-            JWT_SECRET: changeme_changeme
-            SETUP_BOOTSTRAP_TOKEN: changeme
+            JWT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: JWT_SECRET
+            SETUP_BOOTSTRAP_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: SETUP_BOOTSTRAP_TOKEN
             NODE_MAX_OLD_SPACE_SIZE: "2048"
 
 persistence:
@@ -58,15 +66,23 @@ persistence:
 
 # Bookorbit requires uuid-ossp, pg_trgm, unaccent, and vector (pgvector).
 # The default CNPG postgres image ships these extensions.
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: bookorbit
-    database: bookorbit
-    cluster:
-      initdb:
-        postInitApplicationSQL:
-          - CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-          - CREATE EXTENSION IF NOT EXISTS pg_trgm;
-          - CREATE EXTENSION IF NOT EXISTS unaccent;
-          - CREATE EXTENSION IF NOT EXISTS vector;
+    depconfig:
+      postgresqlUsername: bookorbit
+      postgresqlDatabase: bookorbit
+    operator:
+      cluster:
+        initdb:
+          postInitApplicationSQL:
+            - CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+            - CREATE EXTENSION IF NOT EXISTS pg_trgm;
+            - CREATE EXTENSION IF NOT EXISTS unaccent;
+            - CREATE EXTENSION IF NOT EXISTS vector;
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      JWT_SECRET: "changeme_changeme"
+      SETUP_BOOTSTRAP_TOKEN: "changeme"

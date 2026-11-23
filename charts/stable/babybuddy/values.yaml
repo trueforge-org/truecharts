@@ -23,24 +23,27 @@ workload:
         main:
           env:
             DB_ENGINE: "django.db.backends.postgresql"
-            DB_NAME: "{{ .Values.cnpg.main.database }}"
-            DB_USER: "{{ .Values.cnpg.main.user }}"
+            DB_NAME: "{{ .Values.dependencies.postgresql.depconfig.postgresqlDatabase }}"
+            DB_USER: "{{ .Values.dependencies.postgresql.depconfig.postgresqlUsername }}"
             DB_PORT: "5432"
             CSRF_TRUSTED_ORIGINS: ""
             DB_PASSWORD:
               secretKeyRef:
-                name: cnpg-main-user
-                key: password
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: postgresql-password
             DB_HOST:
               secretKeyRef:
-                name: cnpg-main-urls
-                key: host
+                expandObjectName: false
+                name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                key: plainhost
 persistence:
   config:
     enabled: true
     mountPath: /config
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: babybuddy
-    database: babybuddy
+    depconfig:
+      postgresqlUsername: babybuddy
+      postgresqlDatabase: babybuddy

@@ -57,19 +57,18 @@ workload:
 persistence:
   misskeyconfig:
     enabled: true
-    type: configmap
+    type: secret
     objectName: misskeyconfig
     mountPath: "/misskey/.config"
   files:
     enabled: true
     mountPath: "/misskey/files"
 
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: misskey
-    database: misskey
-
-redis:
-  enabled: true
-  username: default
+    depconfig:
+      postgresqlUsername: misskey
+      postgresqlDatabase: misskey
+  valkey:
+    enabled: true

@@ -12,24 +12,10 @@ apiVersion: v2
 appVersion: 1.7.4
 dependencies:
   - name: common
-    version: 30.4.5
+    version: 32.8.5
     repository: oci://oci.trueforge.org/truecharts
     condition: ""
     alias: ""
-    tags: []
-    import-values: []
-  - name: mariadb
-    version: 19.1.5
-    repository: oci://oci.trueforge.org/truecharts
-    condition: mariadb.enabled
-    alias: ""
-    tags: []
-    import-values: []
-  - name: valkey
-    version: 3.1.8
-    repository: oci://oci.trueforge.org/truecharts
-    condition: redis.enabled
-    alias: redis
     tags: []
     import-values: []
 deprecated: false
@@ -49,5 +35,4 @@ sources:
   - https://github.com/trueforge-org/truecharts/tree/master/charts/stable/anonaddy
   - https://hub.docker.com/r/anonaddy/anonaddy
 type: application
-version: 30.3.7
-
+version: 31.0.0

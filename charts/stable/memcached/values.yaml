@@ -1,21 +1,11 @@
 # yaml-language-server: $schema=./values.schema.json
-image:
-  repository: docker.io/bitnamisecure/memcached
-  pullPolicy: IfNotPresent
-  tag: latest@sha256:2cd90ce963fc5d6b9c7fd13544f5ba0c75a369804bdd512b408afbd95c11b877
-
+# Thin shell: everything is provided by the `memcached` dependency of common.
+workload:
+  main:
+    enabled: false
 service:
   main:
-    ports:
-      main:
-        port: 11211
-        protocol: tcp
-        targetPort: 11211
-configmap:
-  dashboard:
+    enabled: false
+dependencies:
+  memcached:
     enabled: true
-    labels:
-      grafana_dashboard: "1"
-    data:
-      memcached.json: >-
-        {{ .Files.Get "dashboard.json" | indent 8 }}

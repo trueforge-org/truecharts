@@ -26,8 +26,8 @@ workload:
                 expandObjectName: false
                 name: '{{ printf "%s-%s" .Release.Name "mariadbcreds" }}'
                 key: plainhost
-            YOURLS_DB_NAME: "{{ .Values.mariadb.mariadbDatabase }}"
-            YOURLS_DB_USER: "{{ .Values.mariadb.mariadbUsername }}"
+            YOURLS_DB_NAME: "{{ .Values.dependencies.mariadb.depconfig.mariadbDatabase }}"
+            YOURLS_DB_USER: "{{ .Values.dependencies.mariadb.depconfig.mariadbUsername }}"
             YOURLS_DB_PASS:
               secretKeyRef:
                 expandObjectName: false
@@ -38,9 +38,20 @@ workload:
             YOURLS_PRIVATE: false
             YOURLS_SITE: "{{ .Values.chartContext.appUrl }}"
             YOURLS_USER: ""
-            YOURLS_PASS: ""
+            YOURLS_PASS:
+              secretKeyRef:
+                name: env-secrets
+                key: YOURLS_PASS
 
-mariadb:
-  enabled: true
-  mariadbUsername: yourls
-  mariadbDatabase: yourls
+dependencies:
+  mariadb:
+    enabled: true
+    depconfig:
+      mariadbUsername: yourls
+      mariadbDatabase: yourls
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      YOURLS_PASS: ""

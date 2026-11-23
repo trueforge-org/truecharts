@@ -58,10 +58,19 @@ workload:
               enabled: false
           env:
             DATA_DIR: "{{.Values.persistence.config.mountPath }}"
-            DISCORD_TOKEN: "{{.Values.muse.discord.token }}"
+            DISCORD_TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: DISCORD_TOKEN
             SPOTIFY_CLIENT_ID: "{{.Values.muse.spotify.client.id }}"
-            SPOTIFY_CLIENT_SECRET: "{{.Values.muse.spotify.client.secret }}"
-            YOUTUBE_API_KEY: "{{.Values.muse.youtube.key }}"
+            SPOTIFY_CLIENT_SECRET:
+              secretKeyRef:
+                name: env-secrets
+                key: SPOTIFY_CLIENT_SECRET
+            YOUTUBE_API_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: YOUTUBE_API_KEY
             BOT_STATUS: "{{.Values.muse.bot.status }}"
             BOT_ACTIVITY_TYPE: "{{.Values.muse.bot.activity.type }}"
             BOT_ACTIVITY: "{{.Values.muse.bot.activity.detail }}"
@@ -73,3 +82,10 @@ persistence:
   config:
     enabled: true
     mountPath: /config
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DISCORD_TOKEN: '{{.Values.muse.discord.token }}'
+      SPOTIFY_CLIENT_SECRET: '{{.Values.muse.spotify.client.secret }}'
+      YOUTUBE_API_KEY: '{{.Values.muse.youtube.key }}'

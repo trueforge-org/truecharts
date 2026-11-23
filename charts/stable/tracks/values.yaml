@@ -27,8 +27,17 @@ workload:
             DATABASE_ENCODING: utf8
             DATABASE_HOST: 10.0.0.10
             DATABASE_NAME: tracks
-            DATABASE_PASSWORD: password
+            DATABASE_PASSWORD:
+              secretKeyRef:
+                name: env-secrets
+                key: DATABASE_PASSWORD
             DATABASE_PORT: "3306"
             DATABASE_TYPE: mysql2
             DATABASE_USERNAME: tracks
             RAILS_ENV: production
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      DATABASE_PASSWORD: "password"

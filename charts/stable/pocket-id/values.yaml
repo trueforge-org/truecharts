@@ -37,6 +37,19 @@ workload:
             TRUST_PROXY: "true"
             ANALYTICS_DISABLED: "true"
             VERSION_CHECK_DISABLED: "false"
-            MAXMIND_LICENSE_KEY: ""
-            ENCRYPTION_KEY: changeme_changeme!!
+            MAXMIND_LICENSE_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: MAXMIND_LICENSE_KEY
+            ENCRYPTION_KEY:
+              secretKeyRef:
+                name: env-secrets
+                key: ENCRYPTION_KEY
             DB_CONNECTION_STRING: file:data/pocket-id.db
+
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      MAXMIND_LICENSE_KEY: ""
+      ENCRYPTION_KEY: "changeme_changeme!!"

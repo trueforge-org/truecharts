@@ -14,7 +14,11 @@ workload:
           env:
             SEAFILE_SERVER_HOSTNAME: "seafile.${DOMAIN}"
             INIT_SEAFILE_ADMIN_EMAIL: me@example.com
-            INIT_SEAFILE_ADMIN_PASSWORD: a_very_secret_password
+
+secret:
+  env-secrets:
+    data:
+      INIT_SEAFILE_ADMIN_PASSWORD: a_very_secret_password
 
 ingress:
   main:

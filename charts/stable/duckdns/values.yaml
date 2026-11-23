@@ -30,8 +30,16 @@ workload:
           env:
             SUBDOMAINS: ""
             LOG_FILE: false
-            TOKEN: ""
+            TOKEN:
+              secretKeyRef:
+                name: env-secrets
+                key: TOKEN
 persistence:
   config:
     enabled: true
     mountPath: /config
+secret:
+  env-secrets:
+    enabled: true
+    data:
+      TOKEN: ""

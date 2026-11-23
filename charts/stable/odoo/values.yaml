@@ -70,7 +70,7 @@ persistence:
           mountPath: "/mnt/extra-addons"
   odoo-config:
     enabled: true
-    type: configmap
+    type: secret
     objectName: odoo-config
     targetSelector:
       main:
@@ -83,8 +83,9 @@ persistence:
           subPath: odoo.conf
           readOnly: true
 # Enabled postgres
-cnpg:
-  main:
+dependencies:
+  postgresql:
     enabled: true
-    user: odoo
-    database: odoo
+    depconfig:
+      postgresqlUsername: odoo
+      postgresqlDatabase: odoo

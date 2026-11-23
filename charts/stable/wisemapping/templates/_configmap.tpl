@@ -2,10 +2,10 @@
 {{- define "wisemapping.configmap" -}}
 {{- $fullname := (include "tc.v1.common.lib.chart.names.fullname" $) -}}
 
-{{- $pgdb := .Values.cnpg.main.database -}}
-{{- $pguser := .Values.cnpg.main.user -}}
-{{- $pgpassword := .Values.cnpg.main.creds.password | trimAll "\"" -}}
-{{- $pghost := .Values.cnpg.main.creds.host | trimAll "\"" -}}
+{{- $pgdb := .Values.dependencies.postgresql.depconfig.postgresqlDatabase -}}
+{{- $pguser := .Values.dependencies.postgresql.depconfig.postgresqlUsername -}}
+{{- $pgpassword := .Values.dependencies.postgresql.depconfig.creds.postgresqlPassword | trimAll "\"" -}}
+{{- $pghost := .Values.dependencies.postgresql.depconfig.creds.plainhost | trimAll "\"" -}}
 
 enabled: true
 data:
@@ -36,7 +36,7 @@ data:
 
 {{- define "wisemapping.configVolume" -}}
 enabled: true
-type: configmap
+type: secret
 objectName: wisemapping-config
 targetSelector:
   main:
