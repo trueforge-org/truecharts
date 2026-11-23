@@ -15,7 +15,7 @@ KUBE_PROMETHEUS_STACK_CHART_VERSION="82.18.0"
 # renovate: datasource=docker depName=registry.k8s.io/ingress-nginx/charts/ingress-nginx
 INGRESS_NGINX_CHART_VERSION="v4.15.1"
 # renovate: datasource=docker depName=oci.trueforge.org/truecharts/snapshot-controller
-SNAPSHOT_CONTROLLER_CHART_VERSION="4.19.2"
+SNAPSHOT_CONTROLLER_CHART_VERSION="6.2.4"
 # renovate: datasource=docker depName=quay.io/metallb/chart/metallb
 METALLB_CHART_VERSION="0.15.3"
 # renovate: datasource=docker depName=quay.io/jetstack/charts/cert-manager
