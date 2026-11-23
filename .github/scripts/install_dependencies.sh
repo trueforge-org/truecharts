@@ -10,23 +10,23 @@ fi
 
 echo "Chart name: $curr_chart"
 
-# renovate: datasource=docker depName=kube-prometheus-stack repository=ghcr.io/prometheus-community/charts
+# renovate: datasource=docker depName=ghcr.io/prometheus-community/charts/kube-prometheus-stack
 KUBE_PROMETHEUS_STACK_CHART_VERSION="82.0.0"
-# renovate: datasource=docker depName=ingress-nginx repository=registry.k8s.io/ingress-nginx/charts
+# renovate: datasource=docker depName=registry.k8s.io/ingress-nginx/charts/ingress-nginx
 INGRESS_NGINX_CHART_VERSION="v4.15.1"
-# renovate: datasource=docker depName=snapshot-controller repository=oci.trueforge.org/truecharts
+# renovate: datasource=docker depName=oci.trueforge.org/truecharts/snapshot-controller
 SNAPSHOT_CONTROLLER_CHART_VERSION="4.15.0"
-# renovate: datasource=docker depName=metallb repository=quay.io/metallb/chart
+# renovate: datasource=docker depName=quay.io/metallb/chart/metallb
 METALLB_CHART_VERSION="0.15.3"
-# renovate: datasource=docker depName=cert-manager repository=quay.io/jetstack/charts
+# renovate: datasource=docker depName=quay.io/jetstack/charts/cert-manager
 CERT_MANAGER_CHART_VERSION="v1.19.3"
-# renovate: datasource=docker depName=cloudnative-pg repository=ghcr.io/cloudnative-pg/charts
+# renovate: datasource=docker depName=ghcr.io/cloudnative-pg/charts/cloudnative-pg
 CLOUDNATIVE_PG_CHART_VERSION="0.27.1"
 # renovate: datasource=helm depName=valkey-operator repository=https://valkey.io/valkey-helm
 VALKEY_OPERATOR_CHART_VERSION="0.9.0"
-# renovate: datasource=docker depName=metrics-server repository=:ghcr.io/home-operations/charts-mirror
+# renovate: datasource=docker depName=ghcr.io/home-operations/charts-mirror/metrics-server
 METRICS_SERVER_CHART_VERSION="3.13.0"
-# renovate: datasource=docker depName=volsync repository=oci.trueforge.org/truecharts
+# renovate: datasource=docker depName=oci.trueforge.org/truecharts/volsync
 VOLSYNC_CHART_VERSION="3.15.16"
 # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
 GATEWAY_API_VERSION="v1.7.0"
