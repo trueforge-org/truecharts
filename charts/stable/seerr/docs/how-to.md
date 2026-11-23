@@ -55,7 +55,7 @@ Check the logs for the container and verify the postgres data was populated, you
                 - "quote identifiers"
                 - --with
                 - "data only"
-                - /app/config/db.sqlite3
+                - /config/db.sqlite3
                 - "{{ .Values.cnpg.main.creds.std }}"
 
     persistence:
