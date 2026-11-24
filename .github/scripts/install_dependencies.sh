@@ -11,7 +11,7 @@ fi
 echo "Chart name: $curr_chart"
 
 # renovate: datasource=docker depName=ghcr.io/prometheus-community/charts/kube-prometheus-stack
-KUBE_PROMETHEUS_STACK_CHART_VERSION="93.9.0"
+KUBE_PROMETHEUS_STACK_CHART_VERSION="93.10.0"
 # renovate: datasource=docker depName=registry.k8s.io/ingress-nginx/charts/ingress-nginx
 INGRESS_NGINX_CHART_VERSION="v4.15.1"
 # renovate: datasource=docker depName=oci.trueforge.org/truecharts/snapshot-controller
