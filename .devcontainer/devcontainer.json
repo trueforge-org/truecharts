@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "TrueForge",
-  "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:ff5ab59c50f9e22164a7fb5f52b25855db6cc22f7b89c668563d25f6b41f0bbf",
+  "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:bb97567d972a81a99ac6be70f29d6d69c283a7dd6ff57a253dc368035c5f1f55",
   "initializeCommand": "mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.claude && mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.config/gh && mkdir -p ${localEnv:HOME}${localEnv:USERPROFILE}/.ssh && touch ${localEnv:HOME}${localEnv:USERPROFILE}/.ssh/known_hosts",
   "postCreateCommand": "if [ -f package.json ]; then npm install; fi",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
