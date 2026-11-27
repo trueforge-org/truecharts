@@ -2,7 +2,7 @@
 image:
   repository: quay.io/backube/volsync
   pullPolicy: IfNotPresent
-  tag: 0.16.0@sha256:0d03a6aad57569eba2c0eaa0848cf4a908d9744b372ff2224bb291a320f36d76
+  tag: 0.17.0@sha256:bbc884d4fa108534260025bf1255a1010ebb6bb8dac9ba4f4a77f437ca7f8fbd
 
 manageCRDs: true
 manageVSCCRD: true
@@ -278,6 +278,15 @@ rbac:
           - list
           - patch
           - update
+          - watch
+      # Read the cluster TLS security profile on OpenShift.
+      - apiGroups:
+          - config.openshift.io
+        resources:
+          - apiservers
+        verbs:
+          - get
+          - list
           - watch
       - apiGroups:
           - events.k8s.io
