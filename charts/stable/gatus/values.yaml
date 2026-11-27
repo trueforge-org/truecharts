@@ -51,7 +51,8 @@ configmap:
         storage:
           type: postgres
           # Gatus expands the env var, which is read from the postgresql secret
-          path: "${GATUS_DB_URL}?client_encoding=utf8"
+          # Build the env reference during Helm rendering to avoid Flux substitution.
+          path: {{ printf "%s{GATUS_DB_URL}?client_encoding=utf8" "$" | quote }}
         {{- end }}
         metrics: true
         endpoints:
