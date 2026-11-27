@@ -86,14 +86,14 @@ workload:
               secretKeyRef:
                 name: env-secrets
                 key: MAIL_PASSWORD
-            MAIL_SCHEME: "SSL"
+            MAIL_SCHEME: "smtps"
             MAIL_FROM_ADDRESS: ""
             MAIL_FROM_NAME: "Speedtest Tracker"
             TELEGRAM_BOT_TOKEN:
               secretKeyRef:
                 name: env-secrets
                 key: TELEGRAM_BOT_TOKEN
-            CACHE_DRIVER: redis
+            CACHE_STORE: redis
             REDIS_URL:
               secretKeyRef:
                 expandObjectName: false
@@ -103,6 +103,10 @@ workload:
             APP_NAME: "Speedtest Tracker"
 
 secret:
+  speedtest-tracker-secrets:
+    enabled: true
+    data:
+      APP_KEY: '{{ required "speedtestTracker.appKey must be set" .Values.speedtestTracker.appKey }}'
   env-secrets:
     enabled: true
     data:
