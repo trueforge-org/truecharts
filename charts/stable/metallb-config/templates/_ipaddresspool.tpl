@@ -11,7 +11,7 @@ spec:
     {{- range .addresses }}
     - {{ . }}
     {{- end }}
-  autoAssign: {{ .autoAssign | default true }}
+  autoAssign: {{ dig "autoAssign" true . }}
   avoidBuggyIPs: {{ .avoidBuggyIPs | default false }}
 {{- end }}
 {{- end -}}
